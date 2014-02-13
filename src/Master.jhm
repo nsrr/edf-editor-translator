@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+	<mapID target="intro" url="master/intro.html" />
+	<mapID target="selection" url="master/selectFiles.html" />
+	<mapID target="hFileA" url="master/ident.html" />
+	<mapID target="hSignalA" url="master/signal.html" />
+	<mapID target="hFileATemp" url="master/identityTemplate.html" />
+	<mapID target="hSignalATemp" url="master/signalTemplate.html" />
+	<mapID target="transducer" url="master/transducer.html" />
+	<mapID target="work" url="master/workspace.html" />	
+	<mapID target="menubar.file" url="master/menubar/menubarFile.html" />	
+	<mapID target="menubar.edit" url="master/menubar/menubarEdit.html" />
+	<mapID target="menubar.tools" url="master/menubar/menubarTools.html" />
+	<mapID target="menubar.template" url="master/menubar/menubarTemplate.html" />
+	<mapID target="menubar.help" url="master/menubar/menubarHelp.html" />
+	<mapID target="toolbar.select" url="master/toolbar/toolbarSelect.html" />
+	<mapID target="toolbar.add" url="master/toolbar/toolbarAdd.html" />
+	<mapID target="toolbar.save" url="master/toolbar/toolbarSave.html" />
+	<mapID target="toolbar.saveall" url="master/toolbar/toolbarSaveall.html" />
+	<mapID target="toolbar.print" url="master/toolbar/toolbarPrint.html" />
+	<mapID target="toolbar.copy" url="master/toolbar/toolbarCopy.html" />
+	<mapID target="toolbar.cut" url="master/toolbar/toolbarCut.html" />
+	<mapID target="toolbar.paste" url="master/toolbar/toolbarPaste.html" />
+	<mapID target="toolbar.undo" url="master/toolbar/toolbarUndo.html" />
+	<mapID target="toolbar.redo" url="master/toolbar/toolbarRedo.html" />
+	<mapID target="toolbar.hFileA" url="master/toolbar/toolbarHfilea.html" />
+	<mapID target="toolbar.hSignalA" url="master/toolbar/toolbarHsignala.html" />
+	<mapID target="toolbar.validate" url="master/toolbar/toolbarValidate.html" />
+	<mapID target="toolbar.addRow" url="master/toolbar/toolbarAddrow.html" />
+	<mapID target="toolbar.removeRow" url="master/toolbar/toolbarRemoverow.html" />
+	<mapID target="toolbar.help" url="master/toolbar/toolbarHelp.html" />
+	<mapID target="toolbar.search" url="master/toolbar/toolbarSearch.html" />
+	<mapID target="overview.workspace" url="master/overview/overviewWorkspace.html" />
+	<mapID target="overview.menubar" url="master/overview/overviewMenubar.html" />
+	<mapID target="overview.toolbar" url="master/overview/overviewToolbar.html" />
+	<mapID target="overview.tasknav" url="master/overview/overviewTasknav.html" />
+	<mapID target="overview.workarea" url="master/overview/overviewWorkarea.html" />
+	<mapID target="overview.fileinfo" url="master/overview/overviewFileinfo.html" />
+	<mapID target="overview.taskinfo" url="master/overview/overviewTaskSum.html" />
+	<mapID target="overview.logging" url="master/overview/overviewLogging.html" />
+	<mapID target="overview.incomp" url="master/overview/overviewIncompliances.html" />
+</map>
