@@ -5,4 +5,5 @@
 *.war
 *.ear
 
+# OS generated files #
 .DS_Store
