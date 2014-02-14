@@ -1,0 +1,29 @@
+
+==================================================
+Release on Feb. 5, 2014
+
+Features:
+(1) Integrate EDF-annnotation-translator as a close part of EDF-Editor, and rename the application as edf-tool-app.jar.
+(2) For EDF-annnotation-translator, combine the modules of "file translator" and "batch translator" into one user-friendly GUI.
+(3) List all EDF files in the chosen folder and its nested sub-folders, so that users can select a sample of EDF files for translation.
+(4) File Viewer: A translated file can be opened in a new window for examination by simply clicking on its name.
+(5) Log Viewer: The translation process as well as parameter settings are written into log for history record.
+
+Known Limitations:
+(1) Currently supports only UTF-8 XML Encoding Format.
+(2) Command Line Execution - not part of this release.
+
+==================================================
+Release on Feb. 7, 2014
+
+Features:
+(1) [EDF-Annotation-Translator] Launch EDF-Annotation-Translator via command line
+    Re-write 1/3 code of EDF-Annotation-Translator module to support command line.
+(2) [EDF-Validator] Launch EDF-Validator via command line
+    Re-write 1/5 code of EDF-Validator module to support command line.
+
+Bug-fixes:
+(1) [EDF-Editor] didn't validate "Phymax must larger than Phymin".
+(2) [EDF-Editor] cannot remember the last chosen file or directory.
+(3) [EDF-Editor] "Error number" cannot be updated once user fixing an error, even re-run validation.
+(4) [EDF-Editor] force the panel of "Start New Task" to appear center window, regardless of the monitor resolution.
