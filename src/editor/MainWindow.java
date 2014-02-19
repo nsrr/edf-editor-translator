@@ -2529,7 +2529,7 @@ public class MainWindow extends JFrame implements WindowListener {
             String text1 = "EDF Header Editor", text2 = version_text;
             String text = format(text1, text2);
             text1 = "Developing members";
-            text2 = "Nathan Johnson; Fangping Huang; Gang Shu; Zendrix Ng; Van Anh Tran; Catherine Jayapandian";
+            text2 = "Nathan Johnson; Fangping Huang; Zendrix Ng; Van Anh Tran; Catherine Jayapandian";
             text = text + format(text1, text2);
             text = appendHeadTail(text);
             
@@ -3394,7 +3394,12 @@ public class MainWindow extends JFrame implements WindowListener {
         }
         
         public void verifyHeaders(){
-        	//TODO:
+        	/**
+        	 * TODO: [Validation] Validation of EDF Header
+        	 * Term Definition:
+        	 *   EIA: EDF Identity Attributes
+        	 *   ESA: EDF Signal Attributes
+        	 */
             cleanupIncompliances();
             parseEIATable();
             parseESATables();

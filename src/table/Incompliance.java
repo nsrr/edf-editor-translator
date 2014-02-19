@@ -26,12 +26,14 @@ public class Incompliance{
 /*     protected static final String error_eia_day = "value for day segment should be numbers in [1, 31]";
     protected static final String error_eia_month = "value for month segment should be numbers in [1, 12]";
     protected static final String error_eia_year = "value for year segment should be numbers in [0, 99]"; */
-    protected static final String error_esa_phymax = "physical maximum should be numeric";
-    protected static final String error_esa_phymin = "physical minimum should be numeric";
-    protected static final String error_esa_phymaxmin = "physical max should be larger than physical minminum";
-    protected static final String error_esa_digmax = "digtal maximum should be integer";
-    protected static final String error_esa_digmin = "digtal minmum should be integer";  
-    protected static final String error_esa_digmaxmin = "digital max should be larger than digital minminum";
+    protected static final String error_esa_ascii = "Signal Header: Non Ascii character in signal";
+    
+    protected static final String error_esa_phymax = "physical maximum must be numeric";
+    protected static final String error_esa_phymin = "physical minimum must be numeric";
+    protected static final String error_esa_phymaxmin = "physical max must be larger than physical minminum";
+    protected static final String error_esa_digmax = "digtal maximum must be numeric";
+    protected static final String error_esa_digmin = "digtal minmum must be numeric";
+    protected static final String error_esa_digmaxmin = "digital max must be larger than digital minminum";
     protected static final String error_esa_label = "Identical labels at row ";
     
     public static final String Title_ErroIndex = "Error #"; //this might be redundant, Fangping, 09/29/2010

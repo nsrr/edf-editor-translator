@@ -45,16 +45,31 @@ public class EDFTable extends JTable {
     public static final Color stripBackgroundClr = new Color(102, 78, 130);
     public static final Color stripForegroundClr = new Color(255, 255, 219);    
     public static final Color selectedCellColor = new Color(57, 105, 138);
+
+    /************************************************************** 
+	 * [Validation] Refer to URL: http://www.edfplus.info/specs/edf.html
+	 * The below feature-improvement was made by Gang Shu on February 18, 2014
+	 **************************************************************/ 
+	static final int COL_INDEX_LABEL = 0;
+	static final int COL_INDEX_TRANSDUCER_TYPE = 1;
+	static final int COL_INDEX_PHYSICAL_DIMENSION = 2;
+	
+	static final int COL_INDEX_PHYSICAL_MINIMUM = 3;
+	static final int COL_INDEX_PHYSICAL_MAXIMUM = 4;
+	static final int COL_INDEX_DIGITAL_MINIMUM = 5;
+	static final int COL_INDEX_DIGITAL_MAXIMUM = 6;
     
-    static final int PHYSICAL_MAXIMUM_INDEX = 4;
-    static final int PHYSICAL_MINIMUM_INDEX = 3;   
-    static final int DIGITAL_MAXIMUM_INDEX = 6;
-    static final int DIGITAL_MINIMUM_INDEX = 5;
-    
-    static final int TEMPLATE_PHYSICAL_MAXIMUM_INDEX = 5;
+	static final int COL_INDEX_PREFILTERING = 7;
+	static final int COL_INDEX_NR_OF_SAMPLES = 8;
+	static final int COL_INDEX_RESERVED = 9;
+	/************************************************************** 
+	 * The above feature-improvement was made by Gang Shu on February 18, 2014
+	 **************************************************************/
+
     static final int TEMPLATE_PHYSICAL_MINIMUM_INDEX = 4;
-    static final int TEMPLATE_DIGITAL_MAXIMUM_INDEX = 7;
+    static final int TEMPLATE_PHYSICAL_MAXIMUM_INDEX = 5;
     static final int TEMPLATE_DIGITAL_MINIMUM_INDEX = 6;
+    static final int TEMPLATE_DIGITAL_MAXIMUM_INDEX = 7;
     
     static final String physical_maximum_nonnumber_error = "Physical Maximum field should contain scalar value. ";
     static final String physical_minimum_nonnumber_error = "Physical Minimum field should contain scalar value. ";
@@ -247,188 +262,306 @@ public class EDFTable extends JTable {
      * used for both ESA and ESA template tables
      * Fangping, 09/29/2010
      */
-    public ArrayList<Incompliance> parseESATable(){
-        ArrayList<Incompliance> esaIncompliances = new ArrayList<Incompliance>();
-        int errorSrcTypeIndex = -1;
-        
-        int nrow = this.getRowCount(); 
-        int dig_max, dig_min;
-        int phy_max, phy_min;
-        String digmaxStr, digminStr; // keep the temp value of digital min/max value
-        String phyminStr, phymaxStr;
-        
-        Incompliance incomp;
-        String description;
-        String fileName = this.getMasterFile().getAbsolutePath();
-        String incomplianceType; 
-        int rowIndex, columnIndex;
+	public ArrayList<Incompliance> parseESATable() {
+		ArrayList<Incompliance> esaIncompliances = new ArrayList<Incompliance>();
+		int errorSrcTypeIndex = -1;
 
-         //set up incompliance type
-        if (this instanceof ESATable){
-            phy_max = PHYSICAL_MAXIMUM_INDEX;
-            phy_min = PHYSICAL_MINIMUM_INDEX;
-            dig_max = DIGITAL_MAXIMUM_INDEX;
-            dig_min = DIGITAL_MINIMUM_INDEX;
-            errorSrcTypeIndex = Incompliance.index_incomp_src_esa;
-            incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex]; //"ESA"       
-        }
-        else if (this instanceof ESATemplateTable){
-            phy_max = TEMPLATE_PHYSICAL_MAXIMUM_INDEX;
-            phy_min = TEMPLATE_PHYSICAL_MINIMUM_INDEX;
-            dig_max = TEMPLATE_DIGITAL_MAXIMUM_INDEX;
-            dig_min = TEMPLATE_DIGITAL_MINIMUM_INDEX;
-            errorSrcTypeIndex = Incompliance.index_incomp_src_esatemplate;
-            incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex]; //"ESA Template"
-        }
-        else
-            return esaIncompliances; // at this time, esaIncompliances.size() = 0;
-        
-        for (int i = 0; i < nrow; i++) {
-            phymaxStr = (String)this.getModel().getValueAt(i, phy_max) + "";
-            phyminStr = (String)this.getModel().getValueAt(i, phy_min) + "";
-            digmaxStr = (String)this.getModel().getValueAt(i, dig_max) + "";
-            digminStr = (String)this.getModel().getValueAt(i, dig_min) + "";
-            
-            //1. verify phymax field
-            boolean bPhymax = false;
-            try{
-                Double.parseDouble(phymaxStr);
-                bPhymax = true;
-            }
-            catch(NumberFormatException e){
-                setEdfValid(false);
-                description = Incompliance.error_esa_phymax;
-                rowIndex = i;
-                columnIndex = phy_max; 
-                incomp = new Incompliance(incomplianceType, description, fileName, 
-                                          rowIndex, columnIndex, errorSrcTypeIndex);
-                esaIncompliances.add(incomp);
-                //MainWindow.getAggregateIncompliances().add(incomp);
-            }
-            
-            //2. verify phymin field
-            boolean bPhymin = false;
-            try{
-                Double.parseDouble(phyminStr);
-                bPhymin = true;
-            }
-            catch(NumberFormatException e){
-                setEdfValid(false);
-                description = Incompliance.error_esa_phymin;
-                rowIndex = i;
-                columnIndex = phy_min;
-                incomp = new Incompliance(incomplianceType, description, 
-                                          fileName, rowIndex, columnIndex, errorSrcTypeIndex);
-                esaIncompliances.add(incomp);
-                //MainWindow.getAggregateIncompliances().add(incomp);
-            }
-            
-    		/************************************************************** 
-    		 * The following codefix was made by Gang Shu on February 6, 2014
-    		 * 
-    		 * Bug:
-    		 *    does not verify phymax > phymin
-    		 **************************************************************/ 
-            //3. verify phymax > phymin
-            if (bPhymax && bPhymin){
-            	if (Double.parseDouble(phymaxStr) <= Double.parseDouble(phyminStr)) {
-                    setEdfValid(false);
-                    description = Incompliance.error_esa_phymaxmin;
-                    rowIndex = i;
-                    columnIndex = phy_min; // might choose phy_max + 1                
-                    incomp = new Incompliance(incomplianceType, description, 
-                                              fileName,  rowIndex, columnIndex, errorSrcTypeIndex);    
-                    esaIncompliances.add(incomp);
-                    //MainWindow.getAggregateIncompliances().add(incomp);
-                } 
-            }
-    		/************************************************************** 
-    		 * The above codefix was made by Gang Shu on February 6, 2014
-    		 **************************************************************/ 
-            
-            
-           //3. verify digmax field
-           boolean bDigmax = false;
-           try{
-        	   Integer.parseInt(digmaxStr);
-        	   bDigmax = true;
-           }
-           catch(NumberFormatException e){
-               setEdfValid(false);
-               description = Incompliance.error_esa_digmax;
-               rowIndex = i;
-               columnIndex = dig_max;
-               incomp = new Incompliance(incomplianceType, description, 
-                                         fileName, rowIndex, columnIndex, errorSrcTypeIndex);
-               esaIncompliances.add(incomp);
-               //MainWindow.getAggregateIncompliances().add(incomp);
-           }
-           
-            //4. verify digmin field    
-           boolean bDigmin = false;       
-            try{
-                Integer.parseInt(digminStr);
-                bDigmin = true;
-            }
-            catch(NumberFormatException e){
-                setEdfValid(false);
-                description = Incompliance.error_esa_digmin;
-                rowIndex = i;
-                columnIndex = dig_min;
-                incomp = new Incompliance(incomplianceType, description, 
-                                          fileName, rowIndex, columnIndex, errorSrcTypeIndex);
-                esaIncompliances.add(incomp);
-                //MainWindow.getAggregateIncompliances().add(incomp);
-            }
-            
-            //5. verify digmax > digmin 
-            if (bDigmax && bDigmin){
-	            if (Integer.parseInt(digmaxStr) <= Integer.parseInt(digminStr)) {
-	                setEdfValid(false);
-	                description = Incompliance.error_esa_digmaxmin;
-	                rowIndex = i;
-	                columnIndex = dig_min; // might choose dig_max + 1                
-	                incomp = new Incompliance(incomplianceType, description, 
-	                                          fileName,  rowIndex, columnIndex, errorSrcTypeIndex);    
-	                esaIncompliances.add(incomp);
-	                //MainWindow.getAggregateIncompliances().add(incomp);
-	            }
-            }
-        }
-        
-        //6. verify if labels are duplicate
-        String alabel, blabel;
-        boolean repeated;
-        final int label_col_index = 0;
-        for (int i = 0; i < nrow; i++){
-            repeated = false;
-            description = Incompliance.error_esa_label + (i + 1); 
-            alabel = (String) getModel().getValueAt(i, label_col_index);
-            for (int j = i + 1; j < nrow; j++){
-                blabel = (String) getModel().getValueAt(j, label_col_index);
-                if (alabel.equalsIgnoreCase(blabel)){
-                    repeated = true;
-                    description = description + ", " + (j + 1);
-                }
-            }
-            
-            if (repeated == true){
-                incomp = new Incompliance(incomplianceType, description, 
-                                          fileName,  i, label_col_index, errorSrcTypeIndex); 
-                esaIncompliances.add(incomp);
-                //MainWindow.getAggregateIncompliances().add(incomp);
-            }
-        }  
-        
-        return esaIncompliances;
-    }
+		int nrow = this.getRowCount();
+		int dig_max, dig_min;
+		int phy_max, phy_min;
+		String digmaxStr, digminStr; // keep the temp value of digital min/max
+										// value
+		String phyminStr, phymaxStr;
+
+		Incompliance incomp;
+		String description;
+		String fileName = this.getMasterFile().getAbsolutePath();
+		String incomplianceType;
+		int rowIndex, columnIndex;
+
+		// set up incompliance type
+		if (this instanceof ESATable) {
+			phy_min = COL_INDEX_PHYSICAL_MINIMUM;
+			phy_max = COL_INDEX_PHYSICAL_MAXIMUM;
+			dig_min = COL_INDEX_DIGITAL_MINIMUM;
+			dig_max = COL_INDEX_DIGITAL_MAXIMUM;
+			errorSrcTypeIndex = Incompliance.index_incomp_src_esa;
+			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex]; // "ESA"
+		} else if (this instanceof ESATemplateTable) {
+			phy_min = TEMPLATE_PHYSICAL_MINIMUM_INDEX;
+			phy_max = TEMPLATE_PHYSICAL_MAXIMUM_INDEX;
+			dig_min = TEMPLATE_DIGITAL_MINIMUM_INDEX;
+			dig_max = TEMPLATE_DIGITAL_MAXIMUM_INDEX;
+			errorSrcTypeIndex = Incompliance.index_incomp_src_esatemplate;
+			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex]; // "ESA Template"
+		} else
+			return esaIncompliances; // at this time, esaIncompliances.size() =
+										// 0;
+
+		for (int i = 0; i < nrow; i++) {
+			phymaxStr = (String) this.getModel().getValueAt(i, phy_max) + "";
+			phyminStr = (String) this.getModel().getValueAt(i, phy_min) + "";
+			digmaxStr = (String) this.getModel().getValueAt(i, dig_max) + "";
+			digminStr = (String) this.getModel().getValueAt(i, dig_min) + "";
+			boolean bASCII;
+
+			// (D.1) [Physical_maximum] is made of ascii.
+			bASCII = checkAsciiF(phymaxStr);
+			if (!bASCII) {
+				setEdfValid(false);
+				description = Incompliance.error_esa_ascii;
+				rowIndex = i;
+				columnIndex = phy_max;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+
+			// (D.2) [Physical_ minimum] is made of ascii.
+			bASCII = checkAsciiF(phyminStr);
+			if (!bASCII) {
+				setEdfValid(false);
+				description = Incompliance.error_esa_ascii;
+				rowIndex = i;
+				columnIndex = phy_min;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+
+			// (D.3) [Physical_maximum] is a double number.
+			boolean bPhymax = false;
+			try {
+				Double.parseDouble(phymaxStr);
+				bPhymax = true;
+			} catch (NumberFormatException e) {
+				setEdfValid(false);
+				description = Incompliance.error_esa_phymax;
+				rowIndex = i;
+				columnIndex = phy_max;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+				// MainWindow.getAggregateIncompliances().add(incomp);
+			}
+
+			// (D.4) [Physical_minimum] is a double number.
+			boolean bPhymin = false;
+			try {
+				Double.parseDouble(phyminStr);
+				bPhymin = true;
+			} catch (NumberFormatException e) {
+				setEdfValid(false);
+				description = Incompliance.error_esa_phymin;
+				rowIndex = i;
+				columnIndex = phy_min;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+				// MainWindow.getAggregateIncompliances().add(incomp);
+			}
+
+			/**************************************************************
+			 * The following codefix was made by Gang Shu on February 6, 2014
+			 * 
+			 * Bug: does not verify phymax > phymin
+			 **************************************************************/
+			// (D.5) [Physical_minimum] is strictly smaller than Physical_maximum
+			if (bPhymax && bPhymin) {
+				if (Double.parseDouble(phymaxStr) <= Double
+						.parseDouble(phyminStr)) {
+					setEdfValid(false);
+					description = Incompliance.error_esa_phymaxmin;
+					rowIndex = i;
+					columnIndex = phy_min; // might choose phy_max + 1
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+					// MainWindow.getAggregateIncompliances().add(incomp);
+				}
+			}
+			/**************************************************************
+			 * The above codefix was made by Gang Shu on February 6, 2014
+			 **************************************************************/
+
+			// (E.1) [Digital_maximum] is made of ascii.
+			bASCII = checkAsciiF(digmaxStr);
+			if (!bASCII) {
+				setEdfValid(false);
+				description = Incompliance.error_esa_ascii;
+				rowIndex = i;
+				columnIndex = dig_max;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+
+			// (E.2) [Digital_ minimum] is made of ascii.
+			bASCII = checkAsciiF(digminStr);
+			if (!bASCII) {
+				setEdfValid(false);
+				description = Incompliance.error_esa_ascii;
+				rowIndex = i;
+				columnIndex = dig_min;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+
+			// (E.3) [Digital_maximum] is an integer number.
+			boolean bDigmax = false;
+			try {
+				Integer.parseInt(digmaxStr);
+				bDigmax = true;
+			} catch (NumberFormatException e) {
+				setEdfValid(false);
+				description = Incompliance.error_esa_digmax;
+				rowIndex = i;
+				columnIndex = dig_max;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+				// MainWindow.getAggregateIncompliances().add(incomp);
+			}
+
+			// (E.4) [Digital_minimum] is an integer number.
+			boolean bDigmin = false;
+			try {
+				Integer.parseInt(digminStr);
+				bDigmin = true;
+			} catch (NumberFormatException e) {
+				setEdfValid(false);
+				description = Incompliance.error_esa_digmin;
+				rowIndex = i;
+				columnIndex = dig_min;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+				// MainWindow.getAggregateIncompliances().add(incomp);
+			}
+
+			// (E.5) [Digital_minimum] is strictly smaller than Digital_maximum
+			if (bDigmax && bDigmin) {
+				if (Integer.parseInt(digmaxStr) <= Integer.parseInt(digminStr)) {
+					setEdfValid(false);
+					description = Incompliance.error_esa_digmaxmin;
+					rowIndex = i;
+					columnIndex = dig_min; // might choose dig_max + 1
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+					// MainWindow.getAggregateIncompliances().add(incomp);
+				}
+			}
+		}
+
+		/*
+		 * Check other fields
+		 */
+		for (int i = 0; i < nrow; i++) {
+			
+			String alabel = (String) getModel().getValueAt(i, COL_INDEX_LABEL);
+			
+			//(A.1) [Label] is made of ascii.
+			boolean bASCII = checkAsciiF(alabel);
+			if (!bASCII) {
+				description = Incompliance.error_esa_ascii;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			
+			//(A.2) [Label] must be unique.
+			boolean repeated = false;
+			description = Incompliance.error_esa_label + (i + 1);
+			for (int j = i + 1; j < nrow; j++) {
+				String blabel = (String) getModel().getValueAt(j, COL_INDEX_LABEL);
+				if (alabel.equalsIgnoreCase(blabel)) {
+					repeated = true;
+					description = description + ", " + (j + 1);
+				}
+			}
+			if (repeated){
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			
+			//(B.1) [Transducer_Type] is made of ascii.
+			String transducer_type = (String) getModel().getValueAt(i, COL_INDEX_TRANSDUCER_TYPE);
+			bASCII = checkAsciiF(transducer_type);
+			if (!bASCII) {
+				description = Incompliance.error_esa_ascii;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, COL_INDEX_TRANSDUCER_TYPE, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			
+			//(C.1) [Physical_Dimension] is made of ascii.
+			String physical_dimension = (String) getModel().getValueAt(i, COL_INDEX_PHYSICAL_DIMENSION);
+			bASCII = checkAsciiF(physical_dimension);
+			if (!bASCII) {
+				description = Incompliance.error_esa_ascii;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, COL_INDEX_PHYSICAL_DIMENSION, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			
+			//(F.1) [Prefiltering] is made of ascii.
+			String prefiltering = (String) getModel().getValueAt(i, COL_INDEX_PREFILTERING);
+			bASCII = checkAsciiF(prefiltering);
+			if (!bASCII) {
+				description = Incompliance.error_esa_ascii;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, COL_INDEX_PREFILTERING, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			
+			//(G.1) [Nr_of_samples] is made of ascii.
+			String nr_of_samples = (String) getModel().getValueAt(i, COL_INDEX_NR_OF_SAMPLES);
+			bASCII = checkAsciiF(nr_of_samples);
+			if (!bASCII) {
+				description = Incompliance.error_esa_ascii;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			
+			//(H.1) [Reserved] is made of ascii.
+			String reserved = (String) getModel().getValueAt(i, COL_INDEX_RESERVED);
+			bASCII = checkAsciiF(reserved);
+			if (!bASCII) {
+				description = Incompliance.error_esa_ascii;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, COL_INDEX_RESERVED, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			
+		}
+
+		return esaIncompliances;
+	}
     
+	/************************************************************** 
+	 * The below code was made by Gang Shu on February 18, 2014
+	 **************************************************************/ 
+    private boolean checkAsciiF(String text){
+    	if (text==null){
+    		return false;
+    	}
+    	else{
+    		return text.matches("\\A\\p{ASCII}*\\z");
+    	}
+    }
+	/************************************************************** 
+	 * The above code was made by Gang Shu on February 18, 2014
+	 **************************************************************/ 
       
     protected final int[] lowerbounds = {0, 0, 0};
     protected final int[] upperbounds = {31, 12, 99}; // 31 day, 12 month, 2099 years
      
     /**
-     * parse EIA table.
+     * TODO: [Validation] parse EIA table.
      * this one can be used on both EIATable
      */
     public ArrayList<Incompliance> parseEIATable( ) {

@@ -29,6 +29,7 @@ public class TestCommandLineController {
 		};
 		
 		CommandLineController.Start(argv);
+		System.exit(0);
     }
 
 }

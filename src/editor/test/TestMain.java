@@ -1,4 +1,4 @@
-package translator.test;
+package editor.test;
 
 import editor.Main;
 import translator.utils.Keywords;
@@ -8,9 +8,16 @@ public class TestMain {
 
 	public static void main(String[] args) throws Exception {
 		
+		testMainGUI();
+		
 		testTranslator();
 		
 		testValidator();
+	}
+	
+	private static void testMainGUI() throws Exception{
+		
+		Main.main(new String[]{});
 	}
 	
 	private static void testValidator() throws Exception{
