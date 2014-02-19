@@ -277,7 +277,6 @@ public class EDFTable extends JTable {
 		String description;
 		String fileName = this.getMasterFile().getAbsolutePath();
 		String incomplianceType;
-		int rowIndex, columnIndex;
 
 		// set up incompliance type
 		if (this instanceof ESATable) {
@@ -295,25 +294,22 @@ public class EDFTable extends JTable {
 			errorSrcTypeIndex = Incompliance.index_incomp_src_esatemplate;
 			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex]; // "ESA Template"
 		} else
-			return esaIncompliances; // at this time, esaIncompliances.size() =
-										// 0;
-
+			return esaIncompliances; // at this time, esaIncompliances.size() = 0;
+		
+		boolean bASCII;
 		for (int i = 0; i < nrow; i++) {
 			phymaxStr = (String) this.getModel().getValueAt(i, phy_max) + "";
 			phyminStr = (String) this.getModel().getValueAt(i, phy_min) + "";
 			digmaxStr = (String) this.getModel().getValueAt(i, dig_max) + "";
 			digminStr = (String) this.getModel().getValueAt(i, dig_min) + "";
-			boolean bASCII;
-
+			
 			// (D.1) [Physical_maximum] is made of ascii.
 			bASCII = checkAsciiF(phymaxStr);
 			if (!bASCII) {
 				setEdfValid(false);
 				description = Incompliance.error_esa_ascii;
-				rowIndex = i;
-				columnIndex = phy_max;
 				incomp = new Incompliance(incomplianceType, description,
-						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+						fileName, i, phy_max, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
 			}
 
@@ -322,10 +318,8 @@ public class EDFTable extends JTable {
 			if (!bASCII) {
 				setEdfValid(false);
 				description = Incompliance.error_esa_ascii;
-				rowIndex = i;
-				columnIndex = phy_min;
 				incomp = new Incompliance(incomplianceType, description,
-						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+						fileName, i, phy_min, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
 			}
 
@@ -337,12 +331,9 @@ public class EDFTable extends JTable {
 			} catch (NumberFormatException e) {
 				setEdfValid(false);
 				description = Incompliance.error_esa_phymax;
-				rowIndex = i;
-				columnIndex = phy_max;
 				incomp = new Incompliance(incomplianceType, description,
-						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+						fileName, i, phy_max, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
-				// MainWindow.getAggregateIncompliances().add(incomp);
 			}
 
 			// (D.4) [Physical_minimum] is a double number.
@@ -353,12 +344,9 @@ public class EDFTable extends JTable {
 			} catch (NumberFormatException e) {
 				setEdfValid(false);
 				description = Incompliance.error_esa_phymin;
-				rowIndex = i;
-				columnIndex = phy_min;
 				incomp = new Incompliance(incomplianceType, description,
-						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+						fileName, i, phy_min, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
-				// MainWindow.getAggregateIncompliances().add(incomp);
 			}
 
 			/**************************************************************
@@ -372,12 +360,10 @@ public class EDFTable extends JTable {
 						.parseDouble(phyminStr)) {
 					setEdfValid(false);
 					description = Incompliance.error_esa_phymaxmin;
-					rowIndex = i;
-					columnIndex = phy_min; // might choose phy_max + 1
+					int columnIndex = phy_min; // might choose phy_max + 1
 					incomp = new Incompliance(incomplianceType, description,
-							fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+							fileName, i, columnIndex, errorSrcTypeIndex);
 					esaIncompliances.add(incomp);
-					// MainWindow.getAggregateIncompliances().add(incomp);
 				}
 			}
 			/**************************************************************
@@ -389,10 +375,8 @@ public class EDFTable extends JTable {
 			if (!bASCII) {
 				setEdfValid(false);
 				description = Incompliance.error_esa_ascii;
-				rowIndex = i;
-				columnIndex = dig_max;
 				incomp = new Incompliance(incomplianceType, description,
-						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+						fileName, i, dig_max, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
 			}
 
@@ -401,56 +385,64 @@ public class EDFTable extends JTable {
 			if (!bASCII) {
 				setEdfValid(false);
 				description = Incompliance.error_esa_ascii;
-				rowIndex = i;
-				columnIndex = dig_min;
 				incomp = new Incompliance(incomplianceType, description,
-						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+						fileName, i, dig_min, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
 			}
 
 			// (E.3) [Digital_maximum] is an integer number.
 			boolean bDigmax = false;
 			try {
-				Integer.parseInt(digmaxStr);
+				int digmax = Integer.parseInt(digmaxStr);
 				bDigmax = true;
+				
+				//(E.4) Digital_maximum is in the range of [-32768, 327670].
+				boolean bDigRange = check_digital_range(digmax);
+				if (!bDigRange) {
+					description = Incompliance.error_esa_digrange;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, dig_max, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
 			} catch (NumberFormatException e) {
 				setEdfValid(false);
 				description = Incompliance.error_esa_digmax;
-				rowIndex = i;
-				columnIndex = dig_max;
 				incomp = new Incompliance(incomplianceType, description,
-						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+						fileName, i, dig_max, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
-				// MainWindow.getAggregateIncompliances().add(incomp);
 			}
 
-			// (E.4) [Digital_minimum] is an integer number.
+			// (E.5) [Digital_minimum] is an integer number.
 			boolean bDigmin = false;
 			try {
-				Integer.parseInt(digminStr);
+				int digmin = Integer.parseInt(digminStr);
 				bDigmin = true;
+				
+				//(E.6) Digital_ minimum is in the range of [-32768, 327670].
+				boolean bDigRange = check_digital_range(digmin);
+				if (!bDigRange) {
+					description = Incompliance.error_esa_digrange;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, dig_min, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
 			} catch (NumberFormatException e) {
 				setEdfValid(false);
 				description = Incompliance.error_esa_digmin;
-				rowIndex = i;
-				columnIndex = dig_min;
 				incomp = new Incompliance(incomplianceType, description,
-						fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+						fileName, i, dig_min, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
-				// MainWindow.getAggregateIncompliances().add(incomp);
 			}
 
-			// (E.5) [Digital_minimum] is strictly smaller than Digital_maximum
+			// (E.7) [Digital_minimum] is strictly smaller than Digital_maximum
 			if (bDigmax && bDigmin) {
 				if (Integer.parseInt(digmaxStr) <= Integer.parseInt(digminStr)) {
 					setEdfValid(false);
 					description = Incompliance.error_esa_digmaxmin;
-					rowIndex = i;
-					columnIndex = dig_min; // might choose dig_max + 1
+					int columnIndex = dig_min; // might choose dig_max + 1
 					incomp = new Incompliance(incomplianceType, description,
-							fileName, rowIndex, columnIndex, errorSrcTypeIndex);
+							fileName, i, columnIndex, errorSrcTypeIndex);
 					esaIncompliances.add(incomp);
-					// MainWindow.getAggregateIncompliances().add(incomp);
 				}
 			}
 		}
@@ -463,7 +455,7 @@ public class EDFTable extends JTable {
 			String alabel = (String) getModel().getValueAt(i, COL_INDEX_LABEL);
 			
 			//(A.1) [Label] is made of ascii.
-			boolean bASCII = checkAsciiF(alabel);
+			bASCII = checkAsciiF(alabel);
 			if (!bASCII) {
 				description = Incompliance.error_esa_ascii;
 				incomp = new Incompliance(incomplianceType, description,
@@ -517,14 +509,33 @@ public class EDFTable extends JTable {
 				esaIncompliances.add(incomp);
 			}
 			
-			//(G.1) [Nr_of_samples] is made of ascii.
-			String nr_of_samples = (String) getModel().getValueAt(i, COL_INDEX_NR_OF_SAMPLES);
-			bASCII = checkAsciiF(nr_of_samples);
+			//(G.1) [Num_signals] is made of ascii.
+			String Num_signals = (String) getModel().getValueAt(i, COL_INDEX_NR_OF_SAMPLES);
+			bASCII = checkAsciiF(Num_signals);
 			if (!bASCII) {
 				description = Incompliance.error_esa_ascii;
 				incomp = new Incompliance(incomplianceType, description,
 						fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
+			}
+			//(G.2) [Num_signals] is an integer number.
+			else{
+				try {
+					int num_signals = Integer.parseInt(Num_signals);
+
+					//(G.3) [Num_signals] is greater or equal to 1.
+					if (num_signals < 1){
+						description = Incompliance.error_esa_num_signals_range;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}					
+				} catch (NumberFormatException e) {
+					description = Incompliance.error_esa_num_signals;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
 			}
 			
 			//(H.1) [Reserved] is made of ascii.
@@ -552,6 +563,10 @@ public class EDFTable extends JTable {
     	else{
     		return text.matches("\\A\\p{ASCII}*\\z");
     	}
+    }
+    
+    private boolean check_digital_range(int x){
+    	return x>=-32768 && x<=327670 ? true : false;
     }
 	/************************************************************** 
 	 * The above code was made by Gang Shu on February 18, 2014

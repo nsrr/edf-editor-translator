@@ -27,6 +27,9 @@ public class Incompliance{
     protected static final String error_eia_month = "value for month segment should be numbers in [1, 12]";
     protected static final String error_eia_year = "value for year segment should be numbers in [0, 99]"; */
     protected static final String error_esa_ascii = "Signal Header: Non Ascii character in signal";
+    protected static final String error_esa_digrange = "Signal Header: Digital integer is out of range [-32768, 327670]";
+    protected static final String error_esa_num_signals = "Signal Header: Num signals must be numeric";
+    protected static final String error_esa_num_signals_range = "Signal Header: Samples in record is less than 1";
     
     protected static final String error_esa_phymax = "physical maximum must be numeric";
     protected static final String error_esa_phymin = "physical minimum must be numeric";
