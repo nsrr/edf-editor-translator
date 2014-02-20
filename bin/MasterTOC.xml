@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='ISO-8859-1'  ?>
+
+<!--
+ @(#)MasterTOC.xml	1.8 06/10/30
+ 
+ Copyright (c) 2006 Sun Microsystems, Inc.  All Rights Reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ 
+ - Redistribution of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+ 
+ - Redistribution in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in
+   the documentation and/or other materials provided with the
+   distribution.
+ 
+ Neither the name of Sun Microsystems, Inc. or the names of
+ contributors may be used to endorse or promote products derived
+ from this software without specific prior written permission.
+ 
+ This software is provided "AS IS," without a warranty of any
+ kind. ALL EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND
+ WARRANTIES, INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT, ARE HEREBY
+ EXCLUDED. SUN MICROSYSTEMS, INC. ("SUN") AND ITS LICENSORS SHALL
+ NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF
+ USING, MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS
+ DERIVATIVES. IN NO EVENT WILL SUN OR ITS LICENSORS BE LIABLE FOR
+ ANY LOST REVENUE, PROFIT OR DATA, OR FOR DIRECT, INDIRECT, SPECIAL,
+ CONSEQUENTIAL, INCIDENTAL OR PUNITIVE DAMAGES, HOWEVER CAUSED AND
+ REGARDLESS OF THE THEORY OF LIABILITY, ARISING OUT OF THE USE OF OR
+ INABILITY TO USE THIS SOFTWARE, EVEN IF SUN HAS BEEN ADVISED OF THE
+ POSSIBILITY OF SUCH DAMAGES.
+ 
+ You acknowledge that this software is not designed, licensed or
+ intended for use in the design, construction, operation or
+ maintenance of any nuclear facility. 
+-->
+
+<!DOCTYPE toc
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/toc_1_0.dtd">
+<toc version="1.0">
+  <tocitem text="EDFEditor Help">
+    <tocitem text="Introduction" target="intro"/> 
+    <tocitem text="EDFEditor Workspace Overview"> 
+    	<tocitem text="Workspace Overview" target="overview.workspace"/>
+		<tocitem text="Menu Bar" target="overview.menubar"/>
+		<tocitem text="Tool Bar" target="overview.toolbar"/>
+		<tocitem text="Task Navigator" target="overview.tasknav"/>
+		<tocitem text="Work Area" target="overview.workarea"/>
+		<tocitem text="File Information Area" target="overview.fileinfo"/>
+		<tocitem text="Task Summary Area" target="overview.taskinfo"/>
+		<tocitem text="Logging Area" target="overview.logging"/>
+		<tocitem text="Incompliance List" target="overview.incomp"/>
+  	</tocitem>
+  	<tocitem text="Menus">
+		<tocitem text="Menu Bar: File" target="menubar.file"/> 
+		<tocitem text="Menu Bar: Edit" target="menubar.edit"/> 
+		<tocitem text="Menu Bar: Template" target="menubar.template"/>
+		<tocitem text="Menu Bar: Tools" target="menubar.tools"/> 
+		<tocitem text="Menu Bar: Help" target="menubar.help"/>
+ 	</tocitem>
+	<tocitem text="Tool Bar">
+		<tocitem text="Tool Bar: Select EDF Files" target="toolbar.select"/> 
+		<tocitem text="Tool Bar: Add EDF Files" target="toolbar.add"/> 
+		<tocitem text="Tool Bar: Save" target="toolbar.save"/>
+		<tocitem text="Tool Bar: Save All" target="toolbar.saveall"/> 
+		<tocitem text="Tool Bar: Print" target="toolbar.print"/>
+		<tocitem text="Tool Bar: Copy" target="toolbar.copy"/> 
+		<tocitem text="Tool Bar: Cut" target="toolbar.cut"/> 
+		<tocitem text="Tool Bar: Paste" target="toolbar.paste"/>
+		<tocitem text="Tool Bar: Undo" target="toolbar.undo"/> 
+		<tocitem text="Tool Bar: Redo" target="toolbar.redo"/>
+		<tocitem text="Tool Bar: Apply Identity Template" target="toolbar.hFileA"/> 
+		<tocitem text="Tool Bar: Apply Signal Template" target="toolbar.hSignalA"/>
+		<tocitem text="Tool Bar: Validate Header" target="toolbar.validate"/> 
+		<tocitem text="Tool Bar: Add Row" target="toolbar.addRow"/>
+		<tocitem text="Tool Bar: Remove Row" target="toolbar.removeRow"/> 
+		<tocitem text="Tool Bar: Help Button" target="toolbar.help"/>
+		<tocitem text="Tool Bar: Search" target="toolbar.search"/>
+  	</tocitem>
+  	<tocitem text="EDFEditor Functionality">
+		<tocitem text="Selecting Files" target="selection"/>
+		<tocitem text="EDF Header: Identity Attributes" target="hFileA"/>
+		<tocitem text="EDF Header: Configuring Identity Attributes Templates" target="hFileATemp"/>
+		<tocitem text="EDF Header: Signal Attributes" target="hSignalA"/>
+		<tocitem text="EDF Header: Configuring Signal Attributes Templates" target="hSignalATemp"/>
+		<tocitem text="EDF Header: Transducer Label Expression Builder" target="transducer"/>
+  	</tocitem>
+  </tocitem>
+</toc>

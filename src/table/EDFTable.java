@@ -27,7 +27,9 @@ import javax.swing.table.TableModel;
 
 public class EDFTable extends JTable {
 
-    protected Boolean savedOnce = false; // usage: if the body should be copied in current save
+    private static final long serialVersionUID = 1L;
+	
+	protected Boolean savedOnce = false; // usage: if the body should be copied in current save
     protected Boolean updateSinceLastSave = false; //false when ESA/EIA table is created; true when template file is created
     protected File masterFile = null; //usage: keep the master file of the table
     protected int masterFileIndex; // index of the master file in the master file array
@@ -45,31 +47,6 @@ public class EDFTable extends JTable {
     public static final Color stripBackgroundClr = new Color(102, 78, 130);
     public static final Color stripForegroundClr = new Color(255, 255, 219);    
     public static final Color selectedCellColor = new Color(57, 105, 138);
-
-    /************************************************************** 
-	 * [Validation] Refer to URL: http://www.edfplus.info/specs/edf.html
-	 * The below feature-improvement was made by Gang Shu on February 18, 2014
-	 **************************************************************/ 
-	static final int COL_INDEX_LABEL = 0;
-	static final int COL_INDEX_TRANSDUCER_TYPE = 1;
-	static final int COL_INDEX_PHYSICAL_DIMENSION = 2;
-	
-	static final int COL_INDEX_PHYSICAL_MINIMUM = 3;
-	static final int COL_INDEX_PHYSICAL_MAXIMUM = 4;
-	static final int COL_INDEX_DIGITAL_MINIMUM = 5;
-	static final int COL_INDEX_DIGITAL_MAXIMUM = 6;
-    
-	static final int COL_INDEX_PREFILTERING = 7;
-	static final int COL_INDEX_NR_OF_SAMPLES = 8;
-	static final int COL_INDEX_RESERVED = 9;
-	/************************************************************** 
-	 * The above feature-improvement was made by Gang Shu on February 18, 2014
-	 **************************************************************/
-
-    static final int TEMPLATE_PHYSICAL_MINIMUM_INDEX = 4;
-    static final int TEMPLATE_PHYSICAL_MAXIMUM_INDEX = 5;
-    static final int TEMPLATE_DIGITAL_MINIMUM_INDEX = 6;
-    static final int TEMPLATE_DIGITAL_MAXIMUM_INDEX = 7;
     
     static final String physical_maximum_nonnumber_error = "Physical Maximum field should contain scalar value. ";
     static final String physical_minimum_nonnumber_error = "Physical Minimum field should contain scalar value. ";
@@ -263,293 +240,588 @@ public class EDFTable extends JTable {
      * Fangping, 09/29/2010
      */
 	public ArrayList<Incompliance> parseESATable() {
+		
 		ArrayList<Incompliance> esaIncompliances = new ArrayList<Incompliance>();
+		String incomplianceType;
 		int errorSrcTypeIndex = -1;
-
 		int nrow = this.getRowCount();
-		int dig_max, dig_min;
-		int phy_max, phy_min;
-		String digmaxStr, digminStr; // keep the temp value of digital min/max
-										// value
-		String phyminStr, phymaxStr;
-
 		Incompliance incomp;
 		String description;
 		String fileName = this.getMasterFile().getAbsolutePath();
-		String incomplianceType;
-
-		// set up incompliance type
+		boolean bASCII;
+		
 		if (this instanceof ESATable) {
-			phy_min = COL_INDEX_PHYSICAL_MINIMUM;
-			phy_max = COL_INDEX_PHYSICAL_MAXIMUM;
-			dig_min = COL_INDEX_DIGITAL_MINIMUM;
-			dig_max = COL_INDEX_DIGITAL_MAXIMUM;
 			errorSrcTypeIndex = Incompliance.index_incomp_src_esa;
 			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex]; // "ESA"
-		} else if (this instanceof ESATemplateTable) {
-			phy_min = TEMPLATE_PHYSICAL_MINIMUM_INDEX;
-			phy_max = TEMPLATE_PHYSICAL_MAXIMUM_INDEX;
-			dig_min = TEMPLATE_DIGITAL_MINIMUM_INDEX;
-			dig_max = TEMPLATE_DIGITAL_MAXIMUM_INDEX;
-			errorSrcTypeIndex = Incompliance.index_incomp_src_esatemplate;
-			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex]; // "ESA Template"
-		} else
-			return esaIncompliances; // at this time, esaIncompliances.size() = 0;
-		
-		boolean bASCII;
-		for (int i = 0; i < nrow; i++) {
-			phymaxStr = (String) this.getModel().getValueAt(i, phy_max) + "";
-			phyminStr = (String) this.getModel().getValueAt(i, phy_min) + "";
-			digmaxStr = (String) this.getModel().getValueAt(i, dig_max) + "";
-			digminStr = (String) this.getModel().getValueAt(i, dig_min) + "";
 			
-			// (D.1) [Physical_maximum] is made of ascii.
-			bASCII = checkAsciiF(phymaxStr);
-			if (!bASCII) {
-				setEdfValid(false);
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, phy_max, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-
-			// (D.2) [Physical_ minimum] is made of ascii.
-			bASCII = checkAsciiF(phyminStr);
-			if (!bASCII) {
-				setEdfValid(false);
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, phy_min, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-
-			// (D.3) [Physical_maximum] is a double number.
-			boolean bPhymax = false;
-			try {
-				Double.parseDouble(phymaxStr);
-				bPhymax = true;
-			} catch (NumberFormatException e) {
-				setEdfValid(false);
-				description = Incompliance.error_esa_phymax;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, phy_max, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-
-			// (D.4) [Physical_minimum] is a double number.
-			boolean bPhymin = false;
-			try {
-				Double.parseDouble(phyminStr);
-				bPhymin = true;
-			} catch (NumberFormatException e) {
-				setEdfValid(false);
-				description = Incompliance.error_esa_phymin;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, phy_min, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-
-			/**************************************************************
-			 * The following codefix was made by Gang Shu on February 6, 2014
-			 * 
-			 * Bug: does not verify phymax > phymin
-			 **************************************************************/
-			// (D.5) [Physical_minimum] is strictly smaller than Physical_maximum
-			if (bPhymax && bPhymin) {
-				if (Double.parseDouble(phymaxStr) <= Double
-						.parseDouble(phyminStr)) {
-					setEdfValid(false);
-					description = Incompliance.error_esa_phymaxmin;
-					int columnIndex = phy_min; // might choose phy_max + 1
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, columnIndex, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-			}
-			/**************************************************************
-			 * The above codefix was made by Gang Shu on February 6, 2014
-			 **************************************************************/
-
-			// (E.1) [Digital_maximum] is made of ascii.
-			bASCII = checkAsciiF(digmaxStr);
-			if (!bASCII) {
-				setEdfValid(false);
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, dig_max, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-
-			// (E.2) [Digital_ minimum] is made of ascii.
-			bASCII = checkAsciiF(digminStr);
-			if (!bASCII) {
-				setEdfValid(false);
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, dig_min, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-
-			// (E.3) [Digital_maximum] is an integer number.
-			boolean bDigmax = false;
-			try {
-				int digmax = Integer.parseInt(digmaxStr);
-				bDigmax = true;
+			//Check "ESA Table" fields
+			final int COL_INDEX_LABEL = 0;
+			final int COL_INDEX_TRANSDUCER_TYPE = 1;
+			final int COL_INDEX_PHYSICAL_DIMENSION = 2;
+			final int COL_INDEX_PHYSICAL_MINIMUM = 3;
+			final int COL_INDEX_PHYSICAL_MAXIMUM = 4;
+			final int COL_INDEX_DIGITAL_MINIMUM = 5;
+			final int COL_INDEX_DIGITAL_MAXIMUM = 6;
+			final int COL_INDEX_PREFILTERING = 7;
+			final int COL_INDEX_NR_OF_SAMPLES = 8;
+			final int COL_INDEX_RESERVED = 9;
+			
+			for (int i = 0; i < nrow; i++) {
 				
-				//(E.4) Digital_maximum is in the range of [-32768, 327670].
-				boolean bDigRange = check_digital_range(digmax);
-				if (!bDigRange) {
-					description = Incompliance.error_esa_digrange;
+				/************************************************************
+				 * ns * 16 ascii : ns * label (e.g. EEG Fpz-Cz or Body temp)
+				 ************************************************************/
+				String alabel = (String) getModel().getValueAt(i, COL_INDEX_LABEL);
+				if (alabel==null || alabel.equals("")){
+					//[Label](K.3) cannot be empty field
+					description = Incompliance.error_esa_empty;
 					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, dig_max, errorSrcTypeIndex);
+							fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
 					esaIncompliances.add(incomp);
 				}
-			} catch (NumberFormatException e) {
-				setEdfValid(false);
-				description = Incompliance.error_esa_digmax;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, dig_max, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-
-			// (E.5) [Digital_minimum] is an integer number.
-			boolean bDigmin = false;
-			try {
-				int digmin = Integer.parseInt(digminStr);
-				bDigmin = true;
-				
-				//(E.6) Digital_ minimum is in the range of [-32768, 327670].
-				boolean bDigRange = check_digital_range(digmin);
-				if (!bDigRange) {
-					description = Incompliance.error_esa_digrange;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, dig_min, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-			} catch (NumberFormatException e) {
-				setEdfValid(false);
-				description = Incompliance.error_esa_digmin;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, dig_min, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-
-			// (E.7) [Digital_minimum] is strictly smaller than Digital_maximum
-			if (bDigmax && bDigmin) {
-				if (Integer.parseInt(digmaxStr) <= Integer.parseInt(digminStr)) {
-					setEdfValid(false);
-					description = Incompliance.error_esa_digmaxmin;
-					int columnIndex = dig_min; // might choose dig_max + 1
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, columnIndex, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-			}
-		}
-
-		/*
-		 * Check other fields
-		 */
-		for (int i = 0; i < nrow; i++) {
-			
-			String alabel = (String) getModel().getValueAt(i, COL_INDEX_LABEL);
-			
-			//(A.1) [Label] is made of ascii.
-			bASCII = checkAsciiF(alabel);
-			if (!bASCII) {
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-			
-			//(A.2) [Label] must be unique.
-			boolean repeated = false;
-			description = Incompliance.error_esa_label + (i + 1);
-			for (int j = i + 1; j < nrow; j++) {
-				String blabel = (String) getModel().getValueAt(j, COL_INDEX_LABEL);
-				if (alabel.equalsIgnoreCase(blabel)) {
-					repeated = true;
-					description = description + ", " + (j + 1);
-				}
-			}
-			if (repeated){
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-			
-			//(B.1) [Transducer_Type] is made of ascii.
-			String transducer_type = (String) getModel().getValueAt(i, COL_INDEX_TRANSDUCER_TYPE);
-			bASCII = checkAsciiF(transducer_type);
-			if (!bASCII) {
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, COL_INDEX_TRANSDUCER_TYPE, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-			
-			//(C.1) [Physical_Dimension] is made of ascii.
-			String physical_dimension = (String) getModel().getValueAt(i, COL_INDEX_PHYSICAL_DIMENSION);
-			bASCII = checkAsciiF(physical_dimension);
-			if (!bASCII) {
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, COL_INDEX_PHYSICAL_DIMENSION, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-			
-			//(F.1) [Prefiltering] is made of ascii.
-			String prefiltering = (String) getModel().getValueAt(i, COL_INDEX_PREFILTERING);
-			bASCII = checkAsciiF(prefiltering);
-			if (!bASCII) {
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, COL_INDEX_PREFILTERING, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-			
-			//(G.1) [Num_signals] is made of ascii.
-			String Num_signals = (String) getModel().getValueAt(i, COL_INDEX_NR_OF_SAMPLES);
-			bASCII = checkAsciiF(Num_signals);
-			if (!bASCII) {
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
-			//(G.2) [Num_signals] is an integer number.
-			else{
-				try {
-					int num_signals = Integer.parseInt(Num_signals);
-
-					//(G.3) [Num_signals] is greater or equal to 1.
-					if (num_signals < 1){
-						description = Incompliance.error_esa_num_signals_range;
+				else{
+					//[Label](K.1) check for ascii 
+					bASCII = checkAsciiF(alabel);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
 						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
+								fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
 						esaIncompliances.add(incomp);
-					}					
-				} catch (NumberFormatException e) {
-					description = Incompliance.error_esa_num_signals;
+					}
+					
+					//[Label](K.2) no duplicate signal labels
+					boolean repeated = false;
+					description = Incompliance.error_esa_label + (i + 1);
+					for (int j = i + 1; j < nrow; j++) {
+						String blabel = (String) getModel().getValueAt(j, COL_INDEX_LABEL);
+						if (alabel.equalsIgnoreCase(blabel)) {
+							repeated = true;
+							description = description + ", " + (j + 1);
+						}
+					}
+					if (repeated){
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+
+				/************************************************************
+				 * ns * 80 ascii : ns * transducer type (e.g. AgAgCl electrode) 
+				 ************************************************************/
+				String transducer_type = (String) getModel().getValueAt(i, COL_INDEX_TRANSDUCER_TYPE);
+				if (transducer_type==null || transducer_type.equals("")){
+					//[Transducer_Type](L.2) can be empty field
+				}
+				else{
+					//[Transducer_Type](L.1) check for ascii
+					bASCII = checkAsciiF(transducer_type);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_TRANSDUCER_TYPE, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+
+				/************************************************************
+				 * ns * 8 ascii : ns * physical dimension (e.g. uV or degreeC) 
+				 ************************************************************/
+				String physical_dimension = (String) getModel().getValueAt(i, COL_INDEX_PHYSICAL_DIMENSION);
+				if (physical_dimension==null || physical_dimension.equals("")){
+					//[Physical_Dimension](M.2) can be empty field
+				}
+				else{
+					//[Physical_Dimension](M.1) check for ascii
+					bASCII = checkAsciiF(physical_dimension);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_PHYSICAL_DIMENSION, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+
+				/************************************************************
+				 * ns * 8 ascii : ns * physical minimum (e.g. -500 or 34) 
+				 ************************************************************/
+				String physical_minimum = (String) getModel().getValueAt(i, COL_INDEX_PHYSICAL_MINIMUM);
+				boolean bGood_physical_minimum = false;
+				if (physical_minimum==null || physical_minimum.equals("")){
+					//[Physical_Minimum](N.5) cannot be empty field
+					description = Incompliance.error_esa_empty;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, COL_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Physical_Minimum](N.1) check for ascii
+					bASCII = checkAsciiF(physical_minimum);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					else{
+						//[Physical_Minimum](N.2) is a floating point number
+						try{
+							Float.parseFloat(physical_minimum);
+							bGood_physical_minimum = true;
+						} catch (NumberFormatException e) {
+							description = Incompliance.error_esa_phymin;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, COL_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}
+				}
+				
+				/************************************************************
+				 * ns * 8 ascii : ns * physical maximum (e.g. 500 or 40) 
+				 ************************************************************/
+				String physical_maximum = (String) getModel().getValueAt(i, COL_INDEX_PHYSICAL_MAXIMUM);
+				boolean bGood_physical_maximum = false;
+				if (physical_maximum==null || physical_maximum.equals("")){
+					//[Physical_Maximum](O.4) cannot be empty field
+					description = Incompliance.error_esa_empty;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, COL_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Physical_Maximum](O.1) check for ascii
+					bASCII = checkAsciiF(physical_maximum);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					else{
+						//[Physical_Maximum](O.2) is a floating point number
+						try{
+							Float.parseFloat(physical_maximum);
+							bGood_physical_maximum = true;
+						} catch (NumberFormatException e) {
+							description = Incompliance.error_esa_phymax;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, COL_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}
+				}
+				
+				//[Physical_Maximum](O.3) physical maximum NOT = physical minimum
+				if (bGood_physical_minimum && bGood_physical_maximum){
+					if (Float.parseFloat(physical_minimum) == Float.parseFloat(physical_maximum)){
+						description = Incompliance.error_esa_phy_equal;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+
+				/************************************************************
+				 * ns * 8 ascii : ns * digital minimum (e.g. -2048)
+				 ************************************************************/
+				String digital_minimum = (String) getModel().getValueAt(i, COL_INDEX_DIGITAL_MINIMUM);
+				boolean bGood_digital_minimum = false;
+				if (digital_minimum==null || digital_minimum.equals("")){
+					//[Digital_Minimum](P.4) cannot be empty field
+					description = Incompliance.error_esa_empty;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, COL_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Digital_Minimum](P.1) check for ascii
+					bASCII = checkAsciiF(digital_minimum);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					else{
+						//[Digital_Minimum](P.2) is an integer
+						try{
+							int dig_minimum = Integer.parseInt(digital_minimum);
+							bGood_digital_minimum = true;
+							
+							//[Digital_Minimum](P.3) since each date sample is a 2-byte integer, range check [-32768,32767]
+							boolean bRange = check_digital_range(dig_minimum);
+							if (!bRange){
+								description = Incompliance.error_esa_digrange;
+								incomp = new Incompliance(incomplianceType, description,
+										fileName, i, COL_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
+								esaIncompliances.add(incomp);
+							}
+						}catch (NumberFormatException e) {
+							description = Incompliance.error_esa_digmin;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, COL_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}
+				}
+
+				/************************************************************
+				 * ns * 8 ascii : ns * digital maximum (e.g. 2047) 
+				 ************************************************************/
+				String digital_maximum = (String) getModel().getValueAt(i, COL_INDEX_DIGITAL_MAXIMUM);
+				boolean bGood_digital_maximum = false;
+				if (digital_maximum==null || digital_maximum.equals("")){
+					//[Digital_Maximum](Q.4) cannot be empty field
+					description = Incompliance.error_esa_empty;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Digital_Maximum](Q.1) check for ascii
+					bASCII = checkAsciiF(digital_maximum);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					else{
+						//[Digital_Maximum](Q.2) is an integer
+						try{
+							int dig_maximum = Integer.parseInt(digital_maximum);
+							bGood_digital_maximum = true;
+							
+							//[Digital_Maximum](Q.3) since each date sample is a 2-byte integer, range check [-32768,32767]
+							boolean bRange = check_digital_range(dig_maximum);
+							if (!bRange){
+								description = Incompliance.error_esa_digrange;
+								incomp = new Incompliance(incomplianceType, description,
+										fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+								esaIncompliances.add(incomp);
+							}
+						}catch (NumberFormatException e) {
+							description = Incompliance.error_esa_digmax;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}
+				}
+
+				if (bGood_digital_minimum && bGood_digital_maximum){
+					int dig_minimum = Integer.parseInt(digital_minimum);
+					int dig_maximum = Integer.parseInt(digital_maximum);
+					
+					//[Digital_Minimum](Q.6) digital minimum NOT = digital maximum (division-by-0 condition)
+					if (dig_minimum == dig_maximum){
+						description = Incompliance.error_esa_dig_equal;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					//[Digital_Minimum](Q.5) digital minimum < digital maximum
+					else if (dig_minimum > dig_maximum){
+						description = Incompliance.error_esa_digmaxmin;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+						
+					}
+				}
+
+				/************************************************************
+				 * ns * 80 ascii : ns * prefiltering (e.g. HP:0.1Hz LP:75Hz) 
+				 ************************************************************/
+				String prefiltering = (String) getModel().getValueAt(i, COL_INDEX_PREFILTERING);
+				if (prefiltering==null || prefiltering.equals("")){
+					//[Prefiltering](R.2) can be empty field
+				}
+				else{
+					//[Prefiltering](R.1) check for ascii
+					bASCII = checkAsciiF(prefiltering);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_PREFILTERING, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+				
+				/************************************************************
+				 * ns * 8 ascii : ns * nr of samples in each data record 
+				 ************************************************************/
+				String num_signals = (String) getModel().getValueAt(i, COL_INDEX_NR_OF_SAMPLES);
+				if (num_signals==null || num_signals.equals("")){
+					//[Num_signals](S.4) cannot be empty field
+					description = Incompliance.error_esa_empty;
 					incomp = new Incompliance(incomplianceType, description,
 							fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
 					esaIncompliances.add(incomp);
 				}
-			}
-			
-			//(H.1) [Reserved] is made of ascii.
-			String reserved = (String) getModel().getValueAt(i, COL_INDEX_RESERVED);
-			bASCII = checkAsciiF(reserved);
-			if (!bASCII) {
-				description = Incompliance.error_esa_ascii;
-				incomp = new Incompliance(incomplianceType, description,
-						fileName, i, COL_INDEX_RESERVED, errorSrcTypeIndex);
-				esaIncompliances.add(incomp);
-			}
+				else{
+					//[Num_signals](S.1) check for ascii
+					bASCII = checkAsciiF(num_signals);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					else{
+						//[Num_signals](S.2) is an integer
+						try{
+							int n_signals = Integer.parseInt(num_signals);
+							//[Num_signals](S.3) value is greater than 0
+							if (n_signals <= 0){
+								description = Incompliance.error_esa_nrSig_range;
+								incomp = new Incompliance(incomplianceType, description,
+										fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
+								esaIncompliances.add(incomp);
+							}
+						}catch (NumberFormatException e) {
+							description = Incompliance.error_esa_nrSig;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}
+				}
+				
+				/************************************************************
+				 * ns * 32 ascii : ns * reserved
+				 ************************************************************/
+				String reserved = (String) getModel().getValueAt(i, COL_INDEX_RESERVED);
+				if (reserved==null || reserved.equals("")){
+					//[Reserved](T.2) can be empty field
+				}
+				else{
+					//[Reserved](T.1) check for ascii
+					bASCII = checkAsciiF(reserved);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, COL_INDEX_RESERVED, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+				
+			}//for loop ends
 			
 		}
+		else if (this instanceof ESATemplateTable) {
+			errorSrcTypeIndex = Incompliance.index_incomp_src_esatemplate;
+			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex];
+			
+			//Check "ESA Template" fields
+		    final int TEMPLATE_INDEX_PHYSICAL_MINIMUM = 4;
+		    final int TEMPLATE_INDEX_PHYSICAL_MAXIMUM = 5;
+		    final int TEMPLATE_INDEX_DIGITAL_MINIMUM = 6;
+		    final int TEMPLATE_INDEX_DIGITAL_MAXIMUM = 7;
+			
+			for (int i = 0; i < nrow; i++) {
+				
+				/************************************************************
+				 * ns * 8 ascii : ns * physical minimum (e.g. -500 or 34) 
+				 ************************************************************/
+				String physical_minimum = (String) getModel().getValueAt(i, TEMPLATE_INDEX_PHYSICAL_MINIMUM);
+				boolean bGood_physical_minimum = false;
+				if (physical_minimum==null || physical_minimum.equals("")){
+					//[Physical_Minimum](N.5) cannot be empty field
+					description = Incompliance.error_esa_empty;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, TEMPLATE_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Physical_Minimum](N.1) check for ascii
+					bASCII = checkAsciiF(physical_minimum);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, TEMPLATE_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					else{
+						//[Physical_Minimum](N.2) is a floating point number
+						try{
+							Float.parseFloat(physical_minimum);
+							bGood_physical_minimum = true;
+						} catch (NumberFormatException e) {
+							description = Incompliance.error_esa_phymin;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, TEMPLATE_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}
+				}
+				
+				/************************************************************
+				 * ns * 8 ascii : ns * physical maximum (e.g. 500 or 40) 
+				 ************************************************************/
+				String physical_maximum = (String) getModel().getValueAt(i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM);
+				boolean bGood_physical_maximum = false;
+				if (physical_maximum==null || physical_maximum.equals("")){
+					//[Physical_Maximum](O.4) cannot be empty field
+					description = Incompliance.error_esa_empty;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Physical_Maximum](O.1) check for ascii
+					bASCII = checkAsciiF(physical_maximum);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					else{
+						//[Physical_Maximum](O.2) is a floating point number
+						try{
+							Float.parseFloat(physical_maximum);
+							bGood_physical_maximum = true;
+						} catch (NumberFormatException e) {
+							description = Incompliance.error_esa_phymax;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}
+				}
+				
+				//[Physical_Maximum](O.3) physical maximum NOT = physical minimum
+				if (bGood_physical_minimum && bGood_physical_maximum){
+					if (Float.parseFloat(physical_minimum) == Float.parseFloat(physical_maximum)){
+						description = Incompliance.error_esa_phy_equal;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
 
+				/************************************************************
+				 * ns * 8 ascii : ns * digital minimum (e.g. -2048)
+				 ************************************************************/
+				String digital_minimum = (String) getModel().getValueAt(i, TEMPLATE_INDEX_DIGITAL_MINIMUM);
+				boolean bGood_digital_minimum = false;
+				if (digital_minimum==null || digital_minimum.equals("")){
+					//[Digital_Minimum](P.4) cannot be empty field
+					description = Incompliance.error_esa_empty;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, TEMPLATE_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Digital_Minimum](P.1) check for ascii
+					bASCII = checkAsciiF(digital_minimum);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, TEMPLATE_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					else{
+						//[Digital_Minimum](P.2) is an integer
+						try{
+							int dig_minimum = Integer.parseInt(digital_minimum);
+							bGood_digital_minimum = true;
+							
+							//[Digital_Minimum](P.3) since each date sample is a 2-byte integer, range check [-32768,32767]
+							boolean bRange = check_digital_range(dig_minimum);
+							if (!bRange){
+								description = Incompliance.error_esa_digrange;
+								incomp = new Incompliance(incomplianceType, description,
+										fileName, i, TEMPLATE_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
+								esaIncompliances.add(incomp);
+							}
+						}catch (NumberFormatException e) {
+							description = Incompliance.error_esa_digmin;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, TEMPLATE_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}
+				}
+
+				/************************************************************
+				 * ns * 8 ascii : ns * digital maximum (e.g. 2047) 
+				 ************************************************************/
+				String digital_maximum = (String) getModel().getValueAt(i, TEMPLATE_INDEX_DIGITAL_MAXIMUM);
+				boolean bGood_digital_maximum = false;
+				if (digital_maximum==null || digital_maximum.equals("")){
+					//[Digital_Maximum](Q.4) cannot be empty field
+					description = Incompliance.error_esa_empty;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Digital_Maximum](Q.1) check for ascii
+					bASCII = checkAsciiF(digital_maximum);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					else{
+						//[Digital_Maximum](Q.2) is an integer
+						try{
+							int dig_maximum = Integer.parseInt(digital_maximum);
+							bGood_digital_maximum = true;
+							
+							//[Digital_Maximum](Q.3) since each date sample is a 2-byte integer, range check [-32768,32767]
+							boolean bRange = check_digital_range(dig_maximum);
+							if (!bRange){
+								description = Incompliance.error_esa_digrange;
+								incomp = new Incompliance(incomplianceType, description,
+										fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+								esaIncompliances.add(incomp);
+							}
+						}catch (NumberFormatException e) {
+							description = Incompliance.error_esa_digmax;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}
+				}
+
+				if (bGood_digital_minimum && bGood_digital_maximum){
+					int dig_minimum = Integer.parseInt(digital_minimum);
+					int dig_maximum = Integer.parseInt(digital_maximum);
+					
+					//[Digital_Minimum](Q.6) digital minimum NOT = digital maximum (division-by-0 condition)
+					if (dig_minimum == dig_maximum){
+						description = Incompliance.error_esa_dig_equal;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					//[Digital_Minimum](Q.5) digital minimum < digital maximum
+					else if (dig_minimum > dig_maximum){
+						description = Incompliance.error_esa_digmaxmin;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+						
+					}
+				}
+
+			}//for loop ends
+			
+		}
+		else{
+			return esaIncompliances; // at this time, esaIncompliances.size() = 0;
+		}
+		
+		if (esaIncompliances != null && esaIncompliances.size() > 0){
+			setEdfValid(false);
+		}
+		
 		return esaIncompliances;
 	}
     
@@ -566,7 +838,7 @@ public class EDFTable extends JTable {
     }
     
     private boolean check_digital_range(int x){
-    	return x>=-32768 && x<=327670 ? true : false;
+    	return x >= -32768 && x <= 32767;
     }
 	/************************************************************** 
 	 * The above code was made by Gang Shu on February 18, 2014

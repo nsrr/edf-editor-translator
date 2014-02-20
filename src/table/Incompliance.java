@@ -26,18 +26,20 @@ public class Incompliance{
 /*     protected static final String error_eia_day = "value for day segment should be numbers in [1, 31]";
     protected static final String error_eia_month = "value for month segment should be numbers in [1, 12]";
     protected static final String error_eia_year = "value for year segment should be numbers in [0, 99]"; */
-    protected static final String error_esa_ascii = "Signal Header: Non Ascii character in signal";
-    protected static final String error_esa_digrange = "Signal Header: Digital integer is out of range [-32768, 327670]";
-    protected static final String error_esa_num_signals = "Signal Header: Num signals must be numeric";
-    protected static final String error_esa_num_signals_range = "Signal Header: Samples in record is less than 1";
     
-    protected static final String error_esa_phymax = "physical maximum must be numeric";
-    protected static final String error_esa_phymin = "physical minimum must be numeric";
-    protected static final String error_esa_phymaxmin = "physical max must be larger than physical minminum";
-    protected static final String error_esa_digmax = "digtal maximum must be numeric";
-    protected static final String error_esa_digmin = "digtal minmum must be numeric";
-    protected static final String error_esa_digmaxmin = "digital max must be larger than digital minminum";
-    protected static final String error_esa_label = "Identical labels at row ";
+    protected static final String error_esa_ascii       = "Signal Header: Non Ascii character in signal";
+    protected static final String error_esa_empty       = "Signal Header: Cannot be empty field";
+    protected static final String error_esa_label       = "Signal Header: Duplicate labels at row ";
+    protected static final String error_esa_phymin      = "Signal Header: Physical minimum is a floating point number";
+    protected static final String error_esa_phymax      = "Signal Header: Physical maximum is a floating point number";
+    protected static final String error_esa_phy_equal   = "Signal Header: Physical maximum cannot equal to physical minimum";
+    protected static final String error_esa_digmin      = "Signal Header: Digital minimum is an integer";
+    protected static final String error_esa_digmax      = "Signal Header: Digital maximum is an integer";
+    protected static final String error_esa_dig_equal   = "Signal Header: Digital maximum cannot equal to digital minimum";
+    protected static final String error_esa_digrange    = "Signal Header: Digital integer is out of range [-32768, 327670]";
+    protected static final String error_esa_digmaxmin   = "Signal Header: Digital maximum must be larger than digital minimum";
+    protected static final String error_esa_nrSig       = "Signal Header: Number of signals is an integer";
+    protected static final String error_esa_nrSig_range = "Signal Header: Number of signals is greater than 0";
     
     public static final String Title_ErroIndex = "Error #"; //this might be redundant, Fangping, 09/29/2010
     public static final String Title_Description = "Description";

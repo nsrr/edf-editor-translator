@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libs/Annotation.jar"/>
+	<classpathentry kind="lib" path="libs/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="libs/commons-io-1.3.2.jar"/>
+	<classpathentry kind="lib" path="libs/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="libs/javahelp-2.0.05.jar"/>
+	<classpathentry kind="lib" path="libs/jgoodies-animation-1.4.3.jar"/>
+	<classpathentry kind="lib" path="libs/jgoodies-binding-2.10.0.jar"/>
+	<classpathentry kind="lib" path="libs/jgoodies-common-1.7.0.jar"/>
+	<classpathentry kind="lib" path="libs/jgoodies-forms-1.7.2.jar"/>
+	<classpathentry kind="lib" path="libs/jgoodies-looks-2.5.3.jar"/>
+	<classpathentry kind="lib" path="libs/jgoodies-validation-2.5.0.jar"/>
+	<classpathentry kind="lib" path="libs/miglayout-4.0.jar"/>
+	<classpathentry kind="lib" path="libs/xercesImpl.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
