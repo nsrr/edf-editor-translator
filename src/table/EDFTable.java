@@ -51,10 +51,6 @@ public class EDFTable extends JTable {
     static final String digital_order_error = "Digtial Maximum should be larger than Digital Minimum.";
     static final String digital_field_blank_error = "Digital field should contain integer value.";
     
-    static final int START_DATE_INDEX = 4;
-    
-    
-    
     static final String start_date_error = "Start date needs to be in the form of xx.xx.xx where x are integers";
     static final String altName = (Main.mac_os)? "Command": "Alt";
     
@@ -256,40 +252,51 @@ public class EDFTable extends JTable {
 		int col;
 		
 		/////
-		int COL_INDEX_LABEL = 0;
-		int COL_INDEX_TRANSDUCER_TYPE = 1;
-		int COL_INDEX_PHYSICAL_DIMENSION = 2;
-		int COL_INDEX_PHYSICAL_MINIMUM = 3;
-		int COL_INDEX_PHYSICAL_MAXIMUM = 4;
-		int COL_INDEX_DIGITAL_MINIMUM = 5;
-		int COL_INDEX_DIGITAL_MAXIMUM = 6;
-		int COL_INDEX_PREFILTERING = 7;
-		int COL_INDEX_NR_OF_SAMPLES = 8;
-		int COL_INDEX_RESERVED = 9;
+		int COL_INDEX_LABEL;
+		int COL_INDEX_CORRECTED_LABEL = -1;
+		int COL_INDEX_TRANSDUCER_TYPE;
+		int COL_INDEX_PHYSICAL_DIMENSION;
+		int COL_INDEX_PHYSICAL_MINIMUM;
+		int COL_INDEX_PHYSICAL_MAXIMUM;
+		int COL_INDEX_DIGITAL_MINIMUM;
+		int COL_INDEX_DIGITAL_MAXIMUM;
+		int COL_INDEX_PREFILTERING;
+		int COL_INDEX_NR_OF_SAMPLES;
+		int COL_INDEX_RESERVED;
 		/////
-		
 		
 		if (this instanceof ESATable) {
 			errorSrcTypeIndex = Incompliance.index_incomp_src_esa;
 			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex];
 			
 			//Check "ESA Table" fields
+			COL_INDEX_LABEL = 0;
+			COL_INDEX_TRANSDUCER_TYPE = 1;
+			COL_INDEX_PHYSICAL_DIMENSION = 2;
+			COL_INDEX_PHYSICAL_MINIMUM = 3;
+			COL_INDEX_PHYSICAL_MAXIMUM = 4;
+			COL_INDEX_DIGITAL_MINIMUM = 5;
+			COL_INDEX_DIGITAL_MAXIMUM = 6;
+			COL_INDEX_PREFILTERING = 7;
+			COL_INDEX_NR_OF_SAMPLES = 8;
+			COL_INDEX_RESERVED = 9;
 		}
 		else if (this instanceof ESATemplateTable) {
 			errorSrcTypeIndex = Incompliance.index_incomp_src_esatemplate;
 			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex];
 			
 			//Check "ESA Template" fields
-			COL_INDEX_LABEL += 1;
-			COL_INDEX_TRANSDUCER_TYPE += 1;
-			COL_INDEX_PHYSICAL_DIMENSION += 1;
-			COL_INDEX_PHYSICAL_MINIMUM += 1;
-			COL_INDEX_PHYSICAL_MAXIMUM += 1;
-			COL_INDEX_DIGITAL_MINIMUM += 1;
-			COL_INDEX_DIGITAL_MAXIMUM += 1;
-			COL_INDEX_PREFILTERING += 1;
-			COL_INDEX_NR_OF_SAMPLES += 1;
-			COL_INDEX_RESERVED += 1;
+			COL_INDEX_LABEL = 0;
+			COL_INDEX_CORRECTED_LABEL = 1;
+			COL_INDEX_TRANSDUCER_TYPE = 2;
+			COL_INDEX_PHYSICAL_DIMENSION = 3;
+			COL_INDEX_PHYSICAL_MINIMUM = 4;
+			COL_INDEX_PHYSICAL_MAXIMUM = 5;
+			COL_INDEX_DIGITAL_MINIMUM = 6;
+			COL_INDEX_DIGITAL_MAXIMUM = 7;
+			COL_INDEX_PREFILTERING = 8;
+			COL_INDEX_NR_OF_SAMPLES = 9;
+			COL_INDEX_RESERVED = 10;
 		}
 		else{
 			return esaIncompliances; // at this time, esaIncompliances.size() = 0;
@@ -335,7 +342,46 @@ public class EDFTable extends JTable {
 					esaIncompliances.add(incomp);
 				}
 			}
-
+			
+			if (this instanceof ESATemplateTable && COL_INDEX_CORRECTED_LABEL != -1) {
+				col = COL_INDEX_CORRECTED_LABEL;
+				String alabel2 = (String) getModel().getValueAt(i, col);
+				if (alabel2==null || alabel2.equals("")){
+					//[Label](K.3) cannot be empty field
+					description = Incompliance.error_esa_empty;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Label](K.1) check for ascii 
+					bASCII = checkAsciiF(alabel2);
+					if (!bASCII) {
+						description = Incompliance.error_esa_ascii;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+					
+					//[Label](K.2) no duplicate signal labels
+					boolean repeated = false;
+					description = Incompliance.error_esa_label + (i + 1);
+					for (int j = i + 1; j < nrow; j++) {
+						String blabel = (String) getModel().getValueAt(j, col);
+						if (alabel2.equalsIgnoreCase(blabel)) {
+							repeated = true;
+							description = description + ", " + (j + 1);
+						}
+					}
+					if (repeated){
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+			}
+			
+			
 			/************************************************************
 			 * ns * 80 ascii : ns * transducer type (e.g. AgAgCl electrode) 
 			 ************************************************************/
@@ -686,9 +732,8 @@ public class EDFTable extends JTable {
     	
     	ArrayList<Incompliance> eiaIncompliances = new ArrayList<Incompliance>();
 
-    	final int srcTypeIndex = Incompliance.index_incomp_src_eia;
-    	final String incomplianceType = Incompliance.typeOfErrorHeader[srcTypeIndex];     
-    	int errorSrcTypeIndex = -1;
+    	final int errorSrcTypeIndex = Incompliance.index_incomp_src_eia;
+    	final String incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex];
     	Incompliance incomp;
     	String description;
     	boolean bASCII;
@@ -709,7 +754,6 @@ public class EDFTable extends JTable {
         for (int i = 0; i < nrow; i++) {
 
         	String fileName = MainWindow.getWkEdfFiles().get(i).getAbsolutePath();
-        	errorSrcTypeIndex = srcTypeIndex;
         			
 			/************************************************************
 			 * 8 ascii : version of this data format (0) 
@@ -1096,70 +1140,187 @@ public class EDFTable extends JTable {
         return eiaIncompliances;    
     }
     
-    
     public ArrayList<Incompliance> parseEIATemplateTable(){
-        ArrayList<Incompliance> eiaTemplateIncomps = new ArrayList<Incompliance>();
-        final int srcTypeIndex = Incompliance.index_incomp_src_eiatemplate;        
-        final String incomplianceType = Incompliance.typeOfErrorHeader[srcTypeIndex];     
-        Incompliance incomp;
-        String description;
+    	
+    	ArrayList<Incompliance> eiaIncompliances = new ArrayList<Incompliance>();
+
+    	final int errorSrcTypeIndex = Incompliance.index_incomp_src_eiatemplate;
+    	final String incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex];
+    	Incompliance incomp;
+    	String description;
+    	boolean bASCII;
         String fileName = this.getMasterFile().getPath();
-        int nrow = 1;
+        int row = 0, col;
+    	
+        final int COL_INDEX_LOCAL_PATIENT_ID = 2;
+        final int COL_INDEX_LOCAL_RECORDING_ID  = 3;
+        final int COL_INDEX_START_DATE = 4;
+    	
+        /************************************************************
+		 * 80 ascii : local patient identification
+		 ************************************************************/
+        col = 0;
+		String partient_id = ((String)this.getModel().getValueAt(row, COL_INDEX_LOCAL_PATIENT_ID));
+		if (partient_id==null || partient_id.equals("")){
+			//[Partient_id](B.2) can be empty field
+		}
+		else{
+			//[Partient_id](B.1) check for ascii
+			bASCII = checkAsciiF(partient_id);
+			if (!bASCII) {
+				description = Incompliance.error_eia_ascii;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, row, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+		}
+
+		/************************************************************
+		 * 80 ascii : local recording identification
+		 ************************************************************/
+		col = 1;
+		String recording_id = ((String)this.getModel().getValueAt(row, COL_INDEX_LOCAL_RECORDING_ID));
+		if (recording_id==null || recording_id.equals("")){
+			//[Recording_id](C.2) can be empty field
+		}
+		else{
+			//[Recording_id](C.1) check for ascii
+			bASCII = checkAsciiF(recording_id);
+			if (!bASCII) {
+				description = Incompliance.error_eia_ascii;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, row, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+		}
+		
+		/************************************************************
+		 * 8 ascii : startdate of recording (dd.mm.yy) 
+		 ************************************************************/
+		col = 2;
+		String startdate = ((String)this.getModel().getValueAt(row, COL_INDEX_START_DATE)).trim();
+		if (startdate==null || startdate.equals("")){
+			//[Startdate](D.2) cannot be empty field
+			description = Incompliance.error_eia_empty;
+			incomp = new Incompliance(incomplianceType, description,
+					fileName, row, col, errorSrcTypeIndex);
+			eiaIncompliances.add(incomp);
+		}
+		else{
+			//[Startdate](D.1) check for ascii
+			bASCII = checkAsciiF(startdate);
+			if (!bASCII) {
+				description = Incompliance.error_eia_ascii;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, row, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+			else{
+				//[Startdate](D.4) separator between digits should be only ‘period’
+				String[] items = startdate.split("\\.");
+				if (items.length != 3){
+					 description = Incompliance.error_eia_dateformat;
+					 incomp = new Incompliance(incomplianceType, description,
+								fileName, row, col, errorSrcTypeIndex);
+					 eiaIncompliances.add(incomp);
+				}
+				else{
+					//[Startdate](D.3) dd:00-31, mm:00-12, yy:00-99
+					try{
+						int dd = Integer.parseInt(items[0]);
+						int mm = Integer.parseInt(items[1]);
+						int yy = Integer.parseInt(items[2]);
+						if (dd >=0 && dd <=31 && mm >= 0 && mm <= 12 && yy >= 00 && yy <= 99){
+							//valid date format
+						}
+						else{
+							description = Incompliance.error_eia_daterange;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, row, col, errorSrcTypeIndex);
+							eiaIncompliances.add(incomp);
+						}
+					}
+					catch (NumberFormatException e) {
+						description = Incompliance.error_eia_daterange;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, row, col, errorSrcTypeIndex);
+						eiaIncompliances.add(incomp);
+					}
+				}
+			}
+		}
         
-        int rowIndex, columnIndex = 2;
-        int segnumber = 3;
-        int seg[] = new int[segnumber];
-        String[] descriptions = {Incompliance.warning_eia_day, 
-                                 Incompliance.warning_eia_month, Incompliance.warning_eia_year};
+    	
+        if (eiaIncompliances != null && eiaIncompliances.size() > 0){
+        	setEdfValid(false);        	
+        }
         
-       // boolean cellHiding = true;
-        
-        String sd;
-        for (int i = 0; i < nrow; i++) {
-            sd = ((String)this.getModel().getValueAt(i, START_DATE_INDEX)).trim();
-            fileName = this.getMasterFile().getAbsolutePath();
-            rowIndex = i;
-            String[] psd = sd.split("\\.");
-            
-            //1. check format of dd.mm.yy
-            int psdlen = psd.length;
-            if (psdlen != segnumber){
-                setEdfValid(false);
-                description = Incompliance.error_eia_dateformat;
-                incomp = new Incompliance( incomplianceType, description, 
-                                           fileName, rowIndex, columnIndex, srcTypeIndex);
-                eiaTemplateIncomps.add(incomp);
-                continue;
-            } 
-            
-            //2. check each segment of startdate is number or not
-            try{
-                for (int j = 0; j < segnumber; j++)
-                    seg[j] = Integer.parseInt(psd[j]);
-            }
-            catch(NumberFormatException e){
-                setEdfValid(false);
-                description = Incompliance.error_eia_dmyint;
-                incomp = new Incompliance(incomplianceType, description, 
-                                          fileName, rowIndex, columnIndex, srcTypeIndex);
-                  eiaTemplateIncomps.add(incomp);
-                continue;
-            }
-            
-            //3. check segment valid
-            for (int j = 0; j < psdlen; j++) {   
-                if (seg[j] < lowerbounds[j] || seg[j] > upperbounds[j]) {
-                    setEdfValid(false);
-                    description = descriptions[j];
-                    incomp = new Incompliance(incomplianceType, description, 
-                                              fileName, rowIndex, columnIndex, srcTypeIndex);
-                     eiaTemplateIncomps.add(incomp);
-                }
-            }
-        }        
-        
-        return eiaTemplateIncomps;
+        return eiaIncompliances;  
     }
+    
+//    public ArrayList<Incompliance> parseEIATemplateTable(){
+//        ArrayList<Incompliance> eiaTemplateIncomps = new ArrayList<Incompliance>();
+//        final int srcTypeIndex = Incompliance.index_incomp_src_eiatemplate;        
+//        final String incomplianceType = Incompliance.typeOfErrorHeader[srcTypeIndex];     
+//        Incompliance incomp;
+//        String description;
+//        String fileName = this.getMasterFile().getPath();
+//        int nrow = 1;
+//        
+//        int rowIndex, columnIndex = 2;
+//        int segnumber = 3;
+//        int seg[] = new int[segnumber];
+//        String[] descriptions = {Incompliance.warning_eia_day, 
+//                                 Incompliance.warning_eia_month, Incompliance.warning_eia_year};
+//        
+//       // boolean cellHiding = true;
+//        
+//        String sd;
+//        for (int i = 0; i < nrow; i++) {
+//            sd = ((String)this.getModel().getValueAt(i, START_DATE_INDEX)).trim();
+//            fileName = this.getMasterFile().getAbsolutePath();
+//            rowIndex = i;
+//            String[] psd = sd.split("\\.");
+//            
+//            //1. check format of dd.mm.yy
+//            int psdlen = psd.length;
+//            if (psdlen != segnumber){
+//                setEdfValid(false);
+//                description = Incompliance.error_eia_dateformat;
+//                incomp = new Incompliance( incomplianceType, description, 
+//                                           fileName, rowIndex, columnIndex, srcTypeIndex);
+//                eiaTemplateIncomps.add(incomp);
+//                continue;
+//            } 
+//            
+//            //2. check each segment of startdate is number or not
+//            try{
+//                for (int j = 0; j < segnumber; j++)
+//                    seg[j] = Integer.parseInt(psd[j]);
+//            }
+//            catch(NumberFormatException e){
+//                setEdfValid(false);
+//                description = Incompliance.error_eia_dmyint;
+//                incomp = new Incompliance(incomplianceType, description, 
+//                                          fileName, rowIndex, columnIndex, srcTypeIndex);
+//                  eiaTemplateIncomps.add(incomp);
+//                continue;
+//            }
+//            
+//            //3. check segment valid
+//            for (int j = 0; j < psdlen; j++) {   
+//                if (seg[j] < lowerbounds[j] || seg[j] > upperbounds[j]) {
+//                    setEdfValid(false);
+//                    description = descriptions[j];
+//                    incomp = new Incompliance(incomplianceType, description, 
+//                                              fileName, rowIndex, columnIndex, srcTypeIndex);
+//                     eiaTemplateIncomps.add(incomp);
+//                }
+//            }
+//        }        
+//        
+//        return eiaTemplateIncomps;
+//    }
     
     //stub method
     //further implementation in EIATable and ESATable

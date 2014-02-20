@@ -48,7 +48,7 @@ public class Incompliance{
     protected static final String error_esa_digmin      = "Signal Header: Digital minimum should be an integer";
     protected static final String error_esa_digmax      = "Signal Header: Digital maximum should be an integer";
     protected static final String error_esa_dig_equal   = "Signal Header: Digital maximum cannot equal to digital minimum";
-    protected static final String error_esa_digrange    = "Signal Header: Digital integer should be in of range [-32768, 327670]";
+    protected static final String error_esa_digrange    = "Signal Header: Digital integer should be in the range of [-32768, 32767]";
     protected static final String error_esa_digmaxmin   = "Signal Header: Digital maximum must be larger than digital minimum";
     protected static final String error_esa_nrSig       = "Signal Header: Number of signals should be an integer";
     protected static final String error_esa_nrSig_range = "Signal Header: Number of signals should be greater than 0";
