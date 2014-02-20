@@ -3403,8 +3403,8 @@ public class MainWindow extends JFrame implements WindowListener {
             cleanupIncompliances();
             parseEIATable();
             parseESATables();
-            parseEIATempalteTables();
-            parseESATemplateTables();
+//            parseEIATempalteTables();
+//            parseESATemplateTables();
             outputValidationToErrorListTable();
         }
         /*             verifyWorkingFilesHeader();

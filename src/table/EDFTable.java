@@ -8,10 +8,8 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Rectangle;
-
 import java.awt.event.MouseEvent;
 import java.io.File;
-
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -54,6 +52,9 @@ public class EDFTable extends JTable {
     static final String digital_field_blank_error = "Digital field should contain integer value.";
     
     static final int START_DATE_INDEX = 4;
+    
+    
+    
     static final String start_date_error = "Start date needs to be in the form of xx.xx.xx where x are integers";
     static final String altName = (Main.mac_os)? "Command": "Alt";
     
@@ -235,9 +236,12 @@ public class EDFTable extends JTable {
         this.setMasterFileIndex(indexofmasterFile);
     }
     
-    /*
+    /**
      * used for both ESA and ESA template tables
      * Fangping, 09/29/2010
+     * 
+     * Validation improvement for ESA tables
+     * Gang Shu, 02/20/2014
      */
 	public ArrayList<Incompliance> parseESATable() {
 		
@@ -249,574 +253,401 @@ public class EDFTable extends JTable {
 		String description;
 		String fileName = this.getMasterFile().getAbsolutePath();
 		boolean bASCII;
+		int col;
+		
+		/////
+		int COL_INDEX_LABEL = 0;
+		int COL_INDEX_TRANSDUCER_TYPE = 1;
+		int COL_INDEX_PHYSICAL_DIMENSION = 2;
+		int COL_INDEX_PHYSICAL_MINIMUM = 3;
+		int COL_INDEX_PHYSICAL_MAXIMUM = 4;
+		int COL_INDEX_DIGITAL_MINIMUM = 5;
+		int COL_INDEX_DIGITAL_MAXIMUM = 6;
+		int COL_INDEX_PREFILTERING = 7;
+		int COL_INDEX_NR_OF_SAMPLES = 8;
+		int COL_INDEX_RESERVED = 9;
+		/////
+		
 		
 		if (this instanceof ESATable) {
 			errorSrcTypeIndex = Incompliance.index_incomp_src_esa;
-			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex]; // "ESA"
+			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex];
 			
 			//Check "ESA Table" fields
-			final int COL_INDEX_LABEL = 0;
-			final int COL_INDEX_TRANSDUCER_TYPE = 1;
-			final int COL_INDEX_PHYSICAL_DIMENSION = 2;
-			final int COL_INDEX_PHYSICAL_MINIMUM = 3;
-			final int COL_INDEX_PHYSICAL_MAXIMUM = 4;
-			final int COL_INDEX_DIGITAL_MINIMUM = 5;
-			final int COL_INDEX_DIGITAL_MAXIMUM = 6;
-			final int COL_INDEX_PREFILTERING = 7;
-			final int COL_INDEX_NR_OF_SAMPLES = 8;
-			final int COL_INDEX_RESERVED = 9;
-			
-			for (int i = 0; i < nrow; i++) {
-				
-				/************************************************************
-				 * ns * 16 ascii : ns * label (e.g. EEG Fpz-Cz or Body temp)
-				 ************************************************************/
-				String alabel = (String) getModel().getValueAt(i, COL_INDEX_LABEL);
-				if (alabel==null || alabel.equals("")){
-					//[Label](K.3) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Label](K.1) check for ascii 
-					bASCII = checkAsciiF(alabel);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					
-					//[Label](K.2) no duplicate signal labels
-					boolean repeated = false;
-					description = Incompliance.error_esa_label + (i + 1);
-					for (int j = i + 1; j < nrow; j++) {
-						String blabel = (String) getModel().getValueAt(j, COL_INDEX_LABEL);
-						if (alabel.equalsIgnoreCase(blabel)) {
-							repeated = true;
-							description = description + ", " + (j + 1);
-						}
-					}
-					if (repeated){
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_LABEL, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-				}
-
-				/************************************************************
-				 * ns * 80 ascii : ns * transducer type (e.g. AgAgCl electrode) 
-				 ************************************************************/
-				String transducer_type = (String) getModel().getValueAt(i, COL_INDEX_TRANSDUCER_TYPE);
-				if (transducer_type==null || transducer_type.equals("")){
-					//[Transducer_Type](L.2) can be empty field
-				}
-				else{
-					//[Transducer_Type](L.1) check for ascii
-					bASCII = checkAsciiF(transducer_type);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_TRANSDUCER_TYPE, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-				}
-
-				/************************************************************
-				 * ns * 8 ascii : ns * physical dimension (e.g. uV or degreeC) 
-				 ************************************************************/
-				String physical_dimension = (String) getModel().getValueAt(i, COL_INDEX_PHYSICAL_DIMENSION);
-				if (physical_dimension==null || physical_dimension.equals("")){
-					//[Physical_Dimension](M.2) can be empty field
-				}
-				else{
-					//[Physical_Dimension](M.1) check for ascii
-					bASCII = checkAsciiF(physical_dimension);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_PHYSICAL_DIMENSION, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-				}
-
-				/************************************************************
-				 * ns * 8 ascii : ns * physical minimum (e.g. -500 or 34) 
-				 ************************************************************/
-				String physical_minimum = (String) getModel().getValueAt(i, COL_INDEX_PHYSICAL_MINIMUM);
-				boolean bGood_physical_minimum = false;
-				if (physical_minimum==null || physical_minimum.equals("")){
-					//[Physical_Minimum](N.5) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, COL_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Physical_Minimum](N.1) check for ascii
-					bASCII = checkAsciiF(physical_minimum);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					else{
-						//[Physical_Minimum](N.2) is a floating point number
-						try{
-							Float.parseFloat(physical_minimum);
-							bGood_physical_minimum = true;
-						} catch (NumberFormatException e) {
-							description = Incompliance.error_esa_phymin;
-							incomp = new Incompliance(incomplianceType, description,
-									fileName, i, COL_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
-							esaIncompliances.add(incomp);
-						}
-					}
-				}
-				
-				/************************************************************
-				 * ns * 8 ascii : ns * physical maximum (e.g. 500 or 40) 
-				 ************************************************************/
-				String physical_maximum = (String) getModel().getValueAt(i, COL_INDEX_PHYSICAL_MAXIMUM);
-				boolean bGood_physical_maximum = false;
-				if (physical_maximum==null || physical_maximum.equals("")){
-					//[Physical_Maximum](O.4) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, COL_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Physical_Maximum](O.1) check for ascii
-					bASCII = checkAsciiF(physical_maximum);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					else{
-						//[Physical_Maximum](O.2) is a floating point number
-						try{
-							Float.parseFloat(physical_maximum);
-							bGood_physical_maximum = true;
-						} catch (NumberFormatException e) {
-							description = Incompliance.error_esa_phymax;
-							incomp = new Incompliance(incomplianceType, description,
-									fileName, i, COL_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
-							esaIncompliances.add(incomp);
-						}
-					}
-				}
-				
-				//[Physical_Maximum](O.3) physical maximum NOT = physical minimum
-				if (bGood_physical_minimum && bGood_physical_maximum){
-					if (Float.parseFloat(physical_minimum) == Float.parseFloat(physical_maximum)){
-						description = Incompliance.error_esa_phy_equal;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-				}
-
-				/************************************************************
-				 * ns * 8 ascii : ns * digital minimum (e.g. -2048)
-				 ************************************************************/
-				String digital_minimum = (String) getModel().getValueAt(i, COL_INDEX_DIGITAL_MINIMUM);
-				boolean bGood_digital_minimum = false;
-				if (digital_minimum==null || digital_minimum.equals("")){
-					//[Digital_Minimum](P.4) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, COL_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Digital_Minimum](P.1) check for ascii
-					bASCII = checkAsciiF(digital_minimum);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					else{
-						//[Digital_Minimum](P.2) is an integer
-						try{
-							int dig_minimum = Integer.parseInt(digital_minimum);
-							bGood_digital_minimum = true;
-							
-							//[Digital_Minimum](P.3) since each date sample is a 2-byte integer, range check [-32768,32767]
-							boolean bRange = check_digital_range(dig_minimum);
-							if (!bRange){
-								description = Incompliance.error_esa_digrange;
-								incomp = new Incompliance(incomplianceType, description,
-										fileName, i, COL_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
-								esaIncompliances.add(incomp);
-							}
-						}catch (NumberFormatException e) {
-							description = Incompliance.error_esa_digmin;
-							incomp = new Incompliance(incomplianceType, description,
-									fileName, i, COL_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
-							esaIncompliances.add(incomp);
-						}
-					}
-				}
-
-				/************************************************************
-				 * ns * 8 ascii : ns * digital maximum (e.g. 2047) 
-				 ************************************************************/
-				String digital_maximum = (String) getModel().getValueAt(i, COL_INDEX_DIGITAL_MAXIMUM);
-				boolean bGood_digital_maximum = false;
-				if (digital_maximum==null || digital_maximum.equals("")){
-					//[Digital_Maximum](Q.4) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Digital_Maximum](Q.1) check for ascii
-					bASCII = checkAsciiF(digital_maximum);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					else{
-						//[Digital_Maximum](Q.2) is an integer
-						try{
-							int dig_maximum = Integer.parseInt(digital_maximum);
-							bGood_digital_maximum = true;
-							
-							//[Digital_Maximum](Q.3) since each date sample is a 2-byte integer, range check [-32768,32767]
-							boolean bRange = check_digital_range(dig_maximum);
-							if (!bRange){
-								description = Incompliance.error_esa_digrange;
-								incomp = new Incompliance(incomplianceType, description,
-										fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-								esaIncompliances.add(incomp);
-							}
-						}catch (NumberFormatException e) {
-							description = Incompliance.error_esa_digmax;
-							incomp = new Incompliance(incomplianceType, description,
-									fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-							esaIncompliances.add(incomp);
-						}
-					}
-				}
-
-				if (bGood_digital_minimum && bGood_digital_maximum){
-					int dig_minimum = Integer.parseInt(digital_minimum);
-					int dig_maximum = Integer.parseInt(digital_maximum);
-					
-					//[Digital_Minimum](Q.6) digital minimum NOT = digital maximum (division-by-0 condition)
-					if (dig_minimum == dig_maximum){
-						description = Incompliance.error_esa_dig_equal;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					//[Digital_Minimum](Q.5) digital minimum < digital maximum
-					else if (dig_minimum > dig_maximum){
-						description = Incompliance.error_esa_digmaxmin;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-						
-					}
-				}
-
-				/************************************************************
-				 * ns * 80 ascii : ns * prefiltering (e.g. HP:0.1Hz LP:75Hz) 
-				 ************************************************************/
-				String prefiltering = (String) getModel().getValueAt(i, COL_INDEX_PREFILTERING);
-				if (prefiltering==null || prefiltering.equals("")){
-					//[Prefiltering](R.2) can be empty field
-				}
-				else{
-					//[Prefiltering](R.1) check for ascii
-					bASCII = checkAsciiF(prefiltering);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_PREFILTERING, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-				}
-				
-				/************************************************************
-				 * ns * 8 ascii : ns * nr of samples in each data record 
-				 ************************************************************/
-				String num_signals = (String) getModel().getValueAt(i, COL_INDEX_NR_OF_SAMPLES);
-				if (num_signals==null || num_signals.equals("")){
-					//[Num_signals](S.4) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Num_signals](S.1) check for ascii
-					bASCII = checkAsciiF(num_signals);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					else{
-						//[Num_signals](S.2) is an integer
-						try{
-							int n_signals = Integer.parseInt(num_signals);
-							//[Num_signals](S.3) value is greater than 0
-							if (n_signals <= 0){
-								description = Incompliance.error_esa_nrSig_range;
-								incomp = new Incompliance(incomplianceType, description,
-										fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
-								esaIncompliances.add(incomp);
-							}
-						}catch (NumberFormatException e) {
-							description = Incompliance.error_esa_nrSig;
-							incomp = new Incompliance(incomplianceType, description,
-									fileName, i, COL_INDEX_NR_OF_SAMPLES, errorSrcTypeIndex);
-							esaIncompliances.add(incomp);
-						}
-					}
-				}
-				
-				/************************************************************
-				 * ns * 32 ascii : ns * reserved
-				 ************************************************************/
-				String reserved = (String) getModel().getValueAt(i, COL_INDEX_RESERVED);
-				if (reserved==null || reserved.equals("")){
-					//[Reserved](T.2) can be empty field
-				}
-				else{
-					//[Reserved](T.1) check for ascii
-					bASCII = checkAsciiF(reserved);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, COL_INDEX_RESERVED, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-				}
-				
-			}//for loop ends
-			
 		}
 		else if (this instanceof ESATemplateTable) {
 			errorSrcTypeIndex = Incompliance.index_incomp_src_esatemplate;
 			incomplianceType = Incompliance.typeOfErrorHeader[errorSrcTypeIndex];
 			
 			//Check "ESA Template" fields
-		    final int TEMPLATE_INDEX_PHYSICAL_MINIMUM = 4;
-		    final int TEMPLATE_INDEX_PHYSICAL_MAXIMUM = 5;
-		    final int TEMPLATE_INDEX_DIGITAL_MINIMUM = 6;
-		    final int TEMPLATE_INDEX_DIGITAL_MAXIMUM = 7;
-			
-			for (int i = 0; i < nrow; i++) {
-				
-				/************************************************************
-				 * ns * 8 ascii : ns * physical minimum (e.g. -500 or 34) 
-				 ************************************************************/
-				String physical_minimum = (String) getModel().getValueAt(i, TEMPLATE_INDEX_PHYSICAL_MINIMUM);
-				boolean bGood_physical_minimum = false;
-				if (physical_minimum==null || physical_minimum.equals("")){
-					//[Physical_Minimum](N.5) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, TEMPLATE_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Physical_Minimum](N.1) check for ascii
-					bASCII = checkAsciiF(physical_minimum);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, TEMPLATE_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					else{
-						//[Physical_Minimum](N.2) is a floating point number
-						try{
-							Float.parseFloat(physical_minimum);
-							bGood_physical_minimum = true;
-						} catch (NumberFormatException e) {
-							description = Incompliance.error_esa_phymin;
-							incomp = new Incompliance(incomplianceType, description,
-									fileName, i, TEMPLATE_INDEX_PHYSICAL_MINIMUM, errorSrcTypeIndex);
-							esaIncompliances.add(incomp);
-						}
-					}
-				}
-				
-				/************************************************************
-				 * ns * 8 ascii : ns * physical maximum (e.g. 500 or 40) 
-				 ************************************************************/
-				String physical_maximum = (String) getModel().getValueAt(i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM);
-				boolean bGood_physical_maximum = false;
-				if (physical_maximum==null || physical_maximum.equals("")){
-					//[Physical_Maximum](O.4) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Physical_Maximum](O.1) check for ascii
-					bASCII = checkAsciiF(physical_maximum);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					else{
-						//[Physical_Maximum](O.2) is a floating point number
-						try{
-							Float.parseFloat(physical_maximum);
-							bGood_physical_maximum = true;
-						} catch (NumberFormatException e) {
-							description = Incompliance.error_esa_phymax;
-							incomp = new Incompliance(incomplianceType, description,
-									fileName, i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
-							esaIncompliances.add(incomp);
-						}
-					}
-				}
-				
-				//[Physical_Maximum](O.3) physical maximum NOT = physical minimum
-				if (bGood_physical_minimum && bGood_physical_maximum){
-					if (Float.parseFloat(physical_minimum) == Float.parseFloat(physical_maximum)){
-						description = Incompliance.error_esa_phy_equal;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, TEMPLATE_INDEX_PHYSICAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-				}
-
-				/************************************************************
-				 * ns * 8 ascii : ns * digital minimum (e.g. -2048)
-				 ************************************************************/
-				String digital_minimum = (String) getModel().getValueAt(i, TEMPLATE_INDEX_DIGITAL_MINIMUM);
-				boolean bGood_digital_minimum = false;
-				if (digital_minimum==null || digital_minimum.equals("")){
-					//[Digital_Minimum](P.4) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, TEMPLATE_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Digital_Minimum](P.1) check for ascii
-					bASCII = checkAsciiF(digital_minimum);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, TEMPLATE_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					else{
-						//[Digital_Minimum](P.2) is an integer
-						try{
-							int dig_minimum = Integer.parseInt(digital_minimum);
-							bGood_digital_minimum = true;
-							
-							//[Digital_Minimum](P.3) since each date sample is a 2-byte integer, range check [-32768,32767]
-							boolean bRange = check_digital_range(dig_minimum);
-							if (!bRange){
-								description = Incompliance.error_esa_digrange;
-								incomp = new Incompliance(incomplianceType, description,
-										fileName, i, TEMPLATE_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
-								esaIncompliances.add(incomp);
-							}
-						}catch (NumberFormatException e) {
-							description = Incompliance.error_esa_digmin;
-							incomp = new Incompliance(incomplianceType, description,
-									fileName, i, TEMPLATE_INDEX_DIGITAL_MINIMUM, errorSrcTypeIndex);
-							esaIncompliances.add(incomp);
-						}
-					}
-				}
-
-				/************************************************************
-				 * ns * 8 ascii : ns * digital maximum (e.g. 2047) 
-				 ************************************************************/
-				String digital_maximum = (String) getModel().getValueAt(i, TEMPLATE_INDEX_DIGITAL_MAXIMUM);
-				boolean bGood_digital_maximum = false;
-				if (digital_maximum==null || digital_maximum.equals("")){
-					//[Digital_Maximum](Q.4) cannot be empty field
-					description = Incompliance.error_esa_empty;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
-				else{
-					//[Digital_Maximum](Q.1) check for ascii
-					bASCII = checkAsciiF(digital_maximum);
-					if (!bASCII) {
-						description = Incompliance.error_esa_ascii;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					else{
-						//[Digital_Maximum](Q.2) is an integer
-						try{
-							int dig_maximum = Integer.parseInt(digital_maximum);
-							bGood_digital_maximum = true;
-							
-							//[Digital_Maximum](Q.3) since each date sample is a 2-byte integer, range check [-32768,32767]
-							boolean bRange = check_digital_range(dig_maximum);
-							if (!bRange){
-								description = Incompliance.error_esa_digrange;
-								incomp = new Incompliance(incomplianceType, description,
-										fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-								esaIncompliances.add(incomp);
-							}
-						}catch (NumberFormatException e) {
-							description = Incompliance.error_esa_digmax;
-							incomp = new Incompliance(incomplianceType, description,
-									fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-							esaIncompliances.add(incomp);
-						}
-					}
-				}
-
-				if (bGood_digital_minimum && bGood_digital_maximum){
-					int dig_minimum = Integer.parseInt(digital_minimum);
-					int dig_maximum = Integer.parseInt(digital_maximum);
-					
-					//[Digital_Minimum](Q.6) digital minimum NOT = digital maximum (division-by-0 condition)
-					if (dig_minimum == dig_maximum){
-						description = Incompliance.error_esa_dig_equal;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-					}
-					//[Digital_Minimum](Q.5) digital minimum < digital maximum
-					else if (dig_minimum > dig_maximum){
-						description = Incompliance.error_esa_digmaxmin;
-						incomp = new Incompliance(incomplianceType, description,
-								fileName, i, TEMPLATE_INDEX_DIGITAL_MAXIMUM, errorSrcTypeIndex);
-						esaIncompliances.add(incomp);
-						
-					}
-				}
-
-			}//for loop ends
-			
+			COL_INDEX_LABEL += 1;
+			COL_INDEX_TRANSDUCER_TYPE += 1;
+			COL_INDEX_PHYSICAL_DIMENSION += 1;
+			COL_INDEX_PHYSICAL_MINIMUM += 1;
+			COL_INDEX_PHYSICAL_MAXIMUM += 1;
+			COL_INDEX_DIGITAL_MINIMUM += 1;
+			COL_INDEX_DIGITAL_MAXIMUM += 1;
+			COL_INDEX_PREFILTERING += 1;
+			COL_INDEX_NR_OF_SAMPLES += 1;
+			COL_INDEX_RESERVED += 1;
 		}
 		else{
 			return esaIncompliances; // at this time, esaIncompliances.size() = 0;
 		}
+		
+		for (int i = 0; i < nrow; i++) {
+			
+			/************************************************************
+			 * ns * 16 ascii : ns * label (e.g. EEG Fpz-Cz or Body temp)
+			 ************************************************************/
+			col = COL_INDEX_LABEL;
+			String alabel = (String) getModel().getValueAt(i, col);
+			if (alabel==null || alabel.equals("")){
+				//[Label](K.3) cannot be empty field
+				description = Incompliance.error_esa_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			else{
+				//[Label](K.1) check for ascii 
+				bASCII = checkAsciiF(alabel);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				
+				//[Label](K.2) no duplicate signal labels
+				boolean repeated = false;
+				description = Incompliance.error_esa_label + (i + 1);
+				for (int j = i + 1; j < nrow; j++) {
+					String blabel = (String) getModel().getValueAt(j, col);
+					if (alabel.equalsIgnoreCase(blabel)) {
+						repeated = true;
+						description = description + ", " + (j + 1);
+					}
+				}
+				if (repeated){
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+			}
+
+			/************************************************************
+			 * ns * 80 ascii : ns * transducer type (e.g. AgAgCl electrode) 
+			 ************************************************************/
+			col = COL_INDEX_TRANSDUCER_TYPE;
+			String transducer_type = (String) getModel().getValueAt(i, col);
+			if (transducer_type==null || transducer_type.equals("")){
+				//[Transducer_Type](L.2) can be empty field
+			}
+			else{
+				//[Transducer_Type](L.1) check for ascii
+				bASCII = checkAsciiF(transducer_type);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+			}
+
+			/************************************************************
+			 * ns * 8 ascii : ns * physical dimension (e.g. uV or degreeC) 
+			 ************************************************************/
+			col = COL_INDEX_PHYSICAL_DIMENSION;
+			String physical_dimension = (String) getModel().getValueAt(i, col);
+			if (physical_dimension==null || physical_dimension.equals("")){
+				//[Physical_Dimension](M.2) can be empty field
+			}
+			else{
+				//[Physical_Dimension](M.1) check for ascii
+				bASCII = checkAsciiF(physical_dimension);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+			}
+
+			/************************************************************
+			 * ns * 8 ascii : ns * physical minimum (e.g. -500 or 34) 
+			 ************************************************************/
+			col = COL_INDEX_PHYSICAL_MINIMUM;
+			String physical_minimum = (String) getModel().getValueAt(i, col);
+			boolean bGood_physical_minimum = false;
+			if (physical_minimum==null || physical_minimum.equals("")){
+				//[Physical_Minimum](N.5) cannot be empty field
+				description = Incompliance.error_esa_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			else{
+				//[Physical_Minimum](N.1) check for ascii
+				bASCII = checkAsciiF(physical_minimum);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Physical_Minimum](N.2) is a floating point number
+					try{
+						Float.parseFloat(physical_minimum);
+						bGood_physical_minimum = true;
+					} catch (NumberFormatException e) {
+						description = Incompliance.error_esa_phymin;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+			}
+			
+			/************************************************************
+			 * ns * 8 ascii : ns * physical maximum (e.g. 500 or 40) 
+			 ************************************************************/
+			col = COL_INDEX_PHYSICAL_MAXIMUM;
+			String physical_maximum = (String) getModel().getValueAt(i, col);
+			boolean bGood_physical_maximum = false;
+			if (physical_maximum==null || physical_maximum.equals("")){
+				//[Physical_Maximum](O.4) cannot be empty field
+				description = Incompliance.error_esa_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			else{
+				//[Physical_Maximum](O.1) check for ascii
+				bASCII = checkAsciiF(physical_maximum);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Physical_Maximum](O.2) is a floating point number
+					try{
+						Float.parseFloat(physical_maximum);
+						bGood_physical_maximum = true;
+					} catch (NumberFormatException e) {
+						description = Incompliance.error_esa_phymax;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+			}
+			
+			//[Physical_Maximum](O.3) physical maximum NOT = physical minimum
+			if (bGood_physical_minimum && bGood_physical_maximum){
+				if (Float.parseFloat(physical_minimum) == Float.parseFloat(physical_maximum)){
+					description = Incompliance.error_esa_phy_equal;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+			}
+
+			/************************************************************
+			 * ns * 8 ascii : ns * digital minimum (e.g. -2048)
+			 ************************************************************/
+			col = COL_INDEX_DIGITAL_MINIMUM;
+			String digital_minimum = (String) getModel().getValueAt(i, col);
+			boolean bGood_digital_minimum = false;
+			if (digital_minimum==null || digital_minimum.equals("")){
+				//[Digital_Minimum](P.4) cannot be empty field
+				description = Incompliance.error_esa_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			else{
+				//[Digital_Minimum](P.1) check for ascii
+				bASCII = checkAsciiF(digital_minimum);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Digital_Minimum](P.2) is an integer
+					try{
+						int dig_minimum = Integer.parseInt(digital_minimum);
+						bGood_digital_minimum = true;
+						
+						//[Digital_Minimum](P.3) since each date sample is a 2-byte integer, range check [-32768,32767]
+						boolean bRange = check_digital_range(dig_minimum);
+						if (!bRange){
+							description = Incompliance.error_esa_digrange;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}catch (NumberFormatException e) {
+						description = Incompliance.error_esa_digmin;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+			}
+
+			/************************************************************
+			 * ns * 8 ascii : ns * digital maximum (e.g. 2047) 
+			 ************************************************************/
+			col = COL_INDEX_DIGITAL_MAXIMUM;
+			String digital_maximum = (String) getModel().getValueAt(i, col);
+			boolean bGood_digital_maximum = false;
+			if (digital_maximum==null || digital_maximum.equals("")){
+				//[Digital_Maximum](Q.4) cannot be empty field
+				description = Incompliance.error_esa_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			else{
+				//[Digital_Maximum](Q.1) check for ascii
+				bASCII = checkAsciiF(digital_maximum);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Digital_Maximum](Q.2) is an integer
+					try{
+						int dig_maximum = Integer.parseInt(digital_maximum);
+						bGood_digital_maximum = true;
+						
+						//[Digital_Maximum](Q.3) since each date sample is a 2-byte integer, range check [-32768,32767]
+						boolean bRange = check_digital_range(dig_maximum);
+						if (!bRange){
+							description = Incompliance.error_esa_digrange;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}catch (NumberFormatException e) {
+						description = Incompliance.error_esa_digmax;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+			}
+
+			if (bGood_digital_minimum && bGood_digital_maximum){
+				int dig_minimum = Integer.parseInt(digital_minimum);
+				int dig_maximum = Integer.parseInt(digital_maximum);
+				
+				//[Digital_Minimum](Q.6) digital minimum NOT = digital maximum (division-by-0 condition)
+				if (dig_minimum == dig_maximum){
+					description = Incompliance.error_esa_dig_equal;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				//[Digital_Minimum](Q.5) digital minimum < digital maximum
+				else if (dig_minimum > dig_maximum){
+					description = Incompliance.error_esa_digmaxmin;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+					
+				}
+			}
+
+			/************************************************************
+			 * ns * 80 ascii : ns * prefiltering (e.g. HP:0.1Hz LP:75Hz) 
+			 ************************************************************/
+			col = COL_INDEX_PREFILTERING;
+			String prefiltering = (String) getModel().getValueAt(i, col);
+			if (prefiltering==null || prefiltering.equals("")){
+				//[Prefiltering](R.2) can be empty field
+			}
+			else{
+				//[Prefiltering](R.1) check for ascii
+				bASCII = checkAsciiF(prefiltering);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+			}
+			
+			/************************************************************
+			 * ns * 8 ascii : ns * nr of samples in each data record 
+			 ************************************************************/
+			col = COL_INDEX_NR_OF_SAMPLES;
+			String num_signals = (String) getModel().getValueAt(i, col);
+			if (num_signals==null || num_signals.equals("")){
+				//[Num_signals](S.4) cannot be empty field
+				description = Incompliance.error_esa_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				esaIncompliances.add(incomp);
+			}
+			else{
+				//[Num_signals](S.1) check for ascii
+				bASCII = checkAsciiF(num_signals);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+				else{
+					//[Num_signals](S.2) is an integer
+					try{
+						int n_signals = Integer.parseInt(num_signals);
+						//[Num_signals](S.3) value is greater than 0
+						if (n_signals <= 0){
+							description = Incompliance.error_esa_nrSig_range;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							esaIncompliances.add(incomp);
+						}
+					}catch (NumberFormatException e) {
+						description = Incompliance.error_esa_nrSig;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						esaIncompliances.add(incomp);
+					}
+				}
+			}
+			
+			/************************************************************
+			 * ns * 32 ascii : ns * reserved
+			 ************************************************************/
+			col = COL_INDEX_RESERVED;
+			String reserved = (String) getModel().getValueAt(i, col);
+			if (reserved==null || reserved.equals("")){
+				//[Reserved](T.2) can be empty field
+			}
+			else{
+				//[Reserved](T.1) check for ascii
+				bASCII = checkAsciiF(reserved);
+				if (!bASCII) {
+					description = Incompliance.error_esa_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					esaIncompliances.add(incomp);
+				}
+			}
+			
+		}//for loop ends
+		
 		
 		if (esaIncompliances != null && esaIncompliances.size() > 0){
 			setEdfValid(false);
@@ -852,77 +683,419 @@ public class EDFTable extends JTable {
      * this one can be used on both EIATable
      */
     public ArrayList<Incompliance> parseEIATable( ) {
-        ArrayList<Incompliance> eiaIncompliances = new ArrayList<Incompliance>();
-        //index always be Incompliance.index_incomp_src_eia        
-        final int srcTypeIndex = Incompliance.index_incomp_src_eia;
-        final String incomplianceType = Incompliance.typeOfErrorHeader[srcTypeIndex];     
+    	
+    	ArrayList<Incompliance> eiaIncompliances = new ArrayList<Incompliance>();
+
+    	final int srcTypeIndex = Incompliance.index_incomp_src_eia;
+    	final String incomplianceType = Incompliance.typeOfErrorHeader[srcTypeIndex];     
+    	int errorSrcTypeIndex = -1;
+    	Incompliance incomp;
+    	String description;
+    	boolean bASCII;
+    	
+        final int COL_INDEX_VERSION = 0;
+        final int COL_INDEX_LOCAL_PATIENT_ID = 1;
+        final int COL_INDEX_LOCAL_RECORDING_ID  = 2;
+        final int COL_INDEX_START_DATE = 3;
+        final int COL_INDEX_START_TIME = 4;
+        final int COL_INDEX_NUMBER_OF_BYTES_IN_HEADER_RECORD = 5;
+        final int COL_INDEX_RESERVED = 6;
+        final int COL_INDEX_NUMBER_OF_DATA_RECORDS = 7;
+        final int COL_INDEX_DURATION_OF_A_DATA_RECORD = 8;
+        final int COL_INDEX_NUMBER_OF_SIGNALS_IN_DATA_RECORD = 9;
         
         int nrow = this.getRowCount();
-            
-        Incompliance incomp;
-        String description;
-        String fileName;
-        int rowIndex, columnIndex;
-        
-        int segnumber = 3;
-        int seg[] = new int[segnumber];
-        String[] descriptions = {Incompliance.warning_eia_day, 
-                                 Incompliance.warning_eia_month, Incompliance.warning_eia_year};
-        //int[] lowerbounds = {0, 0, 0};
-        //int[] upperbounds = {31, 12, 99}; // 31 day, 12 month, 2099 years
-        
-       // boolean cellHiding = (getModel().getColumnCount() != getColumnModel().getColumnCount());
-        boolean cellHiding = false;
-        
-        String sd;
+        int col;
         for (int i = 0; i < nrow; i++) {
-            sd = ((String)this.getModel().getValueAt(i, START_DATE_INDEX)).trim();
-            fileName = MainWindow.getWkEdfFiles().get(i).getAbsolutePath();
-            rowIndex = i;
-            columnIndex = cellHiding? START_DATE_INDEX - 1: START_DATE_INDEX;
-            String[] psd = sd.split("\\.");
-            
-            //1. check format of dd.mm.yy
-            int psdlen = psd.length;
-            if (psdlen != segnumber){
-                setEdfValid(false);
-                description = Incompliance.error_eia_format;
-                incomp = new Incompliance( incomplianceType, description, 
-                                           fileName, rowIndex, columnIndex, srcTypeIndex);
-                //MainWindow.getAggregateIncompliances().add(incomp);
-                eiaIncompliances.add(incomp);
-                continue;
-            } 
-            
-            //2. check each segment of startdate is number or not
-            try{
-                for (int j = 0; j < segnumber; j++)
-                    seg[j] = Integer.parseInt(psd[j]);
-            }
-            catch(NumberFormatException e){
-                setEdfValid(false);
-                description = Incompliance.error_eia_dmyint;
-                incomp = new Incompliance(incomplianceType, description, 
-                                          fileName, rowIndex, columnIndex, srcTypeIndex);
-                //MainWindow.getAggregateIncompliances().add(incomp);
-                eiaIncompliances.add(incomp);
-                continue;
-            }
-            
-            //3. check segment valid
-            for (int j = 0; j < psdlen; j++) {   
-                if (seg[j] < lowerbounds[j] || seg[j] > upperbounds[j]) {
-                    setEdfValid(false);
-                    description = descriptions[j];
-                    incomp = new Incompliance(incomplianceType, description, 
-                                              fileName, rowIndex, columnIndex, srcTypeIndex);
-                    //MainWindow.getAggregateIncompliances().add(incomp);
-                    eiaIncompliances.add(incomp);
-                }
-            }
-        } 
-        return eiaIncompliances;
+
+        	String fileName = MainWindow.getWkEdfFiles().get(i).getAbsolutePath();
+        	errorSrcTypeIndex = srcTypeIndex;
+        			
+			/************************************************************
+			 * 8 ascii : version of this data format (0) 
+			 ************************************************************/
+        	col = COL_INDEX_VERSION + 1;
+			String version = (String) getModel().getValueAt(i, col);
+			if (version==null || version.equals("")){
+				//[Version](A.3) cannot be empty field
+				description = Incompliance.error_eia_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+			else{
+				//[Version](A.1) check for ascii
+				bASCII = checkAsciiF(version);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+				else{
+					//[Version](A.2) is equal to 0
+					try{
+						int ver = Integer.parseInt(version);
+						if (ver != 0){
+							description = Incompliance.error_eia_version;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							eiaIncompliances.add(incomp);
+						}
+					}catch (NumberFormatException e) {
+						description = Incompliance.error_eia_version;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						eiaIncompliances.add(incomp);
+					}
+				}
+			}
+			
+			/************************************************************
+			 * 80 ascii : local patient identification
+			 ************************************************************/
+			col = COL_INDEX_LOCAL_PATIENT_ID + 1;
+			String partient_id = (String) getModel().getValueAt(i, col);
+			if (partient_id==null || partient_id.equals("")){
+				//[Partient_id](B.2) can be empty field
+			}
+			else{
+				//[Partient_id](B.1) check for ascii
+				bASCII = checkAsciiF(partient_id);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+			}
+
+			/************************************************************
+			 * 80 ascii : local recording identification
+			 ************************************************************/
+			col = COL_INDEX_LOCAL_RECORDING_ID + 1;
+			String recording_id = (String) getModel().getValueAt(i, col);
+			if (recording_id==null || recording_id.equals("")){
+				//[Recording_id](C.2) can be empty field
+			}
+			else{
+				//[Recording_id](C.1) check for ascii
+				bASCII = checkAsciiF(recording_id);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+			}
+			
+			/************************************************************
+			 * 8 ascii : startdate of recording (dd.mm.yy) 
+			 ************************************************************/
+			col = COL_INDEX_START_DATE + 1;
+			String startdate = (String) getModel().getValueAt(i, col);
+			if (startdate==null || startdate.equals("")){
+				//[Startdate](D.2) cannot be empty field
+				description = Incompliance.error_eia_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+			else{
+				//[Startdate](D.1) check for ascii
+				bASCII = checkAsciiF(startdate);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+				else{
+					//[Startdate](D.4) separator between digits should be only ‘period’
+					String[] items = startdate.split("\\.");
+					if (items.length != 3){
+						 description = Incompliance.error_eia_dateformat;
+						 incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+						 eiaIncompliances.add(incomp);
+					}
+					else{
+						//[Startdate](D.3) dd:00-31, mm:00-12, yy:00-99
+						try{
+							int dd = Integer.parseInt(items[0]);
+							int mm = Integer.parseInt(items[1]);
+							int yy = Integer.parseInt(items[2]);
+							if (dd >=0 && dd <=31 && mm >= 0 && mm <= 12 && yy >= 00 && yy <= 99){
+								//valid date format
+							}
+							else{
+								description = Incompliance.error_eia_daterange;
+								incomp = new Incompliance(incomplianceType, description,
+										fileName, i, col, errorSrcTypeIndex);
+								eiaIncompliances.add(incomp);
+							}
+						}
+						catch (NumberFormatException e) {
+							description = Incompliance.error_eia_daterange;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							eiaIncompliances.add(incomp);
+						}
+					}
+				}
+			}
+			
+			/************************************************************
+			 * 8 ascii : starttime of recording (hh.mm.ss) 
+			 ************************************************************/
+			col = COL_INDEX_START_TIME + 1;
+			String starttime = (String) getModel().getValueAt(i, col);
+			if (starttime==null || starttime.equals("")){
+				//[Start-time](E.2) cannot be empty field
+				description = Incompliance.error_eia_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+			else{
+				//[Start-time](E.1) check for ascii
+				bASCII = checkAsciiF(starttime);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+				else{
+					//[Start-time](E.4) separator between digits should be only ‘period’
+					String[] items = starttime.split("\\.");
+					if (items.length != 3){
+						 description = Incompliance.error_eia_timeformat;
+						 incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+						 eiaIncompliances.add(incomp);
+					}
+					else{
+						//[Start-time](E.3) hh:00-23, mm:00-59, ss:00-59
+						try{
+							int hh = Integer.parseInt(items[0]);
+							int mm = Integer.parseInt(items[1]);
+							int ss = Integer.parseInt(items[2]);
+							if (hh >=0 && hh <=23 && mm >= 0 && mm <= 59 && ss >= 00 && ss <= 59){
+								//valid time format
+							}
+							else{
+								description = Incompliance.error_eia_timerange;
+								incomp = new Incompliance(incomplianceType, description,
+										fileName, i, col, errorSrcTypeIndex);
+								eiaIncompliances.add(incomp);
+							}
+						}
+						catch (NumberFormatException e) {
+							description = Incompliance.error_eia_timerange;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							eiaIncompliances.add(incomp);
+						}
+					}
+				}
+			}
+			
+			/************************************************************
+			 * 8 ascii : number of bytes in header record 
+			 ************************************************************/
+			col = COL_INDEX_NUMBER_OF_BYTES_IN_HEADER_RECORD + 1;
+			String nBytes = (String) getModel().getValueAt(i, col);
+			if (nBytes==null || nBytes.equals("")){
+				//[Number_of_bytes](F.2) should not be empty
+				description = Incompliance.error_eia_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+			else{
+				//[Number_of_bytes](F.1) check for ascii
+				bASCII = checkAsciiF(nBytes);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+				else{
+					//[Number_of_bytes](F.3) is an integer
+					try{
+						int nbytes = Integer.parseInt(nBytes);
+						if (nbytes <= 0){
+							description = Incompliance.error_eia_num_bytes;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							eiaIncompliances.add(incomp);
+						}
+					}
+					catch (NumberFormatException e) {
+						description = Incompliance.error_eia_num_bytes;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						eiaIncompliances.add(incomp);
+					}
+				}
+			}
+			
+			/************************************************************
+			 * 44 ascii : reserved 
+			 ************************************************************/
+			col = COL_INDEX_RESERVED + 1;
+			String reserved = (String) getModel().getValueAt(i, col);
+			if (reserved==null || reserved.equals("")){
+				//[Reserved](G.2) can be empty field
+			}
+			else{
+				//[Reserved](G.1) check for ascii
+				bASCII = checkAsciiF(reserved);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+			}
+			
+			/************************************************************
+			 * 8 ascii : number of data records (-1 if unknown)
+			 ************************************************************/
+			col = COL_INDEX_NUMBER_OF_DATA_RECORDS + 1;
+			String nDataRecords = (String) getModel().getValueAt(i, col);
+			if (nDataRecords==null || nDataRecords.equals("")){
+				//[Num_of_DataRecords](H.2) should not be empty
+				description = Incompliance.error_eia_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+			else{
+				//[Num_of_DataRecords](H.1) check for ascii
+				bASCII = checkAsciiF(nDataRecords);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+				else{
+					//[Num_of_DataRecords](H.3) is a positive integer
+					try{
+						int ndatarecords = Integer.parseInt(nDataRecords);
+						if (ndatarecords > 0 || ndatarecords == -1){
+							//valid values
+						}
+						else{
+							description = Incompliance.error_eia_num_records;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							eiaIncompliances.add(incomp);
+						}
+					}
+					catch (NumberFormatException e) {
+						description = Incompliance.error_eia_num_records;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						eiaIncompliances.add(incomp);
+					}
+				}
+			}
+			
+			/************************************************************
+			 * 8 ascii : duration of a data record, in seconds 
+			 ************************************************************/
+			col = COL_INDEX_DURATION_OF_A_DATA_RECORD + 1;
+			String duration = (String) getModel().getValueAt(i, col);
+			if (duration==null || duration.equals("")){
+				//[Duration_of_a_data_record](I.2) should not be empty field
+				description = Incompliance.error_eia_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+			else{
+				//[Duration_of_a_data_record](I.1) check for ascii
+				bASCII = checkAsciiF(duration);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+				else{
+					//[Duration_of_a_data_record](I.3) is a positive floating point number (eg. 1, 0.2, 0.001)
+					try{
+						float dur = Float.parseFloat(duration);
+						if (dur < 0){
+							description = Incompliance.error_eia_duration;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							eiaIncompliances.add(incomp);
+						}
+					}
+					catch (NumberFormatException e) {
+						description = Incompliance.error_eia_duration;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						eiaIncompliances.add(incomp);
+					}
+				}
+			}
+			
+			/************************************************************
+			 * 4 ascii : number of signals (ns) in data record
+			 ************************************************************/
+			col = COL_INDEX_NUMBER_OF_SIGNALS_IN_DATA_RECORD + 1;
+			String nSignals = (String) getModel().getValueAt(i, col);
+			if (nSignals==null || nSignals.equals("")){
+				//[Number_of_signals](J.2) cannot be empty
+				description = Incompliance.error_eia_empty;
+				incomp = new Incompliance(incomplianceType, description,
+						fileName, i, col, errorSrcTypeIndex);
+				eiaIncompliances.add(incomp);
+			}
+			else{
+				//[Number_of_signals](J.1) check for ascii
+				bASCII = checkAsciiF(nSignals);
+				if (!bASCII) {
+					description = Incompliance.error_eia_ascii;
+					incomp = new Incompliance(incomplianceType, description,
+							fileName, i, col, errorSrcTypeIndex);
+					eiaIncompliances.add(incomp);
+				}
+				else{
+					//[Number_of_signals](J.3) is a positive integer
+					try{
+						int nsignals = Integer.parseInt(nSignals);
+						if (nsignals <= 0){
+							description = Incompliance.error_eia_nsignals;
+							incomp = new Incompliance(incomplianceType, description,
+									fileName, i, col, errorSrcTypeIndex);
+							eiaIncompliances.add(incomp);
+						}
+					}
+					catch (NumberFormatException e) {
+						description = Incompliance.error_eia_nsignals;
+						incomp = new Incompliance(incomplianceType, description,
+								fileName, i, col, errorSrcTypeIndex);
+						eiaIncompliances.add(incomp);
+					}
+				}
+			}
+			
+        }//for loop ends
+        
+        if (eiaIncompliances != null && eiaIncompliances.size() > 0){
+        	setEdfValid(false);        	
+        }
+        
+        return eiaIncompliances;    
     }
+    
     
     public ArrayList<Incompliance> parseEIATemplateTable(){
         ArrayList<Incompliance> eiaTemplateIncomps = new ArrayList<Incompliance>();
@@ -952,7 +1125,7 @@ public class EDFTable extends JTable {
             int psdlen = psd.length;
             if (psdlen != segnumber){
                 setEdfValid(false);
-                description = Incompliance.error_eia_format;
+                description = Incompliance.error_eia_dateformat;
                 incomp = new Incompliance( incomplianceType, description, 
                                            fileName, rowIndex, columnIndex, srcTypeIndex);
                 eiaTemplateIncomps.add(incomp);

@@ -21,25 +21,37 @@ public class Incompliance{
     protected static final String warning_eia_year = "value for year segment should lie in [0, 99]";
     
     //the description about critical errors
-    protected static final String error_eia_format = "Start date should be of format dd.mm.yy";
+    
     protected static final String error_eia_dmyint = "each segment of the starttime field should be number";
 /*     protected static final String error_eia_day = "value for day segment should be numbers in [1, 31]";
     protected static final String error_eia_month = "value for month segment should be numbers in [1, 12]";
     protected static final String error_eia_year = "value for year segment should be numbers in [0, 99]"; */
     
-    protected static final String error_esa_ascii       = "Signal Header: Non Ascii character in signal";
+    protected static final String error_eia_ascii       = "EDF Header: Non-Ascii character in header";
+    protected static final String error_eia_empty       = "EDF Header: Cannot be empty field";
+    protected static final String error_eia_version     = "EDF Header: Version should be 0";
+    protected static final String error_eia_dateformat  = "EDF Header: Date should follow the format of dd.mm.yy";
+    protected static final String error_eia_daterange   = "EDF Header: Date is valid under the values:  dd:00-31, mm:00-12, yy:00-99";
+    protected static final String error_eia_timeformat  = "EDF Header: Time should follow the format of hh.mm.ss";
+    protected static final String error_eia_timerange   = "EDF Header: Time is valid under the values:  hh:00-23, mm:00-59, ss:00-59";
+    protected static final String error_eia_num_bytes   = "EDF Header: \"Number of bytes in header record\" should be a non-negative integer (>=0)";
+    protected static final String error_eia_num_records = "EDF Header: \"Number of data records\" should be a positive integer (>0, or -1 if unknown)";
+    protected static final String error_eia_duration    = "EDF Header: \"Duration of a data record\" is a positive floating point number (eg. 1, 0.2, 0.001)";
+    protected static final String error_eia_nsignals    = "EDF Header: \"Number of signals in data record\" is a positive integer (>0)";
+    
+    protected static final String error_esa_ascii       = "Signal Header: Non-Ascii character in signal";
     protected static final String error_esa_empty       = "Signal Header: Cannot be empty field";
-    protected static final String error_esa_label       = "Signal Header: Duplicate labels at row ";
-    protected static final String error_esa_phymin      = "Signal Header: Physical minimum is a floating point number";
-    protected static final String error_esa_phymax      = "Signal Header: Physical maximum is a floating point number";
+    protected static final String error_esa_label       = "Signal Header: Duplicated labels at row ";
+    protected static final String error_esa_phymin      = "Signal Header: Physical minimum should be a floating point number";
+    protected static final String error_esa_phymax      = "Signal Header: Physical maximum should be a floating point number";
     protected static final String error_esa_phy_equal   = "Signal Header: Physical maximum cannot equal to physical minimum";
-    protected static final String error_esa_digmin      = "Signal Header: Digital minimum is an integer";
-    protected static final String error_esa_digmax      = "Signal Header: Digital maximum is an integer";
+    protected static final String error_esa_digmin      = "Signal Header: Digital minimum should be an integer";
+    protected static final String error_esa_digmax      = "Signal Header: Digital maximum should be an integer";
     protected static final String error_esa_dig_equal   = "Signal Header: Digital maximum cannot equal to digital minimum";
-    protected static final String error_esa_digrange    = "Signal Header: Digital integer is out of range [-32768, 327670]";
+    protected static final String error_esa_digrange    = "Signal Header: Digital integer should be in of range [-32768, 327670]";
     protected static final String error_esa_digmaxmin   = "Signal Header: Digital maximum must be larger than digital minimum";
-    protected static final String error_esa_nrSig       = "Signal Header: Number of signals is an integer";
-    protected static final String error_esa_nrSig_range = "Signal Header: Number of signals is greater than 0";
+    protected static final String error_esa_nrSig       = "Signal Header: Number of signals should be an integer";
+    protected static final String error_esa_nrSig_range = "Signal Header: Number of signals should be greater than 0";
     
     public static final String Title_ErroIndex = "Error #"; //this might be redundant, Fangping, 09/29/2010
     public static final String Title_Description = "Description";
