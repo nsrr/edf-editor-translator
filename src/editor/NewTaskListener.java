@@ -18,22 +18,22 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
-
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -191,18 +191,53 @@ public class NewTaskListener extends JDialog {
 			// (3) validate the chosen EDF files.
 			(new MainWindow.VerifyHeaderListener()).verifyHeaders();
 			ArrayList<Incompliance> aggregateIncompliances = MainWindow.aggregateIncompliances();
+			addElementIntoLog("  *  The total number of errors: " + aggregateIncompliances.size(), true, output);
 			
-			addElementIntoLog("  *  The number of errors: " + aggregateIncompliances.size(), true, output);
-			
-			for (int i = 0; i < aggregateIncompliances.size(); i++) {
-				Incompliance error = aggregateIncompliances.get(i);
-				String message = "";
-				message += "------" + "\r\n";
-				message += "Error #" + (i+1) + ": " + error.getFileName();
-				message += " (Row: " + error.getRowIndex() + ", Col: " + error.getColumnIndex() + ")\r\n";
-				message += "Description: " + error.getDescription();
-				addElementIntoLog(message, true, output);
+			/************************************************************
+			 * The above is improved code for output format of validation report
+			 * By Gang Shu on Feb. 20, 2014
+			 ************************************************************/
+			HashMap<String, ArrayList<Incompliance>> map__edf_with_errors = new HashMap<String, ArrayList<Incompliance>>();
+			for (Incompliance error : aggregateIncompliances){
+				String filename = error.getFileName();
+				ArrayList<Incompliance> errorAL = map__edf_with_errors.get(filename);
+				if (errorAL == null)
+					errorAL = new ArrayList<Incompliance>();
+				errorAL.add(error);
+				map__edf_with_errors.put(filename, errorAL);
 			}
+			
+			Iterator<Entry<String, ArrayList<Incompliance>>> iterator = map__edf_with_errors.entrySet().iterator();
+			while(iterator.hasNext()){
+				Entry<String, ArrayList<Incompliance>> entry = iterator.next();
+				
+				if (entry!=null && entry.getKey()!=null && entry.getValue()!=null){
+					String message = "";
+					message += "------------------" + "\r\n";
+					message += "EDF file: " + entry.getKey() + "\r\n";
+					for (Incompliance error : entry.getValue()){
+						message += "[Row: " + error.getRowIndex() + ", Col: " + error.getColumnIndex() + "] " + error.getDescription() + "\r\n";
+					}
+					addElementIntoLog(message, true, output);
+				}
+			}
+			/************************************************************
+			 * The above is improved code for output format of validation report
+			 * By Gang Shu on Feb. 20, 2014
+			 ************************************************************/
+			
+			/**
+			 * The below output format was abandoned since on Feb. 20, 2014
+			 */
+//			for (int i = 0; i < aggregateIncompliances.size(); i++) {
+//				Incompliance error = aggregateIncompliances.get(i);
+//				String message = "";
+//				message += "------" + "\r\n";
+//				message += "Error #" + (i+1) + ": " + error.getFileName();
+//				message += " (Row: " + error.getRowIndex() + ", Col: " + error.getColumnIndex() + ")\r\n";
+//				message += "Description: " + error.getDescription();
+//				addElementIntoLog(message, true, output);
+//			}
 		}
 		
 	}
