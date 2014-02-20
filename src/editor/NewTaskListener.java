@@ -226,18 +226,6 @@ public class NewTaskListener extends JDialog {
 			 * By Gang Shu on Feb. 20, 2014
 			 ************************************************************/
 			
-			/**
-			 * The below output format was abandoned since on Feb. 20, 2014
-			 */
-//			for (int i = 0; i < aggregateIncompliances.size(); i++) {
-//				Incompliance error = aggregateIncompliances.get(i);
-//				String message = "";
-//				message += "------" + "\r\n";
-//				message += "Error #" + (i+1) + ": " + error.getFileName();
-//				message += " (Row: " + error.getRowIndex() + ", Col: " + error.getColumnIndex() + ")\r\n";
-//				message += "Description: " + error.getDescription();
-//				addElementIntoLog(message, true, output);
-//			}
 		}
 		
 	}
