@@ -244,16 +244,16 @@ public class EDFTable extends JTable {
 	public ArrayList<Incompliance> parseESATable() {
 		
 		String wrkFileName = this.getMasterFile().getAbsolutePath();
-		String fileName = "";
+		String srcFileName = "";
 		for (int i = 0; i < MainWindow.getWkEdfFiles().size(); i++){
 			File f = MainWindow.getWkEdfFiles().get(i);
 			if (f.getAbsolutePath().equals(wrkFileName)){
-				fileName = MainWindow.getSrcEdfFiles().get(i).getAbsolutePath();
+				srcFileName = MainWindow.getSrcEdfFiles().get(i).getAbsolutePath();
 				break;
 			}
 		}
 		
-		return ValidateEDF.parseESATable(this, fileName);
+		return ValidateEDF.parseESATable(this, srcFileName);
 	}
 
     public ArrayList<Incompliance> parseEIATable() {

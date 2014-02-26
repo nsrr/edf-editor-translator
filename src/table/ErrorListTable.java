@@ -11,7 +11,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -207,10 +207,23 @@ public class ErrorListTable extends JTable{
         }
         
         public void redirectToESATable(String fileName, int rr, int cc){
+        	
+//        	System.out.println("[" + rr + "," + cc + "]" + fileName);
+        	
+        	String srcFileName = fileName;
+    		String wrkFileName = "";
+    		for (int i = 0; i < MainWindow.getSrcEdfFiles().size(); i++){
+    			File f = MainWindow.getSrcEdfFiles().get(i);
+    			if (f.getAbsolutePath().equals(srcFileName)){
+    				wrkFileName = MainWindow.getWkEdfFiles().get(i).getAbsolutePath();
+    			}
+    		}
+    		
+    		
             ArrayList<ESATable> tables = MainWindow.getIniEsaTables();
             int index = 0;
             for (; index < tables.size(); index++)
-                if (tables.get(index).getMasterFile().getAbsolutePath().equalsIgnoreCase(fileName))
+                if (tables.get(index).getMasterFile().getAbsolutePath().equalsIgnoreCase(wrkFileName))
                     break;
             ESATable esaTable = tables.get(index);
             WorkingTablePane pane = new WorkingTablePane(esaTable);
