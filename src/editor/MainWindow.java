@@ -889,7 +889,6 @@ public class MainWindow extends JFrame implements WindowListener {
             clearErrorListTable();
             activateMenuItems(active);
             activateToolBarItems(active);
-            
         }
         
         private boolean affirmClose(){
@@ -1398,18 +1397,19 @@ public class MainWindow extends JFrame implements WindowListener {
      * The following code:
      * Feature Improvement by Gang Shu on Feb. 24, 2014
      */
+    static int fixerrorTab = -1;
 	protected static class NewErrorFixTemplateListener implements ActionListener {
 
-		private File templateFile = new File("ErrorFix.fix");
+		private File templateFile = new File("Fix Errors");
 
 		public void actionPerformed(ActionEvent e) {
 
 			ErrorFixTemplatePane templatePane = ErrorFixTemplatePane .getErrorFixTemplatePane(null, templateFile);
 
 			tabPane.addTab(templateFile.getName(), toolsErrorFixIcon, templatePane, "Error Fix");
-			int index = MainWindow.tabPane.getTabCount() - 1;
-			new CloseTabButton(MainWindow.tabPane, index);
-			MainWindow.tabPane.setSelectedIndex(index);
+			fixerrorTab = MainWindow.tabPane.getTabCount() - 1;
+			new CloseTabButton(MainWindow.tabPane, fixerrorTab);
+			MainWindow.tabPane.setSelectedIndex(fixerrorTab);
 		}
 	} //end of NewErrorFixTemplateListener
     /**
@@ -3272,6 +3272,10 @@ public class MainWindow extends JFrame implements WindowListener {
      * should remove only the primaryTabs
      */
     private static void closePrimaryTabs(){
+    	if (fixerrorTab!=-1){
+    		tabPane.remove(fixerrorTab);
+    		fixerrorTab = -1;
+    	}
         tabPane.remove(0);// close the Identity Tab
         tabPane.remove(0);//close the Signal Tab
         tabPane.setPrimaryTabsOpened(false);

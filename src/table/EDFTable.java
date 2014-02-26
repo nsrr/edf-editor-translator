@@ -243,7 +243,16 @@ public class EDFTable extends JTable {
      */
 	public ArrayList<Incompliance> parseESATable() {
 		
-		String fileName = this.getMasterFile().getAbsolutePath();
+		String wrkFileName = this.getMasterFile().getAbsolutePath();
+		String fileName = "";
+		for (int i = 0; i < MainWindow.getWkEdfFiles().size(); i++){
+			File f = MainWindow.getWkEdfFiles().get(i);
+			if (f.getAbsolutePath().equals(wrkFileName)){
+				fileName = MainWindow.getSrcEdfFiles().get(i).getAbsolutePath();
+				break;
+			}
+		}
+		
 		return ValidateEDF.parseESATable(this, fileName);
 	}
 
@@ -252,7 +261,7 @@ public class EDFTable extends JTable {
     	int nrow = this.getRowCount();
     	String[] fileList = new String[nrow];
         for (int i = 0; i < nrow; i++) {
-        	String fileName = MainWindow.getWkEdfFiles().get(i).getAbsolutePath();
+        	String fileName = MainWindow.getSrcEdfFiles().get(i).getAbsolutePath();
         	fileList[i] = fileName;
         }
         

@@ -151,7 +151,7 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 		
 		int i = 0;
 		String[] files = new String[MainWindow.getWkEdfFiles().size()];
-		for (File file : MainWindow.getWkEdfFiles()){
+		for (File file : MainWindow.getSrcEdfFiles()){
 			files[i++] = file.getAbsolutePath();
 		}
 		edf_files.setListData(files);

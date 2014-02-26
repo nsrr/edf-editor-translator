@@ -139,3 +139,1098 @@
    + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
 (Step:3/3) Errors after applying bug-fixes:
   Total errors are found: 32
+===============================================================
+  => User start a validation task at 2014-02-26 06:51:06
+  *  The total number of errors: 43
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100020.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100006.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100014.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100009.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100010.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100003.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/200002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:51:24
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100001.edf
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 43
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:53:36
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100001.edf
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 43
+===============================================================
+  => User start a validation task at 2014-02-26 06:53:40
+  *  The total number of errors: 43
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100020.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100006.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100014.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100009.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100010.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100003.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/200002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:56:57
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100001.edf
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 43
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:57:27
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100001.edf
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 43
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:57:29
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100002.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 12, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1478;     Fixed Physical Min/Max:-2.1478/-2.14748
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 39
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:57:30
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 39
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100003.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 37
+===============================================================
+  => User start a validation task at 2014-02-26 06:57:32
+  *  The total number of errors: 37
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100020.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100006.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100014.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100009.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100010.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/200002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:57:45
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 37
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100006.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1748;     Fixed Physical Min/Max:-2.1748/-2.14748
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 32
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:57:47
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 32
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100009.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 28
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:57:49
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 28
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100010.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.4748;     Fixed Physical Min/Max:-2.4748/-2.14748
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 23
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:57:51
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 23
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100014.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 21
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:57:53
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 21
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100020.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 18
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:57:54
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 18
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/200002.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 15
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:58:14
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 15
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100001.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100002.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100003.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100006.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100009.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100010.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100014.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100020.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/200002.edf
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 15
+===============================================================
+  => User start an error-fix task at 2014-02-26 06:59:00
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(2)/100001.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(2)/100002.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 12, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1478;     Fixed Physical Min/Max:-2.1478/-2.14748
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(2)/100003.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(2)/100006.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1748;     Fixed Physical Min/Max:-2.1748/-2.14748
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(2)/100009.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(2)/100010.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.4748;     Fixed Physical Min/Max:-2.4748/-2.14748
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(2)/100014.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(2)/100020.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(2)/200002.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 15
+===============================================================
+  => User start a validation task at 2014-02-26 16:09:10
+  *  The total number of errors: 83
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100003(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100014(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/200002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100020.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100003.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100001(1).edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100006(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100009.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100009(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100006.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100002(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100014.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100010.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100020(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100010(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start a validation task at 2014-02-26 16:09:29
+  *  The total number of errors: 84
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100003(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100014(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100001.edf
+   + [Row: 0, Col: 4] EDF Header: Date is valid under the values:  dd:00-31, mm:00-12, yy:00-99
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/200002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100020.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100003.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100001(1).edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100006(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100009.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100009(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100006.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100002(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100014.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100010.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100020(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(6)/100010(1).edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start an error-fix task at 2014-02-26 16:15:45
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 83
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100001.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100002.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100003.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100006.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100009.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100010.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100014.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100020.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/200002.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100001(1).edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100002(1).edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100003(1).edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100006(1).edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100009(1).edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100010(1).edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100014(1).edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/100020(1).edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(7)/200002(1).edf
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 83
+===============================================================
+  => User start a validation task at 2014-02-26 16:18:07
+  *  The total number of errors: 43
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100006.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100010.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100014.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100020.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/200002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100003.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100009.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start an error-fix task at 2014-02-26 16:18:16
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work/100001.edf
+===============================================================
+  => User start an error-fix task at 2014-02-26 16:22:54
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/Physiomimi Work(1)/100001.edf
+===============================================================
+  => User start an error-fix task at 2014-02-26 16:25:02
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100001.edf
+===============================================================
+  => User start an error-fix task at 2014-02-26 16:25:05
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100001.edf
+===============================================================
+  => User start a validation task at 2014-02-26 16:26:13
+  *  The total number of errors: 43
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100006.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100010.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100014.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100020.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/200002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100003.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100009.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start an error-fix task at 2014-02-26 16:26:20
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100001.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100002.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 12, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1478;     Fixed Physical Min/Max:-2.1478/-2.14748
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100003.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100006.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1748;     Fixed Physical Min/Max:-2.1748/-2.14748
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100009.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100010.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.4748;     Fixed Physical Min/Max:-2.4748/-2.14748
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100014.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100020.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/200002.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 15
+===============================================================
+  => User start a validation task at 2014-02-26 16:27:56
+  *  The total number of errors: 43
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100006.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100010.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100014.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100020.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/200002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100003.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100009.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: /Users/EDF/Desktop/edf_inputs/100002.edf
+   + [Row: 8, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 9, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 4] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start an error-fix task at 2014-02-26 16:28:19
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100001.edf
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100002.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 12, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1478;     Fixed Physical Min/Max:-2.1478/-2.14748
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100003.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100006.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1748;     Fixed Physical Min/Max:-2.1748/-2.14748
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100009.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100010.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.4748;     Fixed Physical Min/Max:-2.4748/-2.14748
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100014.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/100020.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   ------------------
+   Fixed EDF file: /Users/EDF/Desktop/edf_inputs/200002.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 15

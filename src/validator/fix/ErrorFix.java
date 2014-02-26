@@ -21,14 +21,6 @@ public class ErrorFix {
 		NewTask_for_ValidityCommandLine.addElementIntoLog("  => User start an error-fix task at " + MyDate.currentDateTime(), true, MainWindow.log);
 		NewTask_for_ValidityCommandLine.addElementIntoLog("(Step:1/3) Errors before applying bug-fixes:", true, MainWindow.log);
 				
-		//(0)Prepare esa/eia tables for selected edf files
-		HashMap<String, String> map_src_with_wrk = new HashMap<String, String>();
-		for (int i = 0; i < MainWindow.getWkEdfFiles().size(); i++){
-			String src = MainWindow.getSrcEdfFiles().get(i).getAbsolutePath();
-			String wrk = MainWindow.getWkEdfFiles().get(i).getAbsolutePath();
-			map_src_with_wrk.put(src, wrk);
-		}
-		
 		//(1)Validate tables and have a list of errors
 		(new MainWindow.VerifyHeaderListener()).verifyHeaders();
 		ArrayList<Incompliance> incompliances1 = MainWindow.aggregateIncompliances();
@@ -55,8 +47,7 @@ public class ErrorFix {
 			ESATable esaTable2 = null;
 			for (ESATable esaTable1 : esaTables){
 				String src = esaTable1.getSourceMasterFile().getAbsoluteFile().getAbsolutePath();
-				String wrk = map_src_with_wrk.get(src);
-				if (wrk.equals(filename)){
+				if (src.equals(filename)){
 					esaTable2 = esaTable1;
 					break;
 				}
