@@ -72,17 +72,28 @@ class CloseTabButton extends JPanel implements ActionListener {
         uid = temp.getPid();
         tempFile = temp.getMasterFile();
         tempType = 0;
+        
+        removeNodeFromTree(MainWindow.taskTree, tempType + 1, uid);
+        removeTabAt(index);
+        unregisterTemplateFile(tempFile, tempType);
     }
-    else {
+    else if (templatePane instanceof ESATemplatePane){
         ESATemplatePane temp = (ESATemplatePane) templatePane;
         uid = temp.getPid();
         tempFile = temp.getMasterFile();
         tempType = 1;
+        
+        removeNodeFromTree(MainWindow.taskTree, tempType + 1, uid);
+        removeTabAt(index);
+        unregisterTemplateFile(tempFile, tempType);
     }
-           
-    removeNodeFromTree(MainWindow.taskTree, tempType + 1, uid);
-    removeTabAt(index);
-    unregisterTemplateFile(tempFile, tempType);
+    else{
+    	ErrorFixTemplatePane temp = (ErrorFixTemplatePane) templatePane;
+        tempFile = temp.getMasterFile();
+        
+        removeTabAt(index);
+    }
+    
   }
   
 

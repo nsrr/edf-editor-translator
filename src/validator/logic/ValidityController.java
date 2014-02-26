@@ -2,7 +2,7 @@ package validator.logic;
 
 import java.io.File;
 
-import editor.NewTaskListener;
+import editor.NewTask_for_ValidityCommandLine;
 
 public class ValidityController {
 	
@@ -11,7 +11,7 @@ public class ValidityController {
 		edf_dir = separatorReplacer(edf_dir);
 		output = separatorReplacer(output);
 		
-		new NewTaskListener(edf_dir, output);
+		new NewTask_for_ValidityCommandLine(edf_dir, output);
 	}
 	
 	private static String separatorReplacer(String oldString){

@@ -96,7 +96,7 @@ public class EIATemplatePane extends BasicEDFPane {
      * @param eiaHeader
      */
     public EIATemplatePane(EIAHeader eiaHeader, File msFile) {
-        super();        
+        super();
         
         incrementUid();
         pid = uid;

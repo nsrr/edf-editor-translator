@@ -34,7 +34,6 @@ import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterJob;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,17 +42,13 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.io.StringWriter;
-
 import java.net.URL;
-
 import java.util.ArrayList;
 
 import javax.help.CSH;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
-
 import javax.imageio.ImageIO;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -89,7 +84,6 @@ import javax.swing.text.Document;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.undo.UndoManager;
-
 import javax.xml.parsers.ParserConfigurationException;
 
 import listener.EDFFileFilter;
@@ -106,12 +100,16 @@ import table.ESATemplateTableModel;
 import table.ErrorListTable;
 import table.Incompliance;
 import translator.gui.SubWindowGUI;
+import validator.fix.ErrorFix;
+import validator.fix.ErrorTypes;
 
 //import jEDF.JEDF.JEDFMainWindow;
 
 
 public class MainWindow extends JFrame implements WindowListener {
 
+	public static String log = "log.txt";
+	
     /////////////////////////////////////////////////////////////////////////
     //////////////// START of menu and menu items list //////////////////////////////
     ////////////////////////////////////////////////////////////////////////
@@ -149,6 +147,8 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static JMenuItem templateOpenESAItem;
     protected static JMenuItem templateImportESAItem;
 
+    protected static JMenuItem toolFixTableErrorItem;
+    
     protected static JMenuItem templateAddRowItem;
     protected static JMenuItem templateRemoveRowItem;
     
@@ -266,7 +266,9 @@ public class MainWindow extends JFrame implements WindowListener {
     /* keep track of opened eia templates */
     protected static ArrayList<File> EIATemplateFiles = new ArrayList<File>(30); 
     /* keep track of opened esa templates */
-    protected static ArrayList<File> ESATemplateFiles =new ArrayList<File>(30); 
+    protected static ArrayList<File> ESATemplateFiles = new ArrayList<File>(30); 
+    /* keep track of opened error-fix templates */
+    protected static ArrayList<File> ErrorFixTemplateFiles = new ArrayList<File>(30); 
 
     protected static EDFTreeNode rootNode = new EDFTreeNode("Task"); // root
     protected static EDFTreeNode workingDirNode = new EDFTreeNode("EDF Files"); // root.getChildAtRow(0)
@@ -317,6 +319,7 @@ public class MainWindow extends JFrame implements WindowListener {
     public static final ImageIcon toolsApplyEiaIcon = new ImageIcon(MainWindow.class.getResource("/icon/apply-eia.png"));
     public static final ImageIcon toolsApplyEsaIcon = new ImageIcon(MainWindow.class.getResource("/icon/apply-esa.png")); 
     public static final ImageIcon toolsValidateIcon = new ImageIcon(Main.class.getResource("/icon/Preview.png"));
+    public static final ImageIcon toolsErrorFixIcon = new ImageIcon(MainWindow.class.getResource("/icon/apply-eia.png"));
     public static final ImageIcon helpAboutIcon = new ImageIcon(MainWindow.class.getResource("/icon/ProductManual.png"));
     public static final ImageIcon helpHowToUseIcon = new ImageIcon(MainWindow.class.getResource("/icon/Help.png"));
     public static final ImageIcon helpResourceSiteIcon = new ImageIcon(MainWindow.class.getResource("/icon/network-icon.png"));
@@ -328,7 +331,8 @@ public class MainWindow extends JFrame implements WindowListener {
     public static final ImageIcon previousIcon = new ImageIcon(Main.class.getResource("/icon/Previous-icon.png"));
 
     public static final ImageIcon eiaTemplateTabIcon = new ImageIcon(MainWindow.class.getResource("/icon/Eialeaf.png"));
-    public static final ImageIcon esaTemplateTabIcon = new ImageIcon(MainWindow.class.getResource("/icon/Esaleaf.png"));    
+    public static final ImageIcon esaTemplateTabIcon = new ImageIcon(MainWindow.class.getResource("/icon/Esaleaf.png"));
+    public static final ImageIcon errorFixTemplateTabIcon = new ImageIcon(MainWindow.class.getResource("/icon/Eialeaf.png"));
     public static final ImageIcon eiaTabIcon = new ImageIcon(MainWindow.class.getResource("/icon/Edfleaf.png"));
     public static final ImageIcon esaTabIcon = new ImageIcon(MainWindow.class.getResource("/icon/Edfleaf.png"));
     public static final ImageIcon messageIcon = new ImageIcon(MainWindow.class.getResource("/icon/Message.png"));
@@ -602,7 +606,7 @@ public class MainWindow extends JFrame implements WindowListener {
         leftStatusBar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         leftStatusBar.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e) {
-                    new NewTaskListener(new JFrame());
+                    new NewTask_for_ValidityCommandLine(new JFrame());
                 }
             });
     }
@@ -1231,10 +1235,17 @@ public class MainWindow extends JFrame implements WindowListener {
     }
     
     private void createToolsValidateTableItem(){
-        toolValidateTableItem = new JMenuItem("Validate Tables");
+    	//TODO
+        toolValidateTableItem = new JMenuItem("Find Table Errors");
         toolValidateTableItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
         toolValidateTableItem.setIcon(toolsValidateIcon);
         toolValidateTableItem.addActionListener(new VerifyHeaderListener());
+    }
+
+    private void createToolsFixTableErrors(){
+    	toolFixTableErrorItem = new JMenuItem("Fix Table Errors");
+    	toolFixTableErrorItem.setIcon(toolsErrorFixIcon);
+    	toolFixTableErrorItem.addActionListener(new NewErrorFixTemplateListener());
     }
     
     private void createJEDFToolItem(){
@@ -1324,6 +1335,7 @@ public class MainWindow extends JFrame implements WindowListener {
         createTemplateOpenESAItem();
         createTemplateImportEIAItem();
         createTemplateImportESAItem();
+        createToolsFixTableErrors();
         createToolsApplyEIATemplateItem();
         createToolsApplyESATemplateItem();
 /*         createTemplateAddRowItem();
@@ -1338,8 +1350,8 @@ public class MainWindow extends JFrame implements WindowListener {
         templateMenu.add(templateImportESAItem);
         templateMenu.addSeparator();
         templateMenu.add(toolApplyEIATemplateItem);
-        templateMenu.add(toolApplyESATemplateItem);        
-                
+        templateMenu.add(toolApplyESATemplateItem);
+        
         //context sensitive help
         //hb.enableHelpOnButton(templateMenu, "menubar.template", null);
         CSH.setHelpIDString(templateMenu, "menubar.template");
@@ -1381,6 +1393,30 @@ public class MainWindow extends JFrame implements WindowListener {
     }
 
 
+    /**
+     * TODO
+     * The following code:
+     * Feature Improvement by Gang Shu on Feb. 24, 2014
+     */
+	protected static class NewErrorFixTemplateListener implements ActionListener {
+
+		private File templateFile = new File("ErrorFix.fix");
+
+		public void actionPerformed(ActionEvent e) {
+
+			ErrorFixTemplatePane templatePane = ErrorFixTemplatePane .getErrorFixTemplatePane(null, templateFile);
+
+			tabPane.addTab(templateFile.getName(), toolsErrorFixIcon, templatePane, "Error Fix");
+			int index = MainWindow.tabPane.getTabCount() - 1;
+			new CloseTabButton(MainWindow.tabPane, index);
+			MainWindow.tabPane.setSelectedIndex(index);
+		}
+	} //end of NewErrorFixTemplateListener
+    /**
+     * The above code:
+     * Feature Improvement by Gang Shu on Feb. 24, 2014
+     */
+    
     protected static class NewEIATemplateListener implements ActionListener {
 
         private final String eiaFileNamePrefix = "untitled";
@@ -2329,11 +2365,12 @@ public class MainWindow extends JFrame implements WindowListener {
     	toolsMenu.setMnemonic('T');
     	
         createToolsValidateTableItem();
-    	createAnnotationConverterItem();
+        createAnnotationConverterItem();
         createJEDFToolItem();
         createEDFViewerToolItem();
         
         toolsMenu.add(toolValidateTableItem);
+        toolsMenu.add(toolFixTableErrorItem);
         toolsMenu.addSeparator();
     	
     	toolsMenu.add(annotConverterItem);
@@ -2719,7 +2756,7 @@ public class MainWindow extends JFrame implements WindowListener {
                 if (input != 0)
                     return; // do nothing
             }
-            new NewTaskListener(new JFrame());
+            new NewTask_for_ValidityCommandLine(new JFrame());
         }
     } 
     
@@ -3220,7 +3257,7 @@ public class MainWindow extends JFrame implements WindowListener {
         fileDeleteFileItem.setEnabled(active);
         fileRenameItem.setEnabled(active);
         toolApplyEIATemplateItem.setEnabled(active);
-        toolApplyESATemplateItem.setEnabled(active);            
+        toolApplyESATemplateItem.setEnabled(active);
     }
     
     private static void activateToolBarItems(boolean active){
@@ -3248,7 +3285,7 @@ public class MainWindow extends JFrame implements WindowListener {
     /*
      * aggregate all four thype of incompliances into one array list.
      */
-    protected static ArrayList<Incompliance> aggregateIncompliances(){
+    public static ArrayList<Incompliance> aggregateIncompliances(){
         ArrayList<Incompliance> inserted = new ArrayList<Incompliance>();
         //do not mix the adding order       
         insertIncompliances(inserted, eiaIncompliances);
@@ -3309,7 +3346,7 @@ public class MainWindow extends JFrame implements WindowListener {
         CSH.setHelpIDString(verifyBtn, "toolbar.verify");
     }
     
-    static class VerifyHeaderListener implements ActionListener{
+    public static class VerifyHeaderListener implements ActionListener{
 
         public void actionPerformed(ActionEvent e) {
             try {
@@ -3325,13 +3362,8 @@ public class MainWindow extends JFrame implements WindowListener {
             
             theme = Utility.currentTimeToString() + ". Parse file headers.\n";
             doc.insertString(doc.getLength(), theme, EDFInfoPane.getTheme());
-            verifyHeaders();
-            //cleanupIncompliances();
-            //parseEIATable();
-            //parseESATables();
-/*             verifyWorkingFilesHeader();
-            verifyTemplateFilesHeader(); */
-       
+            ArrayList<Incompliance> aggregateIncompliances = verifyHeaders();
+            NewTask_for_ValidityCommandLine.generateInvalidReport(aggregateIncompliances);
         }
         /*
          * obsolete
@@ -3393,22 +3425,18 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }
         
-        public void verifyHeaders(){
+        public ArrayList<Incompliance> verifyHeaders(){
         	/**
-        	 * TODO: [Validation] Validation of EDF Header
-        	 * Term Definition:
-        	 *   EIA: EDF Identity Attributes
-        	 *   ESA: EDF Signal Attributes
+        	 * [Validation] Validation of EDF Header
         	 */
             cleanupIncompliances();
             parseEIATable();
             parseESATables();
             parseEIATempalteTables();
             parseESATemplateTables();
-            outputValidationToErrorListTable();
+            ArrayList<Incompliance> aggregateIncompliances = outputValidationToErrorListTable();
+            return aggregateIncompliances;
         }
-        /*             verifyWorkingFilesHeader();
-        verifyTemplateFilesHeader(); */
         
         public void cleanupIncompliances(){
             MainWindow.getEiaIncompliances().clear();
@@ -3468,11 +3496,12 @@ public class MainWindow extends JFrame implements WindowListener {
         }
 
         
-        private void outputValidationToErrorListTable(){
+        private ArrayList<Incompliance> outputValidationToErrorListTable(){
         	
             ErrorListTable errorTable = MainWindow.getErrorListTable();
            
             ArrayList<Incompliance> aggregateIncompliances = MainWindow.aggregateIncompliances();
+//            NewTask_for_ValidityCommandLine.generateInvalidReport(aggregateIncompliances);
             
             int count = aggregateIncompliances.size();
             outputMessage(count);
@@ -3494,7 +3523,9 @@ public class MainWindow extends JFrame implements WindowListener {
             ErrorListTable.setIcon(errorTable, count);
     		/************************************************************** 
     		 * The above codefix was made by Gang Shu on February 6, 2014
-    		 **************************************************************/ 
+    		 **************************************************************/
+            
+            return aggregateIncompliances;
         }
         
         private void outputMessage(int count){

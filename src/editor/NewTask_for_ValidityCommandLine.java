@@ -67,7 +67,7 @@ import translator.utils.Keywords;
 import translator.utils.MyDate;
 
 
-public class NewTaskListener extends JDialog {
+public class NewTask_for_ValidityCommandLine extends JDialog {
 
     protected static JTextField srcFilesDirField;
     protected static JTextField workingDirField;
@@ -119,7 +119,7 @@ public class NewTaskListener extends JDialog {
         overwriteLabel.setFont(newFont);
     }
 
-    public NewTaskListener(JFrame frame) {
+    public NewTask_for_ValidityCommandLine(JFrame frame) {
         super(frame, true); // modal
         this.setLocationRelativeTo(frame);
 
@@ -131,7 +131,7 @@ public class NewTaskListener extends JDialog {
 	/************************************************************** 
 	 * The below feature improvement was made by Gang Shu on February 7, 2014
 	 **************************************************************/
-    private static void addElementIntoLog(String message, boolean showOnScreen, String outfile){
+    public static void addElementIntoLog(String message, boolean showOnScreen, String outfile){
     	
     	if (showOnScreen){
 			System.out.println(message);
@@ -139,7 +139,8 @@ public class NewTaskListener extends JDialog {
     	
 		BufferedWriter out = null;
 		try {
-			new File(outfile).getParentFile().mkdirs();
+			if (outfile.contains(File.separator))
+				new File(outfile).getParentFile().mkdirs();
 			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outfile, (new File(outfile)).exists())));
 			out.write(message + "\r\n");
 		} catch (Exception e) {
@@ -154,9 +155,11 @@ public class NewTaskListener extends JDialog {
 		}
     }
     
-	public NewTaskListener(String edf_dir, String output) {
+	public NewTask_for_ValidityCommandLine(String edf_dir, String output) {
 		
 		super(new JFrame(), false);
+		
+		MainWindow.log = output;
 		
 		File f = new File(edf_dir);
 		if (f.exists()) {
@@ -164,13 +167,10 @@ public class NewTaskListener extends JDialog {
 			sourceFiles = new ArrayList<File>();
 			@SuppressWarnings("unchecked")
 			Collection<File> fileCollection = FileUtils.listFiles(f, new String[]{"edf", "Edf", "eDf", "edF", "EDf", "EdF", "eDF", "EDF"}, true);
-			addElementIntoLog("===============================================================", true, output);
-			addElementIntoLog("  => User start a EDF validation at " + MyDate.currentDateTime(), true, output);
-			addElementIntoLog("  *  A list of EDF files:", true, output);
 			if (fileCollection != null){
 				int i = 0;
 				for (File file : fileCollection){
-					addElementIntoLog("     " + (++i) + ": " + file.getAbsolutePath(), true, output);
+					addElementIntoLog("   + " + (++i) + ": " + file.getAbsolutePath(), true, output);
 					sourceFiles.add(file);
 				}
 			}
@@ -182,53 +182,61 @@ public class NewTaskListener extends JDialog {
 
 			initUI();
 			setVisible(false);
-			FinishButtonListener finishButtonListener = new FinishButtonListener();
-			finishButtonListener.createWorkingDirectory();
-			finishButtonListener.yieldNewEDFHeaders();
-			finishButtonListener.yieldEiaTable();
-			finishButtonListener.yieldEsaTables();
+			ValidateFinishButtonListener validateFinishButtonListener = new ValidateFinishButtonListener();
+			validateFinishButtonListener.createWorkingDirectory();
+			validateFinishButtonListener.yieldNewEDFHeaders();
+			validateFinishButtonListener.yieldEiaTable();
+			validateFinishButtonListener.yieldEsaTables();
 
 			// (3) validate the chosen EDF files.
 			(new MainWindow.VerifyHeaderListener()).verifyHeaders();
 			ArrayList<Incompliance> aggregateIncompliances = MainWindow.aggregateIncompliances();
-			addElementIntoLog("  *  The total number of errors: " + aggregateIncompliances.size(), true, output);
-			
-			/************************************************************
-			 * The above is improved code for output format of validation report
-			 * By Gang Shu on Feb. 20, 2014
-			 ************************************************************/
-			HashMap<String, ArrayList<Incompliance>> map__edf_with_errors = new HashMap<String, ArrayList<Incompliance>>();
-			for (Incompliance error : aggregateIncompliances){
-				String filename = error.getFileName();
-				ArrayList<Incompliance> errorAL = map__edf_with_errors.get(filename);
-				if (errorAL == null)
-					errorAL = new ArrayList<Incompliance>();
-				errorAL.add(error);
-				map__edf_with_errors.put(filename, errorAL);
-			}
-			
-			Iterator<Entry<String, ArrayList<Incompliance>>> iterator = map__edf_with_errors.entrySet().iterator();
-			while(iterator.hasNext()){
-				Entry<String, ArrayList<Incompliance>> entry = iterator.next();
-				
-				if (entry!=null && entry.getKey()!=null && entry.getValue()!=null){
-					String message = "";
-					message += "------------------" + "\r\n";
-					message += "EDF file: " + entry.getKey() + "\r\n";
-					for (Incompliance error : entry.getValue()){
-						message += "[Row: " + error.getRowIndex() + ", Col: " + error.getColumnIndex() + "] " + error.getDescription() + "\r\n";
-					}
-					addElementIntoLog(message, true, output);
-				}
-			}
-			/************************************************************
-			 * The above is improved code for output format of validation report
-			 * By Gang Shu on Feb. 20, 2014
-			 ************************************************************/
-			
+			generateInvalidReport(aggregateIncompliances);
 		}
 		
 	}
+	
+	public static void generateInvalidReport(ArrayList<Incompliance> aggregateIncompliances){
+		
+		addElementIntoLog("===============================================================", true, MainWindow.log);
+		addElementIntoLog("  => User start a validation task at " + MyDate.currentDateTime(), true, MainWindow.log);
+		addElementIntoLog("  *  The total number of errors: " + aggregateIncompliances.size(), true, MainWindow.log);
+		
+		/************************************************************
+		 * The below is improved code for output format of validation report
+		 * By Gang Shu on Feb. 20, 2014
+		 ************************************************************/
+		HashMap<String, ArrayList<Incompliance>> map__edf_with_errors = new HashMap<String, ArrayList<Incompliance>>();
+		for (Incompliance error : aggregateIncompliances){
+			String filename = error.getFileName();
+			ArrayList<Incompliance> errorAL = map__edf_with_errors.get(filename);
+			if (errorAL == null)
+				errorAL = new ArrayList<Incompliance>();
+			errorAL.add(error);
+			map__edf_with_errors.put(filename, errorAL);
+		}
+		
+		Iterator<Entry<String, ArrayList<Incompliance>>> iterator = map__edf_with_errors.entrySet().iterator();
+		while(iterator.hasNext()){
+			Entry<String, ArrayList<Incompliance>> entry = iterator.next();
+			
+			if (entry!=null && entry.getKey()!=null && entry.getValue()!=null){
+				String message = "";
+				message += "   ------------------" + "\r\n";
+				message += "   EDF file: " + entry.getKey() + "\r\n";
+				for (Incompliance error : entry.getValue()){
+					message += "   + [Row: " + error.getRowIndex() + ", Col: " + error.getColumnIndex() + "] " + error.getDescription() + "\r\n";
+				}
+				addElementIntoLog(message, true, MainWindow.log);
+			}
+		}
+		/************************************************************
+		 * The above is improved code for output format of validation report
+		 * By Gang Shu on Feb. 20, 2014
+		 ************************************************************/
+		
+	}
+	
 	/************************************************************** 
 	 * The above feature improvement was made by Gang Shu on February 7, 2014
 	 **************************************************************/
@@ -255,7 +263,7 @@ public class NewTaskListener extends JDialog {
         
 
         finishButton = new JButton("Finish");
-        finishButton.addActionListener(new FinishButtonListener());
+        finishButton.addActionListener(new ValidateFinishButtonListener());
 
         cancelButton = new JButton("Cancel");
         InputMap im =
@@ -708,7 +716,7 @@ public class NewTaskListener extends JDialog {
         }
     }
 
-    private class FinishButtonListener implements ActionListener {        
+    private class ValidateFinishButtonListener implements ActionListener {        
         public void actionPerformed(ActionEvent e) {
             performActions();            
         }

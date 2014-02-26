@@ -110,7 +110,7 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
     }
 
-    private BasicEDFPane getCurrentPane() {
+    public static BasicEDFPane getCurrentPane() {
         return (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
     }
     
@@ -142,8 +142,9 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         else if (pane instanceof EIATemplatePane){
             saveEIATemplateTable((EIATemplatePane) pane); //done: message to console window
         }
-        else
-            System.out.println("pane initialization error");     
+        else{
+            System.out.println("pane initialization error");
+        }
     }
     
     public void saveEIATemplateTable(EIATemplatePane pane){ 
