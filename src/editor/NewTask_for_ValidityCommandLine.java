@@ -225,7 +225,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 				message += "   ------------------" + "\r\n";
 				message += "   EDF file: " + entry.getKey() + "\r\n";
 				for (Incompliance error : entry.getValue()){
-					message += "   + [Row: " + error.getRowIndex() + ", Col: " + error.getColumnIndex() + "] " + error.getDescription() + "\r\n";
+					message += "   + [Row: " + (error.getRowIndex() + 1) + ", Col: " + (error.getColumnIndex() + 1) + "] " + error.getDescription() + "\r\n";
 				}
 				addElementIntoLog(message, true, MainWindow.log);
 			}
@@ -315,6 +315,9 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         noOverwriteRadio = new JRadioButton("No");
         noOverwriteRadio.setToolTipText("duplicate source files to new directory");
         noOverwriteRadio.setSelected(true);
+        /** Bugfix to default write mode. (Mar. 5, 2014) */
+        MainWindow.setWriteMode(MainWindow.duplicate_mode);
+        /** Bugfix to default write mode. (Mar. 5, 2014) */
         noOverwriteRadio.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     ooutputDirBrowseBtn.setEnabled(true);

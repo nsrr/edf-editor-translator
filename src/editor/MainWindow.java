@@ -273,8 +273,8 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static EDFTreeNode rootNode = new EDFTreeNode("Task"); // root
     protected static EDFTreeNode workingDirNode = new EDFTreeNode("EDF Files"); // root.getChildAtRow(0)
     protected static EDFTreeNode eiaTemplateFilesNode = new EDFTreeNode("Identity Templates"); // root.getChildAtRow(1)
-    protected  static EDFTreeNode esaTemplateFilesNode = new EDFTreeNode("Signal Templates"); // root.getChildAtRow(2)
-    protected static TaskTree taskTree = new TaskTree(rootNode, workingDirNode, eiaTemplateFilesNode, esaTemplateFilesNode);
+    protected static EDFTreeNode esaTemplateFilesNode = new EDFTreeNode("Signal Templates"); // root.getChildAtRow(2)
+    public static TaskTree taskTree = new TaskTree(rootNode, workingDirNode, eiaTemplateFilesNode, esaTemplateFilesNode);
 
     private static int snOfNewEIATemplateFile = 0;
     private static int snOfNewESATemplateFile = 0;
@@ -343,7 +343,7 @@ public class MainWindow extends JFrame implements WindowListener {
     
     protected static int writeMode;
     public static final int overwrite_mode = 0;
-    public static final int duplicate_mode = 1;    
+    public static final int duplicate_mode = 1;
     protected static int selectionMode;
     public static final int selection_mode_by_dir = 0;
     public static final int selection_mode_by_file = 1;
@@ -1235,14 +1235,14 @@ public class MainWindow extends JFrame implements WindowListener {
     
     private void createToolsValidateTableItem(){
     	//TODO
-        toolValidateTableItem = new JMenuItem("Find Table Errors");
+        toolValidateTableItem = new JMenuItem("Find EDF Header Errors");
         toolValidateTableItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
         toolValidateTableItem.setIcon(toolsValidateIcon);
         toolValidateTableItem.addActionListener(new VerifyHeaderListener());
     }
 
     private void createToolsFixTableErrors(){
-    	toolFixTableErrorItem = new JMenuItem("Fix Table Errors");
+    	toolFixTableErrorItem = new JMenuItem("Fix EDF Header Errors");
     	toolFixTableErrorItem.setIcon(toolsErrorFixIcon);
     	toolFixTableErrorItem.addActionListener(new NewErrorFixTemplateListener());
     }
@@ -1736,7 +1736,7 @@ public class MainWindow extends JFrame implements WindowListener {
         private void selectTaskTreeNode(int index) {            
             EDFTreeNode parentNode = MainWindow.taskTree.getEiaRootNode();
             EDFTreeNode greenNode = (EDFTreeNode) parentNode.getChildAt(index);
-
+            
             TreePath path = new TreePath(greenNode.getPath());
             MainWindow.taskTree.scrollPathToVisible(path);
             MainWindow.taskTree.setSelectionPath(path);

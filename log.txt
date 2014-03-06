@@ -1800,3 +1800,415 @@
    + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:1.00/-1.00;     Fixed Physical Min/Max:-1.00/1.00
 (Step:3/3) Errors after applying bug-fixes:
     Total errors are found: 15
+===============================================================
+  => User start a validation task at 2014-03-06 13:16:28
+  *  The total number of errors: 15
+   ------------------
+   EDF file: D:\Workspace2\test\100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+===============================================================
+  => User start a validation task at 2014-03-06 13:20:33
+  *  The total number of errors: 0
+===============================================================
+  => User start a validation task at 2014-03-06 13:23:31
+  *  The total number of errors: 15
+   ------------------
+   EDF file: D:\Workspace2\test\100001.edf
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+===============================================================
+  => User start a validation task at 2014-03-06 13:23:58
+  *  The total number of errors: 16
+   ------------------
+   EDF file: D:\Workspace2\test\100001.edf
+   + [Row: 0, Col: 4] EDF Header: Date should follow the format of dd.mm.yy
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+===============================================================
+  => User start an error-fix task at 2014-03-06 14:07:50
+(Step:1/3) Errors before applying bug-fixes:
+    Total errors are found: 43
+(Step:2/3) Applying bug-fixes:
+   ------------------
+   Fixed EDF file: D:\Workspace2\test\100002.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 12, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1478;     Fixed Physical Min/Max:-2.1478/-2.14748
+   ------------------
+   Fixed EDF file: D:\Workspace2\test\100006.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.1748;     Fixed Physical Min/Max:-2.1748/-2.14748
+   ------------------
+   Fixed EDF file: D:\Workspace2\test\100010.edf
+   + Fixed error at [Row: 8, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 9, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 10, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 11, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:0.501961/-0.49411;     Fixed Physical Min/Max:-0.49411/0.501961
+   + Fixed error at [Row: 13, Col: 4]    Signal Header: Physical maximum must be larger than physical minimum     Wrong Physical Min/Max:-2.14748/-2.4748;     Fixed Physical Min/Max:-2.4748/-2.14748
+(Step:3/3) Errors after applying bug-fixes:
+    Total errors are found: 29
+===============================================================
+  => User start a validation task at 2014-03-06 14:26:04
+  *  The total number of errors: 16
+   ------------------
+   EDF file: D:\Workspace2\test\100001.edf
+   + [Row: 0, Col: 4] EDF Header: Date should follow the format of dd.mm.yy
+   + [Row: 4, Col: 0] Signal Header: Cannot be empty field
+   + [Row: 5, Col: 0] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 6, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 7, Col: 5] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 3] Signal Header: Cannot be empty field
+   + [Row: 8, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 3] Signal Header: Physical minimum should be a floating point number
+   + [Row: 9, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 10, Col: 3] Signal Header: Non-Ascii character in signal
+   + [Row: 10, Col: 4] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 11, Col: 5] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 11, Col: 6] Signal Header: Digital maximum cannot equal to digital minimum
+
+===============================================================
+  => User start a validation task at 2014-03-06 15:45:31
+  *  The total number of errors: 43
+   ------------------
+   EDF file: D:\Workspace2\test\100006.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 14, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100014.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\200002.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100003.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100009.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100001.edf
+   + [Row: 5, Col: 1] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 1] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 7, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 7, Col: 6] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 6] Signal Header: Digital minimum should be an integer
+   + [Row: 9, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 6] Signal Header: Cannot be empty field
+   + [Row: 10, Col: 4] Signal Header: Physical minimum should be a floating point number
+   + [Row: 10, Col: 5] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Non-Ascii character in signal
+   + [Row: 11, Col: 5] Signal Header: Physical maximum should be a floating point number
+   + [Row: 12, Col: 5] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 12, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 12, Col: 7] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 12, Col: 7] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100002.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100020.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100010.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 14, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start a validation task at 2014-03-06 16:52:29
+  *  The total number of errors: 44
+   ------------------
+   EDF file: D:\Workspace2\test\100006.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 14, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100014.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\200002.edf
+   + [Row: 9, Col: 4] EDF Header: Non-Ascii character in header
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100003.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100009.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100001.edf
+   + [Row: 5, Col: 1] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 1] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 7, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 7, Col: 6] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 6] Signal Header: Digital minimum should be an integer
+   + [Row: 9, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 6] Signal Header: Cannot be empty field
+   + [Row: 10, Col: 4] Signal Header: Physical minimum should be a floating point number
+   + [Row: 10, Col: 5] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Non-Ascii character in signal
+   + [Row: 11, Col: 5] Signal Header: Physical maximum should be a floating point number
+   + [Row: 12, Col: 5] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 12, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 12, Col: 7] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 12, Col: 7] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100002.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100020.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100010.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 14, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start a validation task at 2014-03-06 16:56:32
+  *  The total number of errors: 44
+   ------------------
+   EDF file: D:\Workspace2\test\100006.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 14, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100014.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\200002.edf
+   + [Row: 9, Col: 4] EDF Header: Non-Ascii character in header
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100003.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100009.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100001.edf
+   + [Row: 5, Col: 1] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 1] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 7, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 7, Col: 6] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 6] Signal Header: Digital minimum should be an integer
+   + [Row: 9, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 6] Signal Header: Cannot be empty field
+   + [Row: 10, Col: 4] Signal Header: Physical minimum should be a floating point number
+   + [Row: 10, Col: 5] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Non-Ascii character in signal
+   + [Row: 11, Col: 5] Signal Header: Physical maximum should be a floating point number
+   + [Row: 12, Col: 5] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 12, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 12, Col: 7] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 12, Col: 7] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100002.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100020.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100010.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 14, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+===============================================================
+  => User start a validation task at 2014-03-06 16:56:48
+  *  The total number of errors: 45
+   ------------------
+   EDF file: D:\Workspace2\test\100006.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 14, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100014.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\200002.edf
+   + [Row: 9, Col: 4] EDF Header: Non-Ascii character in header
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100003.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100009.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100001.edf
+   + [Row: 1, Col: 3] EDF Header: Non-Ascii character in header
+   + [Row: 5, Col: 1] Signal Header: Cannot be empty field
+   + [Row: 6, Col: 1] Signal Header: Duplicated labels at row 6, 7
+   + [Row: 7, Col: 5] Signal Header: Cannot be empty field
+   + [Row: 7, Col: 6] Signal Header: Digital minimum should be an integer
+   + [Row: 8, Col: 6] Signal Header: Digital minimum should be an integer
+   + [Row: 9, Col: 4] Signal Header: Cannot be empty field
+   + [Row: 9, Col: 6] Signal Header: Cannot be empty field
+   + [Row: 10, Col: 4] Signal Header: Physical minimum should be a floating point number
+   + [Row: 10, Col: 5] Signal Header: Physical maximum should be a floating point number
+   + [Row: 11, Col: 4] Signal Header: Non-Ascii character in signal
+   + [Row: 11, Col: 5] Signal Header: Physical maximum should be a floating point number
+   + [Row: 12, Col: 5] Signal Header: Physical maximum cannot equal to physical minimum
+   + [Row: 12, Col: 6] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 12, Col: 7] Signal Header: Digital integer should be in the range of [-32768, 32767]
+   + [Row: 12, Col: 7] Signal Header: Digital maximum cannot equal to digital minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100002.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 13, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100020.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: D:\Workspace2\test\100010.edf
+   + [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   + [Row: 14, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+

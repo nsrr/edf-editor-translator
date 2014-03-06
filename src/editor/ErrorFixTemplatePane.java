@@ -117,11 +117,11 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 		formPane.add(err1_Check, cc.xy(1, 2));
 		formPane.add(err1_Label, cc.xy(5, 2));
 
-		formPane.add(err2_Check, cc.xy(1, 4));
-		formPane.add(err2_Label, cc.xy(5, 4));
+//		formPane.add(err2_Check, cc.xy(1, 4));
+//		formPane.add(err2_Label, cc.xy(5, 4));
 
-		formPane.add(err3_Check, cc.xy(1, 6));
-		formPane.add(err3_Label, cc.xy(5, 6));
+//		formPane.add(err3_Check, cc.xy(1, 6));
+//		formPane.add(err3_Label, cc.xy(5, 6));
 
 		formPane.add(edf_sroll, cc.xyw(2, 14, 6));
 

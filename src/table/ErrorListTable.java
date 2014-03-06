@@ -1,5 +1,6 @@
 package table;
 
+import editor.EDFTreeNode;
 import editor.EIATemplatePane;
 import editor.ESATemplatePane;
 import editor.MainWindow;
@@ -22,6 +23,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.tree.TreeNode;
 
 
 public class ErrorListTable extends JTable{
@@ -177,18 +179,27 @@ public class ErrorListTable extends JTable{
                 return;
             }
             
+
+        	for (int i = 0; i < MainWindow.taskTree.getEdfRootNode().getChildCount(); i++){
+        		EDFTreeNode child = (EDFTreeNode)MainWindow.taskTree.getEdfRootNode().getChildAt(i);
+        		if (fileName.endsWith(child.getHostFile().getName())){
+        			MainWindow.taskTree.setSelectionRow(i + 2);
+        			break;
+        		}
+        	}
+            
             if (typeCode == Incompliance.index_incomp_src_eia){/* EIA header table*/
                 redirectToEIATable(rowNumber, columnNumber);
                 return;
             }
             
             if (typeCode == Incompliance.index_incomp_src_esa){/* ESA header table*/
-                redirectToESATable(fileName, rowNumber, columnNumber);
+            	redirectToESATable(fileName, rowNumber, columnNumber);
                 return;
             }
             
             if (typeCode == Incompliance.index_incomp_src_eiatemplate){/* EIA template header table*/
-                redirectToEIATemplateTable(fileName, rowNumber, columnNumber);
+            	redirectToEIATemplateTable(fileName, rowNumber, columnNumber);
                 return;
             }
             

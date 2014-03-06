@@ -53,17 +53,25 @@ public class TranslationController {
 				new File(out_file).getParentFile().mkdirs();
 				if (vendor.equals(Vendor.Embla.toString())){
 					annotation_file = validize_file(annotation_dir, basename, ".txt");
-					bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file);
+					if ((new File(annotation_file)).exists()){
+						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file);	
+					}
 				} else if (vendor.equals(Vendor.Compumedics.toString())){
 					annotation_file = validize_file(annotation_dir, basename, ".xml");
-					bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file);
+					if ((new File(annotation_file)).exists()){
+						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file);
+					}
 				} else if (vendor.equals(Vendor.Respironics.toString())){
 					annotation_file = validize_file(annotation_dir, basename, ".events.csv");
 					stage_file = validize_file(stage_dir, basename, ".events.csv");
-					bTranslation = converter.convertCSV(annotation_file, stage_file, edf_file, mapping_file, out_file);
+					if ((new File(annotation_file)).exists() && (new File(stage_file)).exists()){
+						bTranslation = converter.convertCSV(annotation_file, stage_file, edf_file, mapping_file, out_file);
+					}
 				} else if (vendor.equals(Vendor.Sandman.toString())){
 					annotation_file = validize_file(annotation_dir, basename, ".txt");
-					bTranslation = converter.convertSandman(annotation_file, edf_file, mapping_file, out_file);
+					if ((new File(annotation_file)).exists()){
+						bTranslation = converter.convertSandman(annotation_file, edf_file, mapping_file, out_file);
+					}
 				}
 				
 				if (bTranslation){
@@ -166,12 +174,12 @@ public class TranslationController {
 		if (dir == null || basename == null || extension == null)
 			return null;
 		
-		String file = separatorReplacer(dir + File.separator + basename + extension);
+		String file = separatorReplacer(dir + File.separator + basename + extension.toUpperCase());
 		
 		if (!(new File(file)).exists()){
-			file = separatorReplacer(dir + File.separator + basename + extension.toUpperCase());
-			if (!(new File(file)).exists())
-				file = null;
+			file = separatorReplacer(dir + File.separator + basename + extension);
+//			if (!(new File(file)).exists())
+//				file = null;
 		}
 		
 		return file;
