@@ -179,14 +179,30 @@ public class ErrorListTable extends JTable{
                 return;
             }
             
-
-        	for (int i = 0; i < MainWindow.taskTree.getEdfRootNode().getChildCount(); i++){
-        		EDFTreeNode child = (EDFTreeNode)MainWindow.taskTree.getEdfRootNode().getChildAt(i);
-        		if (fileName.endsWith(child.getHostFile().getName())){
-        			MainWindow.taskTree.setSelectionRow(i + 2);
-        			break;
-        		}
-        	}
+            /* 
+             * The below code is used to highlight working-file node on the task tree
+             * This feature is made by March 6, 2014
+             */
+            String srcFileName = fileName;
+            String wrkFileName = null;
+    		for (int i = 0; i < MainWindow.getSrcEdfFiles().size(); i++){
+    			File f = MainWindow.getSrcEdfFiles().get(i);
+    			if (f.getAbsolutePath().equals(srcFileName)){
+    				wrkFileName = MainWindow.getWkEdfFiles().get(i).getAbsolutePath();
+    				break;
+    			}
+    		}
+            
+    		if (wrkFileName!=null){
+    			for (int i = 0; i < MainWindow.taskTree.getEdfRootNode().getChildCount(); i++){
+            		EDFTreeNode child = (EDFTreeNode)MainWindow.taskTree.getEdfRootNode().getChildAt(i);
+            		if (wrkFileName.equals(child.getHostFile().getAbsolutePath())){
+            			MainWindow.taskTree.setSelectionRow(i + 2);
+            			break;
+            		}
+            	}
+    		}
+        	/* The above code is used to highlight working-file node on the task tree*/
             
             if (typeCode == Incompliance.index_incomp_src_eia){/* EIA header table*/
                 redirectToEIATable(rowNumber, columnNumber);

@@ -196,6 +196,9 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 		
 	}
 	
+	/**
+	 * The following function is to generate error summary for EDF Header 
+	 */
 	public static void generateInvalidReport(ArrayList<Incompliance> aggregateIncompliances){
 		
 		addElementIntoLog("===============================================================", true, MainWindow.log);
