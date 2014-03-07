@@ -227,8 +227,9 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 				String message = "";
 				message += "   ------------------" + "\r\n";
 				message += "   EDF file: " + entry.getKey() + "\r\n";
+				int i = 0;
 				for (Incompliance error : entry.getValue()){
-					message += "   + [Row: " + (error.getRowIndex() + 1) + ", Col: " + (error.getColumnIndex() + 1) + "] " + error.getDescription() + "\r\n";
+					message += "   +" + (++i) + " [Row: " + (error.getRowIndex() + 1) + ", Col: " + (error.getColumnIndex() + 1) + "] " + error.getDescription() + "\r\n";
 				}
 				addElementIntoLog(message, true, MainWindow.log);
 			}
