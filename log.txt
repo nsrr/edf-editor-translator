@@ -2212,3 +2212,25 @@
    + [Row: 12, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
    + [Row: 14, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
 
+===============================================================
+  => User start a validation task at 2014-03-27 05:17:54
+  *  The total number of errors: 10
+   ------------------
+   EDF file: C:\Users\gxs213\Dropbox\Edf_Translator\for Catherine\Study Files\SHHS1\100657.EDF
+   +1 [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   +2 [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: C:\Users\gxs213\Dropbox\Edf_Translator\for Catherine\Study Files\SHHS2\202073.EDF
+   +1 [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   +2 [Row: 10, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   +3 [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
+   ------------------
+   EDF file: C:\Users\gxs213\Dropbox\Edf_Translator\for Catherine\Study Files\BestAIR\73629.edf
+   +1 [Row: 2, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   +2 [Row: 7, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   +3 [Row: 8, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   +4 [Row: 9, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+   +5 [Row: 11, Col: 5] Signal Header: Physical maximum must be larger than physical minimum
+
