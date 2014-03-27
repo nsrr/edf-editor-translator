@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="libs/jgoodies-validation-2.5.0.jar"/>
 	<classpathentry kind="lib" path="libs/miglayout-4.0.jar"/>
 	<classpathentry kind="lib" path="libs/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="libs/org-openide-util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

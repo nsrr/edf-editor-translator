@@ -102,6 +102,7 @@ import table.Incompliance;
 import translator.gui.SubWindowGUI;
 import validator.fix.ErrorFix;
 import validator.fix.ErrorTypes;
+import viewer.MatlabEdfViewer;
 
 //import jEDF.JEDF.JEDFMainWindow;
 
@@ -158,7 +159,7 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static JMenuItem toolValidateTableItem;
     protected static JMenuItem annotConverterItem;
     protected static JMenuItem jEDFToolItem;
-    protected static JMenuItem EDFViewerToolItem;
+    protected static JMenuItem EdfViewerToolItem;
 
     // Help menu items
     protected static JMenuItem helpAboutItem;
@@ -1265,18 +1266,10 @@ public class MainWindow extends JFrame implements WindowListener {
     }
     
     private void createEDFViewerToolItem(){
-        EDFViewerToolItem = new JMenuItem("EDFViewer Tool");
-        EDFViewerToolItem.addActionListener(new ActionListener(){
+        EdfViewerToolItem = new JMenuItem("EDF Matlab Viewer");
+        EdfViewerToolItem.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    try
-                    {
-                    	Runtime rt = Runtime.getRuntime();
-                    	Process p = rt.exec("EDFViewer.exe");
-                    }
-                    catch (Exception exc)
-                    {
-                    	exc.printStackTrace();
-                    }
+                	MatlabEdfViewer.callEdfViewer();
                 }
             });
     }
@@ -2372,10 +2365,10 @@ public class MainWindow extends JFrame implements WindowListener {
         toolsMenu.add(toolValidateTableItem);
         toolsMenu.add(toolFixTableErrorItem);
         toolsMenu.addSeparator();
-    	
     	toolsMenu.add(annotConverterItem);
-        toolsMenu.add(jEDFToolItem);
-        toolsMenu.add(EDFViewerToolItem);
+        toolsMenu.add(EdfViewerToolItem);
+        toolsMenu.addSeparator();
+		toolsMenu.add(jEDFToolItem);
         
         //context sensitive help
         //hb.enableHelpOnButton(toolsMenu, "menubar.tools", null);
