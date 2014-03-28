@@ -205,9 +205,10 @@ guidata(hObject, handles);
 % uiwait(handles.figure1);
 
 global needOpenDialog;
-needOpenDialog = logical(0);
-MenuOpenEDF_Callback(hObject, eventdata, handles);
-MenuOpenXML_Callback(hObject, eventdata, handles);
+if (~needOpenDialog)
+    MenuOpenEDF_Callback(hObject, eventdata, handles);
+    MenuOpenXML_Callback(hObject, eventdata, handles);
+end
 needOpenDialog = logical(1);
 
  
