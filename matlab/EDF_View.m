@@ -203,11 +203,21 @@ guidata(hObject, handles);
 
 % UIWAIT makes EDF_View wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
+global EdfFilePath;
+global EdfFileName;
+global XmlFilePath;
+global XmlFileName;
 
 global needOpenDialog;
 if (~needOpenDialog)
-    MenuOpenEDF_Callback(hObject, eventdata, handles);
-    MenuOpenXML_Callback(hObject, eventdata, handles);
+    % Step#1: Visualize Edf
+    if (~(strcmp(EdfFilePath,'') || strcmp(EdfFileName, '')))
+        MenuOpenEDF_Callback(hObject, eventdata, handles);
+        % Step#2: Visualize Xml
+        if (~(strcmp(XmlFilePath,'') || strcmp(XmlFileName, '')))
+            MenuOpenXML_Callback(hObject, eventdata, handles);
+        end
+    end
 end
 needOpenDialog = logical(1);
 

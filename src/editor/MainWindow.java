@@ -103,6 +103,7 @@ import translator.gui.SubWindowGUI;
 import validator.fix.ErrorFix;
 import validator.fix.ErrorTypes;
 import viewer.MatlabEdfViewer;
+import viewer.SetViewerLocation;
 
 //import jEDF.JEDF.JEDFMainWindow;
 
@@ -158,8 +159,9 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static JMenuItem toolApplyESATemplateItem;
     protected static JMenuItem toolValidateTableItem;
     protected static JMenuItem annotConverterItem;
-    protected static JMenuItem jEDFToolItem;
     protected static JMenuItem EdfViewerToolItem;
+    protected static JMenuItem EdfViewerSettings;
+    protected static JMenuItem jEDFToolItem;
 
     // Help menu items
     protected static JMenuItem helpAboutItem;
@@ -233,6 +235,7 @@ public class MainWindow extends JFrame implements WindowListener {
     
     protected static String sourceDirectoryText; // source diretory
     protected static File workingDirectory; // work directory
+    public static File masterFile = null;
 
     protected static EIATable iniEiaTable = null; // initial EIA table
     protected static EIATable dupEiaTable = null; // clone iniEiaTable
@@ -1272,6 +1275,12 @@ public class MainWindow extends JFrame implements WindowListener {
                 	MatlabEdfViewer.callEdfViewer();
                 }
             });
+        EdfViewerSettings = new JMenuItem("Setting Matlab EDF-Viewer");
+        EdfViewerSettings.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+            	SetViewerLocation.main();
+            }
+        });
     }
 
 
@@ -2366,9 +2375,13 @@ public class MainWindow extends JFrame implements WindowListener {
         toolsMenu.add(toolFixTableErrorItem);
         toolsMenu.addSeparator();
     	toolsMenu.add(annotConverterItem);
-        toolsMenu.add(EdfViewerToolItem);
-        toolsMenu.addSeparator();
-		toolsMenu.add(jEDFToolItem);
+    	toolsMenu.addSeparator();
+    	toolsMenu.add(EdfViewerSettings);
+    	toolsMenu.add(EdfViewerToolItem);
+    	
+    	
+//		toolsMenu.addSeparator();
+//		toolsMenu.add(jEDFToolItem);
         
         //context sensitive help
         //hb.enableHelpOnButton(toolsMenu, "menubar.tools", null);

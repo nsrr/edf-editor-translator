@@ -1,8 +1,12 @@
 package viewer;
 
+import java.io.File;
 import java.io.IOException;
-
+import javax.swing.JOptionPane;
 import org.openide.util.Utilities;
+
+import editor.MainWindow;
+
 
 public class MatlabEdfViewer {
 	
@@ -11,40 +15,104 @@ public class MatlabEdfViewer {
 	}
 	
 	public static void callEdfViewer(){
+		
+		if (ViewerLocations.viewer_dir == null){
+			JOptionPane.showMessageDialog(null, "Please first set where Matlab EDF-Viewers locate at.");
+			SetViewerLocation.main();
+			return;
+		}
+		
+		if (MainWindow.masterFile == null){
+			JOptionPane.showMessageDialog(null, "No EDF file for EDF-Viewer is selected from the task tree.");
+			return;
+		}
+		
+		if (MainWindow.masterFile != null){
+			String EdfFilePath = MainWindow.masterFile.getParentFile().getAbsolutePath() + File.separator;
+			String EdfFileName = MainWindow.masterFile.getName();
+			String XmlFilePath = EdfFilePath;////////////////////
+			String XmlFileName = EdfFileName.replaceAll("\\.[eE][dD][fF]$", "_MIMI.xml");
+//			EdfFilePath = "D:\\ABC\\";
+//			EdfFileName = "ABC_012345.edf";
+//			XmlFilePath = "D:\\ABC\\";
+//			XmlFileName = "ABC_012345_MIMI.xml";
+//			callEdfViewer(EdfFilePath, EdfFileName, XmlFilePath, XmlFileName);
+			callEdfViewer(EdfFilePath, EdfFileName, XmlFilePath, XmlFileName);
+		}
 
-		switch (Utilities.getOperatingSystem()) {
-			case Utilities.OS_LINUX:
-				break;
-			case Utilities.OS_MAC:
-				break;
-			case Utilities.OS_WIN95:
-			case Utilities.OS_WIN98:
-			case Utilities.OS_WIN2000:
-			case Utilities.OS_WIN_OTHER:
-			case Utilities.OS_WINNT:
-			case Utilities.OS_WINVISTA:
-				if (is64bit()) {
-					callEdfViewer_MCR_R2013a_Win64();
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static void callEdfViewer(String EdfFilePath, String EdfFileName, String XmlFilePath, String XmlFileName){
+		
+		/*
+		 * Format parameters
+		 */
+		EdfFilePath = formatPath(EdfFilePath);
+		EdfFileName = formatPath(EdfFileName);
+		XmlFilePath = formatPath(XmlFilePath);
+		XmlFileName = formatPath(XmlFileName);
+		
+		EdfFilePath = EdfFilePath.replace(File.separator, "\\");
+		EdfFileName = EdfFileName.replace(File.separator, "\\");
+		XmlFilePath = XmlFilePath.replace(File.separator, "\\");
+		XmlFileName = XmlFileName.replace(File.separator, "\\");
+		
+		/*
+		 * Determine the location of viewer according to 
+		 * 		local operating system and 32/64-bit versions.
+		 */
+		int os = Utilities.getOperatingSystem();
+		boolean is64bit = is64bit();
+		String operatingSystem = null;
+		
+		String loc_viewer = null;
+		
+		if (os != Utilities.OS_WINDOWS_MASK){
+			operatingSystem = "Win_" + (is64bit ? "64bit" : "32bit");
+			if (is64bit)
+				loc_viewer = ViewerLocations.EdfViewer_MCR_R2013a_Win64();
+			else
+				loc_viewer = ViewerLocations.EdfViewer_MCR_R2013b_Win32();
+		}
+		else if (os == Utilities.OS_MAC){
+			operatingSystem = "Mac_" + (is64bit ? "64bit" : "32bit");
+		}
+		else if (os == Utilities.OS_LINUX){
+			operatingSystem = "Linux_" + (is64bit ? "64bit" : "32bit");
+		}
+		
+		/*
+		 * Invoke the EdfViewer if there exists its corresponding compiled viewer.
+		 */
+		boolean bExist = false;
+		boolean bRun = false;
+		if (loc_viewer != null){
+			File viewer = new File(loc_viewer);
+			if (viewer.exists()){
+				bExist = true;
+				String[] cmd = {loc_viewer, EdfFilePath, EdfFileName, XmlFilePath, XmlFileName};
+				try {
+		    		Runtime rt = Runtime.getRuntime();
+					rt.exec(cmd);
+					bRun = true;
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-				break;
+			}
 		}
 		
-	}
-	
-	private static void callEdfViewer_MCR_R2013a_Win64(){
-		
-    	try {
-    		String loc = getViewerDirectory() + "SleepPortalViewer_R2013a(8.1)_Win64.exe";
-			Runtime rt = Runtime.getRuntime();
-			rt.exec(loc);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	private static String getViewerDirectory(){
-		return System.getProperty("user.dir") + "/viewers/";
+		System.out.println("===========================");
+		System.out.println("Invoke Matlab EDF-Viewer fr");
+		System.out.println("EdfFilePath: " + EdfFilePath);
+		System.out.println("EdfFileName: " + EdfFileName);
+		System.out.println("XmlFilePath: " + XmlFilePath);
+		System.out.println("XmlFileName: " + XmlFileName);
+		System.out.println("");
+		System.out.println("Operating-System: " + operatingSystem);
+		System.out.println("Edf-viewer: " + loc_viewer);
+		System.out.println("Exist? " + bExist);
+		System.out.println("Run? " + bRun);
 	}
 	
 	private static boolean is64bit(){
@@ -56,5 +124,36 @@ public class MatlabEdfViewer {
 		}
 		return is64bit;
 	}
+	
+	public static String formatPath(String path){
+		String str = path;
+		str = str.replace("\\", File.separator);
+		str = str.replace("/", File.separator);
+		str = str.replace(File.separator + File.separator, File.separator);
+		return str;
+	}
 
 }
+
+class ViewerLocations{
+	
+	public static String viewer_dir = null;
+	
+	private static String getViewerDirectory(){
+		return MatlabEdfViewer.formatPath(viewer_dir);
+	}
+	
+	public static String EdfViewer_MCR_R2013a_Win64(){
+		return getViewerDirectory() + "SleepPortalViewer_R2013a(8.1)_Win64.exe";
+	}
+	
+	public static String EdfViewer_MCR_R2013b_Win32(){
+		return getViewerDirectory() + "SleepPortalViewer_R2013b(8.2)_Win32.exe";
+	}
+	
+	public static String EdfViewer_MCR_R2013b_Mac64(){
+		return getViewerDirectory() + "SleepPortalViewer_R2013b(8.2)_Mac64.exe";
+	}
+}
+
+

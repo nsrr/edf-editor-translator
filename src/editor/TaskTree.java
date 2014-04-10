@@ -335,7 +335,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
             int nodeIndex = parentNode.getIndex(selectedNode);
             setESATableVisible(nodeIndex); 
             masterFile = MainWindow.srcEdfFiles.get(nodeIndex);
-            
+            MainWindow.masterFile = masterFile;
             this.outputFileInfoPane(masterFile);
             //setTextInfoPane(masterFile);
             return;
