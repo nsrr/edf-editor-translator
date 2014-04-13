@@ -2,7 +2,10 @@ package viewer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+
 import javax.swing.JOptionPane;
+
 import org.openide.util.Utilities;
 
 import editor.MainWindow;
@@ -37,6 +40,12 @@ public class MatlabEdfViewer {
 //			XmlFilePath = "D:\\ABC\\";
 //			XmlFileName = "ABC_012345_MIMI.xml";
 //			callEdfViewer(EdfFilePath, EdfFileName, XmlFilePath, XmlFileName);
+			
+			if (!(new File(XmlFilePath + XmlFileName)).exists()){
+				XmlFilePath = "";
+				XmlFileName = "";
+			} 
+			
 			callEdfViewer(EdfFilePath, EdfFileName, XmlFilePath, XmlFileName);
 		}
 
@@ -91,10 +100,31 @@ public class MatlabEdfViewer {
 			File viewer = new File(loc_viewer);
 			if (viewer.exists()){
 				bExist = true;
-				String[] cmd = {loc_viewer, EdfFilePath, EdfFileName, XmlFilePath, XmlFileName};
+				String[] cmd;
 				try {
-		    		Runtime rt = Runtime.getRuntime();
-					rt.exec(cmd);
+					if (os != Utilities.OS_WINDOWS_MASK){
+//						cmd = new String[] {
+//							"cmd/c",
+//							"set PATH=C:\\Program Files\\MATLAB\\R2013b\\runtime\\win32",
+//							"\"" + loc_viewer + "\" \"" + EdfFilePath + "\" \"" + EdfFileName + "\" \"" + XmlFilePath + "\" \"" + XmlFileName + "\""
+//							};
+						cmd = new String[] {
+								"\"" + loc_viewer.replace(".exe", ".bat") + "\""
+							};
+					}
+					else{
+						cmd = new String[] {
+							loc_viewer,
+							"\"" + EdfFilePath + "\"",
+							"\"" + EdfFileName + "\"",
+							"\"" + XmlFilePath + "\"",
+							"\"" + XmlFileName + "\""
+							};
+					}
+					
+					System.out.println(Arrays.toString(cmd));
+					Runtime rt = Runtime.getRuntime();
+		    		rt.exec(cmd);
 					bRun = true;
 				} catch (IOException e) {
 					e.printStackTrace();
