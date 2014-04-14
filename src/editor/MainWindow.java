@@ -103,7 +103,9 @@ import translator.gui.SubWindowGUI;
 import validator.fix.ErrorFix;
 import validator.fix.ErrorTypes;
 import viewer.MatlabEdfViewer;
-import viewer.SetViewerLocation;
+import viewer.SettingMcrDir;
+import viewer.SettingViewerDir;
+import viewer.MatlabEdfViewer.*;
 
 //import jEDF.JEDF.JEDFMainWindow;
 
@@ -160,7 +162,8 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static JMenuItem toolValidateTableItem;
     protected static JMenuItem annotConverterItem;
     protected static JMenuItem EdfViewerToolItem;
-    protected static JMenuItem EdfViewerSettings;
+    protected static JMenuItem ViewerDirSettings;
+    protected static JMenuItem McrDirSettings;
     protected static JMenuItem jEDFToolItem;
 
     // Help menu items
@@ -1269,16 +1272,22 @@ public class MainWindow extends JFrame implements WindowListener {
     }
     
     private void createEDFViewerToolItem(){
-        EdfViewerToolItem = new JMenuItem("EDF Matlab Viewer");
+        EdfViewerToolItem = new JMenuItem("EDF MATLAB Viewer");
         EdfViewerToolItem.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                 	MatlabEdfViewer.callEdfViewer();
                 }
             });
-        EdfViewerSettings = new JMenuItem("Setting Matlab EDF-Viewer");
-        EdfViewerSettings.addActionListener(new ActionListener(){
+        McrDirSettings = new JMenuItem("Setting MATLAB Compiler Runtime (MCR)");
+        McrDirSettings.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-            	SetViewerLocation.main();
+            	SettingMcrDir.setMcrDir();
+            }
+        });
+        ViewerDirSettings = new JMenuItem("Setting MATLAB EDF-Viewer");
+        ViewerDirSettings.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+            	SettingViewerDir.setViewerDir();
             }
         });
     }
@@ -2376,7 +2385,8 @@ public class MainWindow extends JFrame implements WindowListener {
         toolsMenu.addSeparator();
     	toolsMenu.add(annotConverterItem);
     	toolsMenu.addSeparator();
-    	toolsMenu.add(EdfViewerSettings);
+    	toolsMenu.add(McrDirSettings);
+    	toolsMenu.add(ViewerDirSettings);
     	toolsMenu.add(EdfViewerToolItem);
     	
     	
