@@ -572,7 +572,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
             for (int i = 0; i < dirList.length; i++) {
                 if (dirList[i].isFile()) {
                     String str = dirList[i].getName().toLowerCase();
-                    if (str.endsWith(".edf")) {
+                    if (str.toLowerCase().endsWith(".edf")) {
                         listOfFiles.add(dirList[i]);
                     }
                 }
@@ -586,7 +586,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
                 for (int j = 0; j < dirList.length; j++) {
                     if (dirList[j].isFile()) {
                         String str = dirList[j].getName().toLowerCase();
-                        if (str.endsWith(".edf")) {
+                        if (str.toLowerCase().endsWith(".edf")) {
                             listOfFiles.add(dirList[j]);
                         }
                     }
