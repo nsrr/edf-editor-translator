@@ -12,10 +12,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -26,19 +26,16 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
-
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
-
 import javax.swing.text.MutableAttributeSet;
-
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import listener.EDFFileFilter;
-
 import table.EDFTableModel;
 import table.EIATemplateTable;
+import translator.utils.MyDate;
 
 
 public class SaveListener  implements ActionListener { //extends SwingWorker<Void, Void>
@@ -295,23 +292,18 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
 
         // copy the body first for the first time of saving
         if (eiaTable.getSavedOnce() == false) {
-            try {
-                File sourceFile, workFile;
-                for (int i = 0; i < nfiles; i++) {
-                    sourceFile = MainWindow.getSrcEdfFiles().get(i);
-                    workFile = MainWindow.getWkEdfFiles().get(i);
-                                       
-                    if ((sourceFile != workFile) && MainWindow.iniEsaTables.get(i).getSavedOnce() == false){
-                        MainWindow.getSaveProgressBar().setVisible(true);
-                        Utility.copyEDFFile(sourceFile, workFile);
-                        MainWindow.getSaveProgressBar().setVisible(false);
-                        MainWindow.iniEsaTables.get(i).setSavedOnce(true);
-                    }
+            File sourceFile, workFile;
+            for (int i = 0; i < nfiles; i++) {
+                sourceFile = MainWindow.getSrcEdfFiles().get(i);
+                workFile = MainWindow.getWkEdfFiles().get(i);
+                
+                if ((sourceFile != workFile) && MainWindow.iniEsaTables.get(i).getSavedOnce() == false){
+                    MainWindow.getSaveProgressBar().setVisible(true);
+                    Utility.copyEDFFile(sourceFile, workFile);
+                    MainWindow.getSaveProgressBar().setVisible(false);
+                    MainWindow.iniEsaTables.get(i).setSavedOnce(true);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } 
-            
+            }
             eiaTable.setSavedOnce(true);
         }
 
@@ -327,6 +319,7 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
         
         eiaTable.setUpdateSinceLastSave(false);
+        
     }
     
  
@@ -336,6 +329,7 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         String path = masterFile.getAbsolutePath();
         theme = timestr + ": Save to " + path + dots;
         printMessageToConsole();
+        
         
         if (esaTable.getSavedOnce() == false){// ? move out this?
             int index = getIndexInWkFiles(masterFile);
@@ -374,6 +368,27 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
             printMessageToConsole();
             fnfe.printStackTrace();
         }
+        
+        /**
+    	 * [START]
+    	 * Feature Improvement for source and working file size comparison
+    	 * Made on May 8, 2014
+    	 */
+        int index = getIndexInWkFiles(masterFile);
+        File sourceFile = MainWindow.getSrcEdfFiles().get(index);
+        File workFile = MainWindow.getWkEdfFiles().get(index);
+		String srcName = sourceFile.getAbsolutePath();
+    	String wrkName = workFile.getAbsolutePath();
+    	@SuppressWarnings("resource")
+		long srcSize = (new FileInputStream(srcName)).getChannel().size();
+    	@SuppressWarnings("resource")
+		long wrkSize = (new FileInputStream(wrkName)).getChannel().size();
+        String sizeState = (srcSize == wrkSize) ? "Unchanged" : "Changed";
+        String message = "Old vs New File Bytes:\t" + sizeState + "\t" + "(" + srcSize + " vs " + wrkSize +")" + "\t[OLD]" + srcName + "\t[NEW]" + wrkName;
+        NewTask_for_ValidityCommandLine.addElementIntoLog(message, true, MainWindow.log);
+        /**
+    	 * [END]
+    	 */
         
         theme = msg_done;
         printMessageToConsole();
@@ -902,6 +917,9 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
             MainWindow.tabPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
             //MainWindow.getSaveProgressBar().setVisible(true);
             //createProgressbar();
+            
+            NewTask_for_ValidityCommandLine.addElementIntoLog("===============================================================" , true, MainWindow.log);
+            NewTask_for_ValidityCommandLine.addElementIntoLog("  => User saved changes to EDF files at " + MyDate.currentDateTime() , true, MainWindow.log);
             
             switch (saveOptionIndex) {
             case SAVE:
