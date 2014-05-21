@@ -297,7 +297,7 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static EDFInfoPane fileinfoEdtPane = new EDFInfoPane(EDFInfoPane.FINFO);
     protected static EDFInfoPane taskinfoEdtPane = new EDFInfoPane(EDFInfoPane.FINFO);
     //log/message Pane, located at the right-bottom of the frame
-    protected static EDFInfoPane consolePane = new EDFInfoPane(EDFInfoPane.LOG);
+    public static EDFInfoPane consolePane = new EDFInfoPane(EDFInfoPane.LOG);
     
 
     public static final ImageIcon fileNewIcon = new ImageIcon(MainWindow.class.getResource("/icon/Folder.png"));

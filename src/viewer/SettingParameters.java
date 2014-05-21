@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import configure.ConfigureManager;
+
 public class SettingParameters extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
@@ -25,7 +27,16 @@ public class SettingParameters extends JFrame{
 	public SettingParameters(final String dialogType){
 		
 		super();
-		this.setTitle(dialogType);
+		
+		if (dialogType.equals("MCR_Dir")){
+			this.setTitle("Setting Directory of MATLAB Compiler Runtime (MCR)");
+		}
+		else if (dialogType.equals("Viewer_Dir")){
+			this.setTitle("Setting Directory of EDF Viewer");
+		}
+		else{
+			this.setTitle("");
+		}
 		this.setSize(600, 300);
 		this.setLayout(new GridLayout(3, 1));
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -39,6 +50,8 @@ public class SettingParameters extends JFrame{
 		this.add(controlPanel1);
 		JButton button = new JButton("Select Directory");
 		controlPanel1.add(button);
+		
+		
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -52,6 +65,7 @@ public class SettingParameters extends JFrame{
 					chosenDirectory.setText(folder.getAbsolutePath());
 					chosenDirectory.setForeground(Color.BLUE);
 					chosenDirectory.setFont(new Font("Serif", Font.BOLD, 14));
+					ConfigureManager.addOrUpdateConfiguration(dialogType, folder.getAbsolutePath());
 				}
 			}
 		});

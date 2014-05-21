@@ -806,6 +806,9 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
             //read each file to build headers
            
             File currentFile;
+            /**
+             * TODO: Wei Wang. add progress bar here
+             */
             for (int i = 0; i < numberOfOpenedFiles; i++) {
                  currentFile = sourceFiles.get(i);
                 try {
