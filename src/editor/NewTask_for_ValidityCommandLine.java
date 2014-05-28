@@ -1,34 +1,31 @@
 package editor;
 
-
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import header.EDFFileHeader;
 import header.ESAHeader;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Window;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -51,13 +48,17 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.ProgressMonitor;
+import javax.swing.RootPaneContainer;
+import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
+import listener.EDFFileFilter;
+
 import org.apache.commons.io.FileUtils;
 
-import listener.EDFFileFilter;
 import table.EDFTable;
 import table.EIATable;
 import table.ESATable;
@@ -66,9 +67,23 @@ import table.Incompliance;
 import translator.utils.Keywords;
 import translator.utils.MyDate;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 public class NewTask_for_ValidityCommandLine extends JDialog {
+	
+	
+	///: The below feature improvement was made by Wei Wang on May 21, 2014 ///	
+	private static final long serialVersionUID = 1L;
+	private static Task task;
+	public static Task getTask() {
+		return task;
+	}
 
+	//	private static ProgressMonitor progressMonitor;
+	private static ValidateFinishButtonListener vfbListener = null;
+	///: End /// 	 
+	
     protected static JTextField srcFilesDirField;
     protected static JTextField workingDirField;
     protected static JLabel selectedFileCountLabel;
@@ -96,8 +111,17 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
     
     public final static String defaultDirectoryName = "Physiomimi Work";
 
-    protected ArrayList<File> sourceFiles;
-    protected File sourceDirectory;
+    protected ArrayList<File> sourceFiles;    
+    ///: Wei Wang, 05/21/2014: new edf file list size
+    private static int fileNumber = 0;
+    private static int scale = 1;
+    ///: End
+    
+    public static int getScale() {
+		return scale;
+	}
+
+	protected File sourceDirectory;
     private File workingDirectory;
     
     private boolean dirMode = true;
@@ -112,7 +136,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
     
     //good place to initilaize some static elements
     //Fangping, 08/23/2010
-    static{
+    static {
         Font oldFont = choosebyLabel.getFont();
         Font newFont = new Font(oldFont.getName(), oldFont.getStyle(), oldFont.getSize());
         choosebyLabel.setFont(newFont);
@@ -121,8 +145,14 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 
     public NewTask_for_ValidityCommandLine(JFrame frame) {
         super(frame, true); // modal
+        task = new Task();// test wei wang
         this.setLocationRelativeTo(frame);
-
+        
+//        SwingUtilities.invokeLater(new Runnable() {
+//        	public void run() {
+//        		initUI();
+//        	}
+//        });
         initUI();
         setDialogLayout();
         visualize();
@@ -184,7 +214,8 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 			setVisible(false);
 			ValidateFinishButtonListener validateFinishButtonListener = new ValidateFinishButtonListener();
 			validateFinishButtonListener.createWorkingDirectory();
-			validateFinishButtonListener.yieldNewEDFHeaders();
+//			validateFinishButtonListener.yieldNewEDFHeaders();
+			yieldNewEDFHeaders();
 			validateFinishButtonListener.yieldEiaTable();
 			validateFinishButtonListener.yieldEsaTables();
 
@@ -267,7 +298,9 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         
 
         finishButton = new JButton("Finish");
-        finishButton.addActionListener(new ValidateFinishButtonListener());
+        vfbListener = new ValidateFinishButtonListener();
+        finishButton.addActionListener(vfbListener);
+//        finishButton.addActionListener(new ValidateFinishButtonListener());
 
         cancelButton = new JButton("Cancel");
         InputMap im =
@@ -408,8 +441,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 
         return selectionPanel;
     }
-
-
+    
     private JPanel createOutputPanel() {
         JPanel oPanel =
             new JPanel(new FormLayout("0dlu, pref:grow, 2dlu, pref:grow, 2dlu, pref:grow, 40dlu, 4dlu, min",
@@ -429,7 +461,6 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         oPanel.setBorder(BorderFactory.createTitledBorder("2. Select output directory"));
 
         return oPanel;
-
     }
 
     /*
@@ -456,11 +487,9 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         this.getContentPane().add(controlPanel, BorderLayout.SOUTH);
     }
 
-
     /*
      * create a text field to dispaly the directory path
      */
-
     public JTextField createTextField() {
         JTextField text = new JTextField();
         text.setPreferredSize(favoriteDim);
@@ -492,7 +521,6 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
     /*
      * create the "finish-cancel" pannel at the bottom of the dialog
     */
-
     public JPanel createControlPanel() {
         JPanel controlPanel = new JPanel();
         controlPanel.setMinimumSize(new Dimension(dialogWidth, 40));
@@ -507,7 +535,6 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
     /*
      * create the tip panel atop the dialog
      */
-
     public JPanel createTipPanel() {
         JPanel tipPanel = new JPanel();
         tipPanel.setMinimumSize(new Dimension(dialogWidth, 40));
@@ -542,7 +569,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
                 MainWindow.setSelectionMode(MainWindow.selection_mode_by_dir);
             }
             else{
-                browseBySourcFile();
+                browseBySourceFile();
                 MainWindow.setSelectionMode(MainWindow.selection_mode_by_file);
             }
         }
@@ -567,36 +594,46 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         	
             File[] dirList = sourceDirectory.listFiles();
             
+            /**
+             * Move the loop into Utility package and improve the finding algorithm.
+             * wei wang, 5/27/2014
+             */
             ArrayList<File> listOfFiles = new ArrayList<File>();
-            ArrayList<File> listOfDirectories = new ArrayList<File>();
-            for (int i = 0; i < dirList.length; i++) {
-                if (dirList[i].isFile()) {
-                    String str = dirList[i].getName().toLowerCase();
-                    if (str.toLowerCase().endsWith(".edf")) {
-                        listOfFiles.add(dirList[i]);
-                    }
-                }
-                if (dirList[i].isDirectory()) {
-                    listOfDirectories.add(dirList[i]);
-                }
-            }
-            
-            for (int i = 0; i < listOfDirectories.size(); i++) {
-                dirList = listOfDirectories.get(i).listFiles();
-                for (int j = 0; j < dirList.length; j++) {
-                    if (dirList[j].isFile()) {
-                        String str = dirList[j].getName().toLowerCase();
-                        if (str.toLowerCase().endsWith(".edf")) {
-                            listOfFiles.add(dirList[j]);
-                        }
-                    }
-                }
-            }
+            listOfFiles = Utility.findFileAddRecursive(sourceDirectory, listOfFiles);
+
+//            ArrayList<File> listOfDirectories = new ArrayList<File>();
+//            for (int i = 0; i < dirList.length; i++) {
+//                if (dirList[i].isFile()) {
+//                    String str = dirList[i].getName().toLowerCase();
+//                    if (str.toLowerCase().endsWith(".edf")) {
+//                        listOfFiles.add(dirList[i]);
+//                    }
+//                }
+//                if (dirList[i].isDirectory()) {
+//                    listOfDirectories.add(dirList[i]);
+//                }
+//            }
+//            
+//            for (int i = 0; i < listOfDirectories.size(); i++) {
+//                dirList = listOfDirectories.get(i).listFiles();
+//                for (int j = 0; j < dirList.length; j++) {
+//                    if (dirList[j].isFile()) {
+//                        String str = dirList[j].getName().toLowerCase();
+//                        if (str.toLowerCase().endsWith(".edf")) {
+//                            listOfFiles.add(dirList[j]);
+//                        }
+//                    }
+//                }
+//            } 
 
             sourceFiles = new ArrayList<File>(listOfFiles.size());
             for (int i = 0; i < listOfFiles.size(); i++) {
                 sourceFiles.add(listOfFiles.get(i));
-            }
+            }            
+            fileNumber = sourceFiles.size(); // Wei Wang, 05/21/2014
+            scale = (int)Math.ceil(fileNumber * 1.0/100);
+//            if(fileNumber > 100)
+//            	scale = fileNumber / 100;
 
              /* 
               * need to check if there is any name collision.
@@ -611,7 +648,6 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
             finishButton.setEnabled(true);
         }
 
-
         private void activateSelectedCounterLabel(boolean active) {
             String text = sourceFiles.size() + " EDF files are selected. Files may have been renamed.";
             selectedFileCountLabel.setText(text);
@@ -619,8 +655,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
             selectedFileCountLabel.setEnabled(active);
         }
 
-
-        private void browseBySourcFile() {            
+        private void browseBySourceFile() {            
             enableOutputDirPanel(false);
             finishButton.setEnabled(false);
             
@@ -646,6 +681,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
             for (int i = 0; i < choosedFiles.length; i++){
                    sourceFiles.add(choosedFiles[i]);  
             }
+            fileNumber = sourceFiles.size(); // Wei Wang, 05/21/2014
             
             // evaluate source directory;
             sourceDirectory = sourceFiles.get(0).getParentFile();
@@ -663,8 +699,6 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
             enableOutputDirPanel(true);
             finishButton.setEnabled(true);
         }
-
-
         
         /*
          * do exactly the same as actionperformed
@@ -674,7 +708,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
                 if (dirRadio.isSelected())
                     browseBySourceDir();
                 else
-                    browseBySourcFile();
+                    browseBySourceFile();
             }
         }
     }
@@ -687,7 +721,6 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         workingDirField.setEnabled(abool);           
     }
     
- 
     private class BrowseWorkingDirButtonListener extends MouseAdapter implements ActionListener {
         //only valid when overwrite = false, that is, nooverwrite == false
         private void selectDir() {
@@ -723,24 +756,167 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         }
     }
 
-    private class ValidateFinishButtonListener implements ActionListener {        
-        public void actionPerformed(ActionEvent e) {
-            performActions();            
+
+    ////////////////////////////////
+    ///: by Wei Wang, 05/21/2014 ///
+    ////////////////////////////////
+    class Task extends SwingWorker<Void,Void> {
+    	int progress = 0;
+//    	int cursorType = Cursor.S_RESIZE_CURSOR;
+//    	Component glassPane = ((RootPaneContainer)MainWindow.middleStatusBar.getTopLevelAncestor()).getGlassPane();
+		@Override
+		public Void doInBackground() {
+			MainWindow.middleStatusBar.setText("Busy loading files...");
+//			SwingUtilities.invokeLater(new Runnable() {
+//				public void run() {
+//					Utility.startWaitCurosr(); // wei wang, 5/27/2014
+//				}
+//			});
+//			Utility.startWaitCurosr(); // wei wang, 5/27/2014
+//			MainWindow.tabPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+			try {
+				if(progress < 100 && !isCancelled()) {
+					NewTask_for_ValidityCommandLine.this.setVisible(false);
+					vfbListener.performActions();					
+					setProgress(Math.min(progress, 100));
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		@Override
+		public void done() {
+			MainWindow.getSaveProgressBar().setVisible(false);
+			MainWindow.middleStatusBar.setText("Loading files done!");
+			Utility.endWaitCursor(MainWindow.statusBars); // wei wang, 5/27/2014
+			Toolkit.getDefaultToolkit().beep();
+//			MainWindow.tabPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			NewTask_for_ValidityCommandLine.this.setVisible(false);
+		}
+		
+		/**
+	     * increateCurrentReadingFile by one to progress
+	     * obsolete
+	     */
+	    public synchronized void increaseProgress() {
+	    	if(fileNumber <= 0)
+	    		throw new RuntimeException("file not loaded.");
+	    	progress++;
+	    	setProgress(progress);
+	    }
+	}      
+    
+    /**
+     * obsolete
+     */
+    PropertyChangeListener proplistener = new PropertyChangeListener() {
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {		
+			if(evt.getPropertyName().equals("progress")) {
+	    		int progress = (Integer)evt.getNewValue();
+	    		String message = String.format("Loading... %d%%\n", progress);
+	    		MainWindow.middleStatusBar.setText(message);
+	    	}
+			if(evt.getPropertyName().equals("state")) {
+				if (evt.getNewValue() == SwingWorker.StateValue.DONE) {
+					MainWindow.middleStatusBar.setText("Loading done!");
+				}
+			}
+		}    	
+    };
+    
+    /***
+     * This method is relocated and minor modification was made
+     * wei wang, 5/21/2014
+     */
+    private void yieldNewEDFHeaders() {
+        int numberOfOpenedFiles = sourceFiles.size();
+        ArrayList<EDFFileHeader> headers = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
+        ArrayList<EDFFileHeader> dupHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
+        MainWindow.srcEdfFileHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
+        
+        //read each file to build headers     
+        File currentFile;
+        /**
+         * TODO: Wei Wang. add progress bar here
+         */ 
+        for (int i = 0; i < numberOfOpenedFiles; i++) {
+             currentFile = sourceFiles.get(i);
+             if((i + 1) % (scale * 2) == 0) {                	
+             	task.increaseProgress();
+             	System.out.println("Task progress increased to " + task.progress);  // test         
+             } else {}
+            try {
+                RandomAccessFile raf =
+                    new RandomAccessFile(currentFile, "r");
+                if (raf == null)
+                    return;
+                headers.add(i, new EDFFileHeader(raf, currentFile, false));
+                raf = new RandomAccessFile(currentFile, "r");
+                dupHeaders.add(i, new EDFFileHeader(raf, currentFile, false));
+            } catch (IOException f) {
+                JOptionPane.showMessageDialog(null,
+                                              "File invalid: wrong format or empty. ",
+                                              "Data read error",
+                                              JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        MainWindow.setSrcEdfFileHeaders(headers);
+        MainWindow.setDupEdfFileHeaders(dupHeaders);
+    }
+    /////////////////////////////////////////////////////////////////////
+    //////////////////////    END by Wei Wang        ////////////////////
+    /////////////////////////////////////////////////////////////////////
+    
+    private class ValidateFinishButtonListener implements ActionListener {    	
+    	
+    	/***
+    	 * Minor modification has been made
+    	 * Wei Wang 5/21/2014
+    	 */
+        public void actionPerformed(ActionEvent e) {  
+        	NewTask_for_ValidityCommandLine.this.setVisible(false);
+        	finishButton.setEnabled(false);
+//        	task = new Task();
+            task.addPropertyChangeListener(proplistener);
+
+        	// MainWindow.tabPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            SwingUtilities.invokeLater(new Runnable() {
+            	public void run() {
+            		Utility.startWaitCurosr(MainWindow.statusBars); // wei wang, 5/27/2014
+            	}
+            });
+            task.execute();
+            Utility.endWaitCursor(MainWindow.statusBars);
+//            MainWindow.tabPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            NewTask_for_ValidityCommandLine.this.setVisible(false);
         }
         
-        public void performActions(){
-            if (sourceFiles != null) {
+        public void performActions() {
+            if (sourceFiles != null) {               
                 createWorkingDirectory();
-                renewFileRecords();
-                yieldNewEDFHeaders();
+                // generate new edf headers
+                MainWindow.getSaveProgressBar().setVisible(true);
+            	
+            	renewFileRecords();
+                NewTask_for_ValidityCommandLine.this.yieldNewEDFHeaders();
+            	// Long running task begin. wei wang, 5/23/2014
+//            	WkEdfFiles = Utility.copyFilestoDirectory(sourceFiles, workingDirectory);
+                // Actual long executing task is parsing name confliction.
+//            	System.out.println("Long running task end."); // test
                 yieldEiaTable();
                 yieldEsaTables();
                 updatePrimaryTabs();
                 updateTaskTreeWkfileNodes();
+//                root.setCursor(Cursor.getDefaultCursor());
+//                frame.dispose();
+                MainWindow.getSaveProgressBar().setVisible(false);
                 
                 printMessageToConsole();
                 printMessageToInfopane();
-                //cleanupErorListTable();                
+                //cleanupErorListTable();
                                              
                 boolean active = true;
                 activateMenuItems(active);
@@ -748,11 +924,8 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
                 displayMainTab(active);
                 
                 parseTaskFiles();
-
-                dispose();
             }
-        }
-        
+        }               
 
         /*
          * create the workingDirectory
@@ -775,19 +948,40 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
          * re-register a new group of EDF files
          * name collision check Fangping, 08/20/2010
          */
-        private void renewFileRecords() {                  
+        private void renewFileRecords() {
             File wkDirectory = workingDirectory;
+            NewTask_for_ValidityCommandLine.this.setVisible(false); // test-ww
             
-            ArrayList<File> WkEdfFiles = new ArrayList<File>(); 
+            ArrayList<File> WkEdfFiles = new ArrayList<File>();
                        
-            if (!overwriteMode)
-                WkEdfFiles = Utility.copyFilestoDirectory(sourceFiles, workingDirectory);       
-            else{
+            if (!overwriteMode) {
+              /**
+               * TODO: Wei Wang
+               * A new JFrame indicating copying files(not allowed to close)
+               * Features added by Wei Wang, 05/22/2014
+               */
+//            	JFrame frame = new JFrame("Copying files");
+//            	frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+//            	frame.setSize(200, 100);
+//            	frame.setLocationRelativeTo(null);	
+//            	frame.setAlwaysOnTop(true);
+//            	JPanel panel = new JPanel();
+//            	JLabel label = new JLabel("Please do not close");
+//            	panel.add(label);
+//            	frame.add(panel); 
+//            	frame.setVisible(true);
+//            	// Long running task begin. wei wang, 5/23/2014
+//            	System.out.println("Long running task in renewFileRecords."); // test
+            	WkEdfFiles = Utility.copyFilestoDirectory(sourceFiles, workingDirectory);
+//            	System.out.println("Long running task end."); // test
+//            	frame.dispose();
+            } else {
                 wkDirectory = null; // this line is redundant
-                for (File file : sourceFiles)
+                for (File file : sourceFiles) {
                     WkEdfFiles.add(file);
+                }
             }
-            
+
             MainWindow.setWorkingDirectory(workingDirectory);
             MainWindow.setSourceDirectoryText(sourceFiles.get(0).getParent());
             MainWindow.setSrcEdfFiles(sourceFiles);
@@ -797,39 +991,43 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         /**
          * create the EIA and ESA headers;
          */
-        private void yieldNewEDFHeaders() {
-            int numberOfOpenedFiles = sourceFiles.size();
-            ArrayList<EDFFileHeader> headers = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
-            ArrayList<EDFFileHeader> dupHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
-            MainWindow.srcEdfFileHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
-            
-            //read each file to build headers
-           
-            File currentFile;
-            /**
-             * TODO: Wei Wang. add progress bar here
-             */
-            for (int i = 0; i < numberOfOpenedFiles; i++) {
-                 currentFile = sourceFiles.get(i);
-                try {
-                    RandomAccessFile raf =
-                        new RandomAccessFile(currentFile, "r");
-                    if (raf == null)
-                        return;
-                    headers.add(i, new EDFFileHeader(raf, currentFile, false));
-                    raf = new RandomAccessFile(currentFile, "r");
-                    dupHeaders.add(i, new EDFFileHeader(raf, currentFile, false));
-                } catch (IOException f) {
-                    JOptionPane.showMessageDialog(null,
-                                                  "File invalid: wrong format or empty. ",
-                                                  "Data read error",
-                                                  JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            MainWindow.setSrcEdfFileHeaders(headers);
-            MainWindow.setDupEdfFileHeaders(dupHeaders);
-        }
-
+//        private void yieldNewEDFHeaders() {
+//            int numberOfOpenedFiles = sourceFiles.size();
+//            ArrayList<EDFFileHeader> headers = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
+//            ArrayList<EDFFileHeader> dupHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
+//            MainWindow.srcEdfFileHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
+//            
+//            //read each file to build headers
+//           
+//            File currentFile;
+//            /**
+//             * TODO: Wei Wang. add progress bar here
+//             */
+//            for (int i = 0; i < numberOfOpenedFiles; i++) {
+//                 currentFile = sourceFiles.get(i);
+//                try {
+//                    RandomAccessFile raf =
+//                        new RandomAccessFile(currentFile, "r");
+//                    if (raf == null)
+//                        return;
+//                    headers.add(i, new EDFFileHeader(raf, currentFile, false));
+//                    raf = new RandomAccessFile(currentFile, "r");
+//                    dupHeaders.add(i, new EDFFileHeader(raf, currentFile, false));
+//                    // TODO
+//                    // Wei Wang
+//                    if(readingFileCount < numberOfOpenedFiles) {
+//                    	increaseReadingFileCount();	
+//                    }                    
+//                } catch (IOException f) {
+//                    JOptionPane.showMessageDialog(null,
+//                                                  "File invalid: wrong format or empty. ",
+//                                                  "Data read error",
+//                                                  JOptionPane.ERROR_MESSAGE);
+//                }
+//            }
+//            MainWindow.setSrcEdfFileHeaders(headers);
+//            MainWindow.setDupEdfFileHeaders(dupHeaders);
+//        }
 
         /**
          * build the eia Table
@@ -871,6 +1069,10 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
                 int cat = EDFTable.MasterHeaderCategory.ESA_WORKSET;
                 table.setStatesAllInOne(savedOnce, updateSinceLastSave, workingFile, cat, i); //end of 4.
                 table.setSourceMasterFile(sourceFiles.get(i)); // set source file
+                // TODO by wei wang
+//                if(readingFileCount < numberOfOpenedFiles) {
+//                	increaseReadingFileCount();	
+//                }  
             }
 
             MainWindow.setIniEsaTables(esaTables);
@@ -1075,10 +1277,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         private void displayMainTab(boolean active){
             if (active)
                 MainWindow.tabPane.setSelectedIndex(0);
-        }
-                
-        
-
+        }                        
     } //end of FinishButtonListener class
 
     private class CancelButtonListener implements ActionListener {
@@ -1132,9 +1331,3 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
     }
     
 }//end of NewTaskListener class
-
-
-
-
-
-

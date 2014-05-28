@@ -14,83 +14,53 @@ import header.ESAChannel;
 import header.ESAHeader;
 import header.ESATemplateChannel;
 
-import java.awt.Color;
-
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Font;
-
 import java.awt.Point;
 import java.awt.Rectangle;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
-
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
 import java.lang.reflect.Method;
-
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Random;
 
-import java.util.Set;
-
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
+import javax.swing.RootPaneContainer;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
-import javax.swing.table.JTableHeader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import org.w3c.dom.NodeList;
-
-import org.xml.sax.SAXException;
-
-import table.ESATable;
 import table.TableRowHeader;
 
 
 public class Utility {
 
     public static void copyEDFFile(File source,
-                                   File target) throws IOException{
+                                   File target) throws IOException {
 
         final ByteBuffer buffer = ByteBuffer.allocate(4096);
         FileChannel in=null, out=null;
@@ -1417,7 +1387,16 @@ public class Utility {
         
         //file-wise analysis procedure
         File curfile;
+        int num = 0; // test, wei wang, 5/27/2014
         for (int k = 1; k < sz; k++){
+        	/**
+        	 * Added by wei wang, to increase progress percentage along with yieldNewEDFHeaders() method. 5/27/2014
+        	 */
+        	if((num + 1) % (NewTask_for_ValidityCommandLine.getScale() * 2) == 0) {                	
+             	NewTask_for_ValidityCommandLine.getTask().increaseProgress();
+             	System.out.println("Task progress increased to " + NewTask_for_ValidityCommandLine.getTask().progress);  // test         
+             } else {}
+            num++;
             curfile = filelist.get(k); 
             curfile = parseSingleFileNameCollision(curfile, sublist(filelist, 0, k-1)); 
             //curfile = parseSingleFileNameCollision(curfile, (ArrayList<File>)(filelist.subList(0, k-1)));
@@ -1451,19 +1430,31 @@ public class Utility {
      * used for new task mode of: File_Selections, NO_Override
      */
     public static ArrayList<File> copyFilestoDirectory(ArrayList<File> srcfiles, File outputDir) {
+    	/***
+    	 * This method need a progress bar to indicate progress, TBD
+    	 * TODO: wei wang 05/22/2014
+    	 */
+    	JFrame frame = new JFrame("Copying files...");
+    	JPanel pane = new JPanel();
+    	
+    	frame.add(pane);
         File[] olds = outputDir.listFiles();
         int nolds = olds.length;        
         
         ArrayList<File> tempFiles = new ArrayList<File>(srcfiles.size() + nolds);
         String dirname = outputDir.getAbsolutePath() + "/";
         //1. copy files already there to current list
-        for (int i = 0; i < nolds; i++)
+        for (int i = 0; i < nolds; i++) {
             tempFiles.add(olds[i]);
-        //2. copy srcfiles into the list 
-        for (File file : srcfiles)
+        }
+        //2. copy srcfiles into the list
+        for (File file : srcfiles) {        	        	
             tempFiles.add(new File(dirname + file.getName()));
+        }
         //3. produce new file names
+        MainWindow.middleStatusBar.setText("Parse File Name Collision"); // test, wei wang, 5/27/2014
         ArrayList<File> output = parseFileGroupNameCollision(tempFiles);
+//        MainWindow.middleStatusBar.setText("Parse Process Done!"); // test, wei wang, 5/27/2014
         
         return sublist(output, nolds, tempFiles.size() - 1);
     }
@@ -1634,6 +1625,48 @@ public class Utility {
         }      
         //not exist    
         return -1;        
+    }
+    
+    /**
+     * Recursively find files, which name ends with ".edf"
+     * @param root root file to search.
+     * @param tmp output ArrayList of found files.
+     * wei wang, 5/23/2014
+     */
+    public static ArrayList<File> findFileAddRecursive(File root, ArrayList<File> tmp) {
+        File[] list = root.listFiles();
+        if(list == null) return tmp;
+        for(int i = 0; i < list.length; i++) {
+            File file = list[i];
+            if(file.isDirectory()) {
+                findFileAddRecursive(file, tmp);
+                // TODO: process with this directory
+            } else {
+                // TODO: process file
+                String str = file.getName().toLowerCase();
+                if (str.toLowerCase().endsWith(".edf")) {
+//                    listOfFiles.add(dirList[i]);
+                    tmp.add(file);
+                }
+            }
+        }
+        return tmp;
+    }
+    
+    /**
+     * Start and end of busy waiting cursor.
+     * wei wang, 5/27/2014
+     */
+    public static void startWaitCurosr(JComponent component) {
+    	int cursorType = Cursor.CROSSHAIR_CURSOR;
+    	Component glassPane = ((RootPaneContainer)component.getTopLevelAncestor()).getGlassPane();
+    	glassPane.setCursor(Cursor.getPredefinedCursor(cursorType));
+		glassPane.setVisible(cursorType != Cursor.DEFAULT_CURSOR);
+    }
+    public static void endWaitCursor(JComponent component) {
+    	int cursorType = Cursor.DEFAULT_CURSOR;
+    	Component glassPane = ((RootPaneContainer)component.getTopLevelAncestor()).getGlassPane();
+    	glassPane.setCursor(Cursor.getPredefinedCursor(cursorType));
     }
     
     //Fangping, 10/12/2010

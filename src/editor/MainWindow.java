@@ -1,9 +1,6 @@
 package editor;
 
 
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import header.EDFFileHeader;
 import header.EIAHeader;
 import header.ESAHeader;
@@ -27,7 +24,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
@@ -37,8 +33,6 @@ import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.io.StringWriter;
@@ -100,12 +94,12 @@ import table.ESATemplateTableModel;
 import table.ErrorListTable;
 import table.Incompliance;
 import translator.gui.SubWindowGUI;
-import validator.fix.ErrorFix;
-import validator.fix.ErrorTypes;
 import viewer.MatlabEdfViewer;
 import viewer.SettingMcrDir;
 import viewer.SettingViewerDir;
-import viewer.MatlabEdfViewer.*;
+
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 //import jEDF.JEDF.JEDFMainWindow;
 
@@ -297,7 +291,7 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static EDFInfoPane fileinfoEdtPane = new EDFInfoPane(EDFInfoPane.FINFO);
     protected static EDFInfoPane taskinfoEdtPane = new EDFInfoPane(EDFInfoPane.FINFO);
     //log/message Pane, located at the right-bottom of the frame
-    public static EDFInfoPane consolePane = new EDFInfoPane(EDFInfoPane.LOG);
+    protected static EDFInfoPane consolePane = new EDFInfoPane(EDFInfoPane.LOG);
     
 
     public static final ImageIcon fileNewIcon = new ImageIcon(MainWindow.class.getResource("/icon/Folder.png"));
@@ -363,7 +357,7 @@ public class MainWindow extends JFrame implements WindowListener {
     
     
     
-    static{
+    static {
         fileinfoEdtPane.setEditable(false);
         fileinfoEdtPane.setPreferredSize(new Dimension(220, 2*MAINWINDOW_DLG_HEIGHT/5));
         fileinfoEdtPane.setMaximumSize(new Dimension(220, 2*MAINWINDOW_DLG_HEIGHT/5));
@@ -573,9 +567,12 @@ public class MainWindow extends JFrame implements WindowListener {
     /*
      * customize GUI
      */
-    protected static final Color  statusBarColor = new Color(79, 136, 199);
+//    protected static final Color  statusBarColor = new Color(79, 136, 199);
+    protected static final Color  statusBarColor = new Color(79, 100, 150); // wei wang changed.f
     protected static final Color textColor = Color.white;
     protected static final Font barFont = new Font(Font.SERIF, Font.TRUETYPE_FONT, 13);
+    // wei wang, 5/27/2014 created barFontBold.
+    protected static final Font barFontBold = new Font(Font.SERIF, Font.TRUETYPE_FONT | Font.BOLD, 14);
     private void createStatusBar() {
         createLeftStatusBar();
         createMidStatusBar();
@@ -623,7 +620,7 @@ public class MainWindow extends JFrame implements WindowListener {
         middleStatusBar.setOpaque(true);
         middleStatusBar.setBackground(statusBarColor);
         middleStatusBar.setForeground(textColor);
-        middleStatusBar.setFont(barFont);
+        middleStatusBar.setFont(barFontBold); // wei wang, 5/27/2014
     }
     
     private void createSaveProgressBar(){
@@ -3397,7 +3394,7 @@ public class MainWindow extends JFrame implements WindowListener {
             Document doc = MainWindow.consolePane.getDocument();
             String theme;
             EDFTable table;
-                      
+              
             for (int i = 0; i < sz; i++){
                 theme = "\tScanning " + MainWindow.wkEdfFiles.get(i);
                 doc.insertString(doc.getLength(), theme, EDFInfoPane.getTheme());

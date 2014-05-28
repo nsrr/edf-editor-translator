@@ -10,18 +10,36 @@ public class SettingMcrDir extends SettingParameters{
 	private static SettingMcrDir sm = null;
 	
 	public static SettingMcrDir setMcrDir(){
-		if (sm == null){
+		
+		if (sm==null)
 			sm = new SettingMcrDir();
-		}
+		
 		sm.setVisible(true);
+		
 		return sm;
 	}
 
+	public static String getChosenDirectory(){
+		
+		if (sm!=null && sm.chosenDirectory!=null){
+			String text = sm.chosenDirectory.getText();
+			if (text.equals(""))
+				return null;
+			else
+				return text;
+		}
+		else{
+			return null;
+		}
+	}
+
+	private static boolean bfirst = true;
 	private SettingMcrDir() {
-		super("MCR_Dir");
+		super("Setting Directory of MATLAB Compiler Runtime (MCR)");
 		if (bfirst){
 			bfirst = false;
-			String mcr_dir = getSystemMcrDir();
+			
+			String mcr_dir = getSystemMcrDir();	
 			if (mcr_dir!=null){
 				chosenDirectory.setText(mcr_dir);
 				chosenDirectory.setForeground(Color.BLUE);
@@ -30,9 +48,7 @@ public class SettingMcrDir extends SettingParameters{
 		}
 	}
 	
-	private static boolean bfirst = true;
-	
-	public static String getSystemMcrDir(){
+	private static String getSystemMcrDir(){
 		Map<String, String> env = System.getenv();
 		for (String envName : env.keySet()){
 			if (envName.equalsIgnoreCase("path")){
@@ -41,8 +57,8 @@ public class SettingMcrDir extends SettingParameters{
 				for (String var : vars){
 					String regex = "^.*[mM][aA][tT][lL][aA][bB].*$";
 					if (var.matches(regex)){
-						if (var.endsWith("\\"))
-							var = var.substring(0, var.length() - 1);
+//					if (var.contains("MATLAB Compiler Runtime")){
+//						System.out.println(var);
 						return var;
 					}
 				}

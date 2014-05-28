@@ -13,8 +13,8 @@ import javax.swing.UIManager;
 public class Main {   
     //identify the system to be mac os or not
     public static final boolean mac_os;
-    static{
-        if (System.getProperty("os.name").contains("Mac OS")){
+    static {
+        if (System.getProperty("os.name").contains("Mac OS")) {
             mac_os = true;
             System.setProperty("apple.laf.useScreenMenuBar", "true");   
         }
@@ -24,8 +24,7 @@ public class Main {
   
     public static void main(String[] args) throws Exception{
         //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    	if(args.length == 0)
-    	{
+    	if(args.length == 0) {
 	        UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");               
 	        javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	                public void run() { 
@@ -35,17 +34,14 @@ public class Main {
 	                    mainWindow.setVisible(true);
 	                }
 	            }); 
-    	}
-    	else
-    	{
+    	} else {
     		/*
     		 * args[0] - eia or esa for identity or signal attribute template application
     		 * args[1] - source file
     		 * args[2] - template file
     		 * args[3] - output directory
     		 */
-    		if(args[0].equalsIgnoreCase("eia"))
-    		{
+    		if(args[0].equalsIgnoreCase("eia")) {
     			//Read the source and template files
     			RandomAccessFile raf = new RandomAccessFile(args[1], "rw");
     			File edfFile = new File(args[1]);
@@ -55,16 +51,13 @@ public class Main {
     			Utility.mapEIAHeader(srceia, tempeia);
     			//Save the file
     			String dir = "";
-    			if(args.length <= 3)
-    			{
+    			if(args.length <= 3) {
     				dir = edfFile.getParent();
         			dir = dir + File.separator + "Physiomimi Work";
         			System.out.println(dir);
         			File newDir = new File(dir);
         			newDir.mkdir();	
-    			}
-    			else
-    			{
+    			} else {
     				dir = args[3];
     				File newDir = new File(dir);
         			newDir.mkdir();
@@ -75,8 +68,7 @@ public class Main {
     			raf = new RandomAccessFile(nFile, "rw");
     			srceia.saveToDisk(raf, nFile);
     		}
-    		if(args[0].equalsIgnoreCase("esa"))
-    		{
+    		if(args[0].equalsIgnoreCase("esa")) {
     			//Read the source and template files
     			RandomAccessFile raf = new RandomAccessFile(args[1], "rw");
     			File edfFile = new File(args[1]);
@@ -90,16 +82,13 @@ public class Main {
     			Utility.mapESAHeader(esa, tempEsa);
     			//Save the file
     			String dir = "";
-    			if(args.length <= 3)
-    			{
+    			if(args.length <= 3) {
     				dir = edfFile.getParent();
         			dir = dir + File.separator + "Physiomimi Work";
         			System.out.println(dir);
         			File newDir = new File(dir);
         			newDir.mkdir();	
-    			}
-    			else
-    			{
+    			} else {
     				System.out.println("here");
     				dir = args[3];
     				File newDir = new File(dir);
@@ -114,11 +103,11 @@ public class Main {
     		/************************************************************** 
     		 * The below feature improvement was made by Gang Shu on February 6, 2014
     		 **************************************************************/
-    		if (args[0].equalsIgnoreCase("-translator")){
+    		if (args[0].equalsIgnoreCase("-translator")) {
     			translator.logic.CommandLineController.Start(args);
     			System.exit(0);
     		}
-    		if (args[0].equalsIgnoreCase("-validator")){
+    		if (args[0].equalsIgnoreCase("-validator")) {
     			validator.logic.CommandLineController.Start(args);
     			System.exit(0);
     		}

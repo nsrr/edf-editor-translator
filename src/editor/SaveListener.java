@@ -885,12 +885,6 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
             ESATable esaTable;
             File masterFile;
             
-            /*
-             *  Problem:
-             *  4.It was unclear that the CMD was running a file size check in the background when I attempted to close and save.  I had thought the Editor had frozen and was ready to force close it until I found the CMD running in the background.
-             *	TODO: Wei Wang.
-             *		May need to add a progress bar here.
-             */
             for (int i = 0; i < MainWindow.iniEsaTables.size(); i++) {
                 esaTable = MainWindow.iniEsaTables.get(i);
                 masterFile = MainWindow.getWkEdfFiles().get(i);
