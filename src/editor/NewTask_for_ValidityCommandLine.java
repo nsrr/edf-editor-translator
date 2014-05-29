@@ -816,7 +816,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 		public void propertyChange(PropertyChangeEvent evt) {		
 			if(evt.getPropertyName().equals("progress")) {
 	    		int progress = (Integer)evt.getNewValue();
-	    		String message = String.format("Loading... %d%%\n", progress);
+	    		String message = String.format("Loading... %d%% of " + fileNumber + " files\n", progress);
 	    		MainWindow.middleStatusBar.setText(message);
 	    	}
 			if(evt.getPropertyName().equals("state")) {

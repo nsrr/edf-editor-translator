@@ -51,7 +51,7 @@ public class EDFInfoPane extends JTextPane{
     protected static Color foregroundColor = new Color(0, 255, 0);
     protected static Color backgroundColor = new Color(0, 55, 0);
     //theme, like new task, add files, apply template, save
-    protected static MutableAttributeSet theme = new SimpleAttributeSet();
+    public static MutableAttributeSet theme = new SimpleAttributeSet();
     //content
     protected static MutableAttributeSet content = new SimpleAttributeSet();
     //actions registered in log, such as open, save, export, add, remove, delete

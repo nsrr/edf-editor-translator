@@ -326,8 +326,11 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
     public void saveESAWorkingTable(ESATable esaTable, File masterFile) throws IOException {
         // if had never saved, copy the signal body
         String timestr = Utility.currentTimeToString();
-        String path = masterFile.getAbsolutePath();
+        String path = masterFile.getAbsolutePath(); 
+        String msg = "Saving files...";  // wei wang, 5/28/2014
         theme = timestr + ": Save to " + path + dots;
+        Utility.startWaitCurosr(MainWindow.middleStatusBar); // wei wang, 5/28/2014
+        MainWindow.middleStatusBar.setText(msg);  // wei wang, 5/28/2014
         printMessageToConsole();
         
         
@@ -393,6 +396,7 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         theme = msg_done;
         printMessageToConsole();
         esaTable.setUpdateSinceLastSave(false);
+        Utility.endWaitCursor(MainWindow.middleStatusBar); // wei wang, 5/28/2014
     }
 
 

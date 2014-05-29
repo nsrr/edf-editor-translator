@@ -5,17 +5,17 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class FileIO {
-	
+
 	final static String sperator = "\t";
-	
+
 	public static synchronized void write(String outFile, HashMap<String, String> hashmap, boolean append) {
-		
+
 		BufferedWriter out = null;
 		try {
 			createAbsolutePath(outFile);
 			out = new BufferedWriter(new OutputStreamWriter(
 					new FileOutputStream(outFile, append)));
-			
+
 			if (hashmap!=null){
 				Iterator<Entry<String, String>> iterator = hashmap.entrySet().iterator();
 				while(iterator.hasNext()){
@@ -36,9 +36,9 @@ public class FileIO {
 			}
 		}
 	}
-	
+
 	public static synchronized HashMap<String, String> read(String filename) {
-		
+
 		HashMap<String, String> hashmap = null;
 
 		if (filename != null) {
@@ -66,7 +66,7 @@ public class FileIO {
 		}
 		return hashmap;
 	}
-	
+
 	public static synchronized boolean isExist(String filename) {
 		try {
 			File f = new File(filename);
