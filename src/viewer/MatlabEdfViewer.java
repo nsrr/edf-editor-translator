@@ -124,8 +124,17 @@ public class MatlabEdfViewer {
 		static void setting(){
 			int os = Utilities.getOperatingSystem();
 			boolean is64bit = is64bit();
-
-			if (os == Utilities.OS_MAC){
+			if (os != Utilities.OS_WINDOWS_MASK){
+				if (is64bit){
+					viewerApp = "SleepPortalViewerR2013bWin64.exe";
+					operatingSystem = "Win_64bit";
+				}
+				else{
+					viewerApp = "SleepPortalViewerR2013bWin32.exe";
+					operatingSystem = "Win_32bit";
+				}
+			}
+			else if (os == Utilities.OS_MAC){
 				if (is64bit){
 					operatingSystem = "Mac_64bit";
 				}
@@ -139,16 +148,6 @@ public class MatlabEdfViewer {
 				}
 				else{
 					operatingSystem = "Linux_32bit";
-				}
-			}
-			else if (os != Utilities.OS_WINDOWS_MASK){
-				if (is64bit){
-					viewerApp = "SleepPortalViewerR2013bWin64.exe";
-					operatingSystem = "Win_64bit";
-				}
-				else{
-					viewerApp = "SleepPortalViewerR2013bWin32.exe";
-					operatingSystem = "Win_32bit";
 				}
 			}
 		}
