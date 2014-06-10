@@ -126,7 +126,8 @@ public class MatlabEdfViewer {
 			boolean is64bit = is64bit();
 			if (os != Utilities.OS_WINDOWS_MASK){
 				if (is64bit){
-					viewerApp = "SleepPortalViewerR2013bWin64.exe";
+//					viewerApp = "SleepPortalViewerR2013bWin64.exe";
+					viewerApp = "StartMe_cmdPars.exe"; // wei wang, 6/10/2014
 					operatingSystem = "Win_64bit";
 				}
 				else{
@@ -266,10 +267,12 @@ public class MatlabEdfViewer {
 			stdin.println("set PATH=" + mcrDir);
 			stdin.println("chdir " + viewerDir);
 			stdin.print(viewerApp + " ");
-			stdin.print(EdfFilePath + " ");
+//			stdin.print(EdfFilePath + " ");			
 			stdin.print(EdfFileName + " ");
-			stdin.print(XmlFilePath + " ");
+			stdin.print(EdfFilePath + " "); // wei wang, 6/10/2014
+//			stdin.print(XmlFilePath + " ");
 			stdin.print(XmlFileName + " ");
+			stdin.print(XmlFilePath + " "); // wei wang, 6/10/2014
 			stdin.println();
 		} catch (Exception e) {
 			e.printStackTrace();
