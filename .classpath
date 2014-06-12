@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/miglayout-4.0.jar"/>
 	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/org-openide-util.jar"/>
 	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
