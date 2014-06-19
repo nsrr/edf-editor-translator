@@ -15,7 +15,7 @@ import translator.utils.MyDate;
 
 public class ErrorFix {
 	
-	public static void fixErrors(ArrayList<String> selected_edf_files, ArrayList<ErrorTypes> errorTypeAL){
+	public static void fixErrors(ArrayList<String> selected_edf_files, ArrayList<ErrorTypes> errorTypeAL) {
 		
 		NewTask_for_ValidityCommandLine.addElementIntoLog("===============================================================", true, MainWindow.log);
 		NewTask_for_ValidityCommandLine.addElementIntoLog("  => User start an error-fix task at " + MyDate.currentDateTime(), true, MainWindow.log);
@@ -29,7 +29,7 @@ public class ErrorFix {
 		
 		//(2)Apply error-fixes on selected edf files
 		NewTask_for_ValidityCommandLine.addElementIntoLog("(Step:2/3) Applying bug-fixes:", true, MainWindow.log);
-		for (String filename : selected_edf_files){
+		for (String filename : selected_edf_files) {
 			
 			String message = "";
 			message += "   ------------------" + "\r\n";
@@ -38,23 +38,23 @@ public class ErrorFix {
 			
 			//(2.1)Find out incompliancess associated with the EDF file. 
 			ArrayList<Incompliance> incompliances2 = new ArrayList<Incompliance>();
-			for (Incompliance incompliance : incompliances1){
-				if (incompliance.getFileName().equals(filename)){
+			for (Incompliance incompliance : incompliances1) {
+				if (incompliance.getFileName().equals(filename)) {
 					incompliances2.add(incompliance);
 				}
 			}
 			//(2.2)Find out ESA table associated with the EDF file.
 			ESATable esaTable2 = null;
-			for (ESATable esaTable1 : esaTables){
+			for (ESATable esaTable1 : esaTables) {
 				String src = esaTable1.getSourceMasterFile().getAbsoluteFile().getAbsolutePath();
-				if (src.equals(filename)){
+				if (src.equals(filename)) {
 					esaTable2 = esaTable1;
 					break;
 				}
 			}
 			//(2.3)Fix the errors associated with the chosen EDF_files and with the chosen Error_types.
-			for (ErrorTypes errorType : errorTypeAL){
-				switch(errorType){
+			for (ErrorTypes errorType : errorTypeAL) {
+				switch(errorType) {
 					case phyMaxMin:
 						fix01_SwapPhyMaxMin(incompliances2, esaTable2);
 						break;
@@ -64,7 +64,6 @@ public class ErrorFix {
 						break;
 				}
 			}
-			//
 		}
 		
 		NewTask_for_ValidityCommandLine.addElementIntoLog("(Step:3/3) Errors after applying bug-fixes:", true, MainWindow.log);
@@ -120,7 +119,7 @@ public class ErrorFix {
 //		}
 //	}
 	
-	public static ArrayList<Incompliance> fix01_SwapPhyMaxMin(ArrayList<Incompliance> incompliances, ESATable esaTable){
+	public static ArrayList<Incompliance> fix01_SwapPhyMaxMin(ArrayList<Incompliance> incompliances, ESATable esaTable) {
 		
 		ArrayList<Incompliance> incompliances_solved = new ArrayList<Incompliance>();
 		
@@ -130,7 +129,7 @@ public class ErrorFix {
 		
 		TableModel tableModel = esaTable.getModel();
 		int row, col;
-		for (Incompliance incompliance : incompliances){
+		for (Incompliance incompliance : incompliances) {
 			String des = incompliance.getDescription();
 			if (incompliance.getDescription().equals(Incompliance.error_esa_phymaxmin)){
 				
@@ -161,8 +160,3 @@ public class ErrorFix {
 	}
 	
 }
-
-
-	
-	
-	

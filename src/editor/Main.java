@@ -11,29 +11,28 @@ import java.io.RandomAccessFile;
 import javax.swing.UIManager;
 
 public class Main {   
-    //identify the system to be mac os or not
+    // identify the system to be MacOS or not
     public static final boolean mac_os;
     static {
         if (System.getProperty("os.name").contains("Mac OS")) {
             mac_os = true;
             System.setProperty("apple.laf.useScreenMenuBar", "true");   
-        }
-        else
+        } else {
             mac_os = false;
+        }
     }    
-  
-    public static void main(String[] args) throws Exception{
-        //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+    public static void main(String[] args) throws Exception {
+        // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
     	if(args.length == 0) {
 	        UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");               
 	        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-	                public void run() { 
-	                    Utility.increaseSytemFont(1);
-	                    MainWindow mainWindow = new MainWindow();
-	                    
-	                    mainWindow.setVisible(true);
-	                }
-	            }); 
+	            public void run() { 
+	                Utility.increaseSytemFont(1);
+	                MainWindow mainWindow = new MainWindow();	                    
+	                mainWindow.setVisible(true);
+	            }
+	        }); 
     	} else {
     		/*
     		 * args[0] - eia or esa for identity or signal attribute template application
@@ -45,8 +44,8 @@ public class Main {
     			//Read the source and template files
     			RandomAccessFile raf = new RandomAccessFile(args[1], "rw");
     			File edfFile = new File(args[1]);
-    			EIAHeader srceia = new EIAHeader(raf, edfFile);
-    			EIAHeader tempeia = EIAHeader.retrieveEIAHeaderFromXml(args[2]);
+    			EIAHeader srceia = new EIAHeader(raf, edfFile); // throws IOException
+    			EIAHeader tempeia = EIAHeader.retrieveEIAHeaderFromXml(args[2]); // does args[2] exists?, wei wang, 2014-6-18
     			//Map the template file to the source file
     			Utility.mapEIAHeader(srceia, tempeia);
     			//Save the file
@@ -114,9 +113,6 @@ public class Main {
     		/************************************************************** 
     		 * The above feature improvement was made by Gang Shu on February 6, 2014
     		 **************************************************************/ 
-    	}
-    	
-    	
+    	}    	
     }
 }
-

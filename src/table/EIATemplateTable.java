@@ -12,7 +12,7 @@ public class EIATemplateTable extends EIATable {
         super(true);
     }
     
-    public EIATemplateTable(EIAHeader eiaHeader){
+    public EIATemplateTable(EIAHeader eiaHeader) {
         super();
         setForEiaTemplate(true);
         immutableFieldIndices = new int[]{EIA.index_filename, EIA.index_version, EIA.index_start_time, EIA.index_of_bytes, EIA.index_reserved, 
@@ -21,7 +21,7 @@ public class EIATemplateTable extends EIATable {
         TableModel model = this.getModel(); //new EIATableModel(1);     
         String key, value;
         
-        for (int ncolumn = 0; ncolumn < EIA.NUMBER_OF_ATTRIBUTES + 1; ncolumn++){
+        for (int ncolumn = 0; ncolumn < EIA.NUMBER_OF_ATTRIBUTES + 1; ncolumn++) {
             key = EIA.getEIAAttributeAt(ncolumn);
             value = eiaHeader.getAttributeValueAt(key);
             model.setValueAt(value, 0, ncolumn);
@@ -35,7 +35,7 @@ public class EIATemplateTable extends EIATable {
 
     }
     
-    public File getMasterFile(){
+    public File getMasterFile() {
         return masterFile;
     }
 }

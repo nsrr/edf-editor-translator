@@ -129,7 +129,6 @@ public class SelectFilesListener implements ActionListener {
             esaHeader =  edfFileHeaders.get(i).getEsaHeader();
             esaTables.set(i, new ESATable(esaHeader, true));
         }          
-        
 
     }
    
@@ -254,4 +253,3 @@ public class SelectFilesListener implements ActionListener {
         } //end of ActionPerformed()
 
     } //end of the SelectFilesListener */
-

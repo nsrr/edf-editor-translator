@@ -26,7 +26,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.tree.TreeNode;
 
 
-public class ErrorListTable extends JTable{
+public class ErrorListTable extends JTable {
     //moved to the Incompliance class
 /*     public static final String Title_ErroIndex = "Error #";
     public static final String Title_Description = "Description";
@@ -35,8 +35,9 @@ public class ErrorListTable extends JTable{
     public static final String Title_Column = "Column";
     public static final String Title_Type = "Type"; */
     //public static final String tableTypes[] = {"EIA", "ESA", "EIA template", "ESA template"};
-    protected static final String columnNames[] = {Incompliance.Title_ErroIndex, Incompliance.Title_Type, Incompliance.Title_Description, 
-                                                   Incompliance.Title_File, Incompliance.Title_Row, Incompliance.Title_Column};
+    protected static final String columnNames[] = {
+    	Incompliance.Title_ErroIndex, Incompliance.Title_Type, Incompliance.Title_Description, 
+        Incompliance.Title_File, Incompliance.Title_Row, Incompliance.Title_Column};
     
     //public static final int error_number = 0;
     public static final int index_number = 0;
@@ -55,7 +56,7 @@ public class ErrorListTable extends JTable{
         addListeners();
     }
     
-    public ErrorListTable(ArrayList<Incompliance> incompliances){
+    public ErrorListTable(ArrayList<Incompliance> incompliances) {
         super();
         this.setModel(new ErrorListModel(0));
         customizeLook();
@@ -79,11 +80,10 @@ public class ErrorListTable extends JTable{
             
             if (description_number == i || file_number == i)
                 verCol.setPreferredWidth((int)(verCol.getPreferredWidth() * 2.0));
-            else if (index_number == i){
+            else if (index_number == i) {
                 verCol.setPreferredWidth((int)(verCol.getPreferredWidth() + 20));
                 verCol.setMaxWidth((int)(verCol.getPreferredWidth() + 20));
-            }            
-            else{
+            } else {
                 verCol.setPreferredWidth((int)(verCol.getPreferredWidth() * 1.0));
                 verCol.setMaxWidth((int)(verCol.getPreferredWidth() * 1.0));
             }         
@@ -102,13 +102,13 @@ public class ErrorListTable extends JTable{
         
     }
     
-    public void blankOut(){
+    public void blankOut() {
         ErrorListModel model = (ErrorListModel)getModel();
         model.setRowCount(0);//clean all rows
         model.setRowCount(maxViewableRows);
     }
     
-    public void yieldTableFrom(ArrayList<Incompliance> incompliances){        
+    public void yieldTableFrom(ArrayList<Incompliance> incompliances) {        
         blankOut();      
         
         int nrow = incompliances.size();        
@@ -117,17 +117,15 @@ public class ErrorListTable extends JTable{
             incomp = incompliances.get(i);
             insertRowAt(incomp, i);
         }
-
     }
     
-    public void insertRowAt(Incompliance incomp, int rr){
+    public void insertRowAt(Incompliance incomp, int rr) {
         String type;
         String description;
         String fileName;
         int rowIndex;
         int columnIndex;
-        
-        
+                
         type = incomp.getIncomplianceType();
         description = incomp.getDescription();
         fileName = incomp.getFileName();
@@ -147,12 +145,12 @@ public class ErrorListTable extends JTable{
         }    
     }
     
-    public void addListeners(){
+    public void addListeners() {
         this.addMouseListener(new CellMouseClickedListener());
         //this.addKeyListener(null);
     }
         
-    private class CellMouseClickedListener extends MouseAdapter{
+    private class CellMouseClickedListener extends MouseAdapter {
         JTable table;
         String fileName, type;
         int rowNumber, columnNumber;         
@@ -164,17 +162,16 @@ public class ErrorListTable extends JTable{
             table = (JTable) e.getSource(); 
             int selRow = table.getSelectedRow(); 
 
-            try{
+            try {
                 if (retrieveLocation(selRow) == false)
                     return;
-            }
-            catch(NumberFormatException exception){
+            } catch(NumberFormatException exception) {
                 return;
             }
             
             int typeCode = retrieveHeaderTableTypeCode();
             
-            if (typeCode == -1){
+            if (typeCode == -1) {
                 System.out.println("wrong type code");
                 return;
             }
@@ -185,7 +182,7 @@ public class ErrorListTable extends JTable{
              */
             String srcFileName = fileName;
             String wrkFileName = null;
-    		for (int i = 0; i < MainWindow.getSrcEdfFiles().size(); i++){
+    		for (int i = 0; i < MainWindow.getSrcEdfFiles().size(); i++) {
     			File f = MainWindow.getSrcEdfFiles().get(i);
     			if (f.getAbsolutePath().equals(srcFileName)){
     				wrkFileName = MainWindow.getWkEdfFiles().get(i).getAbsolutePath();
@@ -193,8 +190,8 @@ public class ErrorListTable extends JTable{
     			}
     		}
             
-    		if (wrkFileName!=null){
-    			for (int i = 0; i < MainWindow.taskTree.getEdfRootNode().getChildCount(); i++){
+    		if (wrkFileName!=null) {
+    			for (int i = 0; i < MainWindow.taskTree.getEdfRootNode().getChildCount(); i++) {
             		EDFTreeNode child = (EDFTreeNode)MainWindow.taskTree.getEdfRootNode().getChildAt(i);
             		if (wrkFileName.equals(child.getHostFile().getAbsolutePath())){
             			MainWindow.taskTree.setSelectionRow(i + 2);
@@ -204,28 +201,28 @@ public class ErrorListTable extends JTable{
     		}
         	/* The above code is used to highlight working-file node on the task tree*/
             
-            if (typeCode == Incompliance.index_incomp_src_eia){/* EIA header table*/
+            if (typeCode == Incompliance.index_incomp_src_eia) {/* EIA header table*/
                 redirectToEIATable(rowNumber, columnNumber);
                 return;
             }
             
-            if (typeCode == Incompliance.index_incomp_src_esa){/* ESA header table*/
+            if (typeCode == Incompliance.index_incomp_src_esa) {/* ESA header table*/
             	redirectToESATable(fileName, rowNumber, columnNumber);
                 return;
             }
             
-            if (typeCode == Incompliance.index_incomp_src_eiatemplate){/* EIA template header table*/
+            if (typeCode == Incompliance.index_incomp_src_eiatemplate) {/* EIA template header table*/
             	redirectToEIATemplateTable(fileName, rowNumber, columnNumber);
                 return;
             }
             
-            if (typeCode == Incompliance.index_incomp_src_esatemplate){/* ESA template header table*/
+            if (typeCode == Incompliance.index_incomp_src_esatemplate) {/* ESA template header table*/
                 redirectToESATemplateTable(fileName, rowNumber, columnNumber);
                 return;
             }         
         }
         
-        public void redirectToEIATable(int rr, int cc){
+        public void redirectToEIATable(int rr, int cc) {
             MainWindow.getTabPane().setSelectedIndex(0);
             EIATable eiaTable = MainWindow.getIniEiaTable();
             if (eiaTable.isTableColumnHidden())
@@ -233,19 +230,18 @@ public class ErrorListTable extends JTable{
             highlightCell(eiaTable, rr, cc);
         }
         
-        public void redirectToESATable(String fileName, int rr, int cc){
+        public void redirectToESATable(String fileName, int rr, int cc) {
         	
 //        	System.out.println("[" + rr + "," + cc + "]" + fileName);
         	
         	String srcFileName = fileName;
     		String wrkFileName = "";
-    		for (int i = 0; i < MainWindow.getSrcEdfFiles().size(); i++){
+    		for (int i = 0; i < MainWindow.getSrcEdfFiles().size(); i++) {
     			File f = MainWindow.getSrcEdfFiles().get(i);
     			if (f.getAbsolutePath().equals(srcFileName)){
     				wrkFileName = MainWindow.getWkEdfFiles().get(i).getAbsolutePath();
     			}
-    		}
-    		
+    		}    		
     		
             ArrayList<ESATable> tables = MainWindow.getIniEsaTables();
             int index = 0;
@@ -260,16 +256,16 @@ public class ErrorListTable extends JTable{
             highlightCell(esaTable, rr, cc);
         }
         
-        public void redirectToEIATemplateTable(String fileName, int rr, int cc){
+        public void redirectToEIATemplateTable(String fileName, int rr, int cc) {
             int tabs = MainWindow.getTabPane().getTabCount();
             EIATemplatePane etPane;
             Object object;
             JTable table;
-            for (int i = 0; i < tabs; i++){
+            for (int i = 0; i < tabs; i++) {
                 object = MainWindow.getTabPane().getComponentAt(i);
-                if (object instanceof EIATemplatePane){
+                if (object instanceof EIATemplatePane) {
                     etPane =  (EIATemplatePane) object;
-                    if (etPane.getMasterFile().getAbsolutePath().equalsIgnoreCase(fileName)){
+                    if (etPane.getMasterFile().getAbsolutePath().equalsIgnoreCase(fileName)) {
                         MainWindow.getTabPane().setSelectedIndex(i);
                         table = etPane.getPreviewTable();
                         highlightCell(table, rr, cc);
@@ -279,16 +275,16 @@ public class ErrorListTable extends JTable{
             }     
         }
         
-        public void redirectToESATemplateTable(String fileName, int rr, int cc){
+        public void redirectToESATemplateTable(String fileName, int rr, int cc) {
             int tabs = MainWindow.getTabPane().getTabCount();
             ESATemplatePane etPane;
             Object object;
             EDFTable table;
-            for (int i = 0; i < tabs; i++){
+            for (int i = 0; i < tabs; i++) {
                 object = MainWindow.getTabPane().getComponentAt(i);
                 if (object instanceof ESATemplatePane){
                     etPane =  (ESATemplatePane) object;
-                    if (etPane.getMasterFile().getAbsolutePath().equalsIgnoreCase(fileName)){
+                    if (etPane.getMasterFile().getAbsolutePath().equalsIgnoreCase(fileName)) {
                         table = etPane.getEsaTemplateTable();
                         MainWindow.getTabPane().setSelectedIndex(i);
                         highlightCell(table, rr, cc);
@@ -298,13 +294,13 @@ public class ErrorListTable extends JTable{
             }            
         }
         
-        void highlightCell(JTable jtable, int rr, int cc){
+        void highlightCell(JTable jtable, int rr, int cc) {
             jtable.getSelectionModel().setSelectionInterval(rr, rr);
             jtable.getColumnModel().getSelectionModel().setSelectionInterval(cc, cc); 
             Utility.scrollTableRowToVisible(jtable, rr, cc);           
         }
                 
-        boolean retrieveLocation(int selRow){
+        boolean retrieveLocation(int selRow) {
             fileName = (String)table.getModel().getValueAt(selRow, file_number);
             if (fileName == null)
                 return false;
@@ -323,7 +319,7 @@ public class ErrorListTable extends JTable{
         }
         
 
-       private int retrieveHeaderTableTypeCode(){
+       private int retrieveHeaderTableTypeCode() {
             int count = Incompliance.typeOfErrorHeader.length;
             for (int i = 0; i < count; i++)
                 if (type.equalsIgnoreCase(Incompliance.typeOfErrorHeader[i]))
@@ -332,39 +328,39 @@ public class ErrorListTable extends JTable{
         }
     } //end of class CellMouseClickedListener
     
-  public static class TextIcon{
+  public static class TextIcon {
         private String text;
         private Icon icon;
-        TextIcon(String text, Icon icon){
+        TextIcon(String text, Icon icon) {
             this.text = text; 
             this.icon = icon;
         }
     }
     
-   public static class HeaderIconRenderer extends DefaultTableCellRenderer{
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                    boolean isSelected, boolean hasFocus, int row, int column) {
+   public static class HeaderIconRenderer extends DefaultTableCellRenderer {
+        public Component getTableCellRendererComponent(
+        		JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 // Inherit the colors and font from the header component
-/*               if (table != null) {
-                    JTableHeader header = table.getTableHeader();
-                    if (header != null) {
-                        setForeground(header.getForeground());
-                        setBackground(header.getBackground());
-                        setFont(header.getFont());
-                    }
-                }  */
+//               if (table != null) {
+//                    JTableHeader header = table.getTableHeader();
+//                    if (header != null) {
+//                        setForeground(header.getForeground());
+//                        setBackground(header.getBackground());
+//                        setFont(header.getFont());
+//                    }
+//                }
 
-                if (value instanceof TextIcon) {
-                    TextIcon txtIcon = (TextIcon)value;
-                    setIcon(txtIcon.icon);
-                    setText(txtIcon.text);
-                } else {
-                    setText((value == null) ? "" : value.toString());
-                    setIcon(null);
-                }
-                setBorder(UIManager.getBorder("TableHeader.cellBorder"));
-                setHorizontalAlignment(JLabel.CENTER);
-                return this;
+        	if (value instanceof TextIcon) {
+                TextIcon txtIcon = (TextIcon)value;
+                setIcon(txtIcon.icon);
+                setText(txtIcon.text);
+            } else {
+                setText((value == null) ? "" : value.toString());
+                setIcon(null);
             }
+            setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+            setHorizontalAlignment(JLabel.CENTER);
+            return this;
+        }
     }
 }

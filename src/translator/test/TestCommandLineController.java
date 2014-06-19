@@ -7,7 +7,7 @@ import translator.utils.Vendor;
 public class TestCommandLineController {
 
     
-    public static void main(String[] args){
+    public static void main(String[] args) {
     	
     	String vendor = Vendor.Compumedics.toString();
 		String mapping_file = "D:/Workspace/EDF_Editor/data/NSRR_eventmapping_compumedics_02032014.csv";
@@ -17,7 +17,7 @@ public class TestCommandLineController {
 		String output_dir = "C:/Documents and Settings/Gang/Desktop/NF";
 		String outname = Keywords.key_edfname + "_" + Keywords.key_vendor + "_" + Keywords.key_date + "_" + Keywords.key_time + ".xml";
 		
-		String[] argv = new String[]{
+		String[] argv = new String[] {
 			"-translator",
 			"-vendor", vendor,
 			"-map", mapping_file,
@@ -31,5 +31,4 @@ public class TestCommandLineController {
 		CommandLineController.Start(argv);
 		System.exit(0);
     }
-
 }

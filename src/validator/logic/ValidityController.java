@@ -14,14 +14,13 @@ public class ValidityController {
 		new NewTask_for_ValidityCommandLine(edf_dir, output);
 	}
 	
-	private static String separatorReplacer(String oldString){
+	private static String separatorReplacer(String oldString) {
 		String newString = oldString;
-		if (newString!=null){
+		if (newString!=null) {
 			newString = newString.replace("/", File.separator);
 			newString = newString.replace("\\", File.separator);
 			newString = newString.replace(File.separator + File.separator, File.separator);
 		}
 		return newString;
 	}
-
 }

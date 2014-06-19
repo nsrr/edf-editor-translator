@@ -118,21 +118,17 @@ public class TransducerListener extends JDialog {
                 if (indC != -1) {
                     aFinalString[0] = curVal.substring(0, indC).trim();
                     if (indAt != -1) {
-                        aFinalString[1] =
-                                curVal.substring(indC + COMMA.length(), indAt).trim();
+                        aFinalString[1] = curVal.substring(indC + COMMA.length(), indAt).trim();
                         if (indRef != -1) {
-                            aFinalString[2] =
-                                    curVal.substring(indAt + AT.length(), indRef).trim();
+                            aFinalString[2] = curVal.substring(indAt + AT.length(), indRef).trim();
                             aFinalString[3] =
                                     curVal.substring(indRef + REFERENCED_TO.length(), curVal.length()).trim();
                         } else {
                             aFinalString[2] =
                                     curVal.substring(indAt + AT.length(), curVal.length());
-                            
                         }
                     } else {
-                        aFinalString[1] =
-                                curVal.substring(indC + 1, curVal.length()).trim();
+                        aFinalString[1] = curVal.substring(indC + 1, curVal.length()).trim();
                     }
                 } else {
                     aFinalString[0] = curVal;
@@ -143,7 +139,6 @@ public class TransducerListener extends JDialog {
         initUI();
         setDialogLayout();
         visualize();
-
     }
 
     private void initUI() {
@@ -363,10 +358,10 @@ public class TransducerListener extends JDialog {
     /*
      * Fangping, 08/10/2010
      */
-    private class TransducerBoxesListener implements ActionListener{
+    private class TransducerBoxesListener implements ActionListener {
         private int option;
         private JComboBox box;
-        TransducerBoxesListener(int opt, JComboBox bx){
+        TransducerBoxesListener(int opt, JComboBox bx) {
             option = opt; box = bx;
         }
         public void actionPerformed(ActionEvent e) {
@@ -436,7 +431,7 @@ public class TransducerListener extends JDialog {
      * create the main panel
      * Fangping, 08/09/2010
      */
-    private JPanel createMainPanel(){
+    private JPanel createMainPanel() {
         FormLayout layout = new FormLayout(
                                         "2dlu, pref, 4dlu, 56dlu:grow, 8dlu", //columns
                                         "20dlu, 4dlu, 20dlu, 4dlu,20dlu, 4dlu, 20dlu, 4dlu, 4dlu, 4dlu, 20dlu, 4dlu"); //rows
@@ -624,6 +619,4 @@ public class TransducerListener extends JDialog {
 
         this.setIconImage(image);
     }
-    
-    
 }

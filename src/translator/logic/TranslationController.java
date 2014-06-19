@@ -20,7 +20,9 @@ public class TranslationController {
 	public static JList JList_Messages = null;
 	public static DefaultListModel ListModel_Messages = null;
 	
-	public static ArrayList<String> conductTranslation(String vendor, String mapping_file, String edf_dir, ArrayList<String> selected_Edf_files, String annotation_dir, String stage_dir, String output_dir, String outname){
+	public static ArrayList<String> conductTranslation(
+			String vendor, String mapping_file, String edf_dir, ArrayList<String> selected_Edf_files, 
+			String annotation_dir, String stage_dir, String output_dir, String outname) {
 
 		mapping_file = separatorReplacer(mapping_file);
 		edf_dir = separatorReplacer(edf_dir);
@@ -32,7 +34,7 @@ public class TranslationController {
 		
 		String annotation_file = null, stage_file = null, out_file = null;
 		
-		for (String edf_file : selected_Edf_files){
+		for (String edf_file : selected_Edf_files) {
 			
 			//(1) edf_file
 			edf_file = separatorReplacer(edf_file);
@@ -49,40 +51,39 @@ public class TranslationController {
 			
 			boolean bTranslation = false;
 			AnnotationConverter converter = new AnnotationConverter();
-			try{
+			try {
 				new File(out_file).getParentFile().mkdirs();
-				if (vendor.equals(Vendor.Embla.toString())){
+				if (vendor.equals(Vendor.Embla.toString())) {
 					annotation_file = validize_file(annotation_dir, basename, ".txt");
-					if ((new File(annotation_file)).exists()){
+					if ((new File(annotation_file)).exists()) {
 						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file);	
 					}
-				} else if (vendor.equals(Vendor.Compumedics.toString())){
+				} else if (vendor.equals(Vendor.Compumedics.toString())) {
 					annotation_file = validize_file(annotation_dir, basename, ".xml");
-					if ((new File(annotation_file)).exists()){
+					if ((new File(annotation_file)).exists()) {
 						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file);
 					}
-				} else if (vendor.equals(Vendor.Respironics.toString())){
+				} else if (vendor.equals(Vendor.Respironics.toString())) {
 					annotation_file = validize_file(annotation_dir, basename, ".events.csv");
 					stage_file = validize_file(stage_dir, basename, ".events.csv");
-					if ((new File(annotation_file)).exists() && (new File(stage_file)).exists()){
+					if ((new File(annotation_file)).exists() && (new File(stage_file)).exists()) {
 						bTranslation = converter.convertCSV(annotation_file, stage_file, edf_file, mapping_file, out_file);
 					}
-				} else if (vendor.equals(Vendor.Sandman.toString())){
+				} else if (vendor.equals(Vendor.Sandman.toString())) {
 					annotation_file = validize_file(annotation_dir, basename, ".txt");
-					if ((new File(annotation_file)).exists()){
+					if ((new File(annotation_file)).exists()) {
 						bTranslation = converter.convertSandman(annotation_file, edf_file, mapping_file, out_file);
 					}
 				}
 				
-				if (bTranslation){
+				if (bTranslation) {
 					successfulOutAL.add(out_file);
 				}
 			}
-			catch(Exception e){
+			catch(Exception e) {
 				bTranslation = false;
 				e.printStackTrace();
-			}
-			finally{
+			} finally {
 				//(1) check existence of necessary files
 				mapping_file = mapping_file == null ? "" : mapping_file;
 				edf_file = edf_file == null ? "" : edf_file;
@@ -102,7 +103,7 @@ public class TranslationController {
 				addElementIntoLog("   * Translation:\t" + (bTranslation ? "Successful!" : "Failed!"), true);
 				
 				//(3) record transaction error into log history
-				if (!translationErrors.equals("")){
+				if (!translationErrors.equals("")) {
 					addElementIntoLog("   * Errors:", true);
 					addElementIntoLog(translationErrors, true);
 				}
@@ -118,9 +119,9 @@ public class TranslationController {
 		return successfulOutAL;
 	}
 	
-	public static void addElementIntoLog(String message, boolean showOnScreen){
+	public static void addElementIntoLog(String message, boolean showOnScreen) {
 
-		if (showOnScreen){
+		if (showOnScreen) {
 			System.out.println(message);
 			if (ListModel_Messages!=null)
 				ListModel_Messages.addElement(message);
@@ -147,9 +148,9 @@ public class TranslationController {
 		
 	}
 	
-	private static String separatorReplacer(String oldString){
+	private static String separatorReplacer(String oldString) {
 		String newString = oldString;
-		if (newString!=null){
+		if (newString!=null) {
 			newString = newString.replace("/", File.separator);
 			newString = newString.replace("\\", File.separator);
 			newString = newString.replace(File.separator + File.separator, File.separator);
@@ -157,7 +158,7 @@ public class TranslationController {
 		return newString;
 	}
 	
-	public static String customize_out_file(String pattern, String basename, String vendor){
+	public static String customize_out_file(String pattern, String basename, String vendor) {
 		
 		basename = basename == null ? "filename" : basename;
 		
@@ -169,7 +170,7 @@ public class TranslationController {
 		return example;
 	}
 	
-	private static String validize_file(String dir, String basename, String extension){
+	private static String validize_file(String dir, String basename, String extension) {
 		
 		if (dir == null || basename == null || extension == null)
 			return null;
@@ -185,7 +186,7 @@ public class TranslationController {
 		return file;
 	}
 	
-	public static String updateOutputPattern(String pattern, String key, ItemEvent e){
+	public static String updateOutputPattern(String pattern, String key, ItemEvent e) {
 		
 		final String str_xml = ".xml";
 		pattern = pattern.replaceAll(".(?i)xml", str_xml);

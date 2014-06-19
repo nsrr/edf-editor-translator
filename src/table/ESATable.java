@@ -35,8 +35,7 @@ public class ESATable extends EDFTable {
         this.setUpdateSinceLastSave(true);
     }
     
-    public ESATable(ESATableModel esa) 
-    {
+    public ESATable(ESATableModel esa) {
     	super(esa);
         customizeLook("esa");
     	this.setUpdateSinceLastSave(true);
@@ -82,7 +81,7 @@ public class ESATable extends EDFTable {
         return null;
     } */
     
-      public void updateTable(ESAHeader edfFileHeader){
+      public void updateTable(ESAHeader edfFileHeader) {
 
         TableModel model = this.getModel();
         int nrows = model.getRowCount();
@@ -99,7 +98,7 @@ public class ESATable extends EDFTable {
     }
     
     //Fangping, 10/04/2010
-    private void cacheColumns(){
+    private void cacheColumns() {
         int ncol = getModel().getColumnCount();
          allTableColumns = new TableColumn[ncol];
          for (int i = 0; i < ncol; i++)
@@ -107,15 +106,15 @@ public class ESATable extends EDFTable {
      }
     
     //Fangping, 10/04/2010
-    public void showImmutableFields(){
-        for (int index: immutableFieldIndices){
+    public void showImmutableFields() {
+        for (int index: immutableFieldIndices) {
             addColumn(allTableColumns[index]);
             getColumnModel().moveColumn(getColumnCount() - 1, index);
         }
         validate();
     }
     
-    public void hideImmutableFields(){
+    public void hideImmutableFields() {
         cacheColumns();
         int k = 0;
         for (int i : immutableFieldIndices) {
@@ -131,7 +130,7 @@ public class ESATable extends EDFTable {
      * one header corresponds to one ESA Table
      * algorithm: map each attribute value of each chanel to each cell
      */
-    public void createESATable(ESAHeader esaHeader){
+    public void createESATable(ESAHeader esaHeader) {
         int nChannels = esaHeader.getNumberOfChannels();
         this.setModel(new  ESATableModel(nChannels)); //this line is required; otherewise, getValueAt does not work
         ESAChannel esaChannel;
@@ -146,11 +145,8 @@ public class ESATable extends EDFTable {
             }   
         
         this.stripTable(tableOddRowClr, null, tableEvenRowClr, null);
-    } 
+    }
     
-    
-
-
     public void setSourceMasterFile(File sourceOfMasterFile) {
         this.sourceOfMasterFile = sourceOfMasterFile;
     }
@@ -178,7 +174,6 @@ public class ESATable extends EDFTable {
         }
 
         // Implementation of TableCellRenderer interface
-
         public Component getTableCellRendererComponent(JTable table,
                                                        Object value,
                                                        boolean isSelected,
@@ -248,6 +243,5 @@ public class ESATable extends EDFTable {
             }
         }
     }
-
 
 }

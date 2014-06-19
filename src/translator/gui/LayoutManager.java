@@ -32,25 +32,25 @@ public class LayoutManager {
 		first.gridwidth = 1;
 	}
 	
-	public static void addFirstField(Component c, Container parent){
+	public static void addFirstField(Component c, Container parent) {
 		GridBagLayout gbl = (GridBagLayout) parent.getLayout();
         gbl.setConstraints(c, first);
         parent.add(c);
 	}
 	
-	public static void addMiddleField(Component c, Container parent){
+	public static void addMiddleField(Component c, Container parent) {
 		GridBagLayout gbl = (GridBagLayout) parent.getLayout();
         gbl.setConstraints(c, middle);
         parent.add(c);
 	}
 	
-	public static void addLastField(Component c, Container parent){
+	public static void addLastField(Component c, Container parent) {
 		GridBagLayout gbl = (GridBagLayout) parent.getLayout();
         gbl.setConstraints(c, last);
         parent.add(c);
 	}
 	
-	public static void addItemList(Component c, Container parent){
+	public static void addItemList(Component c, Container parent) {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.weightx = 0.1;
 		gbc.weighty = 0.1;

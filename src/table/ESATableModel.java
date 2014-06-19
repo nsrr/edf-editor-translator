@@ -6,17 +6,16 @@ import header.ESAHeader;
 
 import javax.swing.table.DefaultTableModel;
 
-public class ESATableModel extends EDFTableModel{
+public class ESATableModel extends EDFTableModel {
     public ESATableModel() {
         super();
     }
     
-    public ESATableModel(int rows){
+    public ESATableModel(int rows) {
         super(ESA.getESAAttributes(), rows);
     }
     
-    public ESATableModel(Object[] columnNames, int nrow)
-    {
+    public ESATableModel(Object[] columnNames, int nrow) {
     	super(columnNames, nrow);
     }
 
@@ -24,7 +23,7 @@ public class ESATableModel extends EDFTableModel{
      * @return
      * get the ESAHeader image of the table model
      */
-    public ESAHeader toESAHeader(){
+    public ESAHeader toESAHeader() {
         //TODO: transform table data to ESA header
         return new ESAHeader();
     }
@@ -34,10 +33,9 @@ public class ESATableModel extends EDFTableModel{
      * @return the ESA channel generated from the row
      * usage: tableModel.toESAChannel(1)
      */
-    public ESAChannel toESAChannel(int rowIndex){
+    public ESAChannel toESAChannel(int rowIndex) {
         return new ESAChannel();
     }
-
 
     /**
      * Usage: control edibility of cell.
@@ -76,9 +74,6 @@ public class ESATableModel extends EDFTableModel{
         case 9:
             return Integer.class;            
         }
-
         throw new AssertionError("invalid column");
     } */
-
-    
 }

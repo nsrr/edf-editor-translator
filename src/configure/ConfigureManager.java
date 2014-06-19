@@ -6,14 +6,18 @@ public class ConfigureManager {
 
 	final static String configurationFilename = "configuration.txt";
 
+	/**
+	 * Add if the configuration file specified does not existed
+	 * @param key the key of a configuration entry
+	 * @param value the value of a configuration entry
+	 */
 	public static void addOrUpdateConfiguration(String key, String value){
 
 		HashMap<String, String> hashmap;
 
 		if (FileIO.isExist(configurationFilename)){
 			hashmap = FileIO.read(configurationFilename);
-		}
-		else{
+		} else {
 			hashmap = new HashMap<String, String>();
 		}
 
@@ -21,6 +25,11 @@ public class ConfigureManager {
 		FileIO.write(configurationFilename, hashmap, false);
 	}
 
+	/**
+	 * Get the configuration value
+	 * @param key a key of the configuration entry
+	 * @return the value of the configuration entry specified by the key
+	 */
 	public static String retrieveConfiguration(String key){
 
 		if (FileIO.isExist(configurationFilename)){

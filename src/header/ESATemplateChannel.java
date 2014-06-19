@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 
-public class ESATemplateChannel extends ESA
-{
+public class ESATemplateChannel extends ESA {
 	 private HashMap esaChannel = null;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -67,7 +66,7 @@ public class ESATemplateChannel extends ESA
 		//3. transeducer
 		raf.seek(offset + channelNumber * 80);
 		raf.readFully(transducerType);
-		setAttributeValueAt(ESA.TRANCEDUCER_TYPE,
+		setAttributeValueAt(ESA.TRANSDUCER_TYPE,
 		new String(transducerType).trim());
 		//System.out.println(esaChannel.get(ESA.TRANCEDUCER_TYPE));
 		offset += numberOfChannels * 80;
@@ -193,7 +192,8 @@ return rgdValue;
 	* 2. write each attribute in bytes to file
 	* Note: since ESA attribute values in file is non-linear, so step 1 and 2 are mannually pieced together
 	*/
-	public void writeESATemplateChannelToDisk(RandomAccessFile raf, int indexOfChannel, int numberOfChannels) throws IOException{
+	public void writeESATemplateChannelToDisk(
+			RandomAccessFile raf, int indexOfChannel, int numberOfChannels) throws IOException {
 	
 		HashMap header = getEsaChannel();
 		
@@ -253,12 +253,6 @@ return rgdValue;
 		raf.write(regularizeToBytes(header, 10));      
 	}
 	
-	
-	
-	
-	
-	
-	
 	///////////////////////////////////////////////////////////////////////////////
 	///////////////////// START of setter and getter zone /////////////////////////
 	///////////////////////////////////////////////////////////////////////////////
@@ -295,18 +289,15 @@ return rgdValue;
 		this.esaChannel = esaChannel;
 	}
 	
-	public HashMap getEsaChannel(){
+	public HashMap getEsaChannel() {
 		return esaChannel;
 	}
 	
-	public HashMap initializeEsaChannel(){
+	public HashMap initializeEsaChannel() {
 		return new HashMap();
 	}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////// END of setter and getter zone ///////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-    
-    
 }

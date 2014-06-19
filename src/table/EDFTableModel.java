@@ -12,7 +12,7 @@ public class EDFTableModel extends DefaultTableModel {
         this.addUndoableEditListener(MainWindow.getUndoManager());
     }
     
-    public EDFTableModel(Object[] columnNames, int nrow){
+    public EDFTableModel(Object[] columnNames, int nrow) {
         super(columnNames, nrow);
         this.addUndoableEditListener(MainWindow.getUndoManager());   
     }
@@ -23,12 +23,11 @@ public class EDFTableModel extends DefaultTableModel {
     }
 
     @Override
-    public void setValueAt(Object value, int row, int column){
+    public void setValueAt(Object value, int row, int column) {
         setValueAt(value, row, column, true);
     } 
     
-    public void setValueAt(Object value, int row, int column, boolean undoable)
-        {
+    public void setValueAt(Object value, int row, int column, boolean undoable) {
             UndoableEditListener listeners[] = getListeners(UndoableEditListener.class);
             if (undoable == false || listeners == null){
                 super.setValueAt(value, row, column);
@@ -43,7 +42,7 @@ public class EDFTableModel extends DefaultTableModel {
                 listener.undoableEditHappened(editEvent);
         }
 
-        public void addUndoableEditListener(UndoableEditListener listener){
+        public void addUndoableEditListener(UndoableEditListener listener) {
             listenerList.add(UndoableEditListener.class, listener);
         }
 }

@@ -167,7 +167,7 @@ public class EDFTable extends JTable {
     }
     
     @Override
-    public boolean getScrollableTracksViewportHeight(){
+    public boolean getScrollableTracksViewportHeight() {
         return false;
     }
 
@@ -175,7 +175,7 @@ public class EDFTable extends JTable {
         this.savedOnce = savedEver;
     }
     
-    public boolean isTableColumnHidden(){
+    public boolean isTableColumnHidden() {
         return (getModel().getColumnCount() != getColumnModel().getColumnCount());
     }
 
@@ -268,7 +268,7 @@ public class EDFTable extends JTable {
         return ValidateEDF.parseEIATable((EIATable)this, fileList);
     }
     
-    public ArrayList<Incompliance> parseEIATemplateTable(){
+    public ArrayList<Incompliance> parseEIATemplateTable() {
     	
     	return ValidateEDF.parseEIATemplateTable(this);
     }
@@ -342,13 +342,13 @@ public class EDFTable extends JTable {
     
     //stub method
     //further implementation in EIATable and ESATable
-    public void showImmutableFields(){
+    public void showImmutableFields() {
        ;
     }
     
     //stub method
     //further implementation in EIATable and ESATable
-    public void hideImmutableFields(){
+    public void hideImmutableFields() {
        ;
     }
     
@@ -442,8 +442,8 @@ public class EDFTable extends JTable {
       }
     }
     
-    class EDFUndoableEditListener implements UndoableEditListener{
-        public EDFUndoableEditListener(){
+    class EDFUndoableEditListener implements UndoableEditListener {
+        public EDFUndoableEditListener() {
             super();
         }
 
@@ -468,7 +468,7 @@ public class EDFTable extends JTable {
     }
     
 
-    private class EDFTableHeaderRenderer extends JLabel implements TableCellRenderer{
+    private class EDFTableHeaderRenderer extends JLabel implements TableCellRenderer {
 
         public Component getTableCellRendererComponent(JTable table,
                                                        Object value, // column header value 

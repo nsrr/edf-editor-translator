@@ -25,14 +25,12 @@ public interface AbstracTableIO {
      */
     void write(EIAHeader eiaHeader, ESAHeader esaHeader, File file);
 
-
     /**
      * @param eiaHeader EIA header retrived from EIA table model
      * @param file the target file to be written. 
      * used to save the EIA header after the file body has been saved
      */
     void write(EIAHeader eiaHeader, File file);
-
 
     /**
      * @param esaHeader ESA header retrieved from ESA table model
@@ -47,7 +45,6 @@ public interface AbstracTableIO {
      * @param file the source file to be read
      */
     void read(EIAHeader eiaHeader, ESAHeader esaHeader, File file);
-
 
     /**
      * @param eiaHeader EIA header retrieved from the file

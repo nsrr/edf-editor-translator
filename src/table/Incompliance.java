@@ -2,7 +2,7 @@ package table;
 
 import javax.swing.JTable;
 
-public class Incompliance{
+public class Incompliance {
     //protected static int errorNumber;
     protected String fileName;
     protected String incomplianceType;
@@ -70,7 +70,8 @@ public class Incompliance{
     public static final int index_incomp_src_eiatemplate = 3;
     
     
-    public Incompliance(String incomplianceType, String description, String fileName,  int rowIndex, int columnIndex, int srcTypeIndex) {
+    public Incompliance(
+    		String incomplianceType, String description, String fileName,  int rowIndex, int columnIndex, int srcTypeIndex) {
         this.incomplianceType = incomplianceType; 
         this.description = description;
         this.fileName = fileName;
@@ -80,7 +81,7 @@ public class Incompliance{
         this.srcTypeIndex = srcTypeIndex;
     }
     
-    public Incompliance(){
+    public Incompliance() {
         ;
     }
 

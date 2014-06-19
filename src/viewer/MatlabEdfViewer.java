@@ -18,18 +18,17 @@ import editor.MainWindow;
 
 public class MatlabEdfViewer {
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		callEdfViewer();
 	}
 
-	public static void callEdfViewer(){
+	public static void callEdfViewer() {
 
 		//(1) set Edf and Xml (if any)
-		if (MainWindow.masterFile == null){
+		if (MainWindow.masterFile == null) {
 			JOptionPane.showMessageDialog(null, "No EDF file for EDF-Viewer is selected from the task tree.");
 			return;
-		}
-		else{
+		} else {
 			String EdfFilePath = MainWindow.masterFile.getParentFile().getAbsolutePath() + File.separator;
 			String EdfFileName = MainWindow.masterFile.getName();
 			String XmlFilePath = EdfFilePath;////////////////////
@@ -68,10 +67,9 @@ public class MatlabEdfViewer {
 			//(3) run EdfViewer
 			callEdfViewer(EdfFilePath, EdfFileName, XmlFilePath, XmlFileName);
 		}
-
 	}
 
-	private static void callEdfViewer(String EdfFilePath, String EdfFileName, String XmlFilePath, String XmlFileName){
+	private static void callEdfViewer(String EdfFilePath, String EdfFileName, String XmlFilePath, String XmlFileName) {
 
 		String mcrDir = ConfigureManager.retrieveConfiguration("MCR_Dir");
 		String viewerDir = ConfigureManager.retrieveConfiguration("Viewer_Dir");
@@ -82,29 +80,27 @@ public class MatlabEdfViewer {
 		System.out.println(viewerDir);
 		System.out.println(viewerApp);
 
-		if (mcrDir == null){
+		if (mcrDir == null) {
 			String tmp = SettingMcrDir.getSystemMcrDir();
-			if (tmp != null){
+			if (tmp != null) {
 				ConfigureManager.addOrUpdateConfiguration("MCR_Dir", tmp);
-			}
-			else{
+			} else {
 				JOptionPane.showMessageDialog(null, "Please first set the diectory of MATLAB Compiler Runtime (MCR)!");
 				SettingMcrDir.setMcrDir();
 				return;
 			}
 		}
 
-		if (viewerDir == null){
+		if (viewerDir == null) {
 			JOptionPane.showMessageDialog(null, "Please first set the diectory of MATLAB viewers!");
 			SettingViewerDir.setViewerDir();
 			return;
 		}
-
-		if (viewerApp == null){
+		if (viewerApp == null) {
 			JOptionPane.showMessageDialog(null, "No viewer compiled for this operating system exists.");
 			return;
 		}
-		if (EdfFilePath == null || EdfFileName == null){
+		if (EdfFilePath == null || EdfFileName == null) {
 			JOptionPane.showMessageDialog(null, "Error occurs in EDF settings.");
 			return;
 		}
@@ -116,44 +112,39 @@ public class MatlabEdfViewer {
 		callEdfViewer(mcrDir, viewerDir, viewerApp, EdfFilePath, EdfFileName, XmlFilePath, XmlFileName);
 	}
 
-	private static class ViewerAppEnvir{
+	private static class ViewerAppEnvir {
 		static String operatingSystem = null;
 		static String viewerApp = null;
 
 		@SuppressWarnings("deprecation")
-		static void setting(){
+		static void setting() {
 			int os = Utilities.getOperatingSystem();
 			boolean is64bit = is64bit();
 			if (os != Utilities.OS_WINDOWS_MASK){
-				if (is64bit){
-//					viewerApp = "SleepPortalViewerR2013bWin64.exe";
-					viewerApp = "StartMe_cmdPars.exe"; // wei wang, 6/10/2014
+				if (is64bit) {
+					viewerApp = "SleepPortalViewerR2013bWin64.exe";
+//					viewerApp = "StartMe_cmdPars.exe"; // wei wang, 6/10/2014
 					operatingSystem = "Win_64bit";
-				}
-				else{
+				} else {
 					viewerApp = "SleepPortalViewerR2013bWin32.exe";
 					operatingSystem = "Win_32bit";
 				}
-			}
-			else if (os == Utilities.OS_MAC){
-				if (is64bit){
+			} else if (os == Utilities.OS_MAC){
+				if (is64bit) {
 					operatingSystem = "Mac_64bit";
-				}
-				else{
+				} else {
 					operatingSystem = "Mac_32bit";
 				}
-			}
-			else if (os == Utilities.OS_LINUX){
-				if (is64bit){
+			} else if (os == Utilities.OS_LINUX) {
+				if (is64bit) {
 					operatingSystem = "Linux_64bit";
-				}
-				else{
+				} else{
 					operatingSystem = "Linux_32bit";
 				}
 			}
 		}
 
-		static boolean is64bit(){
+		static boolean is64bit() {
 			boolean is64bit = false;
 			if (System.getProperty("os.name").contains("Windows")) {
 			    is64bit = (System.getenv("ProgramFiles(x86)") != null);
@@ -171,12 +162,12 @@ public class MatlabEdfViewer {
 		 * (1) Examine existence of paths and files
 		 */
 		//mcrDir
-		if (!(new File(mcrDir)).exists()){
+		if (!(new File(mcrDir)).exists()) {
 			JOptionPane.showMessageDialog(null, "Diectory of MATLAB Compiler Runtime (MCR) does not exist. Please check it!");
 			return;
 		}
 		//viewerDir
-		if (!(new File(viewerDir)).exists()){
+		if (!(new File(viewerDir)).exists()) {
 			JOptionPane.showMessageDialog(null, "Diectory of ViewerDir does not exist. Please check it!");
 			return;
 		}
@@ -185,12 +176,12 @@ public class MatlabEdfViewer {
 		viewer.replace("\\", File.separator);
 		viewer.replace("/", File.separator);
 		viewer.replace(File.separator + File.separator, File.separator);
-		if (!(new File(viewer)).exists()){
+		if (!(new File(viewer)).exists()) {
 			JOptionPane.showMessageDialog(null, "Matlab Viewer App does not exist. Please check it!");
 			return;
 		}
 		//EdfFilePath
-		if (!(new File(EdfFilePath)).exists()){
+		if (!(new File(EdfFilePath)).exists()) {
 			JOptionPane.showMessageDialog(null, "EDF file does not exist. Please check it!");
 			return;
 		}
@@ -199,12 +190,12 @@ public class MatlabEdfViewer {
 		EdfFile.replace("\\", File.separator);
 		EdfFile.replace("/", File.separator);
 		EdfFile.replace(File.separator + File.separator, File.separator);
-		if (!(new File(EdfFile)).exists()){
+		if (!(new File(EdfFile)).exists()) {
 			JOptionPane.showMessageDialog(null, "EDF file does not exist. Please check it!");
 			return;
 		}
 		//XmlFilePath & XmlFile
-		if (!(XmlFilePath.equals("") && XmlFileName.equals(""))){
+		if (!(XmlFilePath.equals("") && XmlFileName.equals(""))) {
 			//XmlFilePath
 			if (!(new File(XmlFilePath)).exists()){
 				JOptionPane.showMessageDialog(null, "Annotation file does not exist. Please check it!");
@@ -215,7 +206,7 @@ public class MatlabEdfViewer {
 			XmlFile.replace("\\", File.separator);
 			XmlFile.replace("/", File.separator);
 			XmlFile.replace(File.separator + File.separator, File.separator);
-			if (!(new File(XmlFile)).exists()){
+			if (!(new File(XmlFile)).exists()) {
 				JOptionPane.showMessageDialog(null, "Xml file does not exist. Please check it!");
 				return;
 			}	
@@ -254,7 +245,6 @@ public class MatlabEdfViewer {
 		EdfFileName = EdfFileName.replace("\\", "").equals("") ? "" : EdfFileName;
 		EdfFilePath = EdfFilePath.replace("\\", "").equals("") ? "" : EdfFilePath;
 		
-		
 		/**
 		 * (3) Run BATCH commands
 		 */
@@ -276,8 +266,7 @@ public class MatlabEdfViewer {
 			stdin.println();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally{
+		} finally {
 			if (stdin!=null){
 				stdin.close();
 			}
@@ -302,7 +291,7 @@ public class MatlabEdfViewer {
 		try {
         	Document doc = MainWindow.consolePane.getDocument();
             doc.insertString(doc.getLength(), theme, EDFInfoPane.theme);
-        } catch (BadLocationException e) {; }
+        } catch (BadLocationException e) {;}
 
 	}
     
@@ -327,8 +316,7 @@ public class MatlabEdfViewer {
 		private final InputStream istrm_;
 	}
 
-
-	private static String formatDir(String path){
+	private static String formatDir(String path) {
 		String str = path;
 		str = str.replace("\\", File.separator);
 		str = str.replace("/", File.separator);

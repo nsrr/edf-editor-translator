@@ -17,7 +17,7 @@ public class CommandLineController {
 		CommandLine cmd = null;
 		try {
 			cmd = parser.parse(OptionParser.options, argv);
-			if (cmd != null){
+			if (cmd != null) {
 				//(1) Obtain the parameters
 				String vendor = cmd.getOptionValue(OptionParser.OptionShort.vendor.toString());
 				String mapping_file = cmd.getOptionValue(OptionParser.OptionShort.map.toString());
@@ -31,7 +31,7 @@ public class CommandLineController {
 				//(2) Find EDF files in the chosen folder and its nested sub-folders
 				ArrayList<String> selected_Edf_files = new ArrayList<String>();
 				File f = new File(edf_dir);
-				if (f.exists()){
+				if (f.exists()) {
 					@SuppressWarnings("unchecked")
 					Collection<File> fileCollection = FileUtils.listFiles(
 							f, new String[]{"edf", "Edf", "eDf", "edF", "EDf", "EdF", "eDF", "EDF"}, true);
@@ -55,9 +55,10 @@ public class CommandLineController {
 }
 
 @SuppressWarnings("static-access")
-class OptionParser{
+class OptionParser {
 	public static enum OptionShort{translator, vendor, map, edf, ann, stage, out, name, help}
 	public static Options options;
+	
 	static {
 		options = new Options();
 		
@@ -103,5 +104,3 @@ class OptionParser{
 				.create(OptionShort.name.toString()));
 	}
 }
-
-

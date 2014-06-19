@@ -16,7 +16,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-public class TranslatorGUI extends JPanel implements ActionListener, ItemListener{
+public class TranslatorGUI extends JPanel implements ActionListener, ItemListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -61,7 +61,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 	private JList JList_Messages = null;
 	private DefaultListModel ListModel_Messages = null;
 	
-	public TranslatorGUI(){
+	public TranslatorGUI() {
 		
 		/* (1) Background */
 		this.setLayout(new GridBagLayout());
@@ -73,22 +73,21 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		LayoutManager.addLastField(new JLabel(""), this);
 		
 		/* (2) "Selection of Vendor" */
-		String[] vendorList = new String[]{ 
+		String[] vendorList = new String[] { 
 				"----- Select a vender from the dropdown menu -----                                                                                       ", 
 				Vendor.Embla.toString(), Vendor.Compumedics.toString(),
 				Vendor.Respironics.toString(), Vendor.Sandman.toString()
-				};
+		};
 		JComboBox JComboBox_vendor = new JComboBox(vendorList);
-		JComboBox_vendor.addActionListener(
-                new ActionListener(){
-                    public void actionPerformed(ActionEvent e){
+		JComboBox_vendor.addActionListener (
+				new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
                     	JComboBox jComboBox = (JComboBox)e.getSource();
                     	boolean enable;
-                    	if (jComboBox.getSelectedIndex() == 0){
+                    	if (jComboBox.getSelectedIndex() == 0) {
                     		enable = false;
                     		vendor_Selected = null;
-                    	}
-                    	else{
+                    	} else {
                     		enable = true;
                     		vendor_Selected = (String)jComboBox.getSelectedItem();
                     	}
@@ -168,7 +167,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				public void changedUpdate(DocumentEvent e) {update();}
 				public void removeUpdate(DocumentEvent e) {update();}
 				public void insertUpdate(DocumentEvent e) {update();}
-				private void update(){
+				private void update() {
                 	String pattern = JTextField_OutputPattern.getText();
                 	String example = TranslationController.customize_out_file(pattern, null, vendor_Selected);
                 	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
@@ -237,9 +236,9 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		JList_Out_files = new JList();
 		JList_Out_files.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel2 = JList_Out_files.getSelectionModel();
-		listSelectionModel2.addListSelectionListener(new ListSelectionListener (){
+		listSelectionModel2.addListSelectionListener(new ListSelectionListener() {
         	public void valueChanged(ListSelectionEvent e) {
-        		if (e.getValueIsAdjusting()){
+        		if (e.getValueIsAdjusting()) {
         			String output_file = (String) JList_Out_files.getSelectedValue();
         			if (!SubWindowGUI.existViewer(output_file)){
         				int i0 = output_file.lastIndexOf(File.separator);
@@ -319,13 +318,13 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 			select.setDialogTitle("Select EDF files");
 			select.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			select.setAcceptAllFileFilterUsed(false);
-			if (select.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+			if (select.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 				String pathname = select.getSelectedFile().getAbsolutePath();
 				JTextField_EdfDirectory.setText(pathname);
 				@SuppressWarnings("unchecked")
 				Collection<File> fileCollection = FileUtils.listFiles(
 						new File(pathname), new String[]{"edf", "Edf", "eDf", "edF", "EDf", "EdF", "eDF", "EDF"}, true);
-				if (fileCollection != null){
+				if (fileCollection != null) {
 					String[] files = new String[fileCollection.size()];
 					int i = 0;
 					for (File file : fileCollection)
@@ -335,10 +334,10 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				}
 				//The following code is to give suggested paths
 				//Code Starts
-				if (JTextField_AnnotationDirectory.getText().equals("")){
+				if (JTextField_AnnotationDirectory.getText().equals("")) {
 					JTextField_AnnotationDirectory.setText(pathname);
 				}
-				if (JTextField_StageDirectory.getText().equals("")){
+				if (JTextField_StageDirectory.getText().equals("")) {
 					if (vendor_Selected!=null && vendor_Selected == Vendor.Respironics.toString()){
 			    		JTextField_StageDirectory.setEnabled(true);
 			    		JTextField_StageDirectory.setText(pathname);
@@ -347,8 +346,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				}
 				//Code Ends
 			}
-		}
-		else if (e.getSource() == JButton_AnnotationDirectory) {
+		} else if (e.getSource() == JButton_AnnotationDirectory) {
 			select.setDialogTitle("Select annotation files");
 			select.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			select.setAcceptAllFileFilterUsed(false);
@@ -356,8 +354,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				String pathname = select.getSelectedFile().getAbsolutePath();
 				JTextField_AnnotationDirectory.setText(pathname);
 			}
-		}
-		else if (e.getSource() == JButton_StageDirectory) {
+		} else if (e.getSource() == JButton_StageDirectory) {
 			select.setDialogTitle("Select stage files");
 			select.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			select.setAcceptAllFileFilterUsed(false);
@@ -365,8 +362,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				String pathname = select.getSelectedFile().getAbsolutePath();
 				JTextField_StageDirectory.setText(pathname);
 			}
-		}
-		else if (e.getSource() == JButton_OutputDirectory) {
+		} else if (e.getSource() == JButton_OutputDirectory) {
 			select.setDialogTitle("Select output-directory of translated files");
 			select.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			select.setAcceptAllFileFilterUsed(false);
@@ -374,8 +370,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				String pathname = select.getSelectedFile().getAbsolutePath();
 				JTextField_OutputDirectory.setText(pathname);
 			}
-		}
-		else if (e.getSource() == JButton_Translate) {
+		} else if (e.getSource() == JButton_Translate) {
 			
 			TranslationController.addElementIntoLog("", true);
 			TranslationController.addElementIntoLog("=====================================================================", true);
@@ -384,12 +379,11 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 			ArrayList<String> errorMessages = validatePrerequisites();
 
 			if (errorMessages.size() > 0) {
-				for (String message : errorMessages){
+				for (String message : errorMessages) {
 					TranslationController.addElementIntoLog("    * " + message, false);
 				}
 				TranslationController.addElementIntoLog(" + The task failed. Please check the above error messages!", false);
-			}
-			else{
+			} else {
 				String vendor = vendor_Selected;
 				String mapping_file = JTextField_MappingFile.getText();
 				String edf_dir = JTextField_EdfDirectory.getText();
@@ -414,7 +408,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
     	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
 	}
 	
-	private ArrayList<String> validatePrerequisites(){
+	private ArrayList<String> validatePrerequisites() {
 		
 		String mapping_file = JTextField_MappingFile.getText();
 		String edf_dir = JTextField_EdfDirectory.getText();
@@ -461,7 +455,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		return errorMessages;
 	}
 	
-	private void enableComponents(boolean enable){
+	private void enableComponents(boolean enable) {
 		JTextField_MappingFile.setEnabled(enable);
 		JTextField_EdfDirectory.setEnabled(enable);
 		JTextField_AnnotationDirectory.setEnabled(enable);
@@ -487,17 +481,4 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
     	}
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-

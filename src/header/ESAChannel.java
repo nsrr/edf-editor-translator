@@ -1,34 +1,40 @@
 package header;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 
+public class ESAChannel extends ESA {
+	// wei wang, 2014-6-18:
+	// Change HashMap to HashMap<String,Object>
 
-public class ESAChannel extends ESA{
-
-    private HashMap esaChannel = null;
-
+    private HashMap<String,Object> esaChannel = null;
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////// START of constructor zone //////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Default constructor
+     */
     public ESAChannel() {
         super();
     }
 
-    public ESAChannel(HashMap channel) {
+    /**
+     * Construct the ESA channel using an external channel represented by a HashMap
+     * @param channel the external channel to use
+     */
+    public ESAChannel(HashMap<String,Object> channel) {
         esaChannel = channel;
     }
 
     /**
+     * Construct an ESA channel with parameters
      * @param raf random file accessor
      * @param channelNumber the serial number of current channel
      * @param numberOfChannels the total number of channels in current EDF file
      */
-    public ESAChannel(RandomAccessFile raf, int channelNumber,
-                      int numberOfChannels) {
+    public ESAChannel(RandomAccessFile raf, int channelNumber, int numberOfChannels) {
         byte[] label = new byte[16];
         byte[] transducerType = new byte[80];
         byte[] physDim = new byte[8];
@@ -39,11 +45,9 @@ public class ESAChannel extends ESA{
         byte[] prefiltering = new byte[80];
         byte[] nbSamples = new byte[8];
         byte[] reserved = new byte[32];
-
         
-        int offset = EIA_OFFSET; //skip the EIA part of 256 bytes large
-
-        esaChannel = new HashMap(NUMBER_OF_ATTRIBUTES);
+        int offset = EIA_OFFSET; // skip the EIA part of 256 bytes large
+        esaChannel = new HashMap<String,Object>(NUMBER_OF_ATTRIBUTES);
 
         /**
          * the algorithm is:
@@ -58,19 +62,17 @@ public class ESAChannel extends ESA{
             //System.out.println(esaChannel.get(ESA.LABEL)); //for test
             offset += numberOfChannels * 16;
             
-            //2. transeducer
+            //2. transducer
             raf.seek(offset + channelNumber * 80);
             raf.readFully(transducerType);
-            setAttributeValueAt(ESA.TRANCEDUCER_TYPE,
-                                new String(transducerType).trim());
+            setAttributeValueAt(ESA.TRANSDUCER_TYPE, new String(transducerType).trim());
             //System.out.println(esaChannel.get(ESA.TRANCEDUCER_TYPE));
             offset += numberOfChannels * 80;
              
             //3. physical dimension
             raf.seek(offset + channelNumber * 8);
             raf.readFully(physDim);
-            setAttributeValueAt(ESA.PHYSICAL_DIMESNION,
-                                new String(physDim).trim());
+            setAttributeValueAt(ESA.PHYSICAL_DIMESNION, new String(physDim).trim());
             //System.out.println(esaChannel.get(ESA.PHYSICAL_DIMESNION));
             offset += numberOfChannels * 8;
 
@@ -144,57 +146,55 @@ public class ESAChannel extends ESA{
 ////////////////////// END of constructor zone ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-
-/*     public byte[] regularizeToBytes(HashMap currentChannel, int index){
-        String key = getESAattributes()[index];
-        String srcValue = (String) header.get(key); //1.
-
-        int byteSize = byteLength[index]; //2.
-
-        byte[] rgdValue = regularizeKey(srcValue, byteSize).getBytes(); //3.
-
-        return rgdValue;
-    } */
-
+//     public byte[] regularizeToBytes(HashMap currentChannel, int index){
+//        String key = getESAattributes()[index];
+//        String srcValue = (String) header.get(key); //1.
+//
+//        int byteSize = byteLength[index]; //2.
+//
+//        byte[] rgdValue = regularizeKey(srcValue, byteSize).getBytes(); //3.
+//
+//        return rgdValue;
+//    }
 
     /**
-     * @param channelHeader the attribute values of current channel
-     * @param index the index number of the selected attribute
-     * @return byte value of the selected attribtue
+     * Returns the byte value of the selected attribute
      * Algorithm:
      * 1. single out the attribute value from the header;
      * 2. get the size of the attribute specified by EDF Standard;
      * 3. regularize the attribute value to bytes.
+     * @param channelHeader the attribute values of current channel
+     * @param index the index number of the selected attribute
+     * @return byte value of the selected attribute
      */
-    public byte[] regularizeToBytes(HashMap channelHeader, int index) {
+    public byte[] regularizeToBytes(HashMap<String,Object> channelHeader, int index) {
         String key = getESAAttributeAt(index);
-        String srcValue = (String) channelHeader.get(key); //1.
-        int byteSize = getByteLengthAt(index); //2.
-        byte[] rgdValue = regularizeKey(srcValue, byteSize).getBytes(); //3.
-
+        String srcValue = (String) channelHeader.get(key); // end of 1.
+        int byteSize = getByteLengthAt(index); // end of 2.
+        byte[] rgdValue = regularizeKey(srcValue, byteSize).getBytes(); // end of 3.
         return rgdValue;
     }
-    
-    
 
     /**
      * Usage: to write current ESA channel to file in manner of random file accessor
-     * @param raf random file accessor
-     * @indexOfChannel index of current channel
-     * @param numberOfChannels the number of channels
      * Algorithm:
      * 1. regularize each attribute value of current channel to byte form;
      * 2. write each attribute in bytes to file
-     * Note: since ESA attribute values in file is non-linear, so step 1 and 2 are mannually pieced together
+     * Note: since ESA attribute values in file is non-linear, so step 1 and 2 are manually pieced together
+     * @param raf random file accessor
+     * @param indexOfChannel index of current channel
+     * @param numberOfChannels the number of channels
+     * @throws IOException
      */
-    public void writeESAChannelToDisk(RandomAccessFile raf, int indexOfChannel, int numberOfChannels) throws IOException{
+    public void writeESAChannelToDisk(
+    	RandomAccessFile raf, int indexOfChannel, int numberOfChannels) throws IOException {
         
-        HashMap header = getEsaChannel();
+        HashMap<String,Object> header = getEsaChannel();
         
-/*         byte[][] byteValue = new byte[NUMBER_OF_ATTRIBUTES][90]; //this might be problematic
-        for (int i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
-            byteValue[i] = regularizeToBytes(header, i); //1.
-        } */
+//      byte[][] byteValue = new byte[NUMBER_OF_ATTRIBUTES][90]; //this might be problematic
+//      for (int i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
+//          byteValue[i] = regularizeToBytes(header, i); //1.
+//      }
         /* For each attribute, operations follow: 
          * 1. move the file pointer;
          * 2. write;
@@ -213,7 +213,6 @@ public class ESAChannel extends ESA{
         raf.seek(offset + indexOfChannel * 8);
         raf.write(regularizeToBytes(header, 2));
         offset += numberOfChannels * 8;
-
 
         raf.seek(offset + indexOfChannel * 8);
         raf.write(regularizeToBytes(header, 3));
@@ -242,21 +241,21 @@ public class ESAChannel extends ESA{
         raf.seek(offset + indexOfChannel * 32);
         raf.write(regularizeToBytes(header, 9));      
     }
-    
 
-    
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////// START of setter and getter zone /////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
     /**
-     * @return the complet channel in form of HashMap
+     * Get the ESA channel in map form
+     * @return the complete channel in form of HashMap
      */
-    public HashMap getThisChannel() {
+    public HashMap<String,Object> getThisChannel() {
         return esaChannel;
     }
 
     /**
+     * Get the signal attribute value given a key
      * @param key the attribute key for the ESA channel
      * @return  the attribute value
      */
@@ -264,12 +263,18 @@ public class ESAChannel extends ESA{
         return esaChannel.get(key);
     }
     
+    /**
+     * Get the signal attribute value given an index
+     * @param index the position to return the ESA attribute value
+     * @return the attribute value
+     */
     public Object getSignalAttributeValueAt(int index) {
         String key = ESA.getESAAttributeAt(index);
         return esaChannel.get(key);
     }
 
     /**
+     * Set the attribute value given a key
      * @param key the attribute key for the ESA channel
      * @param value the value for the attribute
      */
@@ -277,22 +282,31 @@ public class ESAChannel extends ESA{
         esaChannel.put(key, value);
     }
     
-    public void setEsaChannel(HashMap esaChannel) {
+    /**
+     * Set ESA channel using a HashMap
+     * @param esaChannel the channel used to set to the current channel
+     */
+    public void setEsaChannel(HashMap<String,Object> esaChannel) {
         this.esaChannel = esaChannel;
     }
     
-    public HashMap getEsaChannel(){
+    /**
+     * Get ESA channel
+     * @return the HashMap representation of the current ESA channel
+     */
+    public HashMap<String,Object> getEsaChannel(){
         return esaChannel;
     }
  
-    public HashMap initializeEsaChannel(){
-        return new HashMap();
+    /**
+     * Initialize the ESA channel by returning a HashMap representation of this channel
+     * @return A new HashMap for this channel
+     */
+    public HashMap<String,Object> initializeEsaChannel(){
+        return new HashMap<String,Object>();
     }
  
-
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////// END of setter and getter zone ///////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-
-
 }

@@ -12,7 +12,7 @@ public class TestCommandLineController {
 		String edf_dir = "D:/Workspace2/test";
 		String output = "D:/Workspace2/test/1.txt";
 
-		String[] argv = new String[]{
+		String[] argv = new String[] {
 			"-validator",
 			"-edf", edf_dir,
 			"-out", output
@@ -21,5 +21,4 @@ public class TestCommandLineController {
 		CommandLineController.Start(argv);
 		System.exit(0);
 	}
-
 }

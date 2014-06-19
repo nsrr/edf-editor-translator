@@ -19,7 +19,8 @@ public class Keywords {
 	public final static Color status = new Color(225, 240, 250);
 	
 	public static JFileChooser fileFolderChooser = new JFileChooser();
-	static{
+	
+	static {
 		fileFolderChooser.setCurrentDirectory(new File("."));
 	}
 }

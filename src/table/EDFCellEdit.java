@@ -2,7 +2,7 @@ package table;
 
 import javax.swing.undo.AbstractUndoableEdit;
 
-public class EDFCellEdit extends AbstractUndoableEdit{
+public class EDFCellEdit extends AbstractUndoableEdit {
     
     protected EDFTableModel tableModel;
     protected Object oldValue;
@@ -20,20 +20,18 @@ public class EDFCellEdit extends AbstractUndoableEdit{
     }
     
     @Override
-    public String getPresentationName(){
+    public String getPresentationName() {
         return "";
     }
     
-    
     @Override
-    public void undo(){
+    public void undo() {
         super.undo();
         tableModel.setValueAt(oldValue, row, column, false);
     }
     
-    
     @Override
-    public void redo(){
+    public void redo() {
         super.redo();
         tableModel.setValueAt(newValue, row, column, false); 
     }

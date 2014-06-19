@@ -122,7 +122,6 @@ public class LineNumberTable extends JTable implements ChangeListener,
     /**
      *  Borrow the renderer from JDK1.4.2 table header
      */
-
     private static class RowNumberRenderer extends DefaultTableCellRenderer {
         final static Color bkColor = new Color(246, 207, 134);
         final static Color fgColor = Color.BLACK;

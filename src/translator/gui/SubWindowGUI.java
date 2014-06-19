@@ -8,7 +8,7 @@ import javax.swing.*;
 
 import translator.utils.Keywords;
 
-public class SubWindowGUI extends JFrame{
+public class SubWindowGUI extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -17,7 +17,7 @@ public class SubWindowGUI extends JFrame{
 	
 	private static SubWindowGUI _instance = null;
 	
-	public static SubWindowGUI getInstance(){
+	public static SubWindowGUI getInstance() {
 		if (_instance == null) {
 			_instance = new SubWindowGUI();
 			_instance.setTitle("EDF Annotation Translator");
@@ -27,8 +27,7 @@ public class SubWindowGUI extends JFrame{
     		if (dim1.width > dim2.width || dim1.height > dim2.height){
     			_instance.setSize(dim2);
     			_instance.setMinimumSize(dim2);
-    		}
-    		else{
+    		} else {
     			_instance.setSize(dim1);
     			_instance.setMinimumSize(dim1);
     		}
@@ -43,7 +42,7 @@ public class SubWindowGUI extends JFrame{
 		return _instance;
 	}
 	
-	private SubWindowGUI(){
+	private SubWindowGUI() {
 		
 		jtabbedPane = new JTabbedPane();
 		jtabbedPane.setBackground(Keywords.tabbedPane);
@@ -54,16 +53,16 @@ public class SubWindowGUI extends JFrame{
 		this.setResizable(false);
 	}
 	
-	public static boolean existViewer(String filename){
+	public static boolean existViewer(String filename) {
 		return map__filename_with_tabIndex.containsKey(filename);
 	}
 	
-	public static void addViewerTab(String tabName, String filename){
+	public static void addViewerTab(String tabName, String filename) {
 		map__filename_with_tabIndex.put(filename, 1);
 		jtabbedPane.addTab(tabName, new QuickViewerGUI(filename, true));
 	}
 	
-	public static void removeViewerTab(QuickViewerGUI tab){
+	public static void removeViewerTab(QuickViewerGUI tab) {
 		map__filename_with_tabIndex.remove(tab.filename);
 		jtabbedPane.remove(tab);
 	}

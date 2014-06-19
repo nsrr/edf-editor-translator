@@ -13,7 +13,7 @@ import javax.swing.filechooser.FileFilter;
  * (4) EIA filter: new EDFFileFilter({"eia", "edf"}, "EIA and EDF Files");
  * (5) ESA filter: new EDFFileFilter({"esa", "edf"}, "ESA and EDF Files")
  */
-public class EDFFileFilter extends FileFilter  {
+public class EDFFileFilter extends FileFilter {
     
     private String[] allowedExtensions = null;
     private String description = "";
@@ -21,13 +21,13 @@ public class EDFFileFilter extends FileFilter  {
     public EDFFileFilter(String[] myAllowedExtensions, String myDescription) {
         this.allowedExtensions = myAllowedExtensions;
         this.description = myDescription;   
-        }
+    }
 
     public boolean accept(File pathname) {
         String fileName = pathname.getName().toLowerCase();
         if (pathname.isDirectory())
             return true;
-        for (int i = 0; i < allowedExtensions.length; i++){
+        for (int i = 0; i < allowedExtensions.length; i++) {
             if (fileName.endsWith("." + allowedExtensions[i].toLowerCase()))
                 return true;                
         }
@@ -35,7 +35,7 @@ public class EDFFileFilter extends FileFilter  {
         return false;  
     }
     
-    public String getDescription(){
+    public String getDescription() {
         return description;
     }
 }

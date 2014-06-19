@@ -33,7 +33,7 @@ public class CommandLineController {
 }
 
 @SuppressWarnings("static-access")
-class OptionParser{
+class OptionParser {
 	public static enum OptionShort{validator, edf, out}
 	public static Options options;
 	static {

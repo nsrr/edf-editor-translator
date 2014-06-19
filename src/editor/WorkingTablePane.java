@@ -83,19 +83,19 @@ public class WorkingTablePane extends BasicEDFPane {
         setupLayout();
     }
     
-    public void setupPaneType(){
-        if (edfTable instanceof EIATable){
+    public void setupPaneType() {
+        if (edfTable instanceof EIATable) {
             setPaneType(type_eiapane);
             return;
         }
         
-        if (edfTable instanceof ESATable){
+        if (edfTable instanceof ESATable) {
             setPaneType(type_esapane);
             return;
         }
     }
     
-    void addListeners(){       
+    void addListeners() {       
         edfTable.getCellEditor(1, 1).addCellEditorListener(new CellEditorListeners());
         customizeItem.addActionListener(new CellMouseClickedListener());
     }
@@ -134,7 +134,7 @@ public class WorkingTablePane extends BasicEDFPane {
         this.add(allCellsShownCbox, cc.xy(3, 2));        
     }
     
-    private void createShowHideCheckBox(){
+    private void createShowHideCheckBox() {
         JCheckBox cbox;
         cbox = new JCheckBox("Show read-only cells");
         Font cboxFont = new Font(oldFont.getName(), oldFont.getStyle(), oldFont.getSize()+ 2);
@@ -145,12 +145,12 @@ public class WorkingTablePane extends BasicEDFPane {
         setupCheckBoxStatus(true);
     }
     
-    private void setupCheckBoxStatus(boolean active){
+    private void setupCheckBoxStatus(boolean active) {
         allCellsShownCbox.setSelected(active);
         setAllCellsShown(active);
     }
     
-    class showHideListener implements ActionListener{
+    class showHideListener implements ActionListener {
         private boolean selected;
         JCheckBox cbox;
         public void actionPerformed(ActionEvent e) {
@@ -159,7 +159,7 @@ public class WorkingTablePane extends BasicEDFPane {
             performActions();
         }
         
-        private void performActions(){
+        private void performActions() {
             if (selected)
                 edfTable.showImmutableFields();
             else
@@ -168,13 +168,12 @@ public class WorkingTablePane extends BasicEDFPane {
     }
 
      
-    private void createBtPane(){
+    private void createBtPane() {
         String filename;
         if (edfTable instanceof ESATable) {
             File file = edfTable.getMasterFile();
             filename = path_prefix + file.getAbsolutePath();            
-        }
-        else
+        } else
             filename = " ";
         filePathLabel = new JLabel(filename, JLabel.LEFT); 
         warningLabel = new JLabel( "Purple cells are uneditable", new ImageIcon(Main.class.getResource("/icon/Favorites-icon.png")), JLabel.RIGHT);
@@ -245,7 +244,6 @@ public class WorkingTablePane extends BasicEDFPane {
 
         }
 
-
         @Override
         public void mousePressed(MouseEvent e) {
             // TODO Auto-generated method stub
@@ -257,8 +255,6 @@ public class WorkingTablePane extends BasicEDFPane {
             // TODO Auto-generated method stub
 
         }
-
-
     }
 
     private class CellMouseListener implements MouseMotionListener {
@@ -289,7 +285,7 @@ public class WorkingTablePane extends BasicEDFPane {
     /*
      * TODO: 09/28/2010
      */
-    private class CellEditorListeners implements KeyListener, CellEditorListener{
+    private class CellEditorListeners implements KeyListener, CellEditorListener {
 
         public void keyTyped(KeyEvent e) {
             //System.out.println("I am pressed. 1");
@@ -314,8 +310,5 @@ public class WorkingTablePane extends BasicEDFPane {
             //TODO: system stub
         }
     }
-    
-    
-
 }
 

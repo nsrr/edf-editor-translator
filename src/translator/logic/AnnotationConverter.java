@@ -42,31 +42,31 @@ import org.apache.xml.serialize.XMLSerializer;
 
 public class AnnotationConverter {
 
-	public String[] readEDF(String edfFile){
+	public String[] readEDF(String edfFile) {
 		String[] startDate = new String[2];
 		SimpleDateFormat df = new SimpleDateFormat ("mm.dd.yyyy hh.mm.ss");
 		try {
 			RandomAccessFile edf = new RandomAccessFile(new File(edfFile),"r");
 			edf.seek(168);
 			char[] date = new char[8];
-			for (int i =0; i<8; i++){
+			for (int i =0; i<8; i++) {
 				date[i] = (char) edf.readByte();
 			}
 			
 			//edf.read(date);
 			char[] time = new char[8];
-			for (int i =0; i<8; i++){
+			for (int i =0; i<8; i++) {
 				time[i] = (char) edf.readByte();
 			}
 			edf.seek(236);
 		
 			char[] numRec = new char[8];
-			for (int i=0; i<8; i++){
+			for (int i=0; i<8; i++) {
 				numRec[i] = (char) edf.readByte();
 				//System.out.println(dur[i]);
 			}
 			char[] durRec = new char[8];
-			for (int i=0; i<8; i++){
+			for (int i=0; i<8; i++) {
 				durRec[i] = (char) edf.readByte();
 				//System.out.println(dur[i]);
 			}
@@ -79,7 +79,7 @@ public class AnnotationConverter {
 			startDate[0] = String.valueOf(date) + " " + String.valueOf(time);
 			startDate[1] = String.valueOf(duration);
 			edf.close();
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			
 			StringWriter errors = new StringWriter();
@@ -88,10 +88,10 @@ public class AnnotationConverter {
 		}
 		return startDate;
 	}
-	public HashMap[] readMapFile(String mapFile){
+	public HashMap[] readMapFile(String mapFile) {
 		HashMap[] map = new HashMap[3];
 		//HashMap map = new HashMap();
-		try{
+		try {
 			BufferedReader input =  new BufferedReader(new FileReader(mapFile));
 			String line = input.readLine();
 			//line = input.readLine();
@@ -101,7 +101,7 @@ public class AnnotationConverter {
 			//map[0]=epoch;
 			HashMap events = new HashMap();
 			HashMap stages = new HashMap();
-			while ((line = input.readLine())!=null){
+			while ((line = input.readLine())!=null) {
 				String[] data = line.split(",");
 				if (data[0].compareTo("EpochLength")!=0 && data[0].compareTo("Sleep Staging")!=0){
 					ArrayList<String> values = new ArrayList<String>(3);
@@ -124,7 +124,7 @@ public class AnnotationConverter {
 			map[0]=epoch;
 			map[1]=events;
 			map[2]=stages;
-		} catch(IOException e){
+		} catch(IOException e) {
 			e.printStackTrace();
 			
 			StringWriter errors = new StringWriter();
@@ -133,7 +133,7 @@ public class AnnotationConverter {
 		}
 		return map;
 	}
-	public Element addElements(Document doc, String[] elements){
+	public Element addElements(Document doc, String[] elements) {
 		Element eventsElmt = doc.createElement("ScoredEvent");
 		Element nameElmt = doc.createElement("EventConcept");
 		nameElmt.appendChild(doc.createTextNode(elements[0]));
@@ -147,7 +147,7 @@ public class AnnotationConverter {
 		return eventsElmt;
 	}
 	
-	public void saveXML(Document xml, String filename){
+	public void saveXML(Document xml, String filename) {
 		try {
 			String tarfileDir = filename.substring(0, filename.lastIndexOf(File.separator));
 			File f1 = new File(tarfileDir);
@@ -168,7 +168,7 @@ public class AnnotationConverter {
 			serializer.serialize( xml.getDocumentElement() );
 			//System.out.println(outfile);
 			fos.close();
-		} catch(IOException e){
+		} catch(IOException e) {
 			e.printStackTrace();
 			
 			StringWriter errors = new StringWriter();
@@ -177,11 +177,11 @@ public class AnnotationConverter {
 		}
 	}
 	
-	public void log(String info){
+	public void log(String info) {
 		TranslationController.translationErrors += info;
 	}
 	
-	public boolean convertXML(String annotation_file, String edf_file, String mapping_file, String output_file){
+	public boolean convertXML(String annotation_file, String edf_file, String mapping_file, String output_file) {
 		
 		HashMap[] map = this.readMapFile(mapping_file);
 		ArrayList<String> events = new ArrayList<String>(map[1].keySet().size());
@@ -253,7 +253,6 @@ public class AnnotationConverter {
 					name.appendChild(nameNode);
 					e.appendChild(name);
 
-
 					//System.out.println("\t<EventConcept>" + map[1].get(eventname) + "</EventConcept>");
 					NodeList lstNmElmntLst = fstElmnt.getElementsByTagName("Duration");
 					Element lstNmElmnt = (Element) lstNmElmntLst.item(0);
@@ -273,11 +272,11 @@ public class AnnotationConverter {
 					Node startNode = xml.createTextNode(Double.toString(starttime));
 					startEt.appendChild(startNode);
 					e.appendChild(startEt);
-					if (((ArrayList<String>) map[1].get(eventname)).get(0).compareTo("Desaturation")==0){
+					if (((ArrayList<String>) map[1].get(eventname)).get(0).compareTo("Desaturation")==0) {
 						//System.out.println("here");
 						NodeList otherElmntLst = fstElmnt.getElementsByTagName("LowestSpO2");
 						double lowestspo2 = 0;
-						if (otherElmntLst.getLength()>=1){
+						if (otherElmntLst.getLength()>=1) {
 							Element lowest = (Element) otherElmntLst.item(0);
 							Element nadir = xml.createElement("SpO2Nadir");
 							NodeList nadirLst = lowest.getChildNodes();
@@ -286,7 +285,7 @@ public class AnnotationConverter {
 							e.appendChild(nadir);
 						}
 						NodeList baseLst = fstElmnt.getElementsByTagName("Desaturation");
-						if (baseLst.getLength()>=1){
+						if (baseLst.getLength()>=1) {
 							Element baseElmnt = (Element) baseLst.item(0);
 							Element baseline = xml.createElement("SpO2Baseline");
 							NodeList baselineLst = baseElmnt.getChildNodes();
@@ -296,7 +295,7 @@ public class AnnotationConverter {
 					}
 				
 					// Other informations depending on type of events
-					if (((ArrayList<String>) map[1].get(eventname)).get(0).compareTo("Respiratory") == 0){
+					if (((ArrayList<String>) map[1].get(eventname)).get(0).compareTo("Respiratory") == 0) {
 						
 					}
 					if (((ArrayList) map[1].get(eventname)).size() > 2){
@@ -343,7 +342,6 @@ public class AnnotationConverter {
 					eventsElmt.appendChild(eventNode);
 					String info = annotation_file + "," + eventname + "," + Double.toString(starttime) ;
 					this.log(info);
-					
 				}
 				
 			}
@@ -372,7 +370,7 @@ public class AnnotationConverter {
 			int count =0;
 			for (int i=1; i< allStages.getLength(); i++) {
 				String nstage = ((Element) allStages.item(i)).getTextContent();
-			    if (nstage.compareTo(stage) == 0){
+			    if (nstage.compareTo(stage) == 0) {
 			        count = count +1;
 			    } else {
 			        durationNode.appendChild(xml.createTextNode(Double.toString(count*30)));
@@ -411,24 +409,20 @@ public class AnnotationConverter {
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			log(errors.toString());
-		}
-		finally{
-			try{
+		} finally {
+			try {
 				if (inputStream !=  null)
 					inputStream.close();
-			}
-			catch(Exception e){
-			}
+			} catch(Exception e) {}
 		}
 		root.appendChild(eventsElmt);
 		xml.appendChild(root);
 		saveXML(xml,output_file);
 		//System.out.println(outfile.get);
 		return bTranslation;
-
 	}
 
-	public boolean convertTXT(String annotation_file, String mapping_file, String output_file){
+	public boolean convertTXT(String annotation_file, String mapping_file, String output_file) {
 		//System.out.println(outfile);
 		HashMap[] map = readMapFile(mapping_file);
 		Document doc = new DocumentImpl();
@@ -442,17 +436,17 @@ public class AnnotationConverter {
 		Element eventsElmt = doc.createElement("ScoredEvents");
 		//System.out.println(map[1].keySet().toString());
 		boolean bTranslation = true;
-		try{
+		try {
 			BufferedReader input = new BufferedReader(new FileReader(annotation_file));
 			String line = "";
 			// Recording start time events
 			DateFormat df = new SimpleDateFormat("mm/dd/yyyy hh:mm:ss a");
 			Date startTime = new Date();
-			while ((line=input.readLine())!=null){
-				if (line.contains("Date of Recording")){
+			while ((line=input.readLine())!=null) {
+				if (line.contains("Date of Recording")) {
 					String data = line.substring(line.indexOf(":")+2, line.length());
 					startTime = df.parse(data);
-				} else if (line.contains("Segment Information")){
+				} else if (line.contains("Segment Information")) {
 					String time = input.readLine();
 					time = input.readLine();
 					//int i = 0;
@@ -484,7 +478,7 @@ public class AnnotationConverter {
 					line = input.readLine();
 					//System.out.println(line);
 					String[] data = line.split(",");
-					if (data.length==7){
+					if (data.length==7) {
 						if(map[2].keySet().contains(data[6].trim())){
 						String stage = data[6].trim();
 						int count = 1;
@@ -493,8 +487,7 @@ public class AnnotationConverter {
 						elmts[1] = data[3].trim();
 						
 						//int i =0;
-						
-						for (int i=1;i<num; i++){
+						for (int i=1;i<num; i++) {
 							//System.out.println(line.length());
 							line = input.readLine();
 							data = line.split(",");
@@ -525,9 +518,9 @@ public class AnnotationConverter {
 				} else if (!line.contains("Desaturation")) {
 					int j = 0;
 					String[] data = line.split(",");
-					if (data.length==7){
+					if (data.length==7) {
 						//System.out.println(data[6]);
-						if (map[1].keySet().contains(data[6].trim())){
+						if (map[1].keySet().contains(data[6].trim())) {
 							//System.out.println(line);
 							String[] elmts = new String[3];
 							elmts[0] = ((ArrayList<String>) map[1].get(data[6].trim())).get(1);
@@ -542,7 +535,7 @@ public class AnnotationConverter {
 							log(str);
 						}
 					}
-				} else if (line.contains("Desaturation")){
+				} else if (line.contains("Desaturation")) {
 					String[] d = line.split("\\(");
 					d = d[1].split(" ");
 					int num = Integer.parseInt(d[0]);
@@ -550,7 +543,7 @@ public class AnnotationConverter {
 					String[][] elmts = new String[num][5];
 					line = input.readLine();
 					line = input.readLine();
-					for (int i = 0; i< num; i++){
+					for (int i = 0; i< num; i++) {
 						
 						line = input.readLine();
 						//System.out.println(line);
@@ -564,20 +557,20 @@ public class AnnotationConverter {
 					line = input.readLine();
 					line = input.readLine();
 					line = input.readLine();
-					for (int i =0; i<num; i++){
+					for (int i =0; i<num; i++) {
 						line = input.readLine();
 					}
 					line = input.readLine();
 					line = input.readLine();
 					line = input.readLine();
 					line = input.readLine();
-					for (int i = 0; i<num; i++){
+					for (int i = 0; i<num; i++) {
 						line = input.readLine();
 						String[] data = line.split(",");
 						elmts[i][4] = data[6].trim();
 					}
 					
-					for (int i=0; i<num; i++){
+					for (int i=0; i<num; i++) {
 						Element elmt = addElements(doc,elmts[i]);
 						Element nadir = doc.createElement("SpO2Nadir");
 						nadir.appendChild(doc.createTextNode(elmts[i][3]));
@@ -590,7 +583,7 @@ public class AnnotationConverter {
 				} 
 			} 
 			root.appendChild(eventsElmt);
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			bTranslation = false;
 			
@@ -603,7 +596,9 @@ public class AnnotationConverter {
 		return bTranslation;
 	}
 
-	public boolean convertCSV(String annotation_file, String stage_file, String edf_file, String mapping_file, String output_file){
+	public boolean convertCSV(
+			String annotation_file, String stage_file, 
+			String edf_file, String mapping_file, String output_file) {
 		HashMap[] map = readMapFile(mapping_file);
 		Document doc = new DocumentImpl();
 		Element root = doc.createElement("PSGAnnotaion");
@@ -628,7 +623,7 @@ public class AnnotationConverter {
 		Date clocktime = new Date();
 		try {
 			clocktime = df.parse(times[0]);
-		}catch (Exception e){
+		} catch (Exception e){
 			e.printStackTrace();
 			
 			StringWriter errors = new StringWriter();
@@ -643,7 +638,7 @@ public class AnnotationConverter {
 			File file = new File(annotation_file);
 			Scanner s = new Scanner(file);
 			String line = s.nextLine();
-			while (s.hasNext()){
+			while (s.hasNext()) {
 				line = s.nextLine();
 				//.out.println(line);
 				String[] data = line.split("\",");
@@ -658,7 +653,7 @@ public class AnnotationConverter {
 					elmts[1]= Long.toString(starttime);
 					elmts[2] = data[5].substring(1);
 					Element event = addElements(doc,elmts);
-					if  (((ArrayList<String>) map[1].get(data[0].substring(1))).get(0).contains("Desaturation")){
+					if (((ArrayList<String>) map[1].get(data[0].substring(1))).get(0).contains("Desaturation")){
 						Element nadir = doc.createElement("SpO2Nadir");
 						nadir.appendChild(doc.createTextNode(data[10].substring(1)));
 						event.appendChild(nadir);
@@ -679,7 +674,6 @@ public class AnnotationConverter {
 					events.appendChild(event);
 					String log = annotation_file + "," + data[0].substring(1) + ", " + data[2].substring(1) + ", " + data[4].substring(1);
 					log(log);
-	
 				}
 			}
 			// get stages
@@ -690,16 +684,16 @@ public class AnnotationConverter {
 			String stage ="";
 			int count = 0;
 			int start = 0;
-			if (map[2].keySet().contains(sleep[0])){
+			if (map[2].keySet().contains(sleep[0])) {
 				stage = sleep[0];
 				count = 1;
 			
 			}
-			while (s.hasNext()){
+			while (s.hasNext()) {
 				line = s.nextLine();
 				
 				sleep = line.split(",");
-				if (sleep[0].equalsIgnoreCase(stage)){
+				if (sleep[0].equalsIgnoreCase(stage)) {
 					count = count +1;
 				} else {
 					String[] elmts = new String[3];
@@ -720,7 +714,7 @@ public class AnnotationConverter {
 			elmts[2]= Long.toString(Integer.parseInt((String) map[0].get("EpochLength")) * count);
 			Element event = addElements(doc,elmts);
 			events.appendChild(event);
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			bTranslation = false;
 			
@@ -735,7 +729,8 @@ public class AnnotationConverter {
 		return bTranslation;
 	}
 
-	public boolean convertSandman(String annotation_file, String edf_file, String mapping_file, String output_file){
+	public boolean convertSandman(
+			String annotation_file, String edf_file, String mapping_file, String output_file) {
 		HashMap[] map = readMapFile(mapping_file);
 		Document doc = new DocumentImpl();
 		Element root = doc.createElement("PSGAnnotation");
@@ -761,7 +756,7 @@ public class AnnotationConverter {
 		Date clocktime = new Date();
 		try {
 			clocktime = df.parse(timeStr[0]);
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			
 			StringWriter errors = new StringWriter();
@@ -779,66 +774,63 @@ public class AnnotationConverter {
 			BufferedReader input = new BufferedReader(new FileReader(annotation_file));
 			
 			String line = input.readLine();
-			while (!line.contains("Epoch")){
+			while (!line.contains("Epoch")) {
 				line = input.readLine();
 			}
-			while ((line = input.readLine())!=null){
+			while ((line = input.readLine())!=null) {
 				String[] data = line.split("\t");
 				String eventname = data[1];
 				//Element event = doc.createElement("ScoredEvent");
 				String[] elmts = new String[3];
 				
 				//scored events
-				if (map[1].keySet().contains(data[1])){
+				if (map[1].keySet().contains(data[1])) {
 					
 					elmts[0] = ((ArrayList<String>) map[1].get(data[1])).get(1);
 					Date starttime = df.parse(date+ " " + data[2]);
 					long time = (starttime.getTime() - clocktime.getTime())/1000;
-					if (time < 0){
+					if (time < 0) {
 						time += 24*60*60;
 					}
 					elmts[1]=Long.toString(time);
 					//startElmt.appendChild(doc.createTextNode(Long.toString(time)));
-					if (data.length>3){
+					if (data.length>3) {
 						//System.out.println(data[1]);
 						//durationElmt.appendChild(doc.createTextNode(data[3]));
 						elmts[2]=data[3];
-					}
-					else {
+					} else {
 						elmts[2] = Integer.toString(0);
 					}
 					Element event = addElements(doc,elmts);
-					if (((ArrayList<String>) map[1].get(data[1])).size()>2){
+					if (((ArrayList<String>) map[1].get(data[1])).size()>2) {
 						Element notesElmt = doc.createElement("Notes");
 						notesElmt.appendChild(doc.createTextNode(((ArrayList<String>) map[1].get(data[1])).get(2)));
 						event.appendChild(notesElmt);
 					}
 					
-					if (((ArrayList<String>) map[1].get(data[1])).get(1).compareToIgnoreCase("Desaturation")!=0){
+					if (((ArrayList<String>) map[1].get(data[1])).get(1).compareToIgnoreCase("Desaturation")!=0) {
 						
 					}
 					eventsElmt.appendChild(event);
 				} else if (!map[2].keySet().contains(data[1])) {
 
-					
 					Element notesNode = doc.createElement("Notes");
 					elmts[0]="Technician Notes";
 					//nameElmt.appendChild(doc.createTextNode("Technician Notes"));
 					Date starttime = df.parse(date+ " " + data[2]);
 					long time = (starttime.getTime() - clocktime.getTime())/1000;
-					if (time < 0){
+					if (time < 0) {
 						time += 24*60*60;
 					}
 					elmts[1] = Long.toString(time);
 					//startElmt.appendChild(doc.createTextNode(Long.toString(time)));
-					if (data.length>3){
+					if (data.length>3) {
 						elmts[2] = data[3];
 						//durationElmt.appendChild(doc.createTextNode(data[3]));
 					} else {
 						elmts[2] = Integer.toString(0);
 					}
-					notesNode.appendChild(doc.createTextNode(eventname));
-					
+					notesNode.appendChild(doc.createTextNode(eventname));					
 					
 					Element event = addElements(doc,elmts);
 					event.appendChild(notesNode);
@@ -846,17 +838,16 @@ public class AnnotationConverter {
 					String info = annotation_file + "," + eventname + "," + data[2];// + Double.toString(starttime);
 					this.log(info);
 					eventsElmt.appendChild(event);
-				}
-				
+				}	
 			}
 			
 			//sleep staging
 			input = new BufferedReader(new FileReader(annotation_file));
 			line = input.readLine();
-			while (!line.contains("Epoch")){
+			while (!line.contains("Epoch")) {
 				line = input.readLine();
 			}
-			while((line=input.readLine())!=null){
+			while((line=input.readLine())!=null) {
 				String[] data = line.split("\t");
 				String stage ="";
 				if (map[2].keySet().contains(data[1])){
@@ -877,7 +868,7 @@ public class AnnotationConverter {
 				}
 			}
 			
-		} catch(Exception e){
+		} catch(Exception e) {
 			e.printStackTrace();
 			bTranslation = false;
 			
@@ -890,7 +881,6 @@ public class AnnotationConverter {
 		saveXML(doc, output_file);
 		return bTranslation;
 	}
-	
 	// log file for events not in mapping: input file name, event, starttime,
 	// output as tech notes event in xml files with notes field is the actual event name.
 

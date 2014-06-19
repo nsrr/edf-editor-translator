@@ -39,7 +39,7 @@ public class ESATemplateTable extends EDFTable {
         this.setUpdateSinceLastSave(true);
     }
 
-     public void customizeLook(){
+     public void customizeLook() {
 	        this.stripTable(tableOddRowClr, null, tableEvenRowClr, null);
 	        this.getTableHeader().setFont( new Font( "Dialog" , Font.PLAIN, 16));
 	       // this.getTableHeader().setForeground(Color.black);
@@ -85,22 +85,22 @@ public class ESATemplateTable extends EDFTable {
         }
     }
     
-    private void cacheColumns(){
+    private void cacheColumns() {
         int ncol = getModel().getColumnCount();
          allTableColumns = new TableColumn[ncol];
          for (int i = 0; i < ncol; i++)
              allTableColumns[i] =  getColumnModel().getColumn(i);
      }
     
-    public void showImmutableFields(){
-        for (int index: immutableFieldIndices){
+    public void showImmutableFields() {
+        for (int index: immutableFieldIndices) {
             addColumn(allTableColumns[index]);
             getColumnModel().moveColumn(getColumnCount() - 1, index);
         }
         validate();
     }
     
-    public void hideImmutableFields(){
+    public void hideImmutableFields() {
         cacheColumns();
         int k = 0;
         for (int i : immutableFieldIndices) {
@@ -110,7 +110,5 @@ public class ESATemplateTable extends EDFTable {
         }
         validate();
     }
-    
-
     
 }

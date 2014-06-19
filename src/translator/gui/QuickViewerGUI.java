@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import translator.utils.Keywords;
 
-public class QuickViewerGUI extends JPanel implements ActionListener{
+public class QuickViewerGUI extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,7 +23,7 @@ public class QuickViewerGUI extends JPanel implements ActionListener{
 	
 	JButton JButton_Refresh, JButton_Remove;
 	
-	public QuickViewerGUI(String filename, boolean canClose){
+	public QuickViewerGUI(String filename, boolean canClose) {
 		
 		/* (1) Background */
 		this.setLayout(new GridBagLayout());
@@ -93,7 +93,7 @@ public class QuickViewerGUI extends JPanel implements ActionListener{
 		}
 	}
 	
-	private void loadFilename(String filename){
+	private void loadFilename(String filename) {
 		
 		StringBuffer content = new StringBuffer();
 		

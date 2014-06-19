@@ -72,11 +72,9 @@ public class Utility {
                 out.write(buffer);
                 buffer.clear();
             } 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             ;        
-        }
-        finally {
+        } finally {
             try {
                 out.close();
                 in.close();   
@@ -126,7 +124,7 @@ public class Utility {
         //Fangping, 10/12/10
         String[] dateStore = disassembleDateStr(datestr);
 
-/*         mapPID(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore);
+/*      mapPID(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore);
         mapRID(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore); 
         mapStartDate(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore);*/
         //10/13/2010
@@ -333,8 +331,6 @@ public class Utility {
             
             EIAHeaderMap.put(title, templateValue);
         }
-    
-    
 
     public static String generateRandomID() {
         Random randomHelper = new Random();
@@ -405,17 +401,13 @@ public class Utility {
                 substrValue = templateValue.substring(index1, index2 + 2);
                 if (substrValue.equalsIgnoreCase(EIA.key_rid)) {
                     keep += dupEDFEIAHeaderMap.get(EIA.LOCAL_RECORDING_ID);
-                } else 
-                if (substrValue.equalsIgnoreCase(EIA.key_pid)) {
+                } else if (substrValue.equalsIgnoreCase(EIA.key_pid)) {
                     keep += dupEDFEIAHeaderMap.get(EIA.LOCAL_PATIENT_ID);
-                } else 
-                if (substrValue.equalsIgnoreCase(EIA.key_filename)) {
+                } else if (substrValue.equalsIgnoreCase(EIA.key_filename)) {
                     keep += dupEDFEIAHeaderMap.get(EIA.FILE_NAME);
-                } else 
-                if (substrValue.equalsIgnoreCase(EIA.key_dd)) {
+                } else if (substrValue.equalsIgnoreCase(EIA.key_dd)) {
                     keep += dateStore[0];
-                } else 
-                if (substrValue.equalsIgnoreCase(EIA.key_mm)) {
+                } else if (substrValue.equalsIgnoreCase(EIA.key_mm)) {
                     keep += dateStore[1];
                 } else if (substrValue.equalsIgnoreCase(EIA.key_yy)) {
                     keep += dateStore[2];
@@ -629,17 +621,15 @@ public class Utility {
         }
         //case 3: no template key assigned
         boolean digital = true;
-        try{
+        try {
             Integer.parseInt(templateValue);
-        }
-        catch(NumberFormatException e){
+        } catch(NumberFormatException e){
             digital = false;
         }
         //keep the orginal value if not digital        
         value = digital? templateValue: (String) dupEDFEIAHeaderMap.get(title);                
         edfEIAHeaderMap.put(title, value);
     }
-
 
     public static String generateRandomDate(int choice) {
         Random helper = new Random();
@@ -747,18 +737,15 @@ public class Utility {
             currentChannel = edfFileChannels[i].getEsaChannel();
 
             key = (String)currentChannel.get(ESA.LABEL);
-            key = key.trim();
-            
+            key = key.trim();       
             
             HashMap templateChannel;
             HashMap clone;
             for (int j = 0; j < numbOfTemplateChannels; j++) {
                 templateChannel = templateChannels[j].getEsaChannel();
                 clone = new HashMap(templateChannel);
-                for(int k = 0; k < ESA.NUMBER_OF_ATTRIBUTES; k++)
-                {
-                	if(((String)templateChannel.get(esaAttributes[k])).equalsIgnoreCase(""))
-                	{
+                for(int k = 0; k < ESA.NUMBER_OF_ATTRIBUTES; k++) {
+                	if(((String)templateChannel.get(esaAttributes[k])).equalsIgnoreCase("")) {
                 		clone.put(esaAttributes[k], currentChannel.get(esaAttributes[k]));
                 	}
                 }
@@ -778,7 +765,7 @@ public class Utility {
         }
     }
     
-    public static String currentTimeToString(){
+    public static String currentTimeToString() {
         Date time = new Date();
         DateFormat df = new SimpleDateFormat("h:mm a, yyyy.MM.dd");
         return df.format(time);
@@ -842,7 +829,9 @@ public class Utility {
                     wkdirStr + "\\File_Attributes_" + getDateTime() + ".csv";
             File file = new File(fileName);
             BufferedWriter output = new BufferedWriter(new FileWriter(file));
-            output.write("FileName,Version,PatientID,RecordInfo,StartDate,StartTime,HeaderBytes,Reserved,NumDataRecords,DurDataRecord,NumSignals\n");
+            output.write(
+            		"FileName,Version,PatientID,RecordInfo,StartDate,StartTime,HeaderBytes,Reserved,NumDataRecords,DurDataRecord,NumSignals\n"
+            );
             EIAHeader eia;
             String fname;
             for (int i = 0; i < edfHeaders.size(); i++) {
@@ -902,7 +891,7 @@ public class Utility {
                     String.format("\t\t<Label>%s</Label>\n", ch.getSignalAttributeValueAt(ch.LABEL));
                 output.write(writeStr);
                 writeStr =
-                        String.format("\t\t<Transducer>%s</Transducer>\n", ch.getSignalAttributeValueAt(ch.TRANCEDUCER_TYPE));
+                        String.format("\t\t<Transducer>%s</Transducer>\n", ch.getSignalAttributeValueAt(ch.TRANSDUCER_TYPE));
                 output.write(writeStr);
                 writeStr =
                         String.format("\t\t<PhyDim>%s</PhyDim>\n", ch.getSignalAttributeValueAt(ch.PHYSICAL_DIMESNION));
@@ -960,16 +949,14 @@ public class Utility {
                 for (int j = 0; j < channels; j++) {
                     ESAChannel ch = esa.getEsaChannelAt(j);
                     String str = ch.getSignalAttributeValueAt(ch.LABEL) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.TRANCEDUCER_TYPE) + ",";
-                    str +=
-    ch.getSignalAttributeValueAt(ch.PHYSICAL_DIMESNION) + ",";
+                    str += ch.getSignalAttributeValueAt(ch.TRANSDUCER_TYPE) + ",";
+                    str += ch.getSignalAttributeValueAt(ch.PHYSICAL_DIMESNION) + ",";
                     str += ch.getSignalAttributeValueAt(ch.PHYSICAL_MINIMUM) + ",";
                     str += ch.getSignalAttributeValueAt(ch.PHYSICAL_MAXIMUM) + ",";
                     str += ch.getSignalAttributeValueAt(ch.DIGITAL_MINIMUM) + ",";
                     str += ch.getSignalAttributeValueAt(ch.DIGITAL_MAXIMUM) + ",";
                     str += ch.getSignalAttributeValueAt(ch.PREFILTERING) + ",";
-                    str +=
-    ch.getSignalAttributeValueAt(ch.NUMBER_OF_SAMPLES) + ",";
+                    str += ch.getSignalAttributeValueAt(ch.NUMBER_OF_SAMPLES) + ",";
                     str += ch.getSignalAttributeValueAt(ch.RESERVED) + "\n";
                     output.write(str);
                 }
@@ -1029,8 +1016,7 @@ public class Utility {
                                              "</DurDataRecord>", str));
                 str = input.readLine().trim();
                 eia.setValueAt(eia.NUMBER_OF_SIGNALS,
-                               outputElement("<NumSignals>", "</NumSignals>",
-                                             str));
+                               outputElement("<NumSignals>", "</NumSignals>", str));
             }
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -1079,7 +1065,6 @@ public class Utility {
             e.printStackTrace();
         }
 
-
         return eia;
     }
 
@@ -1100,7 +1085,7 @@ public class Utility {
                     ch.setAttributeValueAt(ch.LABEL, str);
                     str = input.readLine().trim();
                     str = outputElement("<Transducer>", "</Transducer>", str);
-                    ch.setAttributeValueAt(ch.TRANCEDUCER_TYPE, str);
+                    ch.setAttributeValueAt(ch.TRANSDUCER_TYPE, str);
                     str = input.readLine().trim();
                     str = outputElement("<PhyDim>", "</PhyDim>", str);
                     ch.setAttributeValueAt(ch.PHYSICAL_DIMESNION, str);
@@ -1133,10 +1118,8 @@ public class Utility {
                 }
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -1154,7 +1137,7 @@ public class Utility {
                 ESAChannel ch = new ESAChannel();
                 String[] temp = str.split(",");
                 ch.setAttributeValueAt(ch.LABEL, temp[0]);
-                ch.setAttributeValueAt(ch.TRANCEDUCER_TYPE, temp[1]);
+                ch.setAttributeValueAt(ch.TRANSDUCER_TYPE, temp[1]);
                 ch.setAttributeValueAt(ch.PHYSICAL_DIMESNION, temp[2]);
                 ch.setAttributeValueAt(ch.PHYSICAL_MINIMUM, temp[3]);
                 ch.setAttributeValueAt(ch.PHYSICAL_MAXIMUM, temp[4]);
@@ -1167,10 +1150,8 @@ public class Utility {
                 counter++;
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -1187,7 +1168,6 @@ public class Utility {
      * increment the system size
      * Fangping, 08/04/2010
      */
-
     public static void increaseSytemFont(int scale) {
         UIDefaults defaults = UIManager.getDefaults();
         Enumeration keys = defaults.keys();
@@ -1257,11 +1237,11 @@ public class Utility {
      * Fangping, 08/17/2010
      */
 
-/*
- * name collision/auto new name for creating Physiomimi Work directory
- * Fangping, 08/17/2010
- * this method should be merged with checkSingleFileNameCollision.
- */
+    /*
+     * name collision/auto new name for creating Physiomimi Work directory
+     * Fangping, 08/17/2010
+     * this method should be merged with checkSingleFileNameCollision.
+     */
     public static File parseDirNameCollision(File sourceDir,
                                              String subdirName) {
         
@@ -1304,11 +1284,11 @@ public class Utility {
         return newDir;
     }
     
-/*
- * name collision check for a single file, called when renameing a single file
- * Fangping, 08/17/2010
- * filelist can be null, in which case name collision scope is restricted in the afile's directory 
- */
+    /*
+     * name collision check for a single file, called when renameing a single file
+     * Fangping, 08/17/2010
+     * filelist can be null, in which case name collision scope is restricted in the afile's directory 
+     */
     public static File parseSingleFileNameCollision(File afile, ArrayList<File> filelist){
         // do nothing to a directory
         if (afile.isDirectory()){
@@ -1374,9 +1354,9 @@ public class Utility {
     }
 
     /**
+     * @author Fangping, 08/21/2010
      * @param filelist the list of files to be parsed with name collision
      * @return the collision-free files after renamed
-     * Fangping, 08/21/2010
      */
     public static ArrayList<File> parseFileGroupNameCollision(ArrayList<File> filelist){
         int sz = filelist.size();
@@ -1388,7 +1368,7 @@ public class Utility {
         //file-wise analysis procedure
         File curfile;
         int num = 0; // test, wei wang, 5/27/2014
-        for (int k = 1; k < sz; k++){
+        for (int k = 1; k < sz; k++) {
         	/**
         	 * Added by wei wang, to increase progress percentage along with yieldNewEDFHeaders() method. 5/27/2014
         	 */
@@ -1406,7 +1386,7 @@ public class Utility {
         return filelist;
     }
     
-    public static ArrayList<File> sublist(ArrayList<File> files, int start, int end){
+    public static ArrayList<File> sublist(ArrayList<File> files, int start, int end) {
         ArrayList<File> output = new ArrayList<File>(end+1-start);
         for (int i = start; i <= end; i++)
             output.add(files.get(i));
@@ -1454,18 +1434,16 @@ public class Utility {
         //3. produce new file names
         MainWindow.middleStatusBar.setText("Parse File Name Collision"); // test, wei wang, 5/27/2014
         ArrayList<File> output = parseFileGroupNameCollision(tempFiles);
-//        MainWindow.middleStatusBar.setText("Parse Process Done!"); // test, wei wang, 5/27/2014
         
         return sublist(output, nolds, tempFiles.size() - 1);
     }
 
-
     /**
+     * @author Fangping, 08/21/2010
      * @param target the file to be renamed
      * @param fileList the list of files to be referred to
      * @return the index having the same file name with target in the fileList
      * check if there is name collision. If it is, return the index of the file
-     * Fangping, 08/21/2010
      */
     public static int indexOfCollision(File target, File fileList[]){        
         for (int i = 0; i < fileList.length; i++){
@@ -1479,13 +1457,13 @@ public class Utility {
     }
 
     /**
+     * @author Fangping, 08/21/2010
      * @param target the file to be renamed
      * @param filelist the list of files to be compared to target
      * @return the renamed file of the target
-     * Fangping, 08/21/2010
-     * verfied
+     * verified
      */
-    public static File getSuffixNamedFile(File target, File filelist[]){
+    public static File getSuffixNamedFile(File target, File filelist[]) {
         
         String fullName = target.getName();
         int idx = fullName.lastIndexOf(".");
@@ -1517,7 +1495,7 @@ public class Utility {
      * Fangping, 08/22/2010
      */
     public static boolean defaultNoOptionPane(Component parent, String message, String title,
-                                              int messageType){
+                                              int messageType) {
         
         int reply = JOptionPane.showOptionDialog(parent, message, title,
             JOptionPane.YES_NO_OPTION, messageType, null,
@@ -1527,14 +1505,14 @@ public class Utility {
       }
     
     public static boolean NoThanksOptionPane(Component parent, String message, String title,
-                                              int messageType){
+                                              int messageType) {
         
         int reply = JOptionPane.showOptionDialog(parent, message, title,
             JOptionPane.YES_NO_OPTION, messageType, null,
             new String[] { "Yes", "No, thanks" }, "Yes");
         
         return (reply == 0? true: false);
-      }
+    }
     
     //Fangping, 08/23/2010
     //refer to: https://jdic.dev.java.net/
@@ -1563,8 +1541,7 @@ public class Utility {
     /*
      * open default browser
      */
-    private static final String errMsg =
-         "Error attempting to launch web browser";
+    private static final String errMsg = "Error attempting to launch web browser";
 
      public static void openURL(String url) {
          String osName = System.getProperty("os.name");
@@ -1597,8 +1574,7 @@ public class Utility {
              JOptionPane.showMessageDialog(null, errMsg + ":\n" +
                      e.getLocalizedMessage());
          }
-     }
-     
+     }    
      
     public static void scrollTableRowToVisible(JTable table, int rr, int cc) {
         if (!(table.getParent() instanceof JViewport)) {
@@ -1611,7 +1587,7 @@ public class Utility {
         viewport.scrollRectToVisible(rect);
     }
     
-    public static int getTabIndexofMasterFile(File file){
+    public static int getTabIndexofMasterFile(File file) {
         int index;
         EDFTabbedPane tabbedPane = MainWindow.tabPane;
         int tabCount = tabbedPane.getTabCount();
@@ -1769,5 +1745,4 @@ public class Utility {
         return value;
     } */
     
-        
 }//end of Utility class

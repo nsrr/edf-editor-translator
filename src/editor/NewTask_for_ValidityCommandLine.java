@@ -73,14 +73,13 @@ import com.jgoodies.forms.layout.FormLayout;
 public class NewTask_for_ValidityCommandLine extends JDialog {
 	
 	
-	///: The below feature improvement was made by Wei Wang on May 21, 2014 ///	
+	///: The below feature improvement was made by Wei Wang, 2014-5-21///
 	private static final long serialVersionUID = 1L;
 	private static Task task;
 	public static Task getTask() {
 		return task;
 	}
 
-	//	private static ProgressMonitor progressMonitor;
 	private static ValidateFinishButtonListener vfbListener = null;
 	///: End /// 	 
 	
@@ -112,7 +111,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
     public final static String defaultDirectoryName = "Physiomimi Work";
 
     protected ArrayList<File> sourceFiles;    
-    ///: Wei Wang, 05/21/2014: new edf file list size
+    ///: Wei Wang, 05/21/2014: new EDF file list size
     private static int fileNumber = 0;
     private static int scale = 1;
     ///: End
@@ -161,6 +160,12 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 	/************************************************************** 
 	 * The below feature improvement was made by Gang Shu on February 7, 2014
 	 **************************************************************/
+    /**
+     * TODO: ww
+     * @param message
+     * @param showOnScreen
+     * @param outfile
+     */
     public static void addElementIntoLog(String message, boolean showOnScreen, String outfile){
     	
     	if (showOnScreen){
@@ -415,6 +420,13 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
     }
 
 
+    /**
+     * TODO: ww
+     * @param title
+     * @param textField
+     * @param button
+     * @return
+     */
     public JPanel createSelectionPanel(String title, JTextField textField,
                                        JButton button) {
         int layer;

@@ -70,5 +70,4 @@ public class EIATableModel extends EDFTableModel {
 
         throw new AssertionError("invalid column");
     }
-
 }

@@ -40,8 +40,8 @@ import table.ESATable;
  *  MouseListener is implemented to support popup menu
  */
 
-public class TaskTree extends JTree implements TreeSelectionListener, 
-                                               MouseListener {
+public class TaskTree extends JTree implements TreeSelectionListener, MouseListener {
+	
     private static JPopupMenu rootNodePopup = new JPopupMenu();
     private static JPopupMenu leafNodePopup = new JPopupMenu();
     private static JMenuItem newTaskMenu = new JMenuItem("New task");
@@ -82,7 +82,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
     public static final ImageIcon esaLeafIcon = new ImageIcon(MainWindow.class.getResource("/icon/Esaleaf.png"));
     
     //attach listeners
-    static{        
+    static {        
         newTaskMenu.addActionListener(new MainWindow.SelectFilesListener());
         closeTaskMenu.addActionListener(new MainWindow.CloseTaskItemListener());
         addFilesMenu.addActionListener(new MainWindow.AddFilesAdaptor());
@@ -94,7 +94,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         newEiaTemplateMenu.addActionListener(new MainWindow.NewEIATemplateListener());
         openEiaTemplateMenu.addActionListener(new MainWindow.OpenEIATemplateListener());
         extractEiaTemplateMenu.addActionListener(new MainWindow.ExtractEIATemplateListener());
-        applyEiaTemplateMenu.addActionListener(new ActionListener(){
+        applyEiaTemplateMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (MainWindow.wkEdfFiles == null)
                     return;
@@ -104,7 +104,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         newEsaTemplateMenu.addActionListener(new MainWindow.NewESATemplateListener());
         openEsaTemplateMenu.addActionListener(new MainWindow.OpenESATemplateListener());
         extractEsaTemplateMenu.addActionListener(new MainWindow.ExtractESATemplateListener());
-        applyEsaTemplateMenu.addActionListener(new ActionListener(){
+        applyEsaTemplateMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (MainWindow.wkEdfFiles == null)
                     return;
@@ -131,7 +131,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
     private void initialzeTreeNodes(EDFTreeNode rootNode,
                     EDFTreeNode workingEDFsNode,
                     EDFTreeNode eiaTemplateNode,
-                    EDFTreeNode esaTemplateNode){
+                    EDFTreeNode esaTemplateNode) {
         this.rootNode = rootNode;
         this.edfRootNode = workingEDFsNode;
         this.eiaRootNode = eiaTemplateNode;
@@ -147,7 +147,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         esaRootPath = new TreePath(this.esaRootNode.getPath());         
     }
     
-    private void setlaf(){
+    private void setlaf() {
         this.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         this.getModel().addTreeModelListener(new  EDFTreeModelListener());
         this.setShowsRootHandles(true);
@@ -161,7 +161,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
 
     }
     
-    private void buildRootNodePopup(){
+    private void buildRootNodePopup() {
         rootNodePopup = new JPopupMenu();
         rootNodePopup.add(newTaskMenu);
         rootNodePopup.add(closeTaskMenu);
@@ -184,7 +184,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         
     }
     
-    private void buildLeafNodePopup(){
+    private void buildLeafNodePopup() {
         leafNodePopup = new JPopupMenu();
         leafNodePopup.add(excludeMenu);
         leafNodePopup.add(deleteMenu);
@@ -209,7 +209,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
      * edited
      */ 
     
-    public boolean isPathEditable(TreePath treePath){
+    public boolean isPathEditable(TreePath treePath) {
          if (treePath.toString().equals(rootPath.toString()))
             return false;
          
@@ -249,9 +249,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         this.scrollPathToVisible(path);       
     }
     
-
-    
-    public void removeNodeGroupAt(EDFTreeNode parentNode){
+    public void removeNodeGroupAt(EDFTreeNode parentNode) {
        
         DefaultTreeModel model = (DefaultTreeModel) this.getModel(); 
         while (parentNode.getChildCount() != 0){
@@ -263,7 +261,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
     /** 
      * this one will be merged with the next one.
      */
-    public void addFileNodeAt(int rootChild, File file){
+    public void addFileNodeAt(int rootChild, File file) {
    
         EDFTreeNode fileNode = new EDFTreeNode(file);
          
@@ -271,8 +269,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         TreeNode root = (TreeNode) model.getRoot();
         TreeNode eiaRoot = root.getChildAt(rootChild); 
 
-        if (eiaRoot == null)
-            return;
+        if (eiaRoot == null) return;
         TreePath path = this.getNextMatch(eiaRoot.toString(), 0, Position.Bias.Forward);
         MutableTreeNode parentNode = (MutableTreeNode) path.getLastPathComponent();    
         
@@ -282,10 +279,9 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         TreePath pathOfTheNewNode = new TreePath(fileNode.getPath());
         this.scrollPathToVisible(pathOfTheNewNode);
         this.setSelectionPath(pathOfTheNewNode);    
-     
     }
     
-    public void addFileNodeAt(int rootChild, File file, long uid){
+    public void addFileNodeAt(int rootChild, File file, long uid) {
     
         EDFTreeNode fileNode = new EDFTreeNode(file);
         fileNode.setUid(uid);
@@ -294,8 +290,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         TreeNode root = (TreeNode) model.getRoot();
         TreeNode eiaRoot = root.getChildAt(rootChild); 
 
-        if (eiaRoot == null)
-            return;
+        if (eiaRoot == null) return;
         TreePath path = this.getNextMatch(eiaRoot.toString(), 0, Position.Bias.Forward);
         MutableTreeNode parentNode = (MutableTreeNode) path.getLastPathComponent();    
         
@@ -341,7 +336,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
             return;
         }
         
-        if (parentNode == MainWindow.eiaTemplateFilesNode){
+        if (parentNode == MainWindow.eiaTemplateFilesNode) {
             int nodeIndex = parentNode.getIndex(selectedNode);
             masterFile = MainWindow.EIATemplateFiles.get(nodeIndex); 
             MainWindow.tabPane.setVisibleofTabWithMasterFile(masterFile);
@@ -352,7 +347,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
             return;
         }
         
-        if (parentNode == MainWindow.esaTemplateFilesNode){
+        if (parentNode == MainWindow.esaTemplateFilesNode) {
             int nodeIndex = parentNode.getIndex(selectedNode);
             masterFile = MainWindow.ESATemplateFiles.get(nodeIndex);
             MainWindow.tabPane.setVisibleofTabWithMasterFile(masterFile);
@@ -367,7 +362,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
        // this.setStatusBarText("");
     }
     
-    private void outputFileInfoPane(File file){
+    private void outputFileInfoPane(File file) {
         MainWindow.fileinfoEdtPane.outputFileInfoWithHtml(file);
     }
 
@@ -417,12 +412,12 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         return datestr;
     } */
     
-    private TreePath findByNodes(JTree tree, Object[] nodes){
+    private TreePath findByNodes(JTree tree, Object[] nodes) {
         TreeNode root = (TreeNode) tree.getModel().getRoot();
         return findTreePath(tree, new TreePath(root), nodes, 0, false);
     }
     
-    private TreePath findByName(JTree tree, String[] names){
+    private TreePath findByName(JTree tree, String[] names) {
         TreeNode root = (TreeNode) tree.getModel().getRoot();
         return findTreePath(tree, new TreePath(root), names, 0, false);
     }
@@ -453,12 +448,10 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         return null;
     }
     
-    public int getIndexOfNodeByName(EDFTreeNode parent, Object userObject)
-    {
+    public int getIndexOfNodeByName(EDFTreeNode parent, Object userObject) {
         int index = 0;
         
-        for (Enumeration e = parent.children(); e.hasMoreElements();)
-        {
+        for (Enumeration e = parent.children(); e.hasMoreElements();) {
             if (userObject.equals(((EDFTreeNode)e.nextElement()).getUserObject()))
                 return index;
             index++;
@@ -467,11 +460,11 @@ public class TaskTree extends JTree implements TreeSelectionListener,
         return -1;
     }
 
-    public void setESATableVisible(int index){
+    public void setESATableVisible(int index) {
         ArrayList<ESATable> esaTables = MainWindow.iniEsaTables;
           
         ESATable active = esaTables.get(index);
-        if (MainWindow.tabPane.isPrimaryTabsOpened()){
+        if (MainWindow.tabPane.isPrimaryTabsOpened()) {
             MainWindow.tabPane.remove(1);
             MainWindow.tabPane.setPrimaryTabsOpened(true);
         }
@@ -492,7 +485,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
     }
 
       
-    public void removeFileNode(String nodeName){
+    public void removeFileNode(String nodeName) {
                
         TreePath path = this.getNextMatch(nodeName, 0, Position.Bias.Forward);
         EDFTreeNode redNode = (EDFTreeNode) path.getLastPathComponent();
@@ -500,12 +493,12 @@ public class TaskTree extends JTree implements TreeSelectionListener,
    
         DefaultTreeModel treeModel = (DefaultTreeModel) this.getModel();
         
-          if (parentNode != null){
+          if (parentNode != null) {
               treeModel.removeNodeFromParent(redNode);
         }        
     }
     
-    public void removeFileNode(int parentIndex, long uid){
+    public void removeFileNode(int parentIndex, long uid) {
         DefaultTreeModel model = (DefaultTreeModel) this.getModel();  
         TreeNode root = (TreeNode) model.getRoot();
         
@@ -556,8 +549,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
             if (node == rootNode || node == edfRootNode || node == eiaRootNode || node == esaRootNode){
                 buildRootNodePopup();
                 rootNodePopup.show((JComponent)e.getSource(), e.getX(), e.getY());
-            }
-            else {
+            } else {
                 buildLeafNodePopup();
                 leafNodePopup.show((JComponent)e.getSource(), e.getX(), e.getY());
             }
@@ -575,8 +567,7 @@ public class TaskTree extends JTree implements TreeSelectionListener,
             if (node == rootNode || node == edfRootNode || node == eiaRootNode || node == esaRootNode){
                 buildRootNodePopup();
                 rootNodePopup.show((JComponent)e.getSource(), e.getX(), e.getY());
-            }
-            else {
+            } else {
                 buildLeafNodePopup();
                 leafNodePopup.show((JComponent)e.getSource(), e.getX(), e.getY());
             }
@@ -715,4 +706,3 @@ public class TaskTree extends JTree implements TreeSelectionListener,
     }
 
 }//end of TaskTree class
-

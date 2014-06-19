@@ -54,7 +54,8 @@ import table.ESATable;
 
 public class AddFilesListener extends JDialog {
 
-    private static JButton browseButton;
+	private static final long serialVersionUID = 1L;
+	private static JButton browseButton;
     private static JButton finishButton;
     private static JButton cancelButton;
 
@@ -62,7 +63,7 @@ public class AddFilesListener extends JDialog {
     private final static int dialogHeight = 500;
     private final static String extName = "edf";
     private final static String description = "EDF Files (*.edf)";
-    private final static  Dimension favoriteSize = new Dimension(80, 28);
+    private final static Dimension favoriteSize = new Dimension(80, 28);
     private static final Color alertColor = new Color(255, 240, 188);
     private final static String srctip = "Select one or mulitple EDF source files";
     private final static String helptip = "To add new files to current task, select source EDF files";
@@ -95,7 +96,7 @@ public class AddFilesListener extends JDialog {
     protected static JLabel selectedFilesLabel = new JLabel();
     protected static JLabel selectNoteLabel = new JLabel("Select one or more Files: ", JLabel.LEFT);
     
-    static{
+    static {
         Font oldFont = selectNoteLabel.getFont();
         Font newFont = new Font(oldFont.getName(), oldFont.getStyle(), oldFont.getSize() + 2);
         selectNoteLabel.setFont(newFont);
@@ -115,10 +116,10 @@ public class AddFilesListener extends JDialog {
         selectedFilesLabel.setOpaque(true);
     }
     
-    /*
-     * add mouse listener for dir field
-     */
-       
+    /**
+     * add a mouse listener for dir field
+     * @param frame parent window frame
+     */       
     public AddFilesListener(JFrame frame) {
         super(frame, true); // modal
         this.setLocationRelativeTo(frame);
@@ -159,6 +160,13 @@ public class AddFilesListener extends JDialog {
         
     }
 
+    /**
+     * TODO: ww
+     * @param title
+     * @param textField
+     * @param button
+     * @return
+     */
     public JPanel createSelectionPanel(String title, JTextField textField,
                                        JButton button) {
         int layer;
@@ -185,6 +193,9 @@ public class AddFilesListener extends JDialog {
         return selectionPanel;
     }
 
+    /**
+     * TODO: ww
+     */
     public void buildSourceFileDirField() {
         sourceFilesDirField = new JTextField();
 /*         sourceFilesDirField.setPreferredSize(new Dimension(350, 25));
@@ -219,6 +230,9 @@ public class AddFilesListener extends JDialog {
         cancelButton.addActionListener(new CancelButtonListener());
     }
     
+    /**
+     * TODO: ww
+     */
     public void buildControlPanel() {
         controlPanel = new JPanel();
         controlPanel.setMinimumSize(new Dimension(dialogWidth, 40));
@@ -228,6 +242,9 @@ public class AddFilesListener extends JDialog {
         controlPanel.add(cancelButton);
     }
     
+    /**
+     * TODO: ww
+     */
     public void buildTipPanel() {
         tipPanel = new JPanel();
         tipPanel.setMinimumSize(new Dimension(dialogWidth, 40));
@@ -313,7 +330,6 @@ public class AddFilesListener extends JDialog {
     /*
      * Listener for FinishButton
      */
-
     private class FinishButtonListener implements ActionListener {
         private ArrayList<File> finalAddedFiles = new ArrayList<File>();
         private ArrayList<File> workFiles;
@@ -343,7 +359,6 @@ public class AddFilesListener extends JDialog {
             MainWindow.taskinfoEdtPane.outputTaskInfoWithHtml();
 
             dispose();
-
         }
         
         //removed already opend files
@@ -628,7 +643,6 @@ public class AddFilesListener extends JDialog {
                     break;
                 }
             } 
-
         return indices;
     }
 
@@ -692,8 +706,5 @@ public class AddFilesListener extends JDialog {
             selectedFilesLabel.setText(notetext);
         }
     }
-        
 
 }//end of AddFilesListener class
-
-

@@ -18,23 +18,21 @@ import javax.swing.JPanel;
 
 import configure.ConfigureManager;
 
-public class SettingParameters extends JFrame{
+public class SettingParameters extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static SettingParameters sp = null;
 	protected JLabel chosenDirectory = null;
 
-	public SettingParameters(final String dialogType){
+	public SettingParameters(final String dialogType) {
 
 		super();
 
-		if (dialogType.equals("MCR_Dir")){
+		if (dialogType.equals("MCR_Dir")) {
 			this.setTitle("Setting Directory of MATLAB Compiler Runtime (MCR)");
-		}
-		else if (dialogType.equals("Viewer_Dir")){
+		} else if (dialogType.equals("Viewer_Dir")) {
 			this.setTitle("Setting Directory of EDF Viewer");
-		}
-		else{
+		} else{
 			this.setTitle("");
 		}
 		this.setSize(600, 300);
@@ -79,5 +77,4 @@ public class SettingParameters extends JFrame{
 		chosenDirectory = new JLabel("", JLabel.CENTER);
 		controlPanel2.add(chosenDirectory);
 	}
-
 }
