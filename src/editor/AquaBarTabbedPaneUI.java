@@ -20,10 +20,18 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	private Insets contentInsets = new Insets(10, 10, 10, 10);
 	private int lastRollOverTab = -1;
 
+	/**
+	 * TODO
+	 * @param c
+	 * @return
+	 */
 	public static ComponentUI createUI(JComponent c) {
 		return new AquaBarTabbedPaneUI();
 	}
 
+	/**
+	 * TODO
+	 */
 	public AquaBarTabbedPaneUI() {
 
 		selectedColorSet = new ColorSet();
@@ -52,22 +60,41 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 		setContentInsets(0);
 	}
 
+	/**
+	 * TODO
+	 * @param b
+	 */
 	public void setContentTopBorderDrawn(boolean b) {
 		contentTopBorderDrawn = b;
 	}
 
+	/**
+	 * TODO
+	 * @param i
+	 */
 	public void setContentInsets(Insets i) {
 		contentInsets = i;
 	}
 
+	/**
+	 * TODO
+	 * @param i
+	 */
 	public void setContentInsets(int i) {
 		contentInsets = new Insets(i, i, i, i);
 	}
 
+	/**
+	 * TODO
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getTabRunCount(javax.swing.JTabbedPane)
+	 */
 	public int getTabRunCount(JTabbedPane pane) {
 		return 1;
 	}
 
+	/**
+	 * TODO
+	 */
 	protected void installDefaults() {
 		super.installDefaults();
 
@@ -79,31 +106,49 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 		tabInsets = new Insets(0, 0, 0, 1);
 	}
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	protected boolean scrollableTabLayoutEnabled() {
 		return false;
 	}
 
+	/**
+	 * TODO
+	 */
 	protected Insets getContentBorderInsets(int tabPlacement) {
 		return contentInsets;
 	}
 
-	protected int calculateTabHeight(int tabPlacement, int tabIndex,
-			int fontHeight) {
+	/**
+	 * TODO
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateTabHeight(int, int, int)
+	 */
+	protected int calculateTabHeight(int tabPlacement, int tabIndex, int fontHeight) {
 		return 21;
 	}
 
-	protected int calculateTabWidth(int tabPlacement, int tabIndex,
-			FontMetrics metrics) {
+	/**
+	 * TODO
+	 */
+	protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
 		int w = super.calculateTabWidth(tabPlacement, tabIndex, metrics);
 		int wid = metrics.charWidth('M');
 		w += wid * 2;
 		return w;
 	}
 
+	/**
+	 * TODO
+	 */
 	protected int calculateMaxTabHeight(int tabPlacement) {
 		return 21;
 	}
 
+	/**
+	 * TODO
+	 */
 	protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setPaint(new GradientPaint(0, 0, defaultColorSet.topGradColor1, 0,
@@ -121,6 +166,10 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 		}
 	}
 
+	/**
+	 * TODO
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBackground(java.awt.Graphics, int, int, int, int, int, int, boolean)
+	 */
 	protected void paintTabBackground(Graphics g, int tabPlacement,
 			int tabIndex, int x, int y, int w, int h, boolean isSelected) {
 		Graphics2D g2d = (Graphics2D) g;
@@ -160,6 +209,9 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBorder(java.awt.Graphics, int, int, int, int, int, int, boolean)
+	 */
 	protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex,
 			int x, int y, int w, int h, boolean isSelected) {
 		Rectangle rect = getTabBounds(tabIndex, new Rectangle(x, y, w, h));
@@ -167,37 +219,58 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 		g.drawLine(rect.x + rect.width, 0, rect.x + rect.width, 20);
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorderTopEdge(java.awt.Graphics, int, int, int, int, int, int)
+	 */
 	protected void paintContentBorderTopEdge(Graphics g, int tabPlacement,
 			int selectedIndex, int x, int y, int w, int h) {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorderRightEdge(java.awt.Graphics, int, int, int, int, int, int)
+	 */
 	protected void paintContentBorderRightEdge(Graphics g, int tabPlacement,
 			int selectedIndex, int x, int y, int w, int h) {
 		// Do nothing
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorderLeftEdge(java.awt.Graphics, int, int, int, int, int, int)
+	 */
 	protected void paintContentBorderLeftEdge(Graphics g, int tabPlacement,
 			int selectedIndex, int x, int y, int w, int h) {
 		// Do nothing
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorderBottomEdge(java.awt.Graphics, int, int, int, int, int, int)
+	 */
 	protected void paintContentBorderBottomEdge(Graphics g, int tabPlacement,
 			int selectedIndex, int x, int y, int w, int h) {
 		// Do nothing
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintFocusIndicator(java.awt.Graphics, int, java.awt.Rectangle[], int, java.awt.Rectangle, java.awt.Rectangle, boolean)
+	 */
 	protected void paintFocusIndicator(Graphics g, int tabPlacement,
 			Rectangle[] rects, int tabIndex, Rectangle iconRect,
 			Rectangle textRect, boolean isSelected) {
 		// Do nothing
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getTabLabelShiftY(int, int, boolean)
+	 */
 	protected int getTabLabelShiftY(int tabPlacement, int tabIndex,
 			boolean isSelected) {
 		return 0;
 	}
 
+	/**
+	 * TODO
+	 */
 	private class ColorSet {
 		Color topGradColor1;
 		Color topGradColor2;
@@ -206,6 +279,9 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 		Color bottomGradColor2;
 	}
 
+	/**
+	 * TODO
+	 */
 	private class RollOverListener implements MouseMotionListener,
 			MouseListener {
 
@@ -233,6 +309,9 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 			tabPane.repaint();
 		}
 
+		/**
+		 * TODO
+		 */
 		private void checkRollOver() {
 			int currentRollOver = getRolloverTab();
 			if (currentRollOver != lastRollOverTab) {

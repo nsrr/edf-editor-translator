@@ -8,15 +8,21 @@ import javax.swing.*;
 
 import translator.utils.Keywords;
 
+/**
+ * A GUI to show the EDF Annotation Translator and related log/file viewer
+ */
+@SuppressWarnings("serial")
 public class SubWindowGUI extends JFrame {
 	
-	private static final long serialVersionUID = 1L;
-
 	private static HashMap<String, Integer> map__filename_with_tabIndex = new HashMap<String, Integer>();
 	private static JTabbedPane jtabbedPane;
 	
 	private static SubWindowGUI _instance = null;
 	
+	/**
+	 * Static factory method of returning a new SubWindowGUI instance if not exist
+	 * @return a SubWindowGUI instance 
+	 */
 	public static SubWindowGUI getInstance() {
 		if (_instance == null) {
 			_instance = new SubWindowGUI();
@@ -42,6 +48,9 @@ public class SubWindowGUI extends JFrame {
 		return _instance;
 	}
 	
+	/**
+	 * Default SubWindowGUI constructor
+	 */
 	private SubWindowGUI() {
 		
 		jtabbedPane = new JTabbedPane();
@@ -53,18 +62,31 @@ public class SubWindowGUI extends JFrame {
 		this.setResizable(false);
 	}
 	
+	/**
+	 * Return <code>true</code> if this SubWindowGUI contains the specified file viewer
+	 * @param filename the file name to be tested
+	 * @return true if the file exists
+	 */
 	public static boolean existViewer(String filename) {
 		return map__filename_with_tabIndex.containsKey(filename);
 	}
 	
+	/**
+	 * Add a file viewer tab using file name and tab name
+	 * @param tabName the tab name
+	 * @param filename the file name
+	 */
 	public static void addViewerTab(String tabName, String filename) {
 		map__filename_with_tabIndex.put(filename, 1);
 		jtabbedPane.addTab(tabName, new QuickViewerGUI(filename, true));
 	}
 	
+	/**
+	 * Remove a viewer tab
+	 * @param tab the tab to be removed
+	 */
 	public static void removeViewerTab(QuickViewerGUI tab) {
 		map__filename_with_tabIndex.remove(tab.filename);
 		jtabbedPane.remove(tab);
 	}
-	
 }

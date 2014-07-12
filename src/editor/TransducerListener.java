@@ -1,34 +1,21 @@
 package editor;
 
-
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -41,17 +28,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 import table.EDFTable;
-import table.ESATemplateTable;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
+@SuppressWarnings("serial")
 public class TransducerListener extends JDialog {
     protected static JComboBox procedureBox;
     protected static JComboBox deviceBox;
@@ -82,7 +69,8 @@ public class TransducerListener extends JDialog {
 
     private HashMap<Integer, String> procedures;
     private HashMap<String, Integer> revProcedures;
-    private ArrayList<Integer> devicesRefLocReq;
+    @SuppressWarnings("unused")
+	private ArrayList<Integer> devicesRefLocReq;
 
     private EDFTable esa;
     private int row;
@@ -96,6 +84,13 @@ public class TransducerListener extends JDialog {
     private static final String REFERENCED_TO = " referenced to ";
 
 
+    /**
+     * TODO
+     * @param frame
+     * @param x
+     * @param y
+     * @param esaTemp
+     */
     public TransducerListener(JFrame frame, int x, int y, EDFTable esaTemp) {
         super(frame, true); // modal
         this.setLocationRelativeTo(frame);
@@ -141,6 +136,9 @@ public class TransducerListener extends JDialog {
         visualize();
     }
 
+    /**
+     * TODO
+     */
     private void initUI() {
         this.setSize(new Dimension(dialogWidth, dialogHeight));
 
@@ -222,6 +220,10 @@ public class TransducerListener extends JDialog {
         cancelButton.addActionListener(new CancelButtonListener());
     }
 
+    /**
+     * TODO
+     * @param procID
+     */
     public void setDeviceBox(int procID) {
         deviceLabel.setVisible(true);
         deviceBox.setVisible(true);
@@ -273,6 +275,10 @@ public class TransducerListener extends JDialog {
             }); */
     }
 
+    /**
+     * TODO
+     * @param devSel
+     */
     private void setLocationBox(int devSel) {
         HashMap<Integer, String> locations =
             readFile("/SignalTypes/locations.txt");
@@ -355,7 +361,8 @@ public class TransducerListener extends JDialog {
             }); */
     }
     
-    /*
+    /**
+     * TODO
      * Fangping, 08/10/2010
      */
     private class TransducerBoxesListener implements ActionListener {
@@ -368,8 +375,10 @@ public class TransducerListener extends JDialog {
             updateLabels(option, box);
         }
     }
-    
 
+    /**
+     * TODO
+     */
     private void visualize() {
         this.setTitle("Customize Transducer Type");
         setLogo();
@@ -378,6 +387,11 @@ public class TransducerListener extends JDialog {
         this.setResizable(false);
     }
 
+    /**
+     * TODO
+     * @param loc
+     * @return
+     */
     private HashMap<Integer, String> readFile(String loc) {
         HashMap<Integer, String> ret = new HashMap<Integer, String>();
         ret.put(0, "");
@@ -403,6 +417,11 @@ public class TransducerListener extends JDialog {
         return ret;
     }
     
+    /**
+     * TODO
+     * @param loc
+     * @return
+     */
     private HashMap<String, Integer> revHReadFile(String loc) {
         HashMap<String, Integer> ret = new HashMap<String, Integer>();
         ret.put("", 0);
@@ -427,9 +446,11 @@ public class TransducerListener extends JDialog {
         return ret;
     }
     
-    /*
+    /**
      * create the main panel
      * Fangping, 08/09/2010
+     * TODO
+     * @return
      */
     private JPanel createMainPanel() {
         FormLayout layout = new FormLayout(
@@ -458,6 +479,9 @@ public class TransducerListener extends JDialog {
         return mainPanel;      
     }
 
+    /**
+     * TODO
+     */
     private void setDialogLayout() {
 
 /*         JPanel specPanel = new JPanel(new GridLayout(5, 1));
@@ -492,6 +516,12 @@ public class TransducerListener extends JDialog {
         this.getContentPane().add(controlPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * TODO
+     * @param label
+     * @param cBox
+     * @return
+     */
     public JPanel createPanel(JLabel label, JComboBox cBox) {
 
         JPanel selectionPanel = new JPanel();
@@ -501,6 +531,10 @@ public class TransducerListener extends JDialog {
         return selectionPanel;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public JPanel createControlPanel() {
         JPanel controlPanel = new JPanel();
         controlPanel.setMinimumSize(new Dimension(dialogWidth, 40));
@@ -512,6 +546,10 @@ public class TransducerListener extends JDialog {
         return controlPanel;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public JPanel createTipPanel() {
         JPanel tipPanel = new JPanel();
         tipPanel.setMinimumSize(new Dimension(dialogWidth, 40));
@@ -528,6 +566,11 @@ public class TransducerListener extends JDialog {
         return tipPanel;
     }
 
+    /**
+     * TODO
+     * @param part
+     * @param cb
+     */
     private void updateLabels(int part, JComboBox cb) {        
         
         aFinalString[part] = (String)cb.getSelectedItem(); 
@@ -575,6 +618,9 @@ public class TransducerListener extends JDialog {
         //finalStringCount.setText(Integer.toString(finalLabel.length()));
     }
 
+    /**
+     * TODO
+     */
     class FinishButtonListener implements ActionListener {
 
         @Override
@@ -595,6 +641,9 @@ public class TransducerListener extends JDialog {
 
     } //end of FinishButtonListener class
 
+    /**
+     * TODO
+     */
     class CancelButtonListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
@@ -602,12 +651,18 @@ public class TransducerListener extends JDialog {
         }
     }
 
+    /**
+     * TODO	
+     */
     class CancelAction extends AbstractAction {
         public void actionPerformed(ActionEvent ev) {
             dispose();
         }
     }
 
+    /**
+     * TODO
+     */
     private void setLogo() {
         BufferedImage image = null;
         try {

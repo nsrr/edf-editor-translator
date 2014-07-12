@@ -58,6 +58,12 @@ public class ValidateEDF {
 //		}
 //	}
 	
+	/**
+	 * TODO
+	 * @param esaTable
+	 * @param edfFile
+	 * @return
+	 */
 	public static ArrayList<Incompliance> parseESATable(EDFTable esaTable, String edfFile) {
 		
 		ArrayList<Incompliance> esaIncompliances = new ArrayList<Incompliance>();
@@ -115,7 +121,7 @@ public class ValidateEDF {
 			COL_INDEX_PREFILTERING = 8;
 			COL_INDEX_NR_OF_SAMPLES = 9;
 			COL_INDEX_RESERVED = 10;
-		} else{
+		} else {
 			return esaIncompliances; // at this time, esaIncompliances.size() = 0;
 		}
 		
@@ -512,6 +518,12 @@ public class ValidateEDF {
 		return esaIncompliances;
 	}
 	
+    /**
+     * TODO
+     * @param eiaTable
+     * @param fileList
+     * @return
+     */
     public static ArrayList<Incompliance> parseEIATable(EIATable eiaTable, String[] fileList) {
     	
     	ArrayList<Incompliance> eiaIncompliances = new ArrayList<Incompliance>();
@@ -900,6 +912,11 @@ public class ValidateEDF {
         return eiaIncompliances;    
     }
 	
+    /**
+     * TODO
+     * @param eiaTemplate
+     * @return
+     */
     public static ArrayList<Incompliance> parseEIATemplateTable(EDFTable eiaTemplate) {
     	
     	ArrayList<Incompliance> eiaIncompliances = new ArrayList<Incompliance>();

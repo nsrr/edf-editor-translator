@@ -9,39 +9,49 @@ import java.util.ArrayList;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-
+@SuppressWarnings("serial")
 public class EIATable extends EDFTable {    
     
-    public static final int number_local_patientID = 2;
+	public static final int number_local_patientID = 2;
     public static final int number_local_recordingID = 3;
     public static final int number_start_date_recording = 4;
     private TableColumn[] allTableColumns;
-    protected int[] immutableFieldIndices = {/*EIA.index_filename,*/ EIA.index_version, EIA.index_start_time, 
-    		EIA.index_of_bytes, EIA.index_reserved, EIA.index_number_of_datarecord, EIA.index_duration, 
+    protected int[] immutableFieldIndices = {/*EIA.index_filename,*/ EIA.index_version, EIA.index_start_time,
+    		EIA.index_of_bytes, EIA.index_reserved, EIA.index_number_of_datarecord, EIA.index_duration,
     		EIA.index_number_of_channels};
-    private boolean forEiaTemplate;
-                            
-    public EIATable(Boolean forEIATemplate) {
+    private boolean isEiaTemplate;
+
+    /**
+     * Construct EIATable as described by isEIATemplate
+     * @param isEIATemplate if true, construct EIATable as a template
+     */
+    public EIATable(Boolean isEIATemplate) {
         //super(forEIATemplate);
-        super(new EIATableModel(1));        
-        setForEiaTemplate(forEIATemplate);
+        super(new EIATableModel(1));
+        setEiaTemplate(isEIATemplate);
         //setImmutableFieldIncides();
         customizeLook("eia");        
         //for template table, hide one more column of file name
-        if (forEIATemplate) {
+        if (isEIATemplate) {
             immutableFieldIndices = new int[]{EIA.index_filename, EIA.index_version, EIA.index_start_time, 
             		EIA.index_of_bytes, EIA.index_reserved, EIA.index_number_of_datarecord, EIA.index_duration, 
             		EIA.index_number_of_channels};
             hideImmutableFields();
-        } 
-    } 
-    
-    
+        }
+    }
+
+    /**
+     * Default constructor of EIATable using customized look of "eia"
+     */
     public EIATable() { 
         super(new EIATableModel(1)); 
         customizeLook("eia");   
     }
     
+    /**
+     * Construct EIATable using a EDF file header
+     * @param edfHeader an EDF file header 
+     */
     public EIATable(EDFFileHeader edfHeader) {
         super(new EIATableModel(1));        
         
@@ -58,6 +68,9 @@ public class EIATable extends EDFTable {
         //setImmutableFieldIncides();
     }
 
+    /**
+     * Store current columns into local fields
+     */
     private void cacheColumns() {
         int ncol = getModel().getColumnCount();
          allTableColumns = new TableColumn[ncol];
@@ -66,14 +79,20 @@ public class EIATable extends EDFTable {
      }
     
     //Fangping, 10/04/2010
+    /**
+     * Show immutable table fields
+     */
     public void showImmutableFields() {
         for (int index: immutableFieldIndices){
-            addColumn(allTableColumns[index]);
+            addColumn(allTableColumns[index]); // should test whether allTableColumns[index] exists
             getColumnModel().moveColumn(getColumnCount() - 1, index);
         }        
         validate();
     }
     
+    /**
+     * Hide immutable fields of this EIA table
+     */
     public void hideImmutableFields() {
         cacheColumns();
         int k = 0;
@@ -86,8 +105,9 @@ public class EIATable extends EDFTable {
     }
     
     /**
-     * @param edfHeaders
-     * @param numberOfHeaders
+     * Using EDF headers to construct EIA tables
+     * @param edfHeaders EDF headers used to construct EIA table
+     * @param numberOfHeaders number of header rows
      */
     public EIATable(ArrayList<EDFFileHeader> edfHeaders, int numberOfHeaders) {
         super(new EIATableModel(numberOfHeaders));
@@ -102,7 +122,11 @@ public class EIATable extends EDFTable {
             }          
      }
     
-    
+    /**
+     * Update specified table row value
+     * @param header the EIA header used to construct this EIA table
+     * @param rowIndex the row to be updated
+     */
     public void updateTableRow(EIAHeader header, int rowIndex) {
         TableModel model = this.getModel();
         String value;
@@ -113,11 +137,19 @@ public class EIATable extends EDFTable {
         this.setUpdateSinceLastSave(true);
     }
     
-    public void setForEiaTemplate(boolean forEiaTemplate) {
-        this.forEiaTemplate = forEiaTemplate;
+    /**
+     * Set the forEiaTemplate 
+     * @param forEiaTemplate true if this is an EIA template
+     */
+    public void setEiaTemplate(boolean isEiaTemplate) {
+        this.isEiaTemplate = isEiaTemplate;
     }
         
+    /**
+     * Test whether this is an EIA template
+     * @return true if this is an EIA template
+     */
     public boolean isForEiaTemplate() {
-        return forEiaTemplate;
+        return isEiaTemplate;
     }
 }

@@ -6,8 +6,12 @@ import javax.help.*;
 
 public class EDFEditorHelp {
 
-    private HelpSet hs;
+    @SuppressWarnings("unused")
+	private HelpSet hs;
 
+    /**
+     * TODO
+     */
     public EDFEditorHelp() {
         String helpHS = "/helpfiles/mhHelpSet.hs";
         ClassLoader cl = Main.class.getClassLoader();

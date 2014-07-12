@@ -2,9 +2,7 @@
  * this class is to implement Cut/Copy/Paste and Redo/Undo.
  */
 
-
 package editor;
-
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -17,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import table.EDFTable;
-
 
 public class CPCAdapter implements ActionListener {
     private String operationCode;
@@ -32,6 +29,10 @@ public class CPCAdapter implements ActionListener {
     private final static String PASTE = "Paste";
     EDFTable dataTable = null;
 
+    /**
+     * TODO
+     * @param code
+     */
     public CPCAdapter(String code) {
         super();
         operationCode = code;
@@ -45,6 +46,9 @@ public class CPCAdapter implements ActionListener {
             System.out.println("wrong specfication of operation");
     }
 
+    /**
+     * TODO
+     */
     public void acquireDataTable() {
         if (MainWindow.tabPane.getSelectedComponent() == null)
             return;
@@ -60,6 +64,9 @@ public class CPCAdapter implements ActionListener {
         }
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         acquireDataTable();
         if (dataTable == null)
@@ -83,6 +90,9 @@ public class CPCAdapter implements ActionListener {
         }
     }
 
+    /**
+     * TODO
+     */
     public void copyOperation() {
         String strBuf = "";
         int rr = dataTable.getSelectedRow();
@@ -93,6 +103,9 @@ public class CPCAdapter implements ActionListener {
         System.out.println(systemBuf);
     }
 
+    /**
+     * TODO
+     */
     public void cutOperation() {
         String strBuf = "";
         int rr = dataTable.getSelectedRow();
@@ -104,6 +117,9 @@ public class CPCAdapter implements ActionListener {
         System.out.println(systemBuf);
     }
 
+    /**
+     * TODO
+     */
     public void pasteOperation() {
         int rr = dataTable.getSelectedRow();
         int cc = dataTable.getSelectedColumn();
@@ -122,6 +138,4 @@ public class CPCAdapter implements ActionListener {
             return;
         dataTable.setValueAt(buffer, rr, cc);
     }
-
-
 }

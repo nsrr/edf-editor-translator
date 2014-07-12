@@ -1,20 +1,25 @@
 package validator.fix;
 
-import header.EDFFileHeader;
-
-import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.swing.table.TableModel;
 
+import table.ESATable;
+import table.Incompliance;
+import translator.utils.MyDate;
 import editor.MainWindow;
 import editor.NewTask_for_ValidityCommandLine;
-import table.*;
-import translator.utils.MyDate;
 
+/**
+ * TODO
+ */
 public class ErrorFix {
 	
+	/**
+	 * TODO
+	 * @param selected_edf_files
+	 * @param errorTypeAL
+	 */
 	public static void fixErrors(ArrayList<String> selected_edf_files, ArrayList<ErrorTypes> errorTypeAL) {
 		
 		NewTask_for_ValidityCommandLine.addElementIntoLog("===============================================================", true, MainWindow.log);
@@ -119,7 +124,14 @@ public class ErrorFix {
 //		}
 //	}
 	
-	public static ArrayList<Incompliance> fix01_SwapPhyMaxMin(ArrayList<Incompliance> incompliances, ESATable esaTable) {
+	/**
+	 * TODO
+	 * @param incompliances
+	 * @param esaTable
+	 * @return
+	 */
+	public static ArrayList<Incompliance> fix01_SwapPhyMaxMin(ArrayList<Incompliance> incompliances, 
+			ESATable esaTable) {
 		
 		ArrayList<Incompliance> incompliances_solved = new ArrayList<Incompliance>();
 		
@@ -131,7 +143,7 @@ public class ErrorFix {
 		int row, col;
 		for (Incompliance incompliance : incompliances) {
 			String des = incompliance.getDescription();
-			if (incompliance.getDescription().equals(Incompliance.error_esa_phymaxmin)){
+			if (incompliance.getDescription().equals(Incompliance.error_esa_phymaxmin)) {
 				
 				incompliances_solved.add(incompliance);
 				

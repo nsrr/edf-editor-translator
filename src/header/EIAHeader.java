@@ -31,18 +31,18 @@ public class EIAHeader extends EIA {
 	// Change HashMap to HashMap<String,String>
 	
     private File hostEdfFile = null; // to register the host EDF file of current header
-    private HashMap<String,String> eiaHeader = new HashMap<String,String>(); // store the eia header
+    private HashMap<String,Object> eiaHeader = new HashMap<String,Object>(); // store the eia header
     
-    // TODO: wei wang
-    // what is this field used for? will conflit with EIA class.
-    public static final int EIA = 0;
-    public static final int XML = 1;
+    // what is this field used for? will conflict with EIA class.
+    // conflict solved by change EIA field to aEIA, XML to aXML
+    public static final int aEIA = 0;
+    public static final int aXML = 1;
     
     /**
      * Default constructor
      */
     public EIAHeader() {
-        eiaHeader = new HashMap<String,String>(NUMBER_OF_ATTRIBUTES + 1); // plus file name
+        eiaHeader = new HashMap<String,Object>(NUMBER_OF_ATTRIBUTES + 1); // plus file name
         eiaHeader.put(FILE_NAME, "");
         eiaHeader.put(VERSION, "");
         eiaHeader.put(LOCAL_PATIENT_ID, "");
@@ -57,7 +57,7 @@ public class EIAHeader extends EIA {
     }
 
     /**
-     * construct an EIA header from a file. With constructor, the readFromDisk() is obsolete.
+     * Construct an EIA header from a file. With this constructor, the readFromDisk() is obsolete.
      * Algorithm:
      * 1. fill the value for "file name" key
      * 2. initialize byte pointer for read operation
@@ -68,7 +68,7 @@ public class EIAHeader extends EIA {
      * @throws IOException
      */
      public EIAHeader(RandomAccessFile raf, File edfFile) throws IOException {
-         eiaHeader = new HashMap<String,String>(); 
+         eiaHeader = new HashMap<String,Object>(); 
          
          String fullName = edfFile.getName();
          int extname_len = 4;
@@ -119,7 +119,7 @@ public class EIAHeader extends EIA {
          raf.readFully(nbSignals);
          eiaHeader.put(NUMBER_OF_SIGNALS, new String(nbSignals).trim());// end of 3.
          
-         setHostEdfFile(edfFile); //4.
+         setHostEdfFile(edfFile); // end of 4.
      }
 
     /**
@@ -132,14 +132,15 @@ public class EIAHeader extends EIA {
     public EIAHeader(EIATable table, int rowIndex) {
         TableModel model = table.getModel(); // this is necessary for column hiding/showing 
         int nAttributes = model.getColumnCount();
-        HashMap<String,String> header = new HashMap<String,String>();
+        HashMap<String,Object> header = new HashMap<String,Object>();
         
         String attributeName;
         String cellValue;
         for (int i = 0; i < nAttributes; i++) {
         	// problem: EIA class conflict with EIAHeader.EIA attribute
         	// wei wang, 2014-6-18
-            attributeName = new EIA().getEIAAttributeAt(i);
+//            attributeName = new EIA().getEIAAttributeAt(i);
+        	attributeName = EIA.getEIAAttributeAt(i); // wei wang, 2014-6-19
             cellValue = (String) model.getValueAt(rowIndex, i);
             header.put(attributeName, cellValue);
         }
@@ -153,12 +154,13 @@ public class EIAHeader extends EIA {
     public EIAHeader(EIATable table) {
         TableModel model = table.getModel();
         int nAttributes = model.getColumnCount();
-        HashMap<String,String> header = new HashMap<String,String>();
+        HashMap<String,Object> header = new HashMap<String,Object>();
         
         String attributeName;
         String cellValue;
         for (int i = 0; i < nAttributes; i++) {
-            attributeName = new EIA().getEIAAttributeAt(i);
+//            attributeName = new EIA().getEIAAttributeAt(i);
+        	attributeName = EIA.getEIAAttributeAt(i);  // wei wang, 2014-6-19
             cellValue = (String) model.getValueAt(0, i);
             header.put(attributeName, cellValue);
         }
@@ -169,7 +171,7 @@ public class EIAHeader extends EIA {
      * Evaluate an ESA header directly from another header
      * @param header EIA header to be copied
      */
-    public EIAHeader(HashMap<String,String> header) {
+    public EIAHeader(HashMap<String,Object> header) {
         eiaHeader = header;
     }
 
@@ -199,7 +201,7 @@ public class EIAHeader extends EIA {
      * @param index the index of the attribute
      * @return the bytes value of the attribute 
      */
-    public byte[] regularizeToBytes(HashMap<String,String> header, int index) { 
+    public byte[] regularizeToBytes(HashMap<String,Object> header, int index) { 
         String key = getEIAAttributeAt(index + 1); // note: the first attribute (FILE_NAME) is ignored
         String srcValue = (String) header.get(key); // end of 1.
         int byteSize = getByteLengthAt(index); // end of 2.
@@ -216,7 +218,7 @@ public class EIAHeader extends EIA {
      * @throws IOException
      */
     public void writeEiaHeader(RandomAccessFile raf) throws IOException {
-        HashMap<String,String> header = this.getEIAHeader();
+        HashMap<String,Object> header = this.getEIAHeader();
         raf.seek(0);
         for (int i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
             raf.write(regularizeToBytes(header, i));
@@ -229,7 +231,7 @@ public class EIAHeader extends EIA {
      * 1. pull out the header data from EIA
      * 2. regularize the eiaHeader;
      * 3. write back to disk; 
-     * 4. set the host file of eia header;
+     * 4. set the host file of EIA header;
      * Note: step 2 and 3 are implemented within the writeEiaHeader method
      * @param raf random file accessor to write data to file
      */
@@ -242,9 +244,9 @@ public class EIAHeader extends EIA {
         this.setHostEdfFile(file); // end of 4.
     }
     
-///////////////////////////////////////////////////////////////////////////////
-/////////////// START of setter and getter ///////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
+    /////////////// START of setter and getter ///////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
     
     /**
      * Set value per key
@@ -252,14 +254,14 @@ public class EIAHeader extends EIA {
      * @param value the value specified by the key
      */
     public void setValueAt(String key, Object value) {
-        eiaHeader.put(key, (String)value); // TODO: wei wang, generic Hashmap<String,String>
+        eiaHeader.put(key, (String)value); // wei wang, generic HashMap<String,String>
     }
 
     /**
      * Get current EIA header
      * @return current EIA header
      */
-    public HashMap<String,String> getEIAHeader() {
+    public HashMap<String,Object> getEIAHeader() {
         return eiaHeader;
     }
 
@@ -267,7 +269,7 @@ public class EIAHeader extends EIA {
      * Using external header to set this EIA header
      * @param eiaHeader current EIA header
      */
-    public void setEiaHeader(HashMap<String,String> eiaHeader) {
+    public void setEiaHeader(HashMap<String,Object> eiaHeader) {
         this.eiaHeader = eiaHeader;
     }
 

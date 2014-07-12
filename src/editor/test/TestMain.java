@@ -13,11 +13,19 @@ public class TestMain {
 		testValidator();
 	}
 	
+	/**
+	 * TODO
+	 * @throws Exception
+	 */
 	private static void testMainGUI() throws Exception {
 		
 		Main.main(new String[]{});
 	}
 	
+	/**
+	 * TODO
+	 * @throws Exception
+	 */
 	private static void testValidator() throws Exception {
 		String edf_dir = "D:/Workspace/EDF_Editor/data/input_files";
 		String output = "C:/Documents and Settings/Gang/Desktop/NF/1.txt";
@@ -31,6 +39,10 @@ public class TestMain {
 		Main.main(argv);
 	}
 	
+	/**
+	 * TODO
+	 * @throws Exception
+	 */
 	private static void testTranslator() throws Exception {
 		String vendor = Vendor.Compumedics.toString();
 		String mapping_file = "D:/Workspace/EDF_Editor/data/NSRR_eventmapping_compumedics_02032014.csv";

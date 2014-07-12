@@ -18,12 +18,16 @@ import javax.swing.JPanel;
 
 import configure.ConfigureManager;
 
+@SuppressWarnings("serial")
 public class SettingParameters extends JFrame {
 
-	private static final long serialVersionUID = 1L;
 	private static SettingParameters sp = null;
 	protected JLabel chosenDirectory = null;
 
+	/**
+	 * TODO
+	 * @param dialogType
+	 */
 	public SettingParameters(final String dialogType) {
 
 		super();

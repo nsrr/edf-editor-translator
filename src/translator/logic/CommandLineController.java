@@ -9,8 +9,15 @@ import org.apache.commons.io.FileUtils;
 
 import translator.utils.Keywords;
 
+/**
+ * TODO
+ */
 public class CommandLineController {
     
+	/**
+	 * TODO
+	 * @param argv
+	 */
 	public static void Start(String[] argv) {
 
 		CommandLineParser parser = new GnuParser();
@@ -32,7 +39,6 @@ public class CommandLineController {
 				ArrayList<String> selected_Edf_files = new ArrayList<String>();
 				File f = new File(edf_dir);
 				if (f.exists()) {
-					@SuppressWarnings("unchecked")
 					Collection<File> fileCollection = FileUtils.listFiles(
 							f, new String[]{"edf", "Edf", "eDf", "edF", "EDf", "EdF", "eDF", "EDF"}, true);
 					if (fileCollection != null)
@@ -51,9 +57,11 @@ public class CommandLineController {
 		}
 		
 	}
-	
 }
 
+/**
+ * TODO
+ */
 @SuppressWarnings("static-access")
 class OptionParser {
 	public static enum OptionShort{translator, vendor, map, edf, ann, stage, out, name, help}

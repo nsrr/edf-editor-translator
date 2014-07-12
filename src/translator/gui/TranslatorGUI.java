@@ -16,9 +16,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
+//remove warnings:
+// wei wang: JComboBox -> JComboBox<String>; JList -> JList<String>; DefaultListModel -> DefaultListModel<String>
+/**
+ * The GUI of EDF Annotation Translator
+ */
+@SuppressWarnings("serial")
 public class TranslatorGUI extends JPanel implements ActionListener, ItemListener {
-	
-	private static final long serialVersionUID = 1L;
 	
 	// ComboBox of Vendors
 	private String vendor_Selected = null;
@@ -52,15 +56,18 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 	private JLabel JLabel_OutputExample;
 	
 	// List of EDF-files and Output-files
-	private JList JList_Edf_files, JList_Out_files;
+	private JList<String> JList_Edf_files, JList_Out_files;
 	
-	// Button
+	// Translate Button
 	private JButton JButton_Translate;
 	
 	// List of Messages/Status
-	private JList JList_Messages = null;
-	private DefaultListModel ListModel_Messages = null;
+	private JList<String> JList_Messages = null;
+	private DefaultListModel<String> ListModel_Messages = null;
 	
+	/**
+	 * Initialize translator GUI
+	 */
 	public TranslatorGUI() {
 		
 		/* (1) Background */
@@ -78,26 +85,27 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				Vendor.Embla.toString(), Vendor.Compumedics.toString(),
 				Vendor.Respironics.toString(), Vendor.Sandman.toString()
 		};
-		JComboBox JComboBox_vendor = new JComboBox(vendorList);
+		JComboBox<String> JComboBox_vendor = new JComboBox<String>(vendorList);  
 		JComboBox_vendor.addActionListener (
-				new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                    	JComboBox jComboBox = (JComboBox)e.getSource();
-                    	boolean enable;
-                    	if (jComboBox.getSelectedIndex() == 0) {
-                    		enable = false;
-                    		vendor_Selected = null;
-                    	} else {
-                    		enable = true;
-                    		vendor_Selected = (String)jComboBox.getSelectedItem();
-                    	}
-                    	enableComponents(enable);
-
-                    	String pattern = JTextField_OutputPattern.getText();
-                    	String example = TranslationController.customize_out_file(pattern, null, vendor_Selected);
-                    	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
+			new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    @SuppressWarnings("unchecked")
+					JComboBox<String> jComboBox = (JComboBox<String>)e.getSource();
+                    boolean enable;
+                    if (jComboBox.getSelectedIndex() == 0) {
+                    	enable = false;
+                    	vendor_Selected = null;
+                    } else {
+                    	enable = true;
+                    	vendor_Selected = (String)jComboBox.getSelectedItem();
                     }
+                    enableComponents(enable);
+
+                    String pattern = JTextField_OutputPattern.getText();
+                    String example = TranslationController.customize_out_file(pattern, null, vendor_Selected);
+                    JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
                 }
+            }
         );
 		LayoutManager.addFirstField(new JLabel("Vendor:"), this);
 		LayoutManager.addMiddleField(JComboBox_vendor, this);
@@ -213,14 +221,15 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		
 		/* (10) "List of EDF files" */
 		LayoutManager.addFirstField(new JLabel("List of EDF files:"), JPanel_TwoLists);
-		JList_Edf_files = new JList();
+		JList_Edf_files = new JList<String>();
 		JList_Edf_files.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		ListSelectionModel listSelectionModel1 = JList_Edf_files.getSelectionModel();
         listSelectionModel1.addListSelectionListener(new ListSelectionListener (){
         	public void valueChanged(ListSelectionEvent e) {
         		if (e.getValueIsAdjusting()){
         			selected_Edf_files = new ArrayList<String>();
-        			Object [] selected_Objects = JList_Edf_files.getSelectedValues();
+        			@SuppressWarnings("deprecation")
+					Object [] selected_Objects = JList_Edf_files.getSelectedValues(); // this should change to getSelectedValuesList()
         			if (selected_Objects != null)
         				for(Object object : selected_Objects)
         					selected_Edf_files.add(object.toString());
@@ -233,7 +242,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		
 		/* (11) "List of Output files" */
 		LayoutManager.addFirstField(new JLabel("List of Output files:"), JPanel_TwoLists);
-		JList_Out_files = new JList();
+		JList_Out_files = new JList<String>();
 		JList_Out_files.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel2 = JList_Out_files.getSelectionModel();
 		listSelectionModel2.addListSelectionListener(new ListSelectionListener() {
@@ -285,8 +294,8 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		LayoutManager.addItemList(JPanel_Status, this);
 		
 		/* (14) "Status" */
-		ListModel_Messages = new DefaultListModel();
-		JList_Messages = new JList(ListModel_Messages);
+		ListModel_Messages = new DefaultListModel<String>();
+		JList_Messages = new JList<String>(ListModel_Messages);
 		JScrollPane JSroll_Messages = new JScrollPane(JList_Messages);
 		JSroll_Messages.setPreferredSize(new Dimension(200,100));
 		JList_Messages.setBackground(Keywords.status);
@@ -299,6 +308,9 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		enableComponents(false);
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e) {
 		
 		JFileChooser select = new JFileChooser();
@@ -313,15 +325,13 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				String file = select.getSelectedFile().getAbsolutePath();
 				JTextField_MappingFile.setText(file);
 			}
-		}
-		else if (e.getSource() == JButton_EdfDirectory) {
+		} else if (e.getSource() == JButton_EdfDirectory) {
 			select.setDialogTitle("Select EDF files");
 			select.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			select.setAcceptAllFileFilterUsed(false);
 			if (select.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 				String pathname = select.getSelectedFile().getAbsolutePath();
 				JTextField_EdfDirectory.setText(pathname);
-				@SuppressWarnings("unchecked")
 				Collection<File> fileCollection = FileUtils.listFiles(
 						new File(pathname), new String[]{"edf", "Edf", "eDf", "edF", "EDf", "EdF", "eDF", "EDF"}, true);
 				if (fileCollection != null) {
@@ -402,12 +412,19 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		this.repaint();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+	 */
 	public void itemStateChanged(ItemEvent e) {
 		String pattern = JTextField_OutputPattern.getText();
     	String example = TranslationController.customize_out_file(pattern, null, vendor_Selected);
     	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
 	}
 	
+	/**
+	 * Validate related fields. If error occurs, output them into the error log
+	 * @return ArrayList containing the error messages
+	 */
 	private ArrayList<String> validatePrerequisites() {
 		
 		String mapping_file = JTextField_MappingFile.getText();
@@ -423,10 +440,11 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		File File_OutputDirectory = new File(output_dir);
 		
 		ArrayList<String> errorMessages = new ArrayList<String>();
-		
+		System.out.println("Inside validatePrerequisites function...");  // ww test
 		if (vendor_Selected==null)
 			errorMessages.add("Please select a vendor from the dropdown menu;");
 		
+		System.out.println("mapping_file: " + mapping_file); // test ww
 		if (mapping_file.equals(""))
 			errorMessages.add("Please select a mapping file;");
 		if (edf_dir.equals(""))
@@ -455,6 +473,10 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		return errorMessages;
 	}
 	
+	/**
+	 * Enable components corresponding to the selected vendor
+	 * @param enable true to enable specified components related to the selected vendor
+	 */
 	private void enableComponents(boolean enable) {
 		JTextField_MappingFile.setEnabled(enable);
 		JTextField_EdfDirectory.setEnabled(enable);
@@ -474,11 +496,10 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		JList_Out_files.setEnabled(enable);
         JButton_Translate.setEnabled(enable);
     	
-    	if (vendor_Selected!=null && vendor_Selected != Vendor.Respironics.toString()){
+    	if (vendor_Selected!=null && vendor_Selected != Vendor.Respironics.toString()) {
     		JTextField_StageDirectory.setEnabled(false);
     		JTextField_StageDirectory.setText("");
     		JButton_StageDirectory.setEnabled(false);
     	}
-	}
-	
+	}	
 }

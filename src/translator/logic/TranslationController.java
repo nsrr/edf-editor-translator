@@ -14,12 +14,27 @@ import translator.utils.Keywords;
 import translator.utils.MyDate;
 import translator.utils.Vendor;
 
+/**
+ * TODO
+ */
 public class TranslationController {
 
 	public static String translationErrors = "";
-	public static JList JList_Messages = null;
-	public static DefaultListModel ListModel_Messages = null;
+	public static JList<String> JList_Messages = null; // wei wang, change JList to generic JList<String>
+	public static DefaultListModel<String> ListModel_Messages = null;  // wei wang, change DefaultListModel to DefaultListModel<String>
 	
+	/**
+	 * TODO
+	 * @param vendor
+	 * @param mapping_file
+	 * @param edf_dir
+	 * @param selected_Edf_files
+	 * @param annotation_dir
+	 * @param stage_dir
+	 * @param output_dir
+	 * @param outname
+	 * @return
+	 */
 	public static ArrayList<String> conductTranslation(
 			String vendor, String mapping_file, String edf_dir, ArrayList<String> selected_Edf_files, 
 			String annotation_dir, String stage_dir, String output_dir, String outname) {
@@ -119,6 +134,11 @@ public class TranslationController {
 		return successfulOutAL;
 	}
 	
+	/**
+	 * Add message into log file
+	 * @param message the message to be logged
+	 * @param showOnScreen if true, also show message on the console
+	 */
 	public static void addElementIntoLog(String message, boolean showOnScreen) {
 
 		if (showOnScreen) {
@@ -145,12 +165,16 @@ public class TranslationController {
 				e.printStackTrace();
 			}
 		}
-		
 	}
 	
+	/**
+	 * Formalize the string with standard file separator
+	 * @param oldString the string to be standardized
+	 * @return the standardized string
+	 */
 	private static String separatorReplacer(String oldString) {
 		String newString = oldString;
-		if (newString!=null) {
+		if (newString != null) {
 			newString = newString.replace("/", File.separator);
 			newString = newString.replace("\\", File.separator);
 			newString = newString.replace(File.separator + File.separator, File.separator);
@@ -158,6 +182,13 @@ public class TranslationController {
 		return newString;
 	}
 	
+	/**
+	 * Customize output file name using the specified base name and vendor name
+	 * @param pattern output file pattern 
+	 * @param basename base file name
+	 * @param vendor vendor name
+	 * @return the customized output file name
+	 */
 	public static String customize_out_file(String pattern, String basename, String vendor) {
 		
 		basename = basename == null ? "filename" : basename;
@@ -170,6 +201,13 @@ public class TranslationController {
 		return example;
 	}
 	
+	/**
+	 * TODO
+	 * @param dir
+	 * @param basename
+	 * @param extension
+	 * @return
+	 */
 	private static String validize_file(String dir, String basename, String extension) {
 		
 		if (dir == null || basename == null || extension == null)
@@ -177,15 +215,21 @@ public class TranslationController {
 		
 		String file = separatorReplacer(dir + File.separator + basename + extension.toUpperCase());
 		
-		if (!(new File(file)).exists()){
+		if (!(new File(file)).exists()) {
 			file = separatorReplacer(dir + File.separator + basename + extension);
 //			if (!(new File(file)).exists())
 //				file = null;
-		}
-		
+		}		
 		return file;
 	}
 	
+	/**
+	 * TODO
+	 * @param pattern
+	 * @param key
+	 * @param e
+	 * @return
+	 */
 	public static String updateOutputPattern(String pattern, String key, ItemEvent e) {
 		
 		final String str_xml = ".xml";
@@ -208,5 +252,4 @@ public class TranslationController {
 		
 		return pattern;
 	}
-	
 }

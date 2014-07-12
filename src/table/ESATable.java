@@ -7,7 +7,6 @@ import header.ESAHeader;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import java.io.File;
 
 import javax.swing.JLabel;
@@ -16,31 +15,39 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-
+@SuppressWarnings("serial")
 public class ESATable extends EDFTable {
-    /**
-     * sourceOfMasterFile: 
-     */
-    private File sourceOfMasterFile; // keep the location of the source File for this header.
+	
+    private File hostFile; // keep the location of the source File for this header.
     private TableColumn[] allTableColumns;
     private final static int index_of_immutablie = 8;
-    protected static final int[] immutableFieldIndices = {index_of_immutablie};
+    protected static final int[] immutableFieldIndices = { index_of_immutablie };
 
- /**
-  * this constructor builds a table with 1 empty row
-  */
+    /**
+     * TODO
+     * this constructor builds a table with 1 empty row
+     */
     public ESATable() {
         super(new ESATableModel(1));  
         customizeLook("esa");
         this.setUpdateSinceLastSave(true);
     }
     
+    /**
+     * TODO
+     * @param esa
+     */
     public ESATable(ESATableModel esa) {
     	super(esa);
         customizeLook("esa");
     	this.setUpdateSinceLastSave(true);
     }
     
+    /**
+     * TODO
+     * @param esaHeader
+     * @param forTemplateOpen
+     */
     public ESATable(ESAHeader esaHeader, Boolean forTemplateOpen) {
         super();
         
@@ -48,12 +55,12 @@ public class ESATable extends EDFTable {
             createESATable(esaHeader);
             customizeLook("esa");
         }
-        
         this.setUpdateSinceLastSave(true);
     }
 
 
     /**
+     * TODO
      * @param edfHeader a group of edf files' headers
      */
     public ESATable(EDFFileHeader edfHeader, Boolean forTemplateOpen) {
@@ -66,24 +73,28 @@ public class ESATable extends EDFTable {
         }
      }
     
-/*     @Override
-    public String getTooltTipText(MouseEvent e){
-        String tip = "Press Alt + Mouse right click for transducer customerization";
-        Point p = e.getPoint();
-
-        // Locate the renderer under the event location
-        int hitColumnIndex = columnAtPoint(p);
-        int hitRowIndex = rowAtPoint(p);
-        
-        if (hitColumnIndex ==  1)
-            return tip;
-        
-        return null;
-    } */
+//    @Override
+//    public String getTooltTipText(MouseEvent e){
+//        String tip = "Press Alt + Mouse right click for transducer customerization";
+//        Point p = e.getPoint();
+//
+//        Locate the renderer under the event location
+//        int hitColumnIndex = columnAtPoint(p);
+//        int hitRowIndex = rowAtPoint(p);
+//        
+//        if (hitColumnIndex ==  1)
+//            return tip;
+//        
+//        return null;
+//    }
     
-      public void updateTable(ESAHeader edfFileHeader) {
+    /**
+     * TODO
+     * @param edfFileHeader
+     */
+    public void updateTable(ESAHeader edfFileHeader) {
 
-        TableModel model = this.getModel();
+    	TableModel model = this.getModel();
         int nrows = model.getRowCount();
         int ncols = model.getColumnCount();
         
@@ -98,14 +109,21 @@ public class ESATable extends EDFTable {
     }
     
     //Fangping, 10/04/2010
-    private void cacheColumns() {
-        int ncol = getModel().getColumnCount();
-         allTableColumns = new TableColumn[ncol];
-         for (int i = 0; i < ncol; i++)
-             allTableColumns[i] =  getColumnModel().getColumn(i);
-     }
+      /**
+       * TODO
+       */
+      private void cacheColumns() {
+    	  int ncol = getModel().getColumnCount();
+    	  allTableColumns = new TableColumn[ncol];
+    	  for (int i = 0; i < ncol; i++)
+    		  allTableColumns[i] =  getColumnModel().getColumn(i);
+      }
     
     //Fangping, 10/04/2010
+    /**
+     * TODO
+     * @see table.EDFTable#showImmutableFields()
+     */
     public void showImmutableFields() {
         for (int index: immutableFieldIndices) {
             addColumn(allTableColumns[index]);
@@ -114,6 +132,10 @@ public class ESATable extends EDFTable {
         validate();
     }
     
+    /**
+     * TODO
+     * @see table.EDFTable#hideImmutableFields()
+     */
     public void hideImmutableFields() {
         cacheColumns();
         int k = 0;
@@ -126,13 +148,14 @@ public class ESATable extends EDFTable {
     }
     
     /**
+     * TODO
      * @param esaHeader ESA header
      * one header corresponds to one ESA Table
-     * algorithm: map each attribute value of each chanel to each cell
+     * algorithm: map each attribute value of each channel to each cell
      */
     public void createESATable(ESAHeader esaHeader) {
         int nChannels = esaHeader.getNumberOfChannels();
-        this.setModel(new  ESATableModel(nChannels)); //this line is required; otherewise, getValueAt does not work
+        this.setModel(new  ESATableModel(nChannels)); //this line is required; otherwise, getValueAt does not work
         ESAChannel esaChannel;
         String key, aValue;
         for (int nrow = 0; nrow < nChannels; nrow++)
@@ -142,27 +165,46 @@ public class ESATable extends EDFTable {
                 aValue = (String) esaChannel.getSignalAttributeValueAt(key);
                 //System.out.println(aValue);
                 this.setValueAt(aValue, nrow, ncolumn); //map attribute values to cells
-            }   
-        
+            }
+
         this.stripTable(tableOddRowClr, null, tableEvenRowClr, null);
     }
     
+    /**
+     * TODO
+     * @param sourceOfMasterFile
+     */
     public void setSourceMasterFile(File sourceOfMasterFile) {
-        this.sourceOfMasterFile = sourceOfMasterFile;
+        this.hostFile = sourceOfMasterFile;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public File getSourceMasterFile() {
-        return sourceOfMasterFile;
+        return hostFile;
     }
 
+    /**
+     * TODO
+     */
     class StripedTableCellRenderer extends JLabel implements TableCellRenderer {
         
-        protected TableCellRenderer targetRenderer;
+		protected TableCellRenderer targetRenderer;
         protected Color evenBack;
         protected Color evenFore;
         protected Color oddBack;
         protected Color oddFore;
 
+        /**
+         * TODO
+         * @param targetRenderer
+         * @param evenBack
+         * @param evenFore
+         * @param oddBack
+         * @param oddFore
+         */
         public StripedTableCellRenderer(TableCellRenderer targetRenderer,
                                         Color evenBack, Color evenFore,
                                         Color oddBack, Color oddFore) {
@@ -174,6 +216,10 @@ public class ESATable extends EDFTable {
         }
 
         // Implementation of TableCellRenderer interface
+        /**
+         * TODO
+         * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+         */
         public Component getTableCellRendererComponent(JTable table,
                                                        Object value,
                                                        boolean isSelected,
@@ -201,13 +247,15 @@ public class ESATable extends EDFTable {
                                        table.getForeground());
                 }
             }
-                        
             return comp;
         }
     }
 
     // Convenient method to apply this renderer to single column
-
+    /**
+     * TODO
+     * @see table.EDFTable#stripTableInColumn(int, java.awt.Color, java.awt.Color, java.awt.Color, java.awt.Color)
+     */
     public void stripTableInColumn(int columnIndex, Color evenBack,
                                    Color evenFore, Color oddBack,
                                    Color oddFore) {
@@ -219,8 +267,11 @@ public class ESATable extends EDFTable {
                                                         oddBack, oddFore));
     }
 
-    public void stripTable(Color evenBack, Color evenFore, Color oddBack,
-                           Color oddFore) {
+    /**
+     * TODO
+     * @see table.EDFTable#stripTable(java.awt.Color, java.awt.Color, java.awt.Color, java.awt.Color)
+     */
+    public void stripTable(Color evenBack, Color evenFore, Color oddBack, Color oddFore) {
         StripedTableCellRenderer sharedInstance = null;
         int columns = this.getColumnCount();
         for (int i = 0; i < columns; i++) {

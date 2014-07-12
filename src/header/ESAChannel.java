@@ -7,11 +7,10 @@ import java.util.HashMap;
 public class ESAChannel extends ESA {
 	// wei wang, 2014-6-18:
 	// Change HashMap to HashMap<String,Object>
-
     private HashMap<String,Object> esaChannel = null;
-///////////////////////////////////////////////////////////////////////////////
-///////////////// START of constructor zone //////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
+    ///////////////// START of constructor zone //////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
 
     /**
      * Default constructor
@@ -29,7 +28,7 @@ public class ESAChannel extends ESA {
     }
 
     /**
-     * Construct an ESA channel with parameters
+     * Construct an ESA channel from a file (in form of RandomAccessFile)
      * @param raf random file accessor
      * @param channelNumber the serial number of current channel
      * @param numberOfChannels the total number of channels in current EDF file

@@ -2,11 +2,7 @@ package editor;
 
 import header.EIAHeader;
 import header.ESAHeader;
-import table.EIATable;
-import table.ESATable;
-import table.ESATemplateTable;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -25,9 +21,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
-import javax.swing.JTable;
 import javax.swing.SwingWorker;
-import javax.swing.Timer;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.MutableAttributeSet;
@@ -36,9 +30,11 @@ import javax.swing.tree.TreePath;
 
 import listener.EDFFileFilter;
 import table.EDFTableModel;
+import table.EIATable;
 import table.EIATemplateTable;
+import table.ESATable;
+import table.ESATemplateTable;
 import translator.utils.MyDate;
-
 
 public class SaveListener  implements ActionListener { //extends SwingWorker<Void, Void>
     private final static int SAVE = 0;
@@ -69,12 +65,18 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
     private static SaveTask task;
     // end
     
-    private final static String edfExtName = "edf";
-    private final static String eiaExtName = "eia";
-    private final static String esaExtName = "esa";
-    private final static String edfDescription = "EDF File(*.edf, *.EDF)";
-    private final static String eiaDescription = "EIA File(*.eia, *.EIA)";
-    private final static String esaDescription = "EDF File(*.esa, *.ESA)";
+    @SuppressWarnings("unused")
+	private final static String edfExtName = "edf";
+    @SuppressWarnings("unused")
+	private final static String eiaExtName = "eia";
+    @SuppressWarnings("unused")
+	private final static String esaExtName = "esa";
+    @SuppressWarnings("unused")
+	private final static String edfDescription = "EDF File(*.edf, *.EDF)";
+    @SuppressWarnings("unused")
+	private final static String eiaDescription = "EIA File(*.eia, *.EIA)";
+    @SuppressWarnings("unused")
+	private final static String esaDescription = "EDF File(*.esa, *.ESA)";
     private final static String saveas_title = "Save As";
     private final static String dots = "......";
     
@@ -87,18 +89,32 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
     private boolean signalBodySaved;
     private boolean identityHeaderSaved;
     
+    /**
+     * TODO
+     * @return
+     */
     public int getSaveScale() { return saveScale; } // wei wang, 5/29/2014
 
+    /**
+     * TODO
+     * @param choice
+     */
     public SaveListener(String choice) {
         saveOption = choiceToInt(choice);
         signalBodySaved = false;
         identityHeaderSaved = false;
     }
     
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         performActions();
     }
     
+    /**
+     * TODO
+     */
     private void performActions(){
 //        SaveTask task = new SaveTask(saveOption);
         task = new SaveTask(saveOption);
@@ -106,6 +122,11 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         task.execute();
     }
 
+    /**
+     * TODO
+     * @param choice
+     * @return
+     */
     private int choiceToInt(String choice) {
         if (choice.equalsIgnoreCase("Save"))
             return SAVE;
@@ -118,10 +139,19 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static BasicEDFPane getCurrentPane() {
         return (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
     }
     
+    /**
+     * TODO
+     * @param masterFile
+     * @return
+     */
     public int getIndexInWkFiles(File masterFile){
         int i = 0;
         ArrayList<File> files = MainWindow.getWkEdfFiles();
@@ -131,8 +161,8 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         return i;
     }
 
-
     /**
+     * TODO
      * save the master file of the current pane.
      */
     public void saveFileInCurrentPane() {
@@ -155,6 +185,10 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
     }
     
+    /**
+     * TODO
+     * @param pane
+     */
     public void saveEIATemplateTable(EIATemplatePane pane){ 
         EIATemplateTable previewTable = pane.getPreviewTable();
         EIAHeader header = EIAHeader.getEIAHeaderFromPreviewTable(previewTable);
@@ -181,37 +215,41 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
     }
       
       //obsolete, 10/13/2010
-/*     public void saveEIATemplateTable(EIATemplatePane pane){ 
-        EIATemplateTable previewTable = pane.getPreviewTable();
-        EIAHeader header = EIAHeader.getEIAHeaderFromPreviewTable(previewTable);
-        File tempFile = pane.getMasterFile();
-        
-        if (tempFile == null)
-            return;
-        
-        String timestr = Utility.currentTimeToString();
-        String path = tempFile.getAbsolutePath();
-        theme = timestr + ": Saving EIA template header " + path + dots;
-        printMessageToConsole();
-        
-        RandomAccessFile raf = null;
-
-        try {
-            raf = new RandomAccessFile(tempFile, "rw");
-            header.writeEiaHeader(raf);
-        } catch (Exception e) {
-            theme = msg_fail;
-            printMessageToConsole();
-            e.printStackTrace();
-        }
-        
-        if (freshFile != null) //this is for save as
-            previewTable.setMasterFile(freshFile);
-        
-        theme = msg_done;
-        printMessageToConsole();
-    } */
+//     public void saveEIATemplateTable(EIATemplatePane pane){ 
+//        EIATemplateTable previewTable = pane.getPreviewTable();
+//        EIAHeader header = EIAHeader.getEIAHeaderFromPreviewTable(previewTable);
+//        File tempFile = pane.getMasterFile();
+//        
+//        if (tempFile == null)
+//            return;
+//        
+//        String timestr = Utility.currentTimeToString();
+//        String path = tempFile.getAbsolutePath();
+//        theme = timestr + ": Saving EIA template header " + path + dots;
+//        printMessageToConsole();
+//        
+//        RandomAccessFile raf = null;
+//
+//        try {
+//            raf = new RandomAccessFile(tempFile, "rw");
+//            header.writeEiaHeader(raf);
+//        } catch (Exception e) {
+//            theme = msg_fail;
+//            printMessageToConsole();
+//            e.printStackTrace();
+//        }
+//        
+//        if (freshFile != null) //this is for save as
+//            previewTable.setMasterFile(freshFile);
+//        
+//        theme = msg_done;
+//        printMessageToConsole();
+//    }
     
+    /**
+     * TODO
+     * @param pane
+     */
     public void saveESATemplateTable(ESATemplatePane pane) {
         ESATemplateTable esaTable = pane.getEsaTemplateTable();
         File tempFile = pane.getMasterFile();
@@ -245,6 +283,7 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
     
 
     /**
+     * TODO
      * Save header(s) in primary tab
      * @param Pane
      * @param tabIndex 
@@ -294,7 +333,8 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
     }
 
     /**
-     * Save file headers in Eia working table.
+     * TODO
+     * Save file headers in EIA working table.
      * @param eiaTable
      * @throws java.io.IOException
      */
@@ -317,7 +357,6 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
             }
             eiaTable.setSavedOnce(true);
         }
-
         
         for (int i = 0; i < nfiles; i++) {
             EIAHeader eiaHeader = new EIAHeader(eiaTable, i);
@@ -329,16 +368,21 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
             raf.close();
         }
         
-        eiaTable.setUpdateSinceLastSave(false);
-        
-    }
-    
+        eiaTable.setUpdateSinceLastSave(false);        
+    }    
  
+    /**
+     * TODO
+     * @param esaTable
+     * @param masterFile
+     * @throws IOException
+     */
     public void saveESAWorkingTable(ESATable esaTable, File masterFile) throws IOException {
         // if had never saved, copy the signal body
         String timestr = Utility.currentTimeToString();
         String path = masterFile.getAbsolutePath(); 
-        String msg = "Saving files...";  // wei wang, 5/28/2014
+        @SuppressWarnings("unused")
+		String msg = "Saving files...";  // wei wang, 5/28/2014
         theme = timestr + ": Save to " + path + dots;
         Utility.startWaitCurosr(MainWindow.middleStatusBar); // wei wang, 5/28/2014
 //        MainWindow.middleStatusBar.setText(msg);  // wei wang, 5/28/2014
@@ -409,8 +453,8 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         Utility.endWaitCursor(MainWindow.middleStatusBar); // wei wang, 5/28/2014
     }
 
-
     /**
+     * TODO
      * save the master file of the current pane as.
      */
     public void saveFileInCurrentPaneAs() {
@@ -458,23 +502,32 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
             updateEIATable();
         }
         
-        printMsgWhenSaveASDone(saveSuccessed);                 
-        
+        printMsgWhenSaveASDone(saveSuccessed);                         
     }
 
-    private void printMsgWhenSaveASDone(boolean success){
+    /**
+     * TODO
+     * @param success
+     */
+    private void printMsgWhenSaveASDone(boolean success) {
         theme = (success)? msg_done: msg_fail;
         printMessageToConsole();
     }
 
-    private void formatMsgForSaveAS(){
+    /**
+     * TODO
+     */
+    private void formatMsgForSaveAS() {
         String oldname = oldFile.getAbsolutePath();
         String newname = freshFile.getAbsolutePath();
         String timestr = Utility.currentTimeToString();
         theme = timestr + ": Saving "  + oldname + " as " + newname + dots; 
     }
 
-    private void updateEIATable(){
+    /**
+     * TODO
+     */
+    private void updateEIATable() {
         if (fileType == type_edf && MainWindow.iniEiaTable != null){
             EDFTableModel model = (EDFTableModel)MainWindow.iniEiaTable.getModel();
             String fileName = freshFile.getName();
@@ -483,7 +536,10 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
     }
 
-    private void updateTabbedPane(){
+    /**
+     * TODO
+     */
+    private void updateTabbedPane() {
          EDFTabbedPane tabbedPane = MainWindow.tabPane;
          int tabIndex = tabbedPane.getSelectedIndex();
 
@@ -514,7 +570,10 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         tabbedPane.setSelectedIndex(tabIndex);
     }
 
-    private void updateTaskTree(){
+    /**
+     * TODO
+     */
+    private void updateTaskTree() {
         EDFTreeNode parentNode = getParentNode();
         EDFTreeNode redNode = (EDFTreeNode)parentNode.getChildAt(redIndex);
         DefaultTreeModel model = (DefaultTreeModel)MainWindow.taskTree.getModel();
@@ -527,7 +586,11 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         MainWindow.taskTree.setSelectionPath(path);
     }
     
-    private EDFTreeNode getParentNode(){
+    /**
+     * TODO
+     * @return
+     */
+    private EDFTreeNode getParentNode() {
         switch(fileType){
         case type_edf:
             return MainWindow.taskTree.getEdfRootNode();
@@ -540,11 +603,17 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
     }
 
+    /**
+     * TODO
+     */
     private void updateFileList(){
-            siblingFiles.set(redIndex, freshFile);
+    	siblingFiles.set(redIndex, freshFile);
     }
 
-    private void showWarngingMsgForSaveAs(){
+    /**
+     * TODO
+     */
+    private void showWarngingMsgForSaveAs() {
         String msg = "Oops. No file saved. Please select a file first.";
         String title = "Save As";
         int option = JOptionPane.CANCEL_OPTION;
@@ -552,7 +621,11 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         JOptionPane.showConfirmDialog(null, msg, title, option, msgType);
     }
 
-    private boolean saveOnPaneMasterFileIAs(){
+    /**
+     * TODO
+     * @return
+     */
+    private boolean saveOnPaneMasterFileIAs() {
         try {
             freshFile = acquireFreshFile();
         } catch (IOException e) { return false;}
@@ -567,6 +640,12 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         return writeIntoFreshFile(freshFile, fileType);
     }
 
+    /**
+     * TODO
+     * @param newFile
+     * @param typeOfFile
+     * @return
+     */
     private boolean writeIntoFreshFile(File newFile, int typeOfFile){
         if (typeOfFile == type_eia){
             selectedPane.setMasterFile(newFile);
@@ -599,6 +678,11 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         return false;
     }
 
+    /**
+     * TODO
+     * @param newFile
+     * @throws IOException
+     */
     private void  writeTableInEIAPaneToDisk(File newFile) throws IOException {
         //WorkingTablePane spane = (WorkingTablePane)selectedPane;
         WorkingTablePane spane = (WorkingTablePane)MainWindow.tabPane.getComponentAt(0);
@@ -616,6 +700,11 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         identityHeaderSaved = true;   
     }
 
+    /**
+     * TODO
+     * @param newFile
+     * @throws IOException
+     */
     private void saveSignalBody(File newFile) throws IOException {
         //copy the signal from oldSrcFile, instead of oldFile which may contains only headers
         MainWindow.getSaveProgressBar().setVisible(true);
@@ -624,6 +713,11 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         signalBodySaved = true;
     }
 
+    /**
+     * TODO
+     * @param newFile
+     * @throws IOException
+     */
     private void writeTableInESAPaneToDisk(File newFile) throws IOException {
         WorkingTablePane spane = (WorkingTablePane)selectedPane;
         ESATable esaTable = (ESATable)spane.getEdfTable();
@@ -643,6 +737,12 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         esaTable.setUpdateSelectionOnSort(true);
     }
 
+    /**
+     * TODO
+     * @param file
+     * @param files
+     * @return
+     */
     private int retrieveRedIndex(File file, ArrayList<File> files){
         int red = -1;
         String statName = file.getAbsolutePath();
@@ -657,6 +757,11 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         return red;
     }
 
+    /**
+     * TODO
+     * @return
+     * @throws IOException
+     */
     private File acquireFreshFile() throws IOException {
         String oldName = oldFile.getName();
         int sz = oldName.length();
@@ -683,7 +788,7 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
             //2. test name Collided with sibling files
             boolean nameCollidedWithSiblingFiles = Utility.isFileNameCollided(newFile, siblingFiles, redIndex); 
             //3. test name collided with on-disk files
-           boolean  nameColliedeWithOnDiskFiles = !newFile.createNewFile();
+            boolean  nameColliedeWithOnDiskFiles = !newFile.createNewFile();
             //give more chance of trying naming if the name is the same as some file in the list
             if (nameCollidedWithSiblingFiles){
                 tip = "Oops! the name \"" + newFile.getName() + "\" is already in use. Please try another name.";
@@ -711,12 +816,15 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
     }
 
     /**
+     * TODO
+     * @deprecated
      * the core method for Save As
      * @param pane
      * @param tabIndex
      * obsolete method
      */
-    private void saveHeadersInPrimaryTabAs(BasicEDFPane pane, int tabIndex){
+    @SuppressWarnings("unused")
+	private void saveHeadersInPrimaryTabAs(BasicEDFPane pane, int tabIndex){
         WorkingTablePane  currentPane = (WorkingTablePane ) pane;
         
         if (tabIndex == 0){ //do the same as "save"
@@ -796,9 +904,11 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
     }
 
     /** 
-     * serve for save the esa template table as
+     * TODO
+     * serve for save the ESA template table as
      */
-    private void saveESATemplateTableAs(ESATemplatePane pane){
+    @SuppressWarnings("unused")
+	private void saveESATemplateTableAs(ESATemplatePane pane) {
         ESATemplateTable esaTable = pane.getEsaTemplateTable();
         File oldFile = pane.getMasterFile();
         File newFile = getNewFileName(oldFile);
@@ -852,6 +962,7 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
 
 
     /**
+     * TODO
      * save all files, including EDF files and all template files.
      */
     public void saveAllFilesInAllPanes() {
@@ -876,7 +987,12 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
     }
 
-    public void saveAllHeadersInPrimaryTabs(WorkingTablePane pane, int tabIndex){
+    /**
+     * TODO
+     * @param pane
+     * @param tabIndex
+     */
+    public void saveAllHeadersInPrimaryTabs(WorkingTablePane pane, int tabIndex) {
 //        fileNumToSave = MainWindow.iniEsaTables.size(); // wei wang, 5/29/2014
         if (tabIndex == 0) { // save all EIA headers
             EIATable eiaTable = (EIATable)pane.getEdfTable();
@@ -916,7 +1032,10 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
     }
 
-    protected void createProgressbar(){
+    /**
+     * TODO
+     */
+    protected void createProgressbar() {
         progressBar = new JProgressBar();
         progressBar.setIndeterminate(true);
         MainWindow.statusBars.add(progressBar);
@@ -944,6 +1063,9 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
     };
 
+    /**
+     * TODO
+     */
     protected class SaveTask extends SwingWorker<Void, Void> {
         int progress = 0; // wei wang, 5/29/2014
         private int saveOptionIndex;
@@ -980,7 +1102,7 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
             return null;
         }
 
-        public void done(){
+        public void done() {
             MainWindow.getSaveProgressBar().setVisible(false);
             Toolkit.getDefaultToolkit().beep();
             MainWindow.tabPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -998,10 +1120,10 @@ public class SaveListener  implements ActionListener { //extends SwingWorker<Voi
         }
     }
     
-    private void printMessageToConsole(){
+    private void printMessageToConsole() {
         try {
             doc.insertString(doc.getLength(), theme, mas);
-        } catch (BadLocationException e) {; }
+        } catch (BadLocationException e) {;}
     }
 
 } // end of SaveMenuItemListener

@@ -2,14 +2,11 @@ package editor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -28,21 +25,31 @@ public class RenameFileListener implements ActionListener {
 
     private File oldFile;
     private File freshFile;
-    private String freshName;
+    @SuppressWarnings("unused")
+	private String freshName;
     boolean renamed = false;
     private int redIndex;
     private EDFTreeNode redNode;
     private int nodeType;
     private ArrayList<File> siblingFiles;
 
+    /**
+     * TODO
+     */
     public RenameFileListener() {
         super();
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         performActions();
     }
 
+    /**
+     * TODO
+     */
     private void performActions() {
         if (!validateNodeType() || nodeType == IMMUTE)
             return;
@@ -61,6 +68,10 @@ public class RenameFileListener implements ActionListener {
         printMsgToConsole();
     }
 
+    /**
+     * TODO
+     * @return
+     */
     private boolean validateNodeType() {
         TreePath path = MainWindow.taskTree.getSelectionPath();
         if (path == null)
@@ -82,6 +93,9 @@ public class RenameFileListener implements ActionListener {
      * this method can be improved for oldFile retrieve part.
      */
 
+    /**
+     * TODO
+     */
     private void retrieveOldeFileName() {
         if (nodeType == edf_type) {
             redIndex = MainWindow.workingDirNode.getIndex(redNode);
@@ -105,6 +119,9 @@ public class RenameFileListener implements ActionListener {
         }
     }
     
+    /**
+     * TODO
+     */
     private void retrieveFreshName() {
         String oldName = oldFile.getName();
         int sz = oldName.length();
@@ -150,11 +167,17 @@ public class RenameFileListener implements ActionListener {
         } while (true);
     }
 
+    /**
+     * TODO
+     */
     private void updateOnDiskName() {
         if (oldFile.exists())
             oldFile.renameTo(freshFile);
     }
 
+    /**
+     * TODO
+     */
     private void updateTaskTreeNodeName() {
         DefaultTreeModel model = (DefaultTreeModel)MainWindow.taskTree.getModel();
         EDFTreeNode parentNode = (EDFTreeNode)redNode.getParent();
@@ -167,6 +190,9 @@ public class RenameFileListener implements ActionListener {
         MainWindow.taskTree.setSelectionPath(path);
     }
 
+    /**
+     * TODO
+     */
     private void updateRecordInFileList() {
         switch (nodeType) {
         case edf_type:
@@ -183,11 +209,13 @@ public class RenameFileListener implements ActionListener {
         }
     }
 
+    /**
+     * TODO
+     */
     private void updateCurrentTabPane() {       
         EDFTabbedPane tabbedPane = MainWindow.tabPane;
         int tabCount = tabbedPane.getTabCount();
         int tabIndex = -1;
-
        
         // retrieve index of current tab
         BasicEDFPane tempane;
@@ -231,6 +259,9 @@ public class RenameFileListener implements ActionListener {
     }
     
     
+    /**
+     * TODO
+     */
     private void updateEIATable() {
         if (nodeType == edf_type && MainWindow.iniEiaTable != null){
             EDFTableModel model = (EDFTableModel)MainWindow.iniEiaTable.getModel();
@@ -240,6 +271,9 @@ public class RenameFileListener implements ActionListener {
         }
     }
 
+    /**
+     * TODO
+     */
     private void printMsgToConsole() {
         String timeStr = Utility.currentTimeToString() + ": ";
         String oldname = oldFile.getAbsolutePath();

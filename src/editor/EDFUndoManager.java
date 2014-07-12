@@ -9,10 +9,14 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
+@SuppressWarnings("serial")
 public class EDFUndoManager extends UndoManager {
     protected Action undoAction;
     protected Action redoAction;
 
+    /**
+     * Initialize the EDFUndoManger
+     */
     public EDFUndoManager() {
         this.undoAction = new EDFUndoAction(this);
         undoAction.putValue(Action.NAME, "Undo");
@@ -23,14 +27,26 @@ public class EDFUndoManager extends UndoManager {
         synchronizeActions(); // to set initial names
     }
 
+    /**
+     * Get the undo action field
+     * @return the undoAction field of this instance
+     */
     public Action getUndoAction() {
         return undoAction;
     }
 
+    /**
+     * Get the redo action field
+     * @return the redoAction field of this class
+     */
     public Action getRedoAction() {
         return redoAction;
     }
 
+    /**
+     * Adds an UndoableEdit to this UndoManager, if it's possible
+     * @see javax.swing.undo.UndoManager#addEdit(javax.swing.undo.UndoableEdit)
+     */
     @Override
     public boolean addEdit(UndoableEdit anEdit) {
         try {
@@ -40,6 +56,10 @@ public class EDFUndoManager extends UndoManager {
         }
     }
 
+    /**
+     * Undoes the appropriate edits
+     * @see javax.swing.undo.UndoManager#undoTo(javax.swing.undo.UndoableEdit)
+     */
     @Override
     protected void undoTo(UndoableEdit edit) throws CannotUndoException {
         try {
@@ -49,6 +69,10 @@ public class EDFUndoManager extends UndoManager {
         }
     }
 
+    /** 
+     * Redoes the appropriate edits
+     * @see javax.swing.undo.UndoManager#redoTo(javax.swing.undo.UndoableEdit)
+     */
     @Override
     protected void redoTo(UndoableEdit edit) throws CannotRedoException {
         try {
@@ -58,22 +82,28 @@ public class EDFUndoManager extends UndoManager {
         }
     }
 
+    /**
+     * Set undoAction or redoAction according to current state
+     */
     protected void synchronizeActions() {
-        //System.out.println("canUndo() = " + canUndo());
         undoAction.setEnabled(canUndo());
-        //undoAction.putValue(Action.NAME, getUndoPresentationName());
-        //System.out.println("canRedo() = " + canRedo());
         redoAction.setEnabled(canRedo());
-        //redoAction.putValue(Action.NAME, getRedoPresentationName());
     }
     
     class EDFUndoAction extends AbstractAction {
         protected final UndoManager manager;
 
+        /**
+         * Construct the EDFUndoAction using a UndoManager
+         * @param manager the UndoManger used to construct this EDFUndoAction
+         */
         public EDFUndoAction(UndoManager manager) {
             this.manager = manager;
         }
 
+        /**
+         * EDFUndoAction action
+         */
         public void actionPerformed(ActionEvent e) {
             try {
                 manager.undo();
@@ -86,10 +116,17 @@ public class EDFUndoManager extends UndoManager {
     class EDFRedoAction extends AbstractAction {
         protected final UndoManager manager;
 
+        /**
+         * Construct the EDFRedoAction using a UndoManager
+         * @param manager the UndoManger used to construct this EDFRedoAction
+         */
         public EDFRedoAction(UndoManager manager) {
             this.manager = manager;
         }
-
+        
+        /**
+         * EDFRedoAction action
+         */
         public void actionPerformed(ActionEvent e) {
             try {
                 manager.redo();
@@ -97,8 +134,5 @@ public class EDFUndoManager extends UndoManager {
                 ex.printStackTrace();
             }
         }
-
     }
 }
-
-

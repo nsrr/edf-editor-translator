@@ -3,33 +3,32 @@ package editor;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class TabbedPaneListener implements ChangeListener
-{
+/**
+ * TODO
+ */
+public class TabbedPaneListener implements ChangeListener {
 
+	/* (non-Javadoc)
+	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 */
 	@Override
-	public void stateChanged(ChangeEvent arg0) 
-	{
+	public void stateChanged(ChangeEvent arg0)  {
 		BasicEDFPane pane = (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
         if (pane == null)
             return;
 
-        if (MainWindow.getSelectedTabIndex() == 0 || MainWindow.getSelectedTabIndex() == 1 )
-        {
+        if (MainWindow.getSelectedTabIndex() == 0 || MainWindow.getSelectedTabIndex() == 1 ) {
         	MainWindow.addRowButton.setEnabled(false);
         	MainWindow.removeRowButton.setEnabled(false);
         	MainWindow.templateAddRowItem.setEnabled(false);
         	MainWindow.templateRemoveRowItem.setEnabled(false);
         	MainWindow.editDiscardChangesItem.setEnabled(true);
-        }
-        else if(pane instanceof ESATemplatePane)
-        {
+        } else if(pane instanceof ESATemplatePane) {
         	MainWindow.addRowButton.setEnabled(true);
         	MainWindow.removeRowButton.setEnabled(true);
         	MainWindow.templateAddRowItem.setEnabled(true);
         	MainWindow.templateRemoveRowItem.setEnabled(true);
         	MainWindow.editDiscardChangesItem.setEnabled(false);
         }
-		
 	}
-
 }

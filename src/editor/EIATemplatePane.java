@@ -1,9 +1,6 @@
 package editor;
 
 
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import header.EIA;
 import header.EIAHeader;
 
@@ -15,19 +12,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-
 import java.io.File;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.InputVerifier;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -39,12 +32,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.TableModel;
 import javax.swing.text.BadLocationException;
 
 import table.EIATemplateTable;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
+
+@SuppressWarnings("serial")
 public class EIATemplatePane extends BasicEDFPane {
 
     protected static final String prtags[] = EIA.getKeys();
@@ -93,7 +89,9 @@ public class EIATemplatePane extends BasicEDFPane {
 
     /**
      * create pane for opened EIA template
+     * TODO
      * @param eiaHeader
+     * @param msFile
      */
     public EIATemplatePane(EIAHeader eiaHeader, File msFile) {
         super();
@@ -119,6 +117,12 @@ public class EIATemplatePane extends BasicEDFPane {
         setupLayout();
     }
 
+    /**
+     * TODO
+     * @param box
+     * @param widthRatio
+     * @param heightRatio
+     */
     private void adjustBoxSize(JComboBox box, double widthRatio, double heightRatio) {
         Dimension boxSize = box.getPreferredSize();
         int width = (int)(boxSize.getWidth() * widthRatio);
@@ -129,6 +133,10 @@ public class EIATemplatePane extends BasicEDFPane {
     }
 
 
+    /**
+     * TODO
+     * @return
+     */
     private JComboBox createPRBox() {
         JComboBox box = new JComboBox();
         adjustBoxSize(box, 1.0, 1.3);
@@ -142,6 +150,10 @@ public class EIATemplatePane extends BasicEDFPane {
         return box;
     } 
     
+    /**
+     * TODO
+     * @return
+     */
     private JComboBox createDateBox() {
         JComboBox box = new JComboBox();
         adjustBoxSize(box, 1.0, 1.3);
@@ -184,6 +196,11 @@ public class EIATemplatePane extends BasicEDFPane {
     } */
 
 
+    /**
+     * TODO
+     * @param eiaHeader
+     * @return
+     */
     public EIATemplateTable createPreviewTable(EIAHeader eiaHeader) {
         String pid, rid, startDate, startTime;
         if (eiaHeader == null) {
@@ -218,13 +235,21 @@ public class EIATemplatePane extends BasicEDFPane {
         return previewTable;
     }
     
-    private JLabel createPreviewLabel(){
+    /**
+     * TODO
+     * @return
+     */
+    private JLabel createPreviewLabel() {
         JLabel previewLabel = new JLabel("Attributes Preview");
         previewLabel.setFont(font);
         
         return previewLabel;
     }
 
+    /**
+     * TODO
+     * @param value
+     */
     private void makePidRowLook(String value) {
         if (value == null)
             value = " ";
@@ -259,6 +284,10 @@ public class EIATemplatePane extends BasicEDFPane {
         }
     }
 
+    /**
+     * TODO
+     * @param value
+     */
     private void makeRidRowLook(String value) {
         if (value == null)
             value = " ";
@@ -296,6 +325,10 @@ public class EIATemplatePane extends BasicEDFPane {
         }
     }
 
+    /**
+     * TODO
+     * @param value
+     */
     private void makeDateRowLook(String value) {
         if (value == null)
             value = " ";
@@ -334,7 +367,11 @@ public class EIATemplatePane extends BasicEDFPane {
     }
 
        
-   private JPanel createFormPane() {
+   /**
+    * TODO
+ 	* @return
+ 	*/
+    private JPanel createFormPane() {
         String headerValues[] = new String[4];
         for (int i = EIA.index_patient_id; i <=EIA.index_start_date; i++)
             headerValues[i - EIA.index_patient_id] =(String)previewTable.getModel().getValueAt(0, i);
@@ -385,7 +422,13 @@ public class EIATemplatePane extends BasicEDFPane {
     
     
 
-    private String[] getMutableAttributeValues(EIAHeader eiaHeader) {
+    /**
+     * TODO
+     * @param eiaHeader
+     * @return
+     */
+    @SuppressWarnings("unused")
+	private String[] getMutableAttributeValues(EIAHeader eiaHeader) {
         String values[] = new String[4];
         HashMap header = eiaHeader.getEIAHeader();
 
@@ -396,6 +439,11 @@ public class EIATemplatePane extends BasicEDFPane {
         return values;
     }
 
+    /**
+     * TODO
+     * @param value
+     * @return
+     */
     private boolean isAttributeTag(String value) {
         for (int i = 0; i < prtags.length; i++) {
             if (value.equalsIgnoreCase(prtags[i]))
@@ -405,7 +453,9 @@ public class EIATemplatePane extends BasicEDFPane {
         return false;
     }
 
-
+    /**
+     * TODO
+     */
     public void setupLayout() {
         FormLayout layout =
             new FormLayout("6dlu, f:max(400dlu;p):n, f:p:g, 10dlu:n", "c:p:n, 6dlu:n, c:min(35dlu;p):n, 6dlu:n, c:min(35dlu;p):n");
@@ -423,28 +473,51 @@ public class EIATemplatePane extends BasicEDFPane {
 
     }
 
+    /**
+     * TODO
+     * @param previewTable
+     */
     public void setPreviewTable(EIATemplateTable previewTable) {
         this.previewTable = previewTable;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public EIATemplateTable getPreviewTable() {
         return previewTable;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public String currentTimeToString() {
         Date time = new Date();
         DateFormat df = new SimpleDateFormat("h:mm a");
         return df.format(time);
     }
 
+    /**
+     * TODO
+     * @param myPid
+     */
     public void setUid(long myPid) {
         pid = myPid;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public long getPid() {
         return pid;
     }
 
+    /**
+     * TODO
+     */
     public static void incrementUid() {
         uid++;
     }
@@ -474,8 +547,15 @@ public class EIATemplatePane extends BasicEDFPane {
         return header; */
     }
 
+    /**
+     * TODO
+     */
     private class RadioListener implements ActionListener {
 
+        /**
+         * TODO
+         * @param radio
+         */
         private void switchPidRows(JRadioButton radio) {
             if (radio == pidRadio) {
                 pidField.setEnabled(true);
@@ -492,6 +572,10 @@ public class EIATemplatePane extends BasicEDFPane {
 
         }
 
+        /**
+         * TODO
+         * @param radio
+         */
         private void switchRidRows(JRadioButton radio) {
             if (radio == ridRadio) {
                 ridField.setEnabled(true);
@@ -507,6 +591,10 @@ public class EIATemplatePane extends BasicEDFPane {
 
         }
 
+        /**
+         * TODO
+         * @param radio
+         */
         private void switchStartDateRows(JRadioButton radio) {
             if (radio == dateRadio) {
                 dateField.setEnabled(true);
@@ -521,6 +609,9 @@ public class EIATemplatePane extends BasicEDFPane {
             }
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
 
             JRadioButton srcRadio = (JRadioButton)e.getSource();
@@ -542,12 +633,24 @@ public class EIATemplatePane extends BasicEDFPane {
         }
     }
 
+    /**
+     * @author wei
+     * TODO
+     */
     private class BoxListener implements ActionListener {
 
+        /**
+         * TODO
+         * @param colIndex
+         * @param value
+         */
         private void updatePreviewTableValueAt(int colIndex, String value) {
             previewTable.getModel().setValueAt(value, 0, colIndex);
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             JComboBox box = (JComboBox)e.getSource();
 
@@ -567,18 +670,34 @@ public class EIATemplatePane extends BasicEDFPane {
         }
     }
 
+    /**
+     * @author wei
+     * TODO
+     */
     private class TextFieldListener implements DocumentListener {
         private int colIndex;
         private String value;
 
+        /**
+         * TODO
+         * @param colIndex
+         * @param value
+         */
         private void updatePreviewTableValueAt(int colIndex, String value) {
             previewTable.getModel().setValueAt(value, 0, colIndex);
         }
 
+        /**
+         * TODO
+         * @param colIndex
+         */
         public TextFieldListener(int colIndex) {
             this.colIndex = colIndex;
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+         */
         public void insertUpdate(DocumentEvent e) {
             int nlen = e.getDocument().getLength();
             try {
@@ -589,6 +708,9 @@ public class EIATemplatePane extends BasicEDFPane {
             updatePreviewTableValueAt(colIndex, value);
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+         */
         public void removeUpdate(DocumentEvent e) {
             int nlen = e.getDocument().getLength();
             try {
@@ -599,15 +721,24 @@ public class EIATemplatePane extends BasicEDFPane {
             updatePreviewTableValueAt(colIndex, value);
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+         */
         public void changedUpdate(DocumentEvent e) {
             updatePreviewTableValueAt(colIndex, value);
         }
     }
 
+    /**
+     * TODO
+     */
     private class FieldInputVerifier extends InputVerifier {
         private String errMsg[] = new String[10];
         private int errno;
 
+        /**
+         * TODO
+         */
         public FieldInputVerifier() {
             errMsg[0] = "input more than 80 characters";
             errMsg[1] = "input an attribute tag";
@@ -621,7 +752,13 @@ public class EIATemplatePane extends BasicEDFPane {
             errMsg[9] = "value in ss field is not a number in [0, 59]";
         }
 
-        public String[] parseDateTime(String value) {
+        /**
+         * TODO
+         * @param value
+         * @return
+         */
+        @SuppressWarnings("unused")
+		public String[] parseDateTime(String value) {
             String hd[] = new String[3];
             for (int i = 0; i < 3; i++) {
                 hd[i] = value.substring(3 * i, 3 * i + 2);
@@ -630,7 +767,9 @@ public class EIATemplatePane extends BasicEDFPane {
             return hd;
         }
 
-
+        /* (non-Javadoc)
+         * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
+         */
         public boolean verify(JComponent input) {
             JFormattedTextField ft = (JFormattedTextField)input;
             String value = ft.getText().trim();
@@ -705,13 +844,15 @@ public class EIATemplatePane extends BasicEDFPane {
             return true;
         }
 
+        /* (non-Javadoc)
+         * @see javax.swing.InputVerifier#shouldYieldFocus(javax.swing.JComponent)
+         */
         public boolean shouldYieldFocus(JComponent input) {
             boolean valid = super.shouldYieldFocus(input);
             if (!valid) {
                 String message = errMsg[errno];
                 Toolkit.getDefaultToolkit().beep();
-                JOptionPane.showMessageDialog(null, message, "invalid input",
-                                              JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, message, "invalid input", JOptionPane.ERROR_MESSAGE);
 
             }
             return valid;
@@ -723,6 +864,9 @@ public class EIATemplatePane extends BasicEDFPane {
      */
     private class CellMouseListener implements MouseMotionListener {
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+         */
         public void mouseDragged(MouseEvent e) {
             JTable table = (JTable)e.getSource();
             int nrows = table.getSelectedRowCount();
@@ -737,6 +881,9 @@ public class EIATemplatePane extends BasicEDFPane {
             MainWindow.setCellContent(text);
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+         */
         public void mouseMoved(MouseEvent e) {
             JTable table = (JTable)e.getSource();
             int rr = table.rowAtPoint(e.getPoint());
@@ -748,6 +895,4 @@ public class EIATemplatePane extends BasicEDFPane {
             MainWindow.setCellContent(text);
         }
     }
-
-
 }

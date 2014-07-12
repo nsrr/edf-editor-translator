@@ -1,9 +1,9 @@
 package header;
-/*
+
+/**
  * ESA is to record attributes of a single channel contained in an EDF file.
  * ESAHeader, in comparison, records attributes of all channels, one by one, contained in an EDF file
  */
-
 public class ESA {
     // a list of ESA attribute names
     public static final String LABEL = "label";

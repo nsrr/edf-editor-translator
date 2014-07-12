@@ -25,8 +25,7 @@ import java.awt.*;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class CWTabbedPaneUI extends BasicTabbedPaneUI
-{
+public class CWTabbedPaneUI extends BasicTabbedPaneUI {
 	private static final Insets NO_INSETS = new Insets(0, 0, 0, 0);
 
 	/**
@@ -78,13 +77,19 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 	//  Custom installation methods
 	// ------------------------------------------------------------------------------------------------------------------
 
-	public static ComponentUI createUI(JComponent c)
-	{
+	/**
+	 * TODO
+	 * @param c
+	 * @return
+	 */
+	public static ComponentUI createUI(JComponent c) {
 		return new CWTabbedPaneUI();
 	}
 
-	protected void installComponents()
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installComponents()
+	 */
+	protected void installComponents() {
 		super.installComponents();
 
 		tabColor = tabPane.getBackground().darker().darker();
@@ -94,8 +99,7 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 		backgroundDarker2 = tabPane.getBackground().darker().darker();
 
 		fadeColors = new Color[fadeColorCount];
-		for (int i = 0; i < fadeColorCount; i++)
-		{
+		for (int i = 0; i < fadeColorCount; i++) {
 			int rs = tabColor.getRed();
 			int gs = tabColor.getGreen();
 			int bs = tabColor.getBlue();
@@ -112,8 +116,10 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 		}
 	}
 
-	protected void installDefaults()
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installDefaults()
+	 */
+	protected void installDefaults() {
 		super.installDefaults();
 		tabAreaInsets.left = leftInset;
 		selectedTabPadInsets = new Insets(0, 0, 0, 0);
@@ -123,30 +129,35 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 	//  Custom sizing methods
 	// ------------------------------------------------------------------------------------------------------------------
 
-	public int getTabRunCount(JTabbedPane pane)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getTabRunCount(javax.swing.JTabbedPane)
+	 */
+	public int getTabRunCount(JTabbedPane pane) {
 		return 1;
 	}
 
-	protected Insets getContentBorderInsets(int tabPlacement)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getContentBorderInsets(int)
+	 */
+	protected Insets getContentBorderInsets(int tabPlacement) {
 		return NO_INSETS;
 	}
 
-	protected int calculateTabHeight(int tabPlacement, int tabIndex, int fontHeight)
-	{
-		if (tabPlacement == tabIndex)
-		{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateTabHeight(int, int, int)
+	 */
+	protected int calculateTabHeight(int tabPlacement, int tabIndex, int fontHeight) {
+		if (tabPlacement == tabIndex) {
 			return buttonHeight;
-		}
-		else
-		{
+		} else {
 			return buttonHeight + (buttonHeight / 2) + 6;
 		}
 	}
 
-	protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateTabWidth(int, int, java.awt.FontMetrics)
+	 */
+	protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
 		return super.calculateTabWidth(tabPlacement, tabIndex, metrics) + buttonHeight;
 	}
 
@@ -154,8 +165,10 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 	//  Custom painting methods
 	// ------------------------------------------------------------------------------------------------------------------
 
-	protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabArea(java.awt.Graphics, int, int)
+	 */
+	protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {
 		int tw = tabPane.getBounds().width;
 
 		g.setColor(tabColor);
@@ -168,8 +181,7 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 		g.setColor(Color.black);
 		g.drawLine(0, buttonHeight + 1, tw - 1, buttonHeight + 1);
 
-		for (int i = 1; i <= fadeColorCount; i++)
-		{
+		for (int i = 1; i <= fadeColorCount; i++) {
 			g.setColor(fadeColors[fadeColorCount - 1]);
 			g.drawLine(0, buttonHeight + 1 + i, tw - 1, buttonHeight + 1 + i);
 		}
@@ -177,14 +189,15 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 		super.paintTabArea(g, tabPlacement, selectedIndex);
 	}
 
-	protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int tx, int ty, int tw, int th, boolean isSelected)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBorder(java.awt.Graphics, int, int, int, int, int, int, boolean)
+	 */
+	protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int tx, int ty, int tw, int th, boolean isSelected) {
 		Graphics2D g2d = (Graphics2D) g;
 
 		g2d.translate(tx, 0);
 
-		if (isSelected)
-		{
+		if (isSelected) {
 			int[] x = new int[3];
 			int[] y = new int[3];
 
@@ -224,15 +237,12 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 			g.drawLine(buttonHeight / 2 + 1, buttonHeight + (buttonHeight / 2) + 2, tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2);
 			g.drawLine(tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2, tw, buttonHeight + 1);
 
-			for (int i = 1; i <= fadeColorCount; i++)
-			{
+			for (int i = 1; i <= fadeColorCount; i++) {
 				g.setColor(fadeColors[i - 1]);
 				g.drawLine(buttonHeight / 2 + 2 + i, buttonHeight + (buttonHeight / 2) + 2 + i, tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2 + i);
 				g.drawLine(tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2 + i, tw, buttonHeight + 1 + i);
 			}
-		}
-		else
-		{
+		} else {
 			g.setColor(tabColor);
 
 			g.fillRect(0, 0, tw, buttonHeight);
@@ -251,25 +261,26 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 		g2d.translate(-1 * tx, 0);
 	}
 
-	protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintText(java.awt.Graphics, int, java.awt.Font, java.awt.FontMetrics, int, java.lang.String, java.awt.Rectangle, boolean)
+	 */
+	protected void paintText(Graphics g, int tabPlacement, Font font, 
+			FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected) {
 		Rectangle r = rects[tabIndex];
 
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.translate(r.x, 0);
 
-		if (isSelected)
-		{
+		if (isSelected) {
 			FontMetrics fm = getFontMetrics();
 			g.setColor(selectedTextColor);
-			g.drawString(title, (r.width / 2 - fm.stringWidth(title) / 2) + 1, buttonHeight / 2 + fm.getMaxDescent() + buttonHeight / 2 + 3);
-
-		}
-		else
-		{
+			g.drawString(title, (r.width / 2 - fm.stringWidth(title) / 2) + 1, 
+					buttonHeight / 2 + fm.getMaxDescent() + buttonHeight / 2 + 3);
+		} else {
 			FontMetrics fm = getFontMetrics();
 			g.setColor(Color.white);
-			g.drawString(title, (r.width / 2 - fm.stringWidth(title) / 2) + 1, buttonHeight / 2 + fm.getMaxDescent() + 2);
+			g.drawString(title, (r.width / 2 - fm.stringWidth(title) / 2) + 1, 
+					buttonHeight / 2 + fm.getMaxDescent() + 2);
 		}
 
 		g2d.translate(-1 * r.x, 0);
@@ -279,18 +290,26 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI
 	//  Methods that we want to suppress the behaviour of the superclass
 	// ------------------------------------------------------------------------------------------------------------------
 
-	protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBackground(java.awt.Graphics, int, int, int, int, int, int, boolean)
+	 */
+	protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, 
+			int y, int w, int h, boolean isSelected) {
 		// Do nothing
 	}
 
-	protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintFocusIndicator(java.awt.Graphics, int, java.awt.Rectangle[], int, java.awt.Rectangle, java.awt.Rectangle, boolean)
+	 */
+	protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, 
+			int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
 		// Do nothing
 	}
 
-	protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorder(java.awt.Graphics, int, int)
+	 */
+	protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {
 		// Do nothing
 	}
 }

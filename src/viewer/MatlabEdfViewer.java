@@ -15,13 +15,18 @@ import configure.ConfigureManager;
 import editor.EDFInfoPane;
 import editor.MainWindow;
 
-
+/**
+ * TODO
+ */
 public class MatlabEdfViewer {
 
 	public static void main(String[] args) {
 		callEdfViewer();
 	}
 
+	/**
+	 * TODO
+	 */
 	public static void callEdfViewer() {
 
 		//(1) set Edf and Xml (if any)
@@ -69,6 +74,13 @@ public class MatlabEdfViewer {
 		}
 	}
 
+	/**
+	 * TODO
+	 * @param EdfFilePath
+	 * @param EdfFileName
+	 * @param XmlFilePath
+	 * @param XmlFileName
+	 */
 	private static void callEdfViewer(String EdfFilePath, String EdfFileName, String XmlFilePath, String XmlFileName) {
 
 		String mcrDir = ConfigureManager.retrieveConfiguration("MCR_Dir");
@@ -112,10 +124,17 @@ public class MatlabEdfViewer {
 		callEdfViewer(mcrDir, viewerDir, viewerApp, EdfFilePath, EdfFileName, XmlFilePath, XmlFileName);
 	}
 
+	/**
+	 * @author wei
+	 * TODO
+	 */
 	private static class ViewerAppEnvir {
 		static String operatingSystem = null;
 		static String viewerApp = null;
 
+		/**
+		 * TODO
+		 */
 		@SuppressWarnings("deprecation")
 		static void setting() {
 			int os = Utilities.getOperatingSystem();
@@ -144,6 +163,10 @@ public class MatlabEdfViewer {
 			}
 		}
 
+		/**
+		 * TODO
+		 * @return
+		 */
 		static boolean is64bit() {
 			boolean is64bit = false;
 			if (System.getProperty("os.name").contains("Windows")) {
@@ -156,6 +179,16 @@ public class MatlabEdfViewer {
 	}
 
 
+	/**
+	 * TODO
+	 * @param mcrDir
+	 * @param viewerDir
+	 * @param viewerApp
+	 * @param EdfFilePath
+	 * @param EdfFileName
+	 * @param XmlFilePath
+	 * @param XmlFileName
+	 */
 	private static void callEdfViewer(String mcrDir, String viewerDir, String viewerApp, String EdfFilePath, String EdfFileName, String XmlFilePath, String XmlFileName){
 
 		/**
@@ -295,6 +328,10 @@ public class MatlabEdfViewer {
 
 	}
     
+	/**
+	 * @author wei
+	 * TODO
+	 */
 	private static class SyncPipe implements Runnable {
 		public SyncPipe(InputStream istrm, OutputStream ostrm) {
 			istrm_ = istrm;
@@ -316,6 +353,11 @@ public class MatlabEdfViewer {
 		private final InputStream istrm_;
 	}
 
+	/**
+	 * TODO
+	 * @param path
+	 * @return
+	 */
 	private static String formatDir(String path) {
 		String str = path;
 		str = str.replace("\\", File.separator);

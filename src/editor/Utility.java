@@ -56,12 +56,22 @@ import javax.swing.plaf.FontUIResource;
 
 import table.TableRowHeader;
 
-
+/**
+ * Utility class used for general purpose
+ * @author wei wang, 2014-6-19
+ */
 public class Utility {
 
-    public static void copyEDFFile(File source,
-                                   File target) throws IOException {
-
+	// wei wang, 2014-6-19
+	// Changed HashMap to HashMap<String,Object>
+	
+	/**
+	 * Copy File from <code>source</code> to <code>target</code>
+	 * @param source the source file to be copied
+	 * @param target the target to copy to
+	 * @throws IOException
+	 */
+    public static void copyEDFFile(File source, File target) throws IOException {
         final ByteBuffer buffer = ByteBuffer.allocate(4096);
         FileChannel in=null, out=null;
         try {
@@ -73,26 +83,26 @@ public class Utility {
                 buffer.clear();
             } 
         } catch (IOException e) {
-            ;        
+            e.printStackTrace(); // added by wei wang, 2014-6-19        
         } finally {
             try {
                 out.close();
                 in.close();   
             }   
             catch (Exception e) {
-                ;
+                e.printStackTrace(); // added by wei wang, 2014-6-19
             }
         }
     }
 
     /**
+     * Build file name from file directory name, file name and file type
      * @param directory path name of the file
      * @param file name of the file
      * @param fileType file type: eia, esa, edf, xml, csv, etc.
-     * @return
+     * @return full path of the file
      */
-    public static File buildFileFullName(File directory, File file,
-                                         String fileType) {
+    public static File buildFileFullName(File directory, File file, String fileType) {
         String dirName = directory.getName() + "/";
         String fileName = file.getName() + fileType;
         String fileFullName = dirName + "/" + fileName;
@@ -101,6 +111,11 @@ public class Utility {
         return regFile;
     }
 
+    /**
+     * Rename a file
+     * @param old the old file
+     * @param newName the new name of the old file
+     */
     public static void renameFile(File old, String newName) {
         if (!old.exists() || old.isDirectory())
             return;
@@ -110,37 +125,36 @@ public class Utility {
 
 
     /**
-     * map the eia attributes in the template header to edf file header
+     * Map the EIA attributes in the template header to EDF file header
      * serves for template applying
      * @param edfFileHeader
      * @param eiaTemplateHeader
      */
     public static void mapEIAHeader(EIAHeader eiaHeader, EIAHeader eiaTemplateHeader) {
-        
-        HashMap eiaHeaderMap = eiaHeader.getEIAHeader();        
-        HashMap templateHeaderMap = eiaTemplateHeader.getEIAHeader();        
-        HashMap dupEIAHeaderMap = new HashMap(eiaHeader.getEIAHeader());     
+        HashMap<String,Object> eiaHeaderMap = eiaHeader.getEIAHeader();        
+        HashMap<String,Object> templateHeaderMap = eiaTemplateHeader.getEIAHeader();        
+        HashMap<String,Object> dupEIAHeaderMap = new HashMap<String,Object>(eiaHeader.getEIAHeader());     
         String datestr = (String) dupEIAHeaderMap.get(EIA.START_DATE_RECORDING);
-        //Fangping, 10/12/10
+        // Fangping, 10/12/10
         String[] dateStore = disassembleDateStr(datestr);
 
-/*      mapPID(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore);
-        mapRID(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore); 
-        mapStartDate(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore);*/
+//      mapPID(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore);
+//      mapRID(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore); 
+//      mapStartDate(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore);
         //10/13/2010
         mapPRIDFields(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore, EIA.LOCAL_PATIENT_ID);
         mapPRIDFields(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore, EIA.LOCAL_RECORDING_ID);
         mapStartDateField(eiaHeaderMap, dupEIAHeaderMap, templateHeaderMap, dateStore);
-        //mapStartTime(edfEIAHeaderMap, templateHeaderMap); 
-
+//      mapStartTime(edfEIAHeaderMap, templateHeaderMap); 
         eiaHeader.setEiaHeader(eiaHeaderMap);
     }
-    
 
     /**
-     * @param datestr
+     * Disassemble date string separated by '.'
+     * @param datestr date string
      * @return an array with length 3, corresponding to the number of fields of date
-     * Fangping, 10/12/10
+     * @author Fangping, 10/12/10
+     * @author wei wang, commented on 2014-6-19
      */
     public static String[] disassembleDateStr(String datestr){
         if (datestr == null || datestr.isEmpty())
@@ -151,7 +165,7 @@ public class Utility {
         String[] temp = datestr.split(symbol);
         String[] result = new String[]{"", "", ""};
         
-        //duplicate to result;
+        // duplicate to result;
         for (int i = 0; i < Math.min(maxsegnum, temp.length); i++)
             result[i] = temp[i];
         
@@ -160,14 +174,14 @@ public class Utility {
 
 
     /**
-     * obsolete
+     * @deprecated obsolete // wei wang
      * @param EIAHeaderMap
      * @param dupEDFEIAHeaderMap
      * @param templateHeaderMap
      * @param dateStore
      */
-    public static void mapPID(HashMap EIAHeaderMap, HashMap dupEDFEIAHeaderMap,
-                              HashMap templateHeaderMap, String[] dateStore) {
+    public static void mapPID(HashMap<String,Object> EIAHeaderMap, HashMap<String,Object> dupEDFEIAHeaderMap,
+                              HashMap<String,Object> templateHeaderMap, String[] dateStore) {
         String title = EIA.LOCAL_PATIENT_ID;
         String templateValue = "" + (String)templateHeaderMap.get(title);
         templateValue = templateValue.trim();
@@ -286,8 +300,16 @@ public class Utility {
     public static final String[] RegPatterns = {reg_key_rand, reg_key_filename, 
                                             reg_key_pid, reg_key_rid, reg_key_yy, reg_key_mm, reg_key_dd};
     
-    private static void mapPRIDFields(HashMap EIAHeaderMap, HashMap dupEDFEIAHeaderMap,
-                                  HashMap templateHeaderMap, String[] dateStore, String title) {
+    /**
+     * Map specified field of attribute of a template to EIA header
+     * @param EIAHeaderMap the EIA header to be mapped
+     * @param dupEDFEIAHeaderMap duplicate of the current EIA header
+     * @param templateHeaderMap the template header to map from
+     * @param dateStore the date string array
+     * @param title the attribute name
+     */
+    private static void mapPRIDFields(HashMap<String,Object> EIAHeaderMap, HashMap<String,Object> dupEDFEIAHeaderMap,
+                                  HashMap<String,Object> templateHeaderMap, String[] dateStore, String title) {
             String templateValue;
             if (templateHeaderMap.get(title) == null)
                 templateValue = "" ;
@@ -314,10 +336,10 @@ public class Utility {
             
             int count = RegPatterns.length;
             String[] keywords = new String[count];
-            keywords[0] = generateRandomID(); //rand
-            keywords[1] = (String)dupEDFEIAHeaderMap.get(EIA.FILE_NAME);//filename;
-            keywords[2] = (String) dupEDFEIAHeaderMap.get(EIA.LOCAL_PATIENT_ID);//pid
-            keywords[3] = (String) dupEDFEIAHeaderMap.get(EIA.LOCAL_RECORDING_ID);//rid
+            keywords[0] = generateRandomID(); // random
+            keywords[1] = (String) dupEDFEIAHeaderMap.get(EIA.FILE_NAME);// filename;
+            keywords[2] = (String) dupEDFEIAHeaderMap.get(EIA.LOCAL_PATIENT_ID);// pid
+            keywords[3] = (String) dupEDFEIAHeaderMap.get(EIA.LOCAL_RECORDING_ID);// rid
             keywords[4] = dateStore[2];
             keywords[5] = dateStore[1];
             keywords[6] = dateStore[0];
@@ -332,6 +354,10 @@ public class Utility {
             EIAHeaderMap.put(title, templateValue);
         }
 
+    /**
+     * Generate random ID
+     * @return random ID of string format
+     */
     public static String generateRandomID() {
         Random randomHelper = new Random();
         String pid = Long.toString(Math.abs(randomHelper.nextLong()), 36);
@@ -341,14 +367,15 @@ public class Utility {
 
     /**
      * obsolete
+     * @deprecated  // wei wang, 2014-6-19
      * @param edfEIAHeaderMap
      * @param dupEDFEIAHeaderMap
      * @param templateHeaderMap
      * @param dateStore
      * map RID
      */
-    public static void mapRID(HashMap edfEIAHeaderMap, HashMap dupEDFEIAHeaderMap,
-                              HashMap templateHeaderMap, String [] dateStore) {
+    public static void mapRID(HashMap<String,Object> edfEIAHeaderMap, HashMap<String,Object> dupEDFEIAHeaderMap,
+                              HashMap<String,Object> templateHeaderMap, String [] dateStore) {
         String title = EIA.LOCAL_RECORDING_ID;        
         String templateValue = "" + (String)templateHeaderMap.get(title);
         templateValue = templateValue.trim();
@@ -437,18 +464,25 @@ public class Utility {
         edfEIAHeaderMap.put(title, templateValue);
     }
     
-    public static void mapStartDateField(HashMap edfEIAHeaderMap, HashMap dupEDFEIAHeaderMap,
-                                      HashMap templateHeaderMap, String [] dateStore) {
+    /**
+     * Map start date field from a template to the EIA headers 
+     * @param edfEIAHeaderMap the EIA header to be mapped
+     * @param dupEDFEIAHeaderMap duplicate of the EIA header 
+     * @param templateHeaderMap the template to be mapped from
+     * @param dateStore date string of the current EIA header
+     */
+    public static void mapStartDateField(HashMap<String,Object> edfEIAHeaderMap, HashMap<String,Object> dupEDFEIAHeaderMap,
+                                      HashMap<String,Object> templateHeaderMap, String [] dateStore) {
           String title = EIA.START_DATE_RECORDING;
           String templateValue = "" + (String)templateHeaderMap.get(title);
           templateValue = templateValue.trim();
           final int ds_len = dateStore.length; // it must be 3
           
           final String marker = "00";
-          String value;
-          //1. only a single key assigned
+          String value = "";	
+          // 1. only a single key assigned
           if (templateValue.equalsIgnoreCase(EIA.key_blank)){
-              //00.00.00
+              // 00.00.00
               value =  marker + "." + marker + "." + marker;
               edfEIAHeaderMap.put(title, value);
               return;
@@ -481,7 +515,7 @@ public class Utility {
               return;
           }
 
-        //case 2: more than one key assgined
+        // case 2: more than one key assigned
 
         String[] disassembledValues = disassembleDateStr(templateValue);
         String[] newValues = dateStore;
@@ -517,14 +551,14 @@ public class Utility {
                 newValues[i] = dateStore[i];
                 continue;
             }
-            //no key matched
+            // no key matched
             boolean digital = true;
             try {
                 Integer.parseInt(disassembledValues[i]);
             } catch (NumberFormatException e) {
                 digital = false;
             }
-            //keep the orginal value if not digital
+            // keep the original value if not digital
             if (digital)
                 newValues[i] = disassembledValues[i];
         }
@@ -533,9 +567,15 @@ public class Utility {
         return;
     }
     
-  
-  public static void mapStartDate(HashMap edfEIAHeaderMap, HashMap dupEDFEIAHeaderMap,
-                                    HashMap templateHeaderMap, String [] dateStore) {
+  /**
+   * Map start date from a template to the EIA headers  
+   * @param edfEIAHeaderMap the EIA header to be mapped
+   * @param dupEDFEIAHeaderMap duplicate of the EIA header 
+   * @param templateHeaderMap the template to be mapped from
+   * @param dateStore date string of the current EIA header
+   */
+  public static void mapStartDate(HashMap<String,Object> edfEIAHeaderMap, HashMap<String,Object> dupEDFEIAHeaderMap,
+                                    HashMap<String,Object> templateHeaderMap, String [] dateStore) {
         String title = EIA.START_DATE_RECORDING;
         String templateValue = "" + (String)templateHeaderMap.get(title);
         templateValue = templateValue.trim();
@@ -551,7 +591,7 @@ public class Utility {
             return;
         }       
         
-        if (templateValue.equalsIgnoreCase(EIA.key_skip) || templateValue.isEmpty()){
+        if (templateValue.equalsIgnoreCase(EIA.key_skip) || templateValue.isEmpty()) {
             return; // no change
         }
 
@@ -561,12 +601,12 @@ public class Utility {
             return;
         } 
         
-        if (templateValue.equalsIgnoreCase(EIA.key_dd)){
+        if (templateValue.equalsIgnoreCase(EIA.key_dd)) {
             value = dateStore[0] + "." + maskstr + "." + maskstr;
             edfEIAHeaderMap.put(title, value);
             return;
         }
-        if (templateValue.equalsIgnoreCase(EIA.key_mm)){
+        if (templateValue.equalsIgnoreCase(EIA.key_mm)) {
             value = maskstr + "." + dateStore[1] + "." + maskstr;
             edfEIAHeaderMap.put(title, value);
             return;
@@ -631,40 +671,41 @@ public class Utility {
         edfEIAHeaderMap.put(title, value);
     }
 
+  	/**
+  	 * Generate random date string
+  	 * @param choice specify which attribute to return. 0 for day, 1 for month, 2 for year, 3 for randomly generated date including day, month and year
+  	 * @return string representation of the date specified by the choice option
+  	 */
     public static String generateRandomDate(int choice) {
         Random helper = new Random();
         String day = "";
         String month = "";
         String year = "";
         switch (choice) {
-        case 0:
-            {
+        	case 0: {
                 day = Integer.toString(helper.nextInt(30));
                 if (day.length() < 2)
                     day = "0" + day;
                 return day;
-            }
-        case 1:
-            {
+        	}
+        	case 1: {
                 month = Integer.toString(helper.nextInt(12) + 1);
                 if (month.length() < 2)
                     month = "0" + month;
                 return month;
-            }
-        case 2:
-            {
+        	}
+        	case 2: {
                 year = Integer.toString(helper.nextInt(100));
                 if (year.length() < 2)
                     year = "0" + year;
                 return year;
-            }
-        case 3:
-            {
+        	}
+        	case 3: {
                 day = Integer.toString(helper.nextInt(30));
                 month = Integer.toString(helper.nextInt(12) + 1);
                 year = Integer.toString(helper.nextInt(100));
                 break;
-            }
+        	}
         }
         if (day.length() < 2)
             day = "0" + day;
@@ -675,49 +716,49 @@ public class Utility {
 
         return day + "." + month + "." + year;
     }
-/* 
-    public static void mapStartTime(HashMap edfEIAHeaderMap, HashMap dupEDFEIAHeaderMap,
-                                    HashMap templateHeaderMap) {
-        String title = EIA.START_TIME_RECORDING;
-        String templateValue = (String)templateHeaderMap.get(title);
-        templateValue = templateValue.trim();
-        if (templateValue.equalsIgnoreCase(EIA.key_blank))
-            edfEIAHeaderMap.put(title, "");
-        else if (templateValue.equalsIgnoreCase(EIA.key_skip))
-            ; // do nothing
-        else if (templateValue.equalsIgnoreCase(EIA.key_rand)) {
-            String time = generateRandomTime();
-            edfEIAHeaderMap.put(title, time);
-        } else if (templateValue.equals(EIA.key_rand)) {
-        	edfEIAHeaderMap.put(title, dupEDFEIAHeaderMap.get(EIA.LOCAL_RECORDING_ID));
-        } else if(templateValue.equals(EIA.key_pid)) {
-        	edfEIAHeaderMap.put(title, dupEDFEIAHeaderMap.get(EIA.LOCAL_PATIENT_ID));
-        }else if(templateValue.equals(EIA.key_filename)) {
-        	edfEIAHeaderMap.put(title, dupEDFEIAHeaderMap.get(EIA.FILE_NAME));
-        } else
-            edfEIAHeaderMap.put(title, templateValue);
-    }
-
-    public static String generateRandomTime() {
-        Random helper = new Random();
-        String hour = Integer.toString(helper.nextInt(24));
-        if (hour.length() < 2)
-            hour = "0" + hour;
-        String minute = Integer.toString(helper.nextInt(60));
-        if (minute.length() < 2)
-            minute = "0" + minute;
-        String second = Integer.toString(helper.nextInt(60));
-        if (second.length() < 2)
-            second = "0" + second;
-
-        return hour + "." + minute + "." + second;
-    } */
+//
+//    public static void mapStartTime(HashMap edfEIAHeaderMap, HashMap dupEDFEIAHeaderMap,
+//                                    HashMap templateHeaderMap) {
+//        String title = EIA.START_TIME_RECORDING;
+//        String templateValue = (String)templateHeaderMap.get(title);
+//        templateValue = templateValue.trim();
+//        if (templateValue.equalsIgnoreCase(EIA.key_blank))
+//            edfEIAHeaderMap.put(title, "");
+//        else if (templateValue.equalsIgnoreCase(EIA.key_skip))
+//            ; // do nothing
+//        else if (templateValue.equalsIgnoreCase(EIA.key_rand)) {
+//            String time = generateRandomTime();
+//            edfEIAHeaderMap.put(title, time);
+//        } else if (templateValue.equals(EIA.key_rand)) {
+//        	edfEIAHeaderMap.put(title, dupEDFEIAHeaderMap.get(EIA.LOCAL_RECORDING_ID));
+//        } else if(templateValue.equals(EIA.key_pid)) {
+//        	edfEIAHeaderMap.put(title, dupEDFEIAHeaderMap.get(EIA.LOCAL_PATIENT_ID));
+//        }else if(templateValue.equals(EIA.key_filename)) {
+//        	edfEIAHeaderMap.put(title, dupEDFEIAHeaderMap.get(EIA.FILE_NAME));
+//        } else
+//            edfEIAHeaderMap.put(title, templateValue);
+//    }
+//
+//    public static String generateRandomTime() {
+//        Random helper = new Random();
+//        String hour = Integer.toString(helper.nextInt(24));
+//        if (hour.length() < 2)
+//            hour = "0" + hour;
+//        String minute = Integer.toString(helper.nextInt(60));
+//        if (minute.length() < 2)
+//            minute = "0" + minute;
+//        String second = Integer.toString(helper.nextInt(60));
+//        if (second.length() < 2)
+//            second = "0" + second;
+//
+//        return hour + "." + minute + "." + second;
+//    }
 
     /**
-     * map the esa attributes in the template header to the edf file header.
+     * Map the ESA attributes in the template header to the EDF file header.
      * serves for template applying.
-     * @param edfFileHeader
-     * @param esaTemplateHeader
+     * @param edfFileHeader the ESA header to map to
+     * @param esaTemplateHeader the template to be mapped from
      */
     public static void mapESAHeader(ESAHeader edfFileHeader,
                                     ESAHeader esaTemplateHeader) {
@@ -730,7 +771,7 @@ public class Utility {
         
         String[] esaAttributes = ESA.getESAAttributes();
         
-        HashMap currentChannel;
+        HashMap<String,Object> currentChannel;
         String key;
         for (int i = 0; i < numberOfEdfFileChannels; i++) {
             
@@ -739,11 +780,11 @@ public class Utility {
             key = (String)currentChannel.get(ESA.LABEL);
             key = key.trim();       
             
-            HashMap templateChannel;
-            HashMap clone;
+            HashMap<String,Object> templateChannel;
+            HashMap<String,Object> clone;
             for (int j = 0; j < numbOfTemplateChannels; j++) {
                 templateChannel = templateChannels[j].getEsaChannel();
-                clone = new HashMap(templateChannel);
+                clone = new HashMap<String,Object>(templateChannel);
                 for(int k = 0; k < ESA.NUMBER_OF_ATTRIBUTES; k++) {
                 	if(((String)templateChannel.get(esaAttributes[k])).equalsIgnoreCase("")) {
                 		clone.put(esaAttributes[k], currentChannel.get(esaAttributes[k]));
@@ -765,52 +806,61 @@ public class Utility {
         }
     }
     
+    /**
+     * Get current time as string 
+     * @return the formatted time string
+     */
     public static String currentTimeToString() {
         Date time = new Date();
         DateFormat df = new SimpleDateFormat("h:mm a, yyyy.MM.dd");
         return df.format(time);
     }
     
-    
     /////////////////////////////////////////////////////////////////////////////////
     ///////////////////////// Zendrix //////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    // each attribute eia.VERSION is changed to EIA.VERSION format
+    /**
+     * Write EIA header to XML specified by File object
+     * @param file the File object used to save EIA header information
+     * @param eia EIA header
+     */
     public static void writeXMLEIA(File file, EIAHeader eia) {
         try {
             System.out.println("Start Wrtiting");
             BufferedWriter output = new BufferedWriter(new FileWriter(file));
             output.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
             output.write("<EIAHeader>\n");
-            String writeStr =
-                String.format("\t<Version>%s</Version>\n", eia.getAttributeValueAt(eia.VERSION));
+            String writeStr = String.format("\t<Version>%s</Version>\n", eia.getAttributeValueAt(EIA.VERSION)); // wei wang modified on 2014-6-19
+//                String.format("\t<Version>%s</Version>\n", eia.getAttributeValueAt(eia.VERSION));
             output.write(writeStr);
             writeStr =
-                    String.format("\t<PatientID>%s</PatientID>\n", eia.getAttributeValueAt(eia.LOCAL_PATIENT_ID));
+                    String.format("\t<PatientID>%s</PatientID>\n", eia.getAttributeValueAt(EIA.LOCAL_PATIENT_ID));
             output.write(writeStr);
             writeStr =
-                    String.format("\t<RecordInfo>%s</RecordInfo>\n", eia.getAttributeValueAt(eia.LOCAL_RECORDING_ID));
+                    String.format("\t<RecordInfo>%s</RecordInfo>\n", eia.getAttributeValueAt(EIA.LOCAL_RECORDING_ID));
             output.write(writeStr);
             writeStr =
-                    String.format("\t<StartDate>%s</StartDate>\n", eia.getAttributeValueAt(eia.START_DATE_RECORDING));
+                    String.format("\t<StartDate>%s</StartDate>\n", eia.getAttributeValueAt(EIA.START_DATE_RECORDING));
             output.write(writeStr);
             writeStr =
-                    String.format("\t<StartTime>%s</StartTime>\n", eia.getAttributeValueAt(eia.START_TIME_RECORDING));
+                    String.format("\t<StartTime>%s</StartTime>\n", eia.getAttributeValueAt(EIA.START_TIME_RECORDING));
             output.write(writeStr);
             writeStr =
-                    String.format("\t<HeaderBytes>%s</HeaderBytes>\n", eia.getAttributeValueAt(eia.NUMBER_OF_BYTES_IN_HEADER));
+                    String.format("\t<HeaderBytes>%s</HeaderBytes>\n", eia.getAttributeValueAt(EIA.NUMBER_OF_BYTES_IN_HEADER));
             output.write(writeStr);
             writeStr =
-                    String.format("\t<Reserved>%s</Reserved>\n", eia.getAttributeValueAt(eia.RESERVED));
+                    String.format("\t<Reserved>%s</Reserved>\n", eia.getAttributeValueAt(EIA.RESERVED));
             output.write(writeStr);
             writeStr =
-                    String.format("\t<NumDataRecords>%s</NumDataRecords>\n", eia.getAttributeValueAt(eia.NUMBER_OF_DATA_RECORDS));
+                    String.format("\t<NumDataRecords>%s</NumDataRecords>\n", eia.getAttributeValueAt(EIA.NUMBER_OF_DATA_RECORDS));
             output.write(writeStr);
             writeStr =
-                    String.format("\t<DurDataRecord>%s</DurDataRecord>\n", eia.getAttributeValueAt(eia.DURATION_OF_DATA_RECORD));
+                    String.format("\t<DurDataRecord>%s</DurDataRecord>\n", eia.getAttributeValueAt(EIA.DURATION_OF_DATA_RECORD));
             output.write(writeStr);
             writeStr =
-                    String.format("\t<NumSignals>%s</NumSignals>\n", eia.getAttributeValueAt(eia.NUMBER_OF_SIGNALS));
+                    String.format("\t<NumSignals>%s</NumSignals>\n", eia.getAttributeValueAt(EIA.NUMBER_OF_SIGNALS));
             output.write(writeStr);
             output.write("</EIAHeader>");
             output.close();
@@ -819,65 +869,53 @@ public class Utility {
         }
     }
 
-    public static String writeCSVEIA(ArrayList<EDFFileHeader> edfHeaders,
-                                     ArrayList<File> fileNames) {
+    /**
+     * Write out EDF headers to CSV file
+     * @param edfHeaders EDF headers to write out
+     * @param fileNames list of files used for writing CSV file
+     * @return the name of output CSV file
+     */
+    public static String writeCSVEIA(ArrayList<EDFFileHeader> edfHeaders, ArrayList<File> fileNames) {
         String fileName = "";
         try {
             File wkdir = MainWindow.workingDirectory;
-            String wkdirStr = wkdir.getAbsolutePath();
-            fileName =
-                    wkdirStr + "\\File_Attributes_" + getDateTime() + ".csv";
+            String wkdirPath = wkdir.getAbsolutePath();
+            fileName = wkdirPath + "\\File_Attributes_" + getDateTime() + ".csv";
             File file = new File(fileName);
             BufferedWriter output = new BufferedWriter(new FileWriter(file));
             output.write(
-            		"FileName,Version,PatientID,RecordInfo,StartDate,StartTime,HeaderBytes,Reserved,NumDataRecords,DurDataRecord,NumSignals\n"
+            	"FileName,Version,PatientID,RecordInfo,StartDate,StartTime,HeaderBytes,Reserved,NumDataRecords,DurDataRecord,NumSignals\n"
             );
-            EIAHeader eia;
-            String fname;
+            EIAHeader eia = null; 
+            String fname = "";
             for (int i = 0; i < edfHeaders.size(); i++) {
                 eia = edfHeaders.get(i).getEiaHeader();
                 fname = fileNames.get(i).getAbsolutePath();
                 output.write("\"" + fname + "\",");
-                output.write("\"" + eia.getAttributeValueAt(eia.VERSION) +
-                             "\",");
-                output.write("\"" +
-                             eia.getAttributeValueAt(eia.LOCAL_PATIENT_ID) +
-                             "\",");
-                output.write("\"" +
-                             eia.getAttributeValueAt(eia.LOCAL_RECORDING_ID) +
-                             "\",");
-                output.write("\"" +
-                             eia.getAttributeValueAt(eia.START_DATE_RECORDING) +
-                             "\",");
-                output.write("\"" +
-                             eia.getAttributeValueAt(eia.START_TIME_RECORDING) +
-                             "\",");
-                output.write("\"" +
-                             eia.getAttributeValueAt(eia.NUMBER_OF_BYTES_IN_HEADER) +
-                             "\",");
-                output.write("\"" + eia.getAttributeValueAt(eia.RESERVED) +
-                             "\",");
-                output.write("\"" +
-                             eia.getAttributeValueAt(eia.NUMBER_OF_DATA_RECORDS) +
-                             "\",");
-                output.write("\"" +
-                             eia.getAttributeValueAt(eia.DURATION_OF_DATA_RECORD) +
-                             "\",");
-                output.write("\"" +
-                             eia.getAttributeValueAt(eia.NUMBER_OF_SIGNALS) +
-                             "\"");
+                output.write("\"" + eia.getAttributeValueAt(EIA.VERSION) + "\",");
+                output.write("\"" + eia.getAttributeValueAt(EIA.LOCAL_PATIENT_ID) + "\",");
+                output.write("\"" + eia.getAttributeValueAt(EIA.LOCAL_RECORDING_ID) + "\",");
+                output.write("\"" + eia.getAttributeValueAt(EIA.START_DATE_RECORDING) + "\",");
+                output.write("\"" + eia.getAttributeValueAt(EIA.START_TIME_RECORDING) + "\",");
+                output.write("\"" + eia.getAttributeValueAt(EIA.NUMBER_OF_BYTES_IN_HEADER) + "\",");
+                output.write("\"" + eia.getAttributeValueAt(EIA.RESERVED) + "\",");
+                output.write("\"" + eia.getAttributeValueAt(EIA.NUMBER_OF_DATA_RECORDS) + "\",");
+                output.write("\"" + eia.getAttributeValueAt(EIA.DURATION_OF_DATA_RECORD) + "\",");
+                output.write("\"" + eia.getAttributeValueAt(EIA.NUMBER_OF_SIGNALS) + "\"");
                 output.write("\n");
             }
             output.close();
-
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return fileName;
     }
 
+    /**
+     * Write XML file from existing ESA header
+     * @param file output xml file path
+     * @param esa ESA header used to generate xml file
+     */
     public static void writeXMLESA(File file, ESAHeader esa) {
         try {
             BufferedWriter output = new BufferedWriter(new FileWriter(file));
@@ -885,49 +923,54 @@ public class Utility {
             output.write("<ESAHeader>\n");
             int channels = esa.getNumberOfChannels();
             for (int i = 0; i < channels; i++) {
-                ESAChannel ch = esa.getEsaChannelAt(i);
+                ESAChannel esaChannel = esa.getEsaChannelAt(i);
                 output.write("\t<Channel>\n");
                 String writeStr =
-                    String.format("\t\t<Label>%s</Label>\n", ch.getSignalAttributeValueAt(ch.LABEL));
+                    String.format("\t\t<Label>%s</Label>\n", esaChannel.getSignalAttributeValueAt(ESA.LABEL));
                 output.write(writeStr);
                 writeStr =
-                        String.format("\t\t<Transducer>%s</Transducer>\n", ch.getSignalAttributeValueAt(ch.TRANSDUCER_TYPE));
+                        String.format("\t\t<Transducer>%s</Transducer>\n", esaChannel.getSignalAttributeValueAt(ESA.TRANSDUCER_TYPE));
                 output.write(writeStr);
                 writeStr =
-                        String.format("\t\t<PhyDim>%s</PhyDim>\n", ch.getSignalAttributeValueAt(ch.PHYSICAL_DIMESNION));
+                        String.format("\t\t<PhyDim>%s</PhyDim>\n", esaChannel.getSignalAttributeValueAt(ESA.PHYSICAL_DIMESNION));
                 output.write(writeStr);
                 writeStr =
-                        String.format("\t\t<PhyMin>%s</PhyMin>\n", ch.getSignalAttributeValueAt(ch.PHYSICAL_MINIMUM));
+                        String.format("\t\t<PhyMin>%s</PhyMin>\n", esaChannel.getSignalAttributeValueAt(ESA.PHYSICAL_MINIMUM));
                 output.write(writeStr);
                 writeStr =
-                        String.format("\t\t<PhyMax>%s</PhyMax>\n", ch.getSignalAttributeValueAt(ch.PHYSICAL_MAXIMUM));
+                        String.format("\t\t<PhyMax>%s</PhyMax>\n", esaChannel.getSignalAttributeValueAt(ESA.PHYSICAL_MAXIMUM));
                 output.write(writeStr);
                 writeStr =
-                        String.format("\t\t<DigMin>%s</DigMin>\n", ch.getSignalAttributeValueAt(ch.DIGITAL_MINIMUM));
+                        String.format("\t\t<DigMin>%s</DigMin>\n", esaChannel.getSignalAttributeValueAt(ESA.DIGITAL_MINIMUM));
                 output.write(writeStr);
                 writeStr =
-                        String.format("\t\t<DigMax>%s</DigMax>\n", ch.getSignalAttributeValueAt(ch.DIGITAL_MAXIMUM));
+                        String.format("\t\t<DigMax>%s</DigMax>\n", esaChannel.getSignalAttributeValueAt(ESA.DIGITAL_MAXIMUM));
                 output.write(writeStr);
                 writeStr =
                         String.format("\t\t<Prefiltering>%s</Prefiltering>\n",
-                                      ch.getSignalAttributeValueAt(ch.PREFILTERING));
+                                      esaChannel.getSignalAttributeValueAt(ESA.PREFILTERING));
                 output.write(writeStr);
                 writeStr =
-                        String.format("\t\t<NumSamples>%s</NumSamples>\n", ch.getSignalAttributeValueAt(ch.NUMBER_OF_SAMPLES));
+                        String.format("\t\t<NumSamples>%s</NumSamples>\n", esaChannel.getSignalAttributeValueAt(ESA.NUMBER_OF_SAMPLES));
                 output.write(writeStr);
                 writeStr =
-                        String.format("\t\t<Reserved>%s</Reserved>\n", ch.getSignalAttributeValueAt(ch.RESERVED));
+                        String.format("\t\t<Reserved>%s</Reserved>\n", esaChannel.getSignalAttributeValueAt(ESA.RESERVED));
                 output.write(writeStr);
                 output.write("\t</Channel>\n");
             }
             output.write("</ESAHeader>");
             output.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
+    /**
+     * Write out the ESA headers to csv file
+     * @param edfHeaders the EDF file headers 
+     * @param fileNames the corresponding EDF files
+     * @return the csv file name to be written out
+     */
     public static String writeCSVESA(ArrayList<EDFFileHeader> edfHeaders, ArrayList<File> fileNames) {
     	String fileName = "";
         try {
@@ -939,8 +982,7 @@ public class Utility {
             
             ESAHeader esa; String fname;
             
-            for(int i = 0; i < edfHeaders.size(); i++)
-            {
+            for(int i = 0; i < edfHeaders.size(); i++) {
             	esa = edfHeaders.get(i).getEsaHeader();
             	fname = fileNames.get(i).getAbsolutePath();	
             	output.write(fname + "\n");
@@ -948,30 +990,32 @@ public class Utility {
             	int channels = esa.getNumberOfChannels();
                 for (int j = 0; j < channels; j++) {
                     ESAChannel ch = esa.getEsaChannelAt(j);
-                    String str = ch.getSignalAttributeValueAt(ch.LABEL) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.TRANSDUCER_TYPE) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.PHYSICAL_DIMESNION) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.PHYSICAL_MINIMUM) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.PHYSICAL_MAXIMUM) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.DIGITAL_MINIMUM) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.DIGITAL_MAXIMUM) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.PREFILTERING) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.NUMBER_OF_SAMPLES) + ",";
-                    str += ch.getSignalAttributeValueAt(ch.RESERVED) + "\n";
+                    String str = ch.getSignalAttributeValueAt(ESA.LABEL) + ",";
+                    str += ch.getSignalAttributeValueAt(ESA.TRANSDUCER_TYPE) + ",";
+                    str += ch.getSignalAttributeValueAt(ESA.PHYSICAL_DIMESNION) + ",";
+                    str += ch.getSignalAttributeValueAt(ESA.PHYSICAL_MINIMUM) + ",";
+                    str += ch.getSignalAttributeValueAt(ESA.PHYSICAL_MAXIMUM) + ",";
+                    str += ch.getSignalAttributeValueAt(ESA.DIGITAL_MINIMUM) + ",";
+                    str += ch.getSignalAttributeValueAt(ESA.DIGITAL_MAXIMUM) + ",";
+                    str += ch.getSignalAttributeValueAt(ESA.PREFILTERING) + ",";
+                    str += ch.getSignalAttributeValueAt(ESA.NUMBER_OF_SAMPLES) + ",";
+                    str += ch.getSignalAttributeValueAt(ESA.RESERVED) + "\n";
                     output.write(str);
                 }
                 output.write("\n");
             }
-            
             output.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
         return fileName;
     }
 
+    /**
+     * Read EIA header from XML file
+     * @param file XML file to be read
+     * @return EIA header corresponding to this XML file
+     */
     public static EIAHeader readXMLEIA(File file) {
         EIAHeader eia = new EIAHeader();
         try {
@@ -980,56 +1024,69 @@ public class Utility {
             str = input.readLine();
             if (str.equals("<EIAHeader>")) {
                 str = input.readLine().trim();
-                eia.setValueAt(eia.VERSION,
+                eia.setValueAt(EIA.VERSION,
                                outputElement("<Version>", "</Version>", str));
                 str = input.readLine().trim();
-                eia.setValueAt(eia.LOCAL_PATIENT_ID,
+                eia.setValueAt(EIA.LOCAL_PATIENT_ID,
                                outputElement("<PatientID>", "</PatientID>",
                                              str));
                 str = input.readLine().trim();
-                eia.setValueAt(eia.LOCAL_RECORDING_ID,
+                eia.setValueAt(EIA.LOCAL_RECORDING_ID,
                                outputElement("<RecordInfo>", "</RecordInfo>",
                                              str));
                 str = input.readLine().trim();
-                eia.setValueAt(eia.START_DATE_RECORDING,
+                eia.setValueAt(EIA.START_DATE_RECORDING,
                                outputElement("<StartDate>", "</StartDate>",
                                              str));
                 str = input.readLine().trim();
-                eia.setValueAt(eia.START_TIME_RECORDING,
+                eia.setValueAt(EIA.START_TIME_RECORDING,
                                outputElement("<StartTime>", "</StartTime>",
                                              str));
                 str = input.readLine().trim();
-                eia.setValueAt(eia.NUMBER_OF_BYTES_IN_HEADER,
+                eia.setValueAt(EIA.NUMBER_OF_BYTES_IN_HEADER,
                                outputElement("<HeaderBytes>", "</HeaderBytes>",
                                              str));
                 str = input.readLine().trim();
-                eia.setValueAt(eia.RESERVED,
+                eia.setValueAt(EIA.RESERVED,
                                outputElement("<Reserved>", "</Reserved>",
                                              str));
                 str = input.readLine().trim();
-                eia.setValueAt(eia.NUMBER_OF_DATA_RECORDS,
+                eia.setValueAt(EIA.NUMBER_OF_DATA_RECORDS,
                                outputElement("<NumDataRecords>",
                                              "</NumDataRecords>", str));
                 str = input.readLine().trim();
-                eia.setValueAt(eia.DURATION_OF_DATA_RECORD,
+                eia.setValueAt(EIA.DURATION_OF_DATA_RECORD,
                                outputElement("<DurDataRecord>",
                                              "</DurDataRecord>", str));
                 str = input.readLine().trim();
-                eia.setValueAt(eia.NUMBER_OF_SIGNALS,
+                eia.setValueAt(EIA.NUMBER_OF_SIGNALS,
                                outputElement("<NumSignals>", "</NumSignals>", str));
+                /**
+                 * wei wang, 2014-6-19
+                 * Issue soved: input is never closed
+                 */
+                try {
+					input.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return eia;
     }
 
-    public static String outputElement(String startTag, String endTag,
-                                       String str) {
+    /**
+     * Extract string between start tag string and end tag string
+     * @param startTag the start tag string
+     * @param endTag the end tag string
+     * @param str the target string to be extract from		
+     * @return the extracted string 
+     */
+    public static String outputElement(String startTag, String endTag, String str) {
         String ret = "";
         int startIndex = str.indexOf(startTag);
         int endIndex = str.indexOf(endTag);
@@ -1038,6 +1095,11 @@ public class Utility {
         return ret;
     }
 
+    /**
+     * Parse CSV file into EIA header
+     * @param file CSV file to be processed
+     * @return EIA header extracted from this CSV file
+     */
     public static EIAHeader readCSVEIA(File file) {
         EIAHeader eia = new EIAHeader();
         String[] elements;
@@ -1047,27 +1109,38 @@ public class Utility {
             str = input.readLine();
             str = str.substring(1, str.length()-1);
             elements = str.split("\",\"");
-            eia.setValueAt(eia.VERSION, elements[0]);
-            eia.setValueAt(eia.LOCAL_PATIENT_ID, elements[1]);
-            eia.setValueAt(eia.LOCAL_RECORDING_ID, elements[2]);
-            eia.setValueAt(eia.START_DATE_RECORDING, elements[3]);
-            eia.setValueAt(eia.START_TIME_RECORDING, elements[4]);
-            eia.setValueAt(eia.NUMBER_OF_BYTES_IN_HEADER, elements[5]);
-            eia.setValueAt(eia.RESERVED, elements[6]);
-            eia.setValueAt(eia.NUMBER_OF_DATA_RECORDS, elements[7]);
-            eia.setValueAt(eia.DURATION_OF_DATA_RECORD, elements[8]);
-            eia.setValueAt(eia.NUMBER_OF_SIGNALS, elements[9]);
+            eia.setValueAt(EIA.VERSION, elements[0]);
+            eia.setValueAt(EIA.LOCAL_PATIENT_ID, elements[1]);
+            eia.setValueAt(EIA.LOCAL_RECORDING_ID, elements[2]);
+            eia.setValueAt(EIA.START_DATE_RECORDING, elements[3]);
+            eia.setValueAt(EIA.START_TIME_RECORDING, elements[4]);
+            eia.setValueAt(EIA.NUMBER_OF_BYTES_IN_HEADER, elements[5]);
+            eia.setValueAt(EIA.RESERVED, elements[6]);
+            eia.setValueAt(EIA.NUMBER_OF_DATA_RECORDS, elements[7]);
+            eia.setValueAt(EIA.DURATION_OF_DATA_RECORD, elements[8]);
+            eia.setValueAt(EIA.NUMBER_OF_SIGNALS, elements[9]);
+            /**
+             * wei wang, 2014-6-19
+             * Issue solved: input is never closed
+             */
+            try {
+				input.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return eia;
     }
 
+    /**
+     * Read XML file and converted to ESA header
+     * @param file the XML file to be converted from
+     * @return the constructed ESA header
+     */
     public static ESAHeader readXMLESA(File file) {
         ESAHeader esa = new ESAHeader();
         try {
@@ -1079,42 +1152,52 @@ public class Utility {
                 str = input.readLine().trim();
                 while (str.trim().equals("<Channel>")) {
                     ESAChannel ch = new ESAChannel();
-                    ArrayList<String> temp = new ArrayList<String>();
+//                    ArrayList<String> temp = new ArrayList<String>();  // temp not in use, deleted by wei wang on 2014-6-19
                     str = input.readLine().trim();
                     str = outputElement("<Label>", "</Label>", str);
-                    ch.setAttributeValueAt(ch.LABEL, str);
+                    ch.setAttributeValueAt(ESA.LABEL, str);
                     str = input.readLine().trim();
                     str = outputElement("<Transducer>", "</Transducer>", str);
-                    ch.setAttributeValueAt(ch.TRANSDUCER_TYPE, str);
+                    ch.setAttributeValueAt(ESA.TRANSDUCER_TYPE, str);
                     str = input.readLine().trim();
                     str = outputElement("<PhyDim>", "</PhyDim>", str);
-                    ch.setAttributeValueAt(ch.PHYSICAL_DIMESNION, str);
+                    ch.setAttributeValueAt(ESA.PHYSICAL_DIMESNION, str);
                     str = input.readLine().trim();
                     str = outputElement("<PhyMin>", "</PhyMin>", str);
-                    ch.setAttributeValueAt(ch.PHYSICAL_MINIMUM, str);
+                    ch.setAttributeValueAt(ESA.PHYSICAL_MINIMUM, str);
                     str = input.readLine().trim();
                     str = outputElement("<PhyMax>", "</PhyMax>", str);
-                    ch.setAttributeValueAt(ch.PHYSICAL_MAXIMUM, str);
+                    ch.setAttributeValueAt(ESA.PHYSICAL_MAXIMUM, str);
                     str = input.readLine().trim();
                     str = outputElement("<DigMin>", "</DigMin>", str);
-                    ch.setAttributeValueAt(ch.DIGITAL_MINIMUM, str);
+                    ch.setAttributeValueAt(ESA.DIGITAL_MINIMUM, str);
                     str = input.readLine().trim();
                     str = outputElement("<DigMax>", "</DigMax>", str);
-                    ch.setAttributeValueAt(ch.DIGITAL_MAXIMUM, str);
+                    ch.setAttributeValueAt(ESA.DIGITAL_MAXIMUM, str);
                     str = input.readLine().trim();
                     str = outputElement("<Prefiltering>", "</Prefiltering>", str);
-                    ch.setAttributeValueAt(ch.PREFILTERING, str);
+                    ch.setAttributeValueAt(ESA.PREFILTERING, str);
                     str = input.readLine().trim();
                     str = outputElement("<NumSamples>", "</NumSamples>", str);
-                    ch.setAttributeValueAt(ch.NUMBER_OF_SAMPLES, str);
+                    ch.setAttributeValueAt(ESA.NUMBER_OF_SAMPLES, str);
                     str = input.readLine().trim();
                     str = outputElement("<Reserved>", "</Reserved>", str);
-                    ch.setAttributeValueAt(ch.RESERVED, str);
+                    ch.setAttributeValueAt(ESA.RESERVED, str);
                     esa.setSignalChannel(counter, ch);
                     counter++;
 
                     str = input.readLine().trim();
                     str = input.readLine().trim();
+                    
+                    /**
+                     * wei wang, 2014-6-19
+                     * Issue solved: input is never closed
+                     */
+                    try {
+        				input.close();
+        			} catch (Exception e) {
+        				e.printStackTrace();
+        			}
                 }
             }
         } catch (FileNotFoundException e) {
@@ -1126,6 +1209,11 @@ public class Utility {
         return esa;
     }
 
+    /**
+     * Read CSV file and converted to ESA header
+     * @param file the CSV file
+     * @return the ESA header constructed from this CSV file
+     */
     public static ESAHeader readCSVESA(File file) {
         ESAHeader esa = new ESAHeader();
         try {
@@ -1136,18 +1224,28 @@ public class Utility {
             while (str != null) {
                 ESAChannel ch = new ESAChannel();
                 String[] temp = str.split(",");
-                ch.setAttributeValueAt(ch.LABEL, temp[0]);
-                ch.setAttributeValueAt(ch.TRANSDUCER_TYPE, temp[1]);
-                ch.setAttributeValueAt(ch.PHYSICAL_DIMESNION, temp[2]);
-                ch.setAttributeValueAt(ch.PHYSICAL_MINIMUM, temp[3]);
-                ch.setAttributeValueAt(ch.PHYSICAL_MAXIMUM, temp[4]);
-                ch.setAttributeValueAt(ch.DIGITAL_MINIMUM, temp[5]);
-                ch.setAttributeValueAt(ch.DIGITAL_MAXIMUM, temp[6]);
-                ch.setAttributeValueAt(ch.PREFILTERING, temp[7]);
-                ch.setAttributeValueAt(ch.NUMBER_OF_SAMPLES, temp[8]);
-                ch.setAttributeValueAt(ch.RESERVED, temp[9]);
+                ch.setAttributeValueAt(ESA.LABEL, temp[0]);
+                ch.setAttributeValueAt(ESA.TRANSDUCER_TYPE, temp[1]);
+                ch.setAttributeValueAt(ESA.PHYSICAL_DIMESNION, temp[2]);
+                ch.setAttributeValueAt(ESA.PHYSICAL_MINIMUM, temp[3]);
+                ch.setAttributeValueAt(ESA.PHYSICAL_MAXIMUM, temp[4]);
+                ch.setAttributeValueAt(ESA.DIGITAL_MINIMUM, temp[5]);
+                ch.setAttributeValueAt(ESA.DIGITAL_MAXIMUM, temp[6]);
+                ch.setAttributeValueAt(ESA.PREFILTERING, temp[7]);
+                ch.setAttributeValueAt(ESA.NUMBER_OF_SAMPLES, temp[8]);
+                ch.setAttributeValueAt(ESA.RESERVED, temp[9]);
                 esa.setSignalChannel(counter, ch);
                 counter++;
+                
+                /**
+                 * wei wang, 2014-6-19
+                 * Issue solved: input is never closed
+                 */
+                try {
+    				input.close();
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -1158,19 +1256,25 @@ public class Utility {
         return esa;
     }
     
+    /**
+     * Get string representation of the current date
+     * @return a string representation of the date and time
+     */
     private static String getDateTime(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
         Date date = new Date();
         return dateFormat.format(date);
     }
         
-    /*
-     * increment the system size
-     * Fangping, 08/04/2010
+    /**
+     * Increment the system font size
+     * @param scale the scale to increase the system font size
+     * @author Fangping, 08/04/2010
+     * @author wei wang, commented on 2014-6-19
      */
     public static void increaseSytemFont(int scale) {
         UIDefaults defaults = UIManager.getDefaults();
-        Enumeration keys = defaults.keys();
+        Enumeration<Object> keys = defaults.keys();
         while (keys.hasMoreElements()) {
             Object key = keys.nextElement();
             Object value = defaults.get(key);
@@ -1185,8 +1289,12 @@ public class Utility {
         }
     }
     
-    /* to implement header for table
-     * Fangping, 08/11/2010
+    /** 
+     * Test if the row header if visible in order to implement header for table
+     * @param table the table to be tested against
+     * @return true if the row header is visible
+     * @author Fangping, 08/11/2010
+     * @author wei wang, commented on 2014-6-19
      */
     public static boolean isRowHeaderVisible(JTable table) {
         Container p = table.getParent();
@@ -1202,7 +1310,10 @@ public class Utility {
         return false;
     }
 
-    /** * Creates row header for table with row number (starting with 1) displayed */
+    /**
+     * Creates row header for table with row number (starting with 1) displayed
+     * @param table the target table
+     */
     public static void removeRowHeader(JTable table) {
         Container p = table.getParent();
         if (p instanceof JViewport) {
@@ -1214,7 +1325,11 @@ public class Utility {
         }
     }
 
-    /** * Creates row header for table with row number (starting with 1) displayed */
+    /**
+     * TODO
+     * Creates row header for table with row number (starting with 1) displayed
+     * @param table 
+     */
     public static void setRowHeader(JTable table) {
         Container p = table.getParent();
         if (p instanceof JViewport) {
@@ -1229,18 +1344,18 @@ public class Utility {
         }
     }
     
-    /*
-     * a group of name collision checking methods, including:
-     * (1) checkDirNameCollision: called when the Physiomimi Work directory
-     * (2) checkSingleFileNameCollision: called when rename/save as
-     * (3) checkFileGroupNameCollision: called when add files/new task
-     * Fangping, 08/17/2010
-     */
+//    /*
+//     * a group of name collision checking methods, including:
+//     * (1) checkDirNameCollision: called when the Physiomimi Work directory
+//     * (2) checkSingleFileNameCollision: called when rename/save as
+//     * (3) checkFileGroupNameCollision: called when add files/new task
+//     * Fangping, 08/17/2010
+//     */
 
-    /*
-     * name collision/auto new name for creating Physiomimi Work directory
-     * Fangping, 08/17/2010
+    /**
+     * Name collision/auto new name for creating Physiomimi Work directory
      * this method should be merged with checkSingleFileNameCollision.
+     * @author Fangping, 08/17/2010
      */
     public static File parseDirNameCollision(File sourceDir,
                                              String subdirName) {
@@ -1249,11 +1364,11 @@ public class Utility {
 
         //retrieve files in the current directory
         File files[] = sourceDir.listFiles();
-        /*
-         * check if file with the name has already existed
-         * cannot simply use new File().exists which does discriminate file from directory
-         * Fangping, 08/21/2010
-         */
+//        /*
+//         * check if file with the name has already existed
+//         * cannot simply use new File().exists which does discriminate file from directory
+//         * Fangping, 08/21/2010
+//         */
         boolean collision = false;
         for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory() &&
@@ -1266,7 +1381,7 @@ public class Utility {
         if (collision == false)
             return newDir;
 
-        // with name collison, go on to retrieve an available one.
+        // with name collision, go on to retrieve an available one.
         int suffix, k;
 
         label1:
@@ -1284,12 +1399,15 @@ public class Utility {
         return newDir;
     }
     
-    /*
-     * name collision check for a single file, called when renameing a single file
-     * Fangping, 08/17/2010
-     * filelist can be null, in which case name collision scope is restricted in the afile's directory 
+    /**
+     * TODO
+     * Name collision check for a single file, called when renameing a single file
+     * @author Fangping, 08/17/2010
+     * @param afile
+     * @param filelist can be null, in which case name collision scope is restricted in the afile's directory 
      */
-    public static File parseSingleFileNameCollision(File afile, ArrayList<File> filelist){
+    @SuppressWarnings("unused") // added for "filelist == null" if statement, by wei wang on 2014-6-19
+	public static File parseSingleFileNameCollision(File afile, ArrayList<File> filelist){
         // do nothing to a directory
         if (afile.isDirectory()){
             System.out.println("invalid file. directory not allowed");
@@ -1301,10 +1419,10 @@ public class Utility {
         //take Array because listFiles return that type of data structure
         File sibFiles[] = new File[sz]; 
         
-        if (filelist == null)
-            //if there is no file list given, then parse collison between afile and its siblings
+        if (filelist == null) {
+            //if there is no file list given, then parse collision between afile and its siblings
             sibFiles = parentDir.listFiles();
-        else{
+        } else {
             for (int i = 0; i < sz; i++)
                 sibFiles[i] = filelist.get(i);
         }
@@ -1320,10 +1438,14 @@ public class Utility {
         return getSuffixNamedFile(afile, sibFiles);        
     }
     
-    /*
+    /**
+     * TODO
      * check if the afile has name collided with files in fileList except fileList.get(eindex)
      * eindex can be -1, means go through the whole fileList;
-     * Fangping Huang, 08/26/2010 
+     * @author Fangping Huang, 08/26/2010
+     * @param afile
+     * @param fileList
+     * @param eindex
      */
     public static boolean isFileNameCollided(File afile, ArrayList<File> fileList, int eindex){   
         if (afile == null || afile.isDirectory() || fileList == null || fileList.size() == 0)
@@ -1340,6 +1462,12 @@ public class Utility {
         return false;
     }
     
+    /**
+     * TODO
+     * @param afile
+     * @param fileList
+     * @return
+     */
     public static boolean isFileNameCollided(File afile, ArrayList<File> fileList){   
         if (afile == null || afile.isDirectory() || fileList == null || fileList.size() == 0)
             return false;
@@ -1354,6 +1482,7 @@ public class Utility {
     }
 
     /**
+     * TODO
      * @author Fangping, 08/21/2010
      * @param filelist the list of files to be parsed with name collision
      * @return the collision-free files after renamed
@@ -1386,6 +1515,13 @@ public class Utility {
         return filelist;
     }
     
+    /**
+     * TODO
+     * @param files
+     * @param start
+     * @param end
+     * @return
+     */
     public static ArrayList<File> sublist(ArrayList<File> files, int start, int end) {
         ArrayList<File> output = new ArrayList<File>(end+1-start);
         for (int i = start; i <= end; i++)
@@ -1406,7 +1542,8 @@ public class Utility {
         return parseSingleFileNameCollision(file, dirList);
     } */
 
-    /*
+    /**
+     * TODO
      * used for new task mode of: File_Selections, NO_Override
      */
     public static ArrayList<File> copyFilestoDirectory(ArrayList<File> srcfiles, File outputDir) {
@@ -1439,6 +1576,7 @@ public class Utility {
     }
 
     /**
+     * TODO
      * @author Fangping, 08/21/2010
      * @param target the file to be renamed
      * @param fileList the list of files to be referred to
@@ -1457,6 +1595,7 @@ public class Utility {
     }
 
     /**
+     * TODO
      * @author Fangping, 08/21/2010
      * @param target the file to be renamed
      * @param filelist the list of files to be compared to target
@@ -1475,9 +1614,8 @@ public class Utility {
         int suffix, k;
         out_loop:
         for (suffix = 1; suffix < Integer.MAX_VALUE; suffix++) {
-            for (k = 0; k < filelist.length; k++){
-                if (filelist[k].getName().equalsIgnoreCase(ordName + "(" +
-                                                        suffix + ")" + dotExtName)
+            for (k = 0; k < filelist.length; k++) {
+                if (filelist[k].getName().equalsIgnoreCase(ordName + "(" + suffix + ")" + dotExtName)
                     && (filelist[k].isDirectory() == isDir)) // have the same dir attribute as target
                     continue out_loop;
             }
@@ -1485,12 +1623,12 @@ public class Utility {
         }
         
         String newName = ordName + "(" + suffix + ")" + dotExtName;
-        
         return new File(target.getParent() + "/" + newName);
     }    
     
-    /*
-     * helper to set the default focus on No button instead of Yes
+    /**
+     * TODO
+     * Helper to set the default focus on No button instead of Yes
      * copyied from http://forums.sun.com/thread.jspa?threadID=5395347
      * Fangping, 08/22/2010
      */
@@ -1504,6 +1642,14 @@ public class Utility {
         return (reply == 0? true: false);
       }
     
+    /**
+     * TODO
+     * @param parent
+     * @param message
+     * @param title
+     * @param messageType
+     * @return
+     */
     public static boolean NoThanksOptionPane(Component parent, String message, String title,
                                               int messageType) {
         
@@ -1517,6 +1663,11 @@ public class Utility {
     //Fangping, 08/23/2010
     //refer to: https://jdic.dev.java.net/
     //refer to: http://stackoverflow.com/questions/526037/java-how-to-open-user-system-preffered-editor-for-given-file
+    /**
+     * Open default application according to the user operating system to process the file
+     * @param file the file to be edited
+     * @return true if this file can be edited
+     */
     public static boolean editFile(final File file) {
       if (!Desktop.isDesktopSupported()) {
         return false;
@@ -1538,44 +1689,48 @@ public class Utility {
       return true;
     }
     
-    /*
-     * open default browser
+    /**
+     * Open default browser
      */
     private static final String errMsg = "Error attempting to launch web browser";
 
-     public static void openURL(String url) {
-         String osName = System.getProperty("os.name");
-         try {
-             if (osName.startsWith("Mac OS")) {
-                 Class fileMgr = Class.forName("com.apple.eio.FileManager");
-                 Method openURL =
-                     fileMgr.getDeclaredMethod("openURL", new Class[] { String.class });
-                 openURL.invoke(null, new Object[] { url });
-             } else if (osName.startsWith("Windows"))
-                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " +
-                                           url);
-             else { //assume Unix or Linux
-                 String[] browsers =
-                 { "firefox", "opera", "konqueror", "epiphany", "mozilla",
-                   "netscape" };
-                 String browser = null;
-                 for (int count = 0; count < browsers.length && browser == null;
-                      count++)
-                     if (Runtime.getRuntime().exec(new String[] { "which",
-                                                                  browsers[count] }).waitFor() ==
-                         0)
-                         browser = browsers[count];
-                 if (browser == null)
-                     throw new Exception("Could not find web browser");
-                 else
-                     Runtime.getRuntime().exec(new String[] { browser, url });
-             }
-         } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, errMsg + ":\n" +
-                     e.getLocalizedMessage());
-         }
-     }    
+    /**
+     * Open a url
+     * @param url the url to be opened
+     */
+    public static void openURL(String url) {
+        String osName = System.getProperty("os.name");
+        try {
+            if (osName.startsWith("Mac OS")) {
+                Class<?> fileMgr = Class.forName("com.apple.eio.FileManager"); // change Class to Class<?> by wei wang on 2014-6-19
+                Method openURL = fileMgr.getDeclaredMethod("openURL", new Class[] { String.class });
+                openURL.invoke(null, new Object[] { url });
+            } else if (osName.startsWith("Windows")) {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+            } else { // assume Unix or Linux
+                String[] browsers = { 
+                	"firefox", "opera", "konqueror", "epiphany", "mozilla", "netscape" 
+                };
+                String browser = null;
+                 for (int count = 0; count < browsers.length && browser == null; count++)
+                    if (Runtime.getRuntime().exec(new String[] { "which", browsers[count] }).waitFor() == 0)
+                        browser = browsers[count];
+                if (browser == null)
+                    throw new Exception("Could not find web browser");
+                else
+                    Runtime.getRuntime().exec(new String[] { browser, url });
+            }
+        } catch (Exception e) {
+        	JOptionPane.showMessageDialog(null, errMsg + ":\n" + e.getLocalizedMessage());
+        }
+    }    
      
+    /**
+     * TODO
+     * @param table
+     * @param rr
+     * @param cc
+     */
     public static void scrollTableRowToVisible(JTable table, int rr, int cc) {
         if (!(table.getParent() instanceof JViewport)) {
             return;
@@ -1587,16 +1742,22 @@ public class Utility {
         viewport.scrollRectToVisible(rect);
     }
     
+    /**
+     * TODO
+     * @param file
+     * @return
+     */
     public static int getTabIndexofMasterFile(File file) {
-        int index;
+//        int index;  // deleted by wei wang on 2014-6-19
         EDFTabbedPane tabbedPane = MainWindow.tabPane;
         int tabCount = tabbedPane.getTabCount();
         BasicEDFPane pane;
         for (int i = 0; i < tabCount; i++){
             pane = (BasicEDFPane)tabbedPane.getComponentAt(i);
             if (file == pane.getMasterFile()){
-                index = i;
+//                index = i; // deleted by wei wang on 2014-6-19
                 return i;
+//                return index; // modified by wei wang on 2014-6-19
             }
         }      
         //not exist    
@@ -1639,6 +1800,11 @@ public class Utility {
     	glassPane.setCursor(Cursor.getPredefinedCursor(cursorType));
 		glassPane.setVisible(cursorType != Cursor.DEFAULT_CURSOR);
     }
+    
+    /**
+     * TODO
+     * @param component
+     */
     public static void endWaitCursor(JComponent component) {
     	int cursorType = Cursor.DEFAULT_CURSOR;
     	Component glassPane = ((RootPaneContainer)component.getTopLevelAncestor()).getGlassPane();

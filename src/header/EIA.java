@@ -26,7 +26,7 @@ public class EIA {
     public static final int index_number_of_datarecord = 8;
     public static final int index_duration = 9;
     public static final int index_number_of_channels = 10;
-    
+
     public static final int NUMBER_OF_ATTRIBUTES = 10;
     public static final int BYTES_OF_EIA = 256;
 
@@ -49,15 +49,12 @@ public class EIA {
     
     public static final String[] Keys = {key_blank, key_rand, key_skip, key_filename, key_pid,
                                                   key_rid, key_yy, key_mm, key_dd};
-    
-
 
     protected static int[] byteLength = { 8, 80, 80, 8, 8, 8, 44, 8, 8, 4 };
 
-
 ///////////////////////////////////////////////////////////////////////////////
 ////////////////////START of getter and setter zone ///////////////////////////
- //////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
     /**
      * Usage: used to construct the table header.

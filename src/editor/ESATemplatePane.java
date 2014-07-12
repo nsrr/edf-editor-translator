@@ -39,6 +39,9 @@ public class ESATemplatePane extends BasicEDFPane {
     
     private Font oldFont = MainWindow.tabPane.getFont();
 
+    /**
+     * TODO
+     */
     public ESATemplatePane() {
         super();
         incrementUid();
@@ -52,6 +55,11 @@ public class ESATemplatePane extends BasicEDFPane {
         addListeners();
     }
 
+    /**
+     * TODO
+     * @param esaHeader
+     * @param istemplate
+     */
     public ESATemplatePane(ESAHeader esaHeader, boolean istemplate) {
         super();
         incrementUid();
@@ -68,13 +76,16 @@ public class ESATemplatePane extends BasicEDFPane {
     }
 
     /**
-     *  customerize the table's cell editor, renderer, and so on
+     *  customize the table's cell editor, renderer, and so on
      */
     public void addListeners() {
         esaTemplateTable.addMouseMotionListener(new CellMouseListener());
         esaTemplateTable.addMouseListener(new CellMouseClickedListener());
     }
 
+    /**
+     * TODO
+     */
     private void createFilePathLabel() {
         String filename;
         if (masterFile != null)
@@ -96,6 +107,7 @@ public class ESATemplatePane extends BasicEDFPane {
 
 
     /**
+     * TODO
      * @return table panel
      */
     public JPanel createTablePane() {
@@ -114,6 +126,9 @@ public class ESATemplatePane extends BasicEDFPane {
         return pane;
     }
 
+    /**
+     * TODO
+     */
     public void setupLayout() {
         FormLayout layout =
             new FormLayout("d:n, f:d:g, l:p:n, 4dlu:n, 6dlu:n", "15dlu:n, 2dlu:n, f:d:g, 6dlu:n, b:d:n");
@@ -126,7 +141,10 @@ public class ESATemplatePane extends BasicEDFPane {
         this.add(allCellsShownCbox, cc.xy(3, 1));   
     }
     
-    private void createShowHideCheckBox(){
+    /**
+     * TODO
+     */
+    private void createShowHideCheckBox() {
         JCheckBox cbox;
         cbox = new JCheckBox("Show read-only cells");
         Font cboxFont = new Font(oldFont.getName(), oldFont.getStyle(), oldFont.getSize()+ 2);
@@ -137,7 +155,10 @@ public class ESATemplatePane extends BasicEDFPane {
         setupCheckBoxStatus(true);
     }
     
-    class showHideListener implements ActionListener{
+    /**
+     * TODO
+     */
+    class showHideListener implements ActionListener {
         private boolean selected;
         JCheckBox cbox;
         public void actionPerformed(ActionEvent e) {
@@ -146,7 +167,10 @@ public class ESATemplatePane extends BasicEDFPane {
             performActions();
         }
         
-        private void performActions(){
+        /**
+         * TODO
+         */
+        private void performActions() {
             if (selected)
                 esaTemplateTable.showImmutableFields();
             else
@@ -154,34 +178,56 @@ public class ESATemplatePane extends BasicEDFPane {
         }        
     }
     
+    /**
+     * TODO
+     * @param active
+     */
     private void setupCheckBoxStatus(boolean active){
         allCellsShownCbox.setSelected(active);
         setAllCellsShown(active);
     }
 
-
+    /**
+     * TODO
+     * @param esaTemplateTable
+     */
     public void setEsaTemplateTable(ESATemplateTable esaTemplateTable) {
         this.esaTemplateTable = esaTemplateTable;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public ESATemplateTable getEsaTemplateTable() {
         return esaTemplateTable;
     }
 
+    /**
+     * TODO
+     * @param myPid
+     */
     public void setPid(long myPid) {
         pid = myPid;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public long getPid() {
         return pid;
     }
 
+    /**
+     * TODO
+     */
     public static void incrementUid() {
         uid++;
     }
 
-
     /**
+     * TODO
      * @return ESAHeader which can be used when saving or applyint template
      * Fangping, 02/26/2010
      */
@@ -191,6 +237,9 @@ public class ESATemplatePane extends BasicEDFPane {
         return esaHeader;
     }
 
+    /**
+     * TODO
+     */
     private class CellMouseClickedListener implements MouseListener {
 
         @Override
@@ -204,23 +253,35 @@ public class ESATemplatePane extends BasicEDFPane {
             }
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+         */
         @Override
         public void mouseEntered(MouseEvent e) {
             // TODO Auto-generated method stub
 
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+         */
         @Override
         public void mouseExited(MouseEvent e) {            
             MainWindow.setCellContent("");
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+         */
         @Override
         public void mousePressed(MouseEvent e) {
             // TODO Auto-generated method stub
 
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+         */
         @Override
         public void mouseReleased(MouseEvent e) {
             // TODO Auto-generated method stub
@@ -228,7 +289,9 @@ public class ESATemplatePane extends BasicEDFPane {
         }
     }
 
-
+    /**
+     * TODO
+     */
     private class CellMouseListener implements MouseMotionListener {
 
         public void mouseDragged(MouseEvent e) {
@@ -245,6 +308,9 @@ public class ESATemplatePane extends BasicEDFPane {
             MainWindow.setCellContent(text);
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+         */
         public void mouseMoved(MouseEvent e) {
             EDFTable table = (EDFTable)e.getSource();
             int rr = table.rowAtPoint(e.getPoint());

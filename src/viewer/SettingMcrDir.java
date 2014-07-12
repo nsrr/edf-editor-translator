@@ -4,11 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Map;
 
+/**
+ * TODO
+ */
+@SuppressWarnings("serial")
 public class SettingMcrDir extends SettingParameters {
 
-	private static final long serialVersionUID = 1L;
 	private static SettingMcrDir sm = null;
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public static SettingMcrDir setMcrDir() {
 		if (sm == null) {
 			sm = new SettingMcrDir();
@@ -17,6 +24,9 @@ public class SettingMcrDir extends SettingParameters {
 		return sm;
 	}
 
+	/**
+	 * TODO
+	 */
 	private SettingMcrDir() {
 		super("MCR_Dir");
 		if (bfirst) {
@@ -32,6 +42,10 @@ public class SettingMcrDir extends SettingParameters {
 
 	private static boolean bfirst = true;
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public static String getSystemMcrDir() {
 		Map<String, String> env = System.getenv();
 		for (String envName : env.keySet()){

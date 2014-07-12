@@ -11,16 +11,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -43,13 +40,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import listener.EDFFileFilter;
-
 import net.miginfocom.swing.MigLayout;
-
 import table.EIATable;
 
-
-public class ApplyTemplateListener extends JDialog{
+@SuppressWarnings("serial")
+public class ApplyTemplateListener extends JDialog {
     private JButton applyButton;
     private JButton cancelButton; 
     private JButton selectAllButton; 
@@ -79,6 +74,7 @@ public class ApplyTemplateListener extends JDialog{
     private ArrayList<File> selectedFiles = new ArrayList<File>();
 
     /**
+     * TODO
      * @param templateType the template type, eia or esa, to be applied
      */
     public ApplyTemplateListener(JFrame frame, String templateType) {
@@ -100,10 +96,11 @@ public class ApplyTemplateListener extends JDialog{
 
         /* do not switch the order of visualize() and setDialogLayout(); */
         visualize(); 
-
-
     }
 
+    /**
+     * TODO
+     */
     public void initUI() { /* register a group of listener */
 
         selectAllButton = new JButton("All");
@@ -166,27 +163,41 @@ public class ApplyTemplateListener extends JDialog{
       
     }
     
-    private JScrollPane createScroller(){
+    /**
+     * TODO
+     * @return
+     */
+    @SuppressWarnings("unused")
+	private JScrollPane createScroller() {
         JScrollPane scroller = new JScrollPane(checkboxList);
         return scroller;
     }
     
-    public void setDialogLayout(){
+    /**
+     * TODO
+     */
+    public void setDialogLayout() {
         this.setLayout(new BorderLayout());
         this.getContentPane().add(templatePanel, BorderLayout.NORTH);
         this.getContentPane().add(edfPanel, BorderLayout.CENTER);
         this.getContentPane().add(controlPanel, BorderLayout.SOUTH);
     }
     
-    
-    public void visualize(){   
+    /**
+     * TODO
+     */
+    public void visualize() {   
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setSize(dialogWidth, dialogHeight);
         this.setVisible(true);
         this.pack();
     }
     
-    public JPanel createControlPanel(){
+    /**
+     * TODO
+     * @return
+     */
+    public JPanel createControlPanel() {
         JPanel controlPanel = new JPanel();
         
         controlPanel.add(applyButton);
@@ -195,6 +206,10 @@ public class ApplyTemplateListener extends JDialog{
         return controlPanel;
     }
     
+    /**
+     * TODO
+     * @return
+     */
     public JPanel createEDFPanel(){
         JPanel edfFilesPanel = new JPanel();
         edfFilesPanel.setBorder(BorderFactory.createTitledBorder("Apply Template to Selected EDF Files"));
@@ -210,6 +225,10 @@ public class ApplyTemplateListener extends JDialog{
         return edfFilesPanel;           
     }
     
+    /**
+     * TODO
+     * @return
+     */
     private CheckBoxList createCheckBoxList(){
         CheckBoxList boxList = new CheckBoxList();
         int nfiles;
@@ -230,6 +249,10 @@ public class ApplyTemplateListener extends JDialog{
         return boxList;
     }
     
+    /**
+     * TODO
+     * @return
+     */
     private JPanel createTemplatePanel(){
         JPanel templatePanel = new JPanel();
         
@@ -266,32 +289,46 @@ public class ApplyTemplateListener extends JDialog{
         return templatePanel;
     }
     
-    private void setContentsOfEIATemplateFilesBox(){
+    /**
+     * TODO
+     */
+    private void setContentsOfEIATemplateFilesBox() {
         if (MainWindow.EIATemplateFiles.isEmpty())
             return;
-        for (File file: MainWindow.EIATemplateFiles){
+        for (File file: MainWindow.EIATemplateFiles) {
             String fileName = file.getAbsolutePath();
             templateFilesBox.addItem(fileName);
         }
     }
     
-    private int getTemplateChoice(){
+    /**
+     * TODO
+     * @return
+     */
+    private int getTemplateChoice() {
         if (templateType.equalsIgnoreCase("eia"))
             return 0;
         else 
             return 1;
     }
     
-    private void setContentsOfESATemplateFilesBox(){
+    /**
+     * TODO
+     */
+    private void setContentsOfESATemplateFilesBox() {
         if (MainWindow.ESATemplateFiles.isEmpty())
             return;
         
-        for (File file: MainWindow.ESATemplateFiles){
+        for (File file: MainWindow.ESATemplateFiles) {
              String fileName = file.getAbsolutePath();
             templateFilesBox.addItem(fileName);
         }
     }
 
+    /**
+     * TODO
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
         if (MainWindow.wkEdfFiles == null)
             return; 
@@ -303,7 +340,7 @@ public class ApplyTemplateListener extends JDialog{
         // do not switch the order of visualize() and setDialogLayout(); 
     }
 
-    /**
+    /**TODO
      * get the selected template header
      * @param choice template type
      * @return either eia or esa template header, depending on the templateType
@@ -401,9 +438,12 @@ public class ApplyTemplateListener extends JDialog{
         return null;
     }
 
+    /**
+     * TODO
+     */
     class BrowseActionListener extends MouseAdapter implements ActionListener {
         
-        public void performActions(){
+        public void performActions() {
             String extName, description, chooserDialogTitle;
             if (choice == 0){
                 extName = "eia";
@@ -433,16 +473,25 @@ public class ApplyTemplateListener extends JDialog{
             
         }
         
-        public void actionPerformed(ActionEvent e){
+        /**
+         * TODO
+         */
+        public void actionPerformed(ActionEvent e) {
             performActions();
         }
         
-        public void mouseClicked(MouseEvent e){
+        /**
+         * TODO
+         */
+        public void mouseClicked(MouseEvent e) {
             performActions();
         }           
     }
     
-    class SelectButtonsListener implements ActionListener{
+    /**
+     * TODO
+     */
+    class SelectButtonsListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             JButton source = (JButton) e.getSource();
@@ -451,15 +500,18 @@ public class ApplyTemplateListener extends JDialog{
         }
     }
 
-
+    /**
+     * TODO
+     */
     class ApplyButtonListener implements ActionListener {
 
         /**
+         * TODO
          * map eia Header to edf files and then update the header table
          * @param eiaTemplateHeader eia template header
          * @param indices the select files's indices
          */
-        private void mapeiaHeaderToEDFFiles(EIAHeader eiaTemplateHeader, ArrayList<Integer> indices){
+        private void mapeiaHeaderToEDFFiles(EIAHeader eiaTemplateHeader, ArrayList<Integer> indices) {
             if (eiaTemplateHeader == null)
                 return;
             
@@ -472,19 +524,17 @@ public class ApplyTemplateListener extends JDialog{
                 rowIndex = indices.get(i);
                 // initialize the selectedFiles
                
-                selectedFiles.add(MainWindow.wkEdfFiles.get(rowIndex));
-                
+                selectedFiles.add(MainWindow.wkEdfFiles.get(rowIndex)); 
                
                 //do not remove the next line.
                 //eiaHeader = MainWindow.srcEdfFileHeaders.get(idx).getEiaHeader();
                 eiaHeader = new EIAHeader(etable, rowIndex);
 
-                if (eiaHeader == null){
+                if (eiaHeader == null) {
                     System.out.println("!! edfFileHeader is null");
                     return;
                 }
                 Utility.mapEIAHeader(eiaHeader, eiaTemplateHeader);
-
                 
                 // renew the rowIndex-th row of the eia table
                 etable.updateTableRow(eiaHeader, rowIndex);
@@ -497,8 +547,8 @@ public class ApplyTemplateListener extends JDialog{
          * @param indices
          * Fangping, 08/18/2010, 06:32pm
          */        
-        private void mapesaHeaderToEDFFiles(ESAHeader esaTemplateHeader, ArrayList<Integer> indices){
-            if (esaTemplateHeader == null){
+        private void mapesaHeaderToEDFFiles(ESAHeader esaTemplateHeader, ArrayList<Integer> indices) {
+            if (esaTemplateHeader == null) {
                 return;
             }
             
@@ -519,7 +569,9 @@ public class ApplyTemplateListener extends JDialog{
             }
         }
         
-        
+        /**
+         * TODO
+         */
         public void actionPerformed(ActionEvent e) {
             // acquire the selected edf files
             ArrayList<Integer> selectedindices = checkboxList.getSelectedCheckBox();
@@ -549,7 +601,10 @@ public class ApplyTemplateListener extends JDialog{
         }
     }//end of ApplyButtonListener
     
-    private void printMessageToConsole(){
+    /**
+     * TODO
+     */
+    private void printMessageToConsole() {
         String theme = "";
         int sz = selectedFiles.size();
         String grammar = (sz == 1)? " file ": " files ";
@@ -584,13 +639,19 @@ public class ApplyTemplateListener extends JDialog{
         }
     }
     
+    /**
+     * TODO
+     */
     class CancelAction extends AbstractAction {
         public void actionPerformed(ActionEvent ev) {
             dispose();
         }
     }
     
-    private void setLogo(){
+    /**
+     * TODO
+     */
+    private void setLogo() {
         BufferedImage image = null;
         try {
             image = ImageIO.read(this.getClass().getResource("/icon/mimilogo.png"));
@@ -600,5 +661,4 @@ public class ApplyTemplateListener extends JDialog{
 
         this.setIconImage(image);
     }
-
 }

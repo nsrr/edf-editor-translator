@@ -2,20 +2,14 @@ package editor;
 
 import java.awt.Color;
 import java.awt.Font;
-
 import java.awt.Graphics;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-
 import java.awt.event.MouseEvent;
-
 import java.io.File;
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-
 import java.text.SimpleDateFormat;
 
 import javax.swing.JComponent;
@@ -39,13 +33,13 @@ import javax.swing.text.StyleContext;
  * plain text color/font, and so on.
  */
 
-
 /* EDFInfoPane should extend JTextPane, instead of JEditorPane which is better for 
- * displaying already formatted data but less fantastic if things whant to be
+ * displaying already formatted data but less fantastic if things want to be
  * manipulated by oneself.
  */
 
-public class EDFInfoPane extends JTextPane{
+@SuppressWarnings("serial")
+public class EDFInfoPane extends JTextPane {
     
     protected static String fontName = Font.MONOSPACED;
     protected static Color foregroundColor = new Color(0, 255, 0);
@@ -94,7 +88,7 @@ public class EDFInfoPane extends JTextPane{
    // private JMenuItem findMenu = new JMenuItem("Find");
    // private JMenuItem saveasMenu = new JMenuItem("Save As");
     
-    static{
+    static {
         StyleConstants.setForeground(theme, foregroundColor);
         StyleConstants.setForeground(content, foregroundColor);
         StyleConstants.setForeground(logaction, foregroundColor);
@@ -102,6 +96,10 @@ public class EDFInfoPane extends JTextPane{
     
     private StyledDocument doc;
     
+    /**
+     * TODO
+     * @param paneType
+     */
     public EDFInfoPane(int paneType) {       
         super();
         this.setOpaque(false);
@@ -116,25 +114,35 @@ public class EDFInfoPane extends JTextPane{
         addMouseListener(new InfoPaneMouseAdapter());
         
         //obsolete
-/*         if (paneType == FINFO)
-            this.setText("");
-        else
-            this.setText(logTitle); */
+//        if (paneType == FINFO)
+//            this.setText("");
+//        else
+//            this.setText(logTitle);
     }
     
-    private void setupDoc(){
+    /**
+     * TODO
+     */
+    private void setupDoc() {
         doc = this.getStyledDocument();        
     }
     
-    public void outputMessage(String message){
+    /**
+     * TODO
+     * @param message
+     */
+    public void outputMessage(String message) {
         try {
             doc.insertString(doc.getLength(), message, theme);
         } catch (BadLocationException e) {;}
     }
     
     
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         g.setColor(backgroundColor);
         g.fillRect(0,0, getWidth(), getHeight());
         
@@ -142,7 +150,11 @@ public class EDFInfoPane extends JTextPane{
     }
     
     //print the message header for each type of events
-    public static void printMessageHeader(String headerText){
+    /**
+     * TODO
+     * @param headerText
+     */
+    public static void printMessageHeader(String headerText) {
         StyleContext context = new StyleContext();
         StyledDocument document = new DefaultStyledDocument(context);
         Style labelStyle = context.getStyle(StyleContext.DEFAULT_STYLE);
@@ -161,29 +173,40 @@ public class EDFInfoPane extends JTextPane{
         }
     }
     
-    public void setPopupMenu(){
+    /**
+     * TODO
+     */
+    public void setPopupMenu() {
         popup.add(clearMenu);      
         popup.setLightWeightPopupEnabled(true);
-
         
-        clearMenu.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    clearMessage();
-                }
-            });
+        clearMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                clearMessage();
+            }
+        });
     }
     
     //erase all content in the console window    
+    /**
+     * TODO
+     */
     private void clearMessage(){
         this.setText("");
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static MutableAttributeSet getTheme() {
         return theme;
     }
     
-    /*
+    /**
+     * TODO
      * output file information in table to editorPane
+     * @param file
      */
     public void outputFileInfoWithHtml(File file) {
         this.setContentType("text/html");
@@ -199,7 +222,8 @@ public class EDFInfoPane extends JTextPane{
         this.setText(EDFInfoPane.finfoTitle + list);
     }
 
-    /*
+    /**
+     * TODO
      * output task information in table to editorPane
      */
     public void outputTaskInfoWithHtml() {
@@ -209,11 +233,10 @@ public class EDFInfoPane extends JTextPane{
         //1.
         srcDir = MainWindow.getSourceDirectoryText();
         //2.4.
-        if (MainWindow.getWriteMode() == MainWindow.overwrite_mode){
+        if (MainWindow.getWriteMode() == MainWindow.overwrite_mode) {
             outputDir = srcDir;
             writeMode = "OVERWRITE to source files";
-        }
-        else{
+        } else {
             outputDir = MainWindow.getWorkingDirectory().getPath();
             writeMode = "DUPLICATE source files";
         }
@@ -226,13 +249,17 @@ public class EDFInfoPane extends JTextPane{
         else
             selectionMode = selection_mode_by_file;
         
-
         String list = tabulateTaskInfo(srcDir, outputDir, taskFiles, writeMode, selectionMode);
         this.setText(EDFInfoPane.finfoTitle + list);
     }
 
 
-    private String formatFileSize(long size){
+    /**
+     * TODO
+     * @param size
+     * @return
+     */
+    private String formatFileSize(long size) {
         String lenstr = "";
         DecimalFormat df = new DecimalFormat();
         DecimalFormatSymbols dfs = new DecimalFormatSymbols();
@@ -244,20 +271,37 @@ public class EDFInfoPane extends JTextPane{
         return lenstr;
     }
     
-    private long toMegaBytes(long size){
+    /**
+     * TODO
+     * @param size
+     * @return
+     */
+    private long toMegaBytes(long size) {
         int mb = 1000*1000;
         return (size < 1)? 1: (size/mb);
     }
     
-    private String formatFileDate(long date){        
+    /**
+     * TODO
+     * @param date
+     * @return
+     */
+    private String formatFileDate(long date) {        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss");      
         String datestr = sdf.format(date);       
         
         return datestr;
     }
 
-    
-    private String tabulateFileInfo(String name, String path,  String size, String date){
+    /**
+     * TODO
+     * @param name
+     * @param path
+     * @param size
+     * @param date
+     * @return
+     */
+    private String tabulateFileInfo(String name, String path,  String size, String date) {
         name = appendformattedHeader(file_name, name);
         path = appendformattedHeader(file_path, path);
         size = appendformattedHeader(file_size, size);
@@ -268,11 +312,25 @@ public class EDFInfoPane extends JTextPane{
         return tale_tag_start  + content + table_tag_end;
     }
     
-    private String appendformattedHeader(String header, String content){
+    /**
+     * TODO
+     * @param header
+     * @param content
+     * @return
+     */
+    private String appendformattedHeader(String header, String content) {
         return html_table_beg + header + html_table_mid + content + html_table_end;
     }
     
-    
+    /**
+     * TODO
+     * @param srcDir
+     * @param outputDir
+     * @param taskFilesCount
+     * @param writeMode
+     * @param selectionMode
+     * @return
+     */
     private String tabulateTaskInfo(String srcDir, String outputDir, String taskFilesCount, String writeMode, String selectionMode){
         srcDir = appendformattedHeader(source_dir, srcDir);
         outputDir = appendformattedHeader(output_dir, outputDir);
@@ -285,13 +343,18 @@ public class EDFInfoPane extends JTextPane{
         return  tale_tag_start  + content + table_tag_end;
     }
 
-    class InfoPaneMouseAdapter extends MouseAdapter{
+    /**
+     * TODO
+     */
+    class InfoPaneMouseAdapter extends MouseAdapter {
         
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
+         */
         public void mousePressed(MouseEvent e){
             if (e.getButton() == MouseEvent.BUTTON3){
                 popup.show((JComponent)e.getSource(), e.getX(), e.getY());
             }
         }        
     }   
-     
 }

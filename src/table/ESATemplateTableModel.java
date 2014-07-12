@@ -2,12 +2,14 @@ package table;
 
 import header.ESA;
 
+@SuppressWarnings("serial")
 public class ESATemplateTableModel extends ESATableModel {
+	
     public ESATemplateTableModel(int rows) {
         super(ESA.getESATemplateAttributes(), rows);
     }
     
-    /*
+    /**
      * make the number of signal column uneditable
      * Fangping, 08/05/2010
      */    

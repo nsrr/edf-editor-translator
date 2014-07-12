@@ -6,6 +6,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+/**
+ * A customized layout manager
+ */
 public class LayoutManager {
 	
 	private static GridBagConstraints first;
@@ -32,24 +35,44 @@ public class LayoutManager {
 		first.gridwidth = 1;
 	}
 	
+	/**
+	 * Using this layout manager to add the first component to specified container
+	 * @param c the component to be added
+	 * @param parent the container
+	 */
 	public static void addFirstField(Component c, Container parent) {
 		GridBagLayout gbl = (GridBagLayout) parent.getLayout();
         gbl.setConstraints(c, first);
         parent.add(c);
 	}
 	
+	/**
+	 * Using this layout manager to add the middle component to specified container
+	 * @param c the component to be added
+	 * @param parent the container
+	 */
 	public static void addMiddleField(Component c, Container parent) {
 		GridBagLayout gbl = (GridBagLayout) parent.getLayout();
         gbl.setConstraints(c, middle);
         parent.add(c);
 	}
 	
+	/**
+	 * Using this layout manager to add the last component to specified container
+	 * @param c the component to be added
+	 * @param parent the container
+	 */
 	public static void addLastField(Component c, Container parent) {
 		GridBagLayout gbl = (GridBagLayout) parent.getLayout();
         gbl.setConstraints(c, last);
         parent.add(c);
 	}
 	
+	/**
+	 * Add a component using this layout manager
+	 * @param c the component to be added
+	 * @param parent the container
+	 */
 	public static void addItemList(Component c, Container parent) {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.weightx = 0.1;

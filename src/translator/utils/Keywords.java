@@ -5,6 +5,9 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+/**
+ * Properties related to translator
+ */
 public class Keywords {
 	
 	public final static String translator_log = "translator_log.txt";

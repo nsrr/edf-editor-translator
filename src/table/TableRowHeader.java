@@ -11,19 +11,24 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.table.JTableHeader;
 
-/*
+/**
  * Works as the header of EDF tables
  * copiously adapted from http://www.jguru.com/faq/view.jsp?EID=87579
  * Fangping Huang, 08/11/2010
  */
+@SuppressWarnings({ "serial", "rawtypes" })
 public class TableRowHeader extends JList {
-    private JTable table;
+	private JTable table;
 
-    public TableRowHeader(JTable table) {
+    /**
+     * Construct the TableRowHeader using a specific JTable
+     * @param table the JTable used to construct TableRowHeader
+     */
+    @SuppressWarnings("unchecked")
+	public TableRowHeader(JTable table) {
         super(new TableRowHeaderModel(table));
         this.table = table;
         setFixedCellHeight(table.getRowHeight());
@@ -41,7 +46,6 @@ public class TableRowHeader extends JList {
      * @param index1 the index of the last JList cell in the range
      * @return the bounds of the indexed cells in pixels
      */
-
     public Rectangle getCellBounds(int index0, int index1) {
         Rectangle rect0 = table.getCellRect(index0, 0, true);
         Rectangle rect1 = table.getCellRect(index1, 0, true);
@@ -57,6 +61,10 @@ public class TableRowHeader extends JList {
     }
     // assume that row header width should be big enough to display row number Integer.MAX_VALUE completely
 
+    /**
+     * Get the preferred header width
+     * @return the preferred header width
+     */
     private int preferredHeaderWidth() {
         JLabel longestRowLabel = new JLabel("0000");
         JTableHeader header = table.getTableHeader();
@@ -75,33 +83,59 @@ public class TableRowHeader extends JList {
 }
 
 
+/**
+ * Model of this TableRowHeader
+ * @author wei
+ */
+@SuppressWarnings({ "serial", "rawtypes" })
 class TableRowHeaderModel extends AbstractListModel {
-    private JTable table;
 
+	private JTable table;
+
+    /**
+     * Construct this model using a JTable	
+     * @param table
+     */
     public TableRowHeaderModel(JTable table) {
         this.table = table;
     }
 
+    /**
+     * Get the size of this header
+     * @return the number of fields in this header
+     */
     public int getSize() {
         return table.getRowCount();
     }
 
+    /**
+     * Get the element at index <code>index</code>
+     * @return the element at index <code>index</code>
+     */
     public Object getElementAt(int index) {
         return null;
     }
 }
 
 
+@SuppressWarnings({ "serial", "rawtypes" })
 class RowHeaderRenderer extends JLabel implements ListCellRenderer {
-    private JTable table;
-    private Border selectedBorder;
-    private Border normalBorder;
+
+	private JTable table;
+    @SuppressWarnings("unused")
+	private Border selectedBorder;
+    @SuppressWarnings("unused")
+	private Border normalBorder;
     private Font selectedFont;
     private Font normalFont;
     //background color after selected
     private Color slbkColor = new Color(255, 213, 141);    
     private Color bkColor;
 
+    /**
+     * Construct a RowHeaderRenderer
+     * @param table the target table
+     */
     RowHeaderRenderer(JTable table) {
         this.table = table;
         //normalBorder = UIManager.getBorder("TableHeader.cellBorder");
@@ -118,6 +152,10 @@ class RowHeaderRenderer extends JLabel implements ListCellRenderer {
         setHorizontalAlignment(CENTER);
     }
 
+    /**
+     * Return a component that has been configured to display the specified value
+     * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+     */
     public Component getListCellRendererComponent(JList list, Object value,
                                                   int index,
                                                   boolean isSelected,

@@ -17,15 +17,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -46,7 +43,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import listener.EDFFileFilter;
-
 import table.EDFTable;
 import table.EIATable;
 import table.ESATable;
@@ -129,6 +125,9 @@ public class AddFilesListener extends JDialog {
          visualize();
      }
 
+    /**
+     * TODO
+     */
     private void initUI() {
         this.setSize(new Dimension(dialogWidth, dialogHeight));
         
@@ -139,6 +138,9 @@ public class AddFilesListener extends JDialog {
         buildCancelButton();      
     }
 
+    /**
+     * TODO
+     */
     private void visualize() {
         this.setTitle("Add Files");
         setLogo();
@@ -147,7 +149,9 @@ public class AddFilesListener extends JDialog {
         this.setResizable(false);
     }
 
-
+    /**
+     * TODO
+     */
     private void setDialogLayout(){
         
         buildEdfPanel();
@@ -209,18 +213,26 @@ public class AddFilesListener extends JDialog {
         sourceFilesDirField.addMouseListener(new BrowseSourceFilesButtonListenser());
     }
     
-    
+    /**
+     * TODO
+     */
     private void buildFileBrowseButton(){
         browseButton = new JButton("Browse...");
         browseButton.addActionListener(new BrowseSourceFilesButtonListenser());
     }
     
+    /**
+     * TODO
+     */
     private void buildFinishButton(){
         finishButton = new JButton("Finish");
         finishButton.setEnabled(false); //Fangping, 08/19/2010
         finishButton.addActionListener(new FinishButtonListener());
     }
 
+    /**
+     * TODO
+     */
     private void buildCancelButton(){
         cancelButton = new JButton("Cancel");
         InputMap im = cancelButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -257,6 +269,9 @@ public class AddFilesListener extends JDialog {
         tipPanel.setBorder(BorderFactory.createEtchedBorder());
     }
 
+    /**
+     * TODO
+     */
     private class BrowseSourceFilesButtonListenser extends MouseAdapter implements ActionListener {
         public void performActions() {        
             selectedFiles = selectSourceFiles();
@@ -270,7 +285,11 @@ public class AddFilesListener extends JDialog {
             showResultAreas(true);                       
         }
         
-        private File[] selectSourceFiles(){
+        /**
+         * TODO
+         * @return
+         */
+        private File[] selectSourceFiles() {
             EDFFileFilter filter =
                 new EDFFileFilter(new String[] { extName }, description);
             JFileChooser chooser = new JFileChooser();
@@ -287,7 +306,11 @@ public class AddFilesListener extends JDialog {
             return chooser.getSelectedFiles();
         }
         
-        private ArrayList<File> selectedFilesArrayToArayList(){
+        /**
+         * TODO
+         * @return
+         */
+        private ArrayList<File> selectedFilesArrayToArayList() {
             int nfiles = selectedFiles.length;
             ArrayList<File> sourceFiles = new ArrayList<File>(nfiles);
             for (int i = 0; i < nfiles; i++)              
@@ -296,7 +319,10 @@ public class AddFilesListener extends JDialog {
             return sourceFiles;
         }
             
-        
+        /**
+         * TODO
+         * @return
+         */
         private String getPromptMsg(){
             String text;
             int nfiles = sourceFiles.size();
@@ -310,6 +336,10 @@ public class AddFilesListener extends JDialog {
             return text;
         }
         
+        /**
+         * TODO
+         * @param affirmative
+         */
         private void showResultAreas(boolean affirmative){
             sourceFilesDirField.setText(sourceDirectory.toString());      
             updateCheckBoxList();
@@ -317,18 +347,23 @@ public class AddFilesListener extends JDialog {
             finishButton.setEnabled(affirmative);  
         }
 
+        /**
+         * TODO
+         */
         public void actionPerformed(ActionEvent e) {
             performActions();
         }
         
+        /**
+         * TODO
+         */
         public void mouseClicked(MouseEvent e){
              performActions();
         }
     }
     
-    
-    /*
-     * Listener for FinishButton
+    /**
+     * TODO:Listener for FinishButton
      */
     private class FinishButtonListener implements ActionListener {
         private ArrayList<File> finalAddedFiles = new ArrayList<File>();
@@ -361,7 +396,10 @@ public class AddFilesListener extends JDialog {
             dispose();
         }
         
-        //removed already opend files
+        //removed already opened files
+        /**
+         * TODO
+         */
         private void acquiredFinalAddedFiles(){
             finalAddedFiles = sourceFiles;
                 
@@ -371,7 +409,8 @@ public class AddFilesListener extends JDialog {
             }
         }
         
-        /* 
+        /**
+         * TODO
          * helper of acquiredFinalAddedFiles();
          * reverse elements in the olist to facilitate remove opearation
          */
@@ -454,7 +493,8 @@ public class AddFilesListener extends JDialog {
         /**
          * build the eia Table
          */
-        private void yieldEiaTable(){
+        @SuppressWarnings("deprecation")
+		private void yieldEiaTable(){
             int numberOfOpenedFiles = MainWindow.getSrcEdfFileHeaders().size(); 
             MainWindow.iniEiaTable = new EIATable(MainWindow.getSrcEdfFileHeaders(), numberOfOpenedFiles);
             MainWindow.iniEiaTable.setUpdateSinceLastSave(true); //the initial update status should be true
@@ -505,8 +545,11 @@ public class AddFilesListener extends JDialog {
                                 //MainWindow.srcEdfFiles);                     
         }
         
-        private void updatePrimaryESATab(){
-            if ( MainWindow.tabPane.isPrimaryTabsOpened()){
+        /**
+         * TODO
+         */
+        private void updatePrimaryESATab() {
+            if ( MainWindow.tabPane.isPrimaryTabsOpened()) {
                 MainWindow.tabPane.removeTabAt(1);
             }
             
@@ -522,7 +565,10 @@ public class AddFilesListener extends JDialog {
             MainWindow.tabPane.setPrimaryTabsOpened(true);   
         }
         
-        private void updatePrimaryEIATab(){
+        /**
+         * TODO
+         */
+        private void updatePrimaryEIATab() {
             if ( MainWindow.tabPane.isPrimaryTabsOpened()){
                 MainWindow.tabPane.removeTabAt(0);               
             }
@@ -547,8 +593,11 @@ public class AddFilesListener extends JDialog {
             updatePrimaryEIATab();
             updatePrimaryESATab();
         }
-                
-        public void printMessageToConsole(){
+               
+        /**
+         * TODO
+         */
+        public void printMessageToConsole() {
             int sz = sourceFiles.size();
             
             //print the theme
@@ -574,16 +623,16 @@ public class AddFilesListener extends JDialog {
                 catch(Exception e){;}
             }
 
-
             try {
                 doc.insertString(doc.getLength(), "Adding files is done. \n", EDFInfoPane.theme);
             } catch (BadLocationException e) {;}  
         }
         
-        /*
+        /**
+         * TODO
          * print information about sourcefiles and workfiles to the console window.
          */
-        public void printNoFileAddedMsgToConsole(){
+        public void printNoFileAddedMsgToConsole() {
             String theme = Utility.currentTimeToString() + ": ";
             theme = theme + "No file added, since ALL selected files have existed in current task. \n";
             Document doc = MainWindow.consolePane.getDocument();
@@ -597,21 +646,32 @@ public class AddFilesListener extends JDialog {
         }   
     }//end of FinishButtonListener class
     
-  
-
+    /**
+     * TODO
+     * @author wei
+     *
+     */
     private class CancelButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             dispose();
         }
     }
     
+    /**
+     * TODO
+     * @author wei
+     *
+     */
     class CancelAction extends AbstractAction {
         public void actionPerformed(ActionEvent ev) {
             dispose();
         }
     }
     
-    private void setLogo(){
+    /**
+     * TODO
+     */
+    private void setLogo() {
         BufferedImage image = null;
         try {
             image = ImageIO.read(this.getClass().getResource("/icon/mimilogo.png"));
@@ -624,7 +684,6 @@ public class AddFilesListener extends JDialog {
     
     //Fangping:
     //TODO
-
     private ArrayList<Integer> geteMultiTbaFilesIndices(File[] tbaFiles,
                             /*to be added list*/ArrayList<File> aaList) /*already added list*/ {
         if (tbaFiles == null)
@@ -646,10 +705,16 @@ public class AddFilesListener extends JDialog {
         return indices;
     }
 
-    private void getMultiaddedFileIndexList(){
+    /**
+     * TODO
+     */
+    private void getMultiaddedFileIndexList() {
         multiaddedFileIndices = geteMultiTbaFilesIndices(selectedFiles, MainWindow.srcEdfFiles);
     }
 
+    /**
+     * TODO
+     */
     private void updateCheckBoxList() {
         int nfiles = selectedFiles.length;
         if (nfiles == 0)
@@ -678,6 +743,9 @@ public class AddFilesListener extends JDialog {
         }   
     }
     
+    /**
+     * TODO
+     */
     private void buildEdfPanel(){
         
         //6 cols, 6 rows
@@ -699,7 +767,12 @@ public class AddFilesListener extends JDialog {
         activateBoxAndNotificationArea(false, "");
     }
     
-    private void activateBoxAndNotificationArea(boolean visible, String notetext){
+    /**
+     * TODO
+     * @param visible
+     * @param notetext
+     */
+    private void activateBoxAndNotificationArea(boolean visible, String notetext) {
         selectedFilesLabel.setVisible(visible);
         checkBoxList.setVisible(visible);
         if (visible == true && notetext != ""){

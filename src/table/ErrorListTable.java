@@ -1,13 +1,5 @@
 package table;
 
-import editor.EDFTreeNode;
-import editor.EIATemplatePane;
-import editor.ESATemplatePane;
-import editor.MainWindow;
-import editor.Utility;
-import editor.WorkingTablePane;
-
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -23,23 +15,32 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.tree.TreeNode;
+
+import editor.EDFTreeNode;
+import editor.EIATemplatePane;
+import editor.ESATemplatePane;
+import editor.MainWindow;
+import editor.Utility;
+import editor.WorkingTablePane;
 
 
+@SuppressWarnings("serial")
 public class ErrorListTable extends JTable {
-    //moved to the Incompliance class
-/*     public static final String Title_ErroIndex = "Error #";
-    public static final String Title_Description = "Description";
-    public static final String Title_File = "File";
-    public static final String Title_Row = "Row";
-    public static final String Title_Column = "Column";
-    public static final String Title_Type = "Type"; */
-    //public static final String tableTypes[] = {"EIA", "ESA", "EIA template", "ESA template"};
+
+//	  moved to the Incompliance class
+//    public static final String Title_ErroIndex = "Error #";
+//    public static final String Title_Description = "Description";
+//    public static final String Title_File = "File";
+//    public static final String Title_Row = "Row";
+//    public static final String Title_Column = "Column";
+//    public static final String Title_Type = "Type"; */
+//    public static final String tableTypes[] = {"EIA", "ESA", "EIA template", "ESA template"};
     protected static final String columnNames[] = {
     	Incompliance.Title_ErroIndex, Incompliance.Title_Type, Incompliance.Title_Description, 
-        Incompliance.Title_File, Incompliance.Title_Row, Incompliance.Title_Column};
+        Incompliance.Title_File, Incompliance.Title_Row, Incompliance.Title_Column
+    };
     
-    //public static final int error_number = 0;
+//    public static final int error_number = 0;
     public static final int index_number = 0;
     public static final int type_number = 1;
     public static final int description_number = 2;
@@ -49,6 +50,9 @@ public class ErrorListTable extends JTable {
     
     public static final int maxViewableRows = 10;  
     
+    /**
+     * TODO
+     */
     public ErrorListTable() {
         super();
         this.setModel(new ErrorListModel());
@@ -56,16 +60,22 @@ public class ErrorListTable extends JTable {
         addListeners();
     }
     
+    /**
+     * TODO
+     * @param incompliances
+     */
     public ErrorListTable(ArrayList<Incompliance> incompliances) {
         super();
         this.setModel(new ErrorListModel(0));
         customizeLook();
         
         yieldTableFrom(incompliances);
-        
         addListeners();
     }
         
+    /**
+     * TODO
+     */
     public void customizeLook() {
         this.getTableHeader().setFont(new Font("Dialog", Font.PLAIN, 12));
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -90,6 +100,11 @@ public class ErrorListTable extends JTable {
         }
     }
 
+    /**
+     * TODO
+     * @param table
+     * @param errorCount
+     */
     public static void setIcon(JTable table, int errorCount) {
         ImageIcon icon = MainWindow.errorIcon;
         int colIndex = index_number;
@@ -102,12 +117,19 @@ public class ErrorListTable extends JTable {
         
     }
     
+    /**
+     * TODO
+     */
     public void blankOut() {
         ErrorListModel model = (ErrorListModel)getModel();
         model.setRowCount(0);//clean all rows
         model.setRowCount(maxViewableRows);
     }
     
+    /**
+     * TODO
+     * @param incompliances
+     */
     public void yieldTableFrom(ArrayList<Incompliance> incompliances) {        
         blankOut();      
         
@@ -119,6 +141,11 @@ public class ErrorListTable extends JTable {
         }
     }
     
+    /**
+     * TODO
+     * @param incomp
+     * @param rr
+     */
     public void insertRowAt(Incompliance incomp, int rr) {
         String type;
         String description;
@@ -145,11 +172,17 @@ public class ErrorListTable extends JTable {
         }    
     }
     
+    /**
+     * TODO
+     */
     public void addListeners() {
         this.addMouseListener(new CellMouseClickedListener());
         //this.addKeyListener(null);
     }
         
+    /**
+     * TODO
+     */
     private class CellMouseClickedListener extends MouseAdapter {
         JTable table;
         String fileName, type;
@@ -222,6 +255,11 @@ public class ErrorListTable extends JTable {
             }         
         }
         
+        /**
+         * TODO
+         * @param rr
+         * @param cc
+         */
         public void redirectToEIATable(int rr, int cc) {
             MainWindow.getTabPane().setSelectedIndex(0);
             EIATable eiaTable = MainWindow.getIniEiaTable();
@@ -230,6 +268,12 @@ public class ErrorListTable extends JTable {
             highlightCell(eiaTable, rr, cc);
         }
         
+        /**
+         * TODO
+         * @param fileName
+         * @param rr
+         * @param cc
+         */
         public void redirectToESATable(String fileName, int rr, int cc) {
         	
 //        	System.out.println("[" + rr + "," + cc + "]" + fileName);
@@ -256,6 +300,12 @@ public class ErrorListTable extends JTable {
             highlightCell(esaTable, rr, cc);
         }
         
+        /**
+         * TODO
+         * @param fileName
+         * @param rr
+         * @param cc
+         */
         public void redirectToEIATemplateTable(String fileName, int rr, int cc) {
             int tabs = MainWindow.getTabPane().getTabCount();
             EIATemplatePane etPane;
@@ -275,6 +325,12 @@ public class ErrorListTable extends JTable {
             }     
         }
         
+        /**
+         * TODO
+         * @param fileName
+         * @param rr
+         * @param cc
+         */
         public void redirectToESATemplateTable(String fileName, int rr, int cc) {
             int tabs = MainWindow.getTabPane().getTabCount();
             ESATemplatePane etPane;
@@ -294,12 +350,23 @@ public class ErrorListTable extends JTable {
             }            
         }
         
+        /**
+         * TODO
+         * @param jtable
+         * @param rr
+         * @param cc
+         */
         void highlightCell(JTable jtable, int rr, int cc) {
             jtable.getSelectionModel().setSelectionInterval(rr, rr);
             jtable.getColumnModel().getSelectionModel().setSelectionInterval(cc, cc); 
             Utility.scrollTableRowToVisible(jtable, rr, cc);           
         }
                 
+        /**
+         * TODO
+         * @param selRow
+         * @return
+         */
         boolean retrieveLocation(int selRow) {
             fileName = (String)table.getModel().getValueAt(selRow, file_number);
             if (fileName == null)
@@ -317,19 +384,25 @@ public class ErrorListTable extends JTable {
             
             return true;
         }
-        
 
-       private int retrieveHeaderTableTypeCode() {
-            int count = Incompliance.typeOfErrorHeader.length;
-            for (int i = 0; i < count; i++)
-                if (type.equalsIgnoreCase(Incompliance.typeOfErrorHeader[i]))
-                    return i;
+        /**
+         * TODO
+         * @return
+         */
+        private int retrieveHeaderTableTypeCode() {
+        	int count = Incompliance.typeOfErrorHeader.length;
+        	for (int i = 0; i < count; i++)
+        		if (type.equalsIgnoreCase(Incompliance.typeOfErrorHeader[i]))
+        			return i;
             return -1;
         }
     } //end of class CellMouseClickedListener
     
-  public static class TextIcon {
-        private String text;
+    /**
+     * TODO
+     */
+    public static class TextIcon {
+    	private String text;
         private Icon icon;
         TextIcon(String text, Icon icon) {
             this.text = text; 
@@ -337,9 +410,19 @@ public class ErrorListTable extends JTable {
         }
     }
     
-   public static class HeaderIconRenderer extends DefaultTableCellRenderer {
-        public Component getTableCellRendererComponent(
-        		JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    /**
+     * TODO
+     */
+    public static class HeaderIconRenderer extends DefaultTableCellRenderer {
+	    private static final long serialVersionUID = 1L;
+
+	    /**
+	     * TODO
+	     * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(
+	     * javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+	     */
+	    public Component getTableCellRendererComponent (
+	    		JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 // Inherit the colors and font from the header component
 //               if (table != null) {
 //                    JTableHeader header = table.getTableHeader();

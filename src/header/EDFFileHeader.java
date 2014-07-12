@@ -4,14 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import javax.swing.JOptionPane;
-
-
 public class EDFFileHeader {
 
     private EIAHeader eiaHeader;
     private ESAHeader esaHeader;
 
+    /**
+     * TODO
+     */
     public EDFFileHeader() {
         super();
     }
@@ -23,6 +23,12 @@ public class EDFFileHeader {
     protected static final int SAVE_ESA_ONLY = 1;
     protected static final int SAVE_EIA_ESA_BOTH = 2;
 
+    /**
+     * TODO
+     * @param raf
+     * @param edfFile
+     * @param istemplate
+     */
     public EDFFileHeader(RandomAccessFile raf, File edfFile, boolean istemplate) {
         try {
             eiaHeader = new EIAHeader(raf, edfFile);
@@ -42,6 +48,7 @@ public class EDFFileHeader {
 
 
     /**
+     * TODO
      * @param raf the Random AccessFile for saving data in tables
      * Usage: used to save the EDFHeader, not including the signal  data body.
      * Algorithm:
@@ -49,8 +56,7 @@ public class EDFFileHeader {
      * 2. save ESA Headers to disk
      * 3. close the file accessor
      */
-    public void saveToDisk(RandomAccessFile raf, File file,
-                           int saveOption) throws IOException {
+    public void saveToDisk(RandomAccessFile raf, File file, int saveOption) throws IOException {
         switch (saveOption) {
         case SAVE_EIA_ONLY:
             this.eiaHeader.saveToDisk(raf, file); //1.
@@ -70,27 +76,43 @@ public class EDFFileHeader {
         }
 
         raf.close(); // 3.
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////
     /////////////// START of getters and setters ///////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
 
+    
+    /**
+     * TODO
+     * @param eiaHeader
+     */
     public void setEiaHeader(EIAHeader eiaHeader) {
         this.eiaHeader = eiaHeader;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public EIAHeader getEiaHeader() {
         return eiaHeader;
     }
 
+    /**
+     * TODO
+     * @param esaHeader
+     */
     public void setEsaHeader(ESAHeader esaHeader) {
         this.esaHeader = esaHeader;
     }
 
 
-    public ESAHeader  getEsaHeader() {
+    /**
+     * TODO
+     * @return
+     */
+    public ESAHeader getEsaHeader() {
         return esaHeader;
     }
 

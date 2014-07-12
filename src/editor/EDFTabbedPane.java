@@ -7,9 +7,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
-
 import java.io.File;
-
 import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
@@ -18,17 +16,23 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 
-
-public class EDFTabbedPane extends JTabbedPane{
+@SuppressWarnings("serial")
+public class EDFTabbedPane extends JTabbedPane {
     
     Boolean primaryTabsOpened = false;
     
+    /**
+     * TODO
+     */
     public EDFTabbedPane() {
         super();
         setdisplay();  
     }
     
-    private void setdisplay(){
+    /**
+     * TODO
+     */
+    private void setdisplay() {
         this.setPreferredSize(new Dimension(2*MainWindow.MAINWINDOW_DLG_WIDTH/3, 2*MainWindow.MAINWINDOW_DLG_WIDTH/5));
         this.setMaximumSize(new Dimension(2*MainWindow.MAINWINDOW_DLG_WIDTH/3, 2*MainWindow.MAINWINDOW_DLG_WIDTH/5));
         this.setOpaque(true);       
@@ -37,7 +41,11 @@ public class EDFTabbedPane extends JTabbedPane{
         
     }
     
-    private void customizeAdvancedUI(){
+    /**
+     * TODO
+     */
+    @SuppressWarnings("unused")
+	private void customizeAdvancedUI(){
         //BasicTabbedPaneUI ui = (BasicTabbedPaneUI) this.getUI();      
         
         /*         UIManager.put("TabbedPane.lightHighlight", UIManager.get("TabbedPane.background") );
@@ -45,37 +53,66 @@ public class EDFTabbedPane extends JTabbedPane{
         UIManager.put("TabbedPane.shadow", UIManager.get("TabbedPane.background") ); */
     }
 
+    /**
+     * TODO
+     * @param tabPlacement
+     * @return
+     */
     protected Insets getContentBorderInsets(int tabPlacement) {
         return new Insets(0, 0, 0, 0);
     }
 
+    /**
+     * TODO
+     * @param g
+     * @param tabPlacement
+     * @param selectedIndex
+     */
     protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {
     }
 
       
-    public int getTabIndexWithMasterFile(File masterFileOfNode){
+    /**
+     * TODO
+     * @param masterFileOfNode
+     * @return
+     */
+    public int getTabIndexWithMasterFile(File masterFileOfNode) {
         return Utility.getTabIndexofMasterFile(masterFileOfNode);         
     }
     
-    public void setVisibleofTabWithMasterFile(File mFile){
+    /**
+     * TODO
+     * @param mFile
+     */
+    public void setVisibleofTabWithMasterFile(File mFile) {
         int tabIndex = this.getTabIndexWithMasterFile(mFile);
         this.setSelectedIndex(tabIndex);
     }
 
-
-
+    /**
+     * TODO
+     * @param primaryTabsOpened
+     */
     public void setPrimaryTabsOpened(Boolean primaryTabsOpened) {
         this.primaryTabsOpened = primaryTabsOpened;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public Boolean isPrimaryTabsOpened() {
         return primaryTabsOpened;
     }
     
     //for gradient background
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
     @Override
-    protected void paintComponent(Graphics g){
-        if (!isOpaque()){
+    protected void paintComponent(Graphics g) {
+        if (!isOpaque()) {
             super.paintComponent(g);
             return;
         }
@@ -94,5 +131,4 @@ public class EDFTabbedPane extends JTabbedPane{
         super.paintComponent(g);
         setOpaque(true);
     }
-    
 }

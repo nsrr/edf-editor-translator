@@ -4,12 +4,9 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.util.ArrayList;
-
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-
 import java.util.LinkedList;
 
 import javax.swing.AbstractListModel;
@@ -29,6 +26,9 @@ public class CheckBoxList extends JList {
     protected static Border noFocusBorder = new EmptyBorder(1, 4, 1, 4);
     DefaultListModel model;
 
+    /**
+     * TODO
+     */
     public CheckBoxList() {
         setCellRenderer(new CellRenderer());
         addMouseListener(new MouseAdapter() {
@@ -49,6 +49,9 @@ public class CheckBoxList extends JList {
     }
 
     //Fangping, 08/23/2010
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
     @Override
     protected void paintComponent(Graphics g){
         //g.setColor(backgroundColor);
@@ -57,6 +60,10 @@ public class CheckBoxList extends JList {
         super.paintComponent(g);
     } 
 
+    /**
+     * TODO
+     * @param checkBox
+     */
     public void addCheckbox(JCheckBox checkBox) {
         ListModel currentList = this.getModel();
         int currentSize = currentList.getSize();
@@ -68,6 +75,10 @@ public class CheckBoxList extends JList {
         setListData(newList);
     }
 
+    /**
+     * TODO
+     * @param checkBox
+     */
     public void appendCheckbox(JCheckBox checkBox) {
         ListModel currentList = this.getModel();
         int currentSize = currentList.getSize();
@@ -79,7 +90,11 @@ public class CheckBoxList extends JList {
         setListData(newList);
     }
 
-
+    /**
+     * TODO
+     * @param index
+     * @return
+     */
     public JCheckBox getCheckBox(int index) {
         ListModel currentList = this.getModel();
         JCheckBox checkBox = (JCheckBox)currentList.getElementAt(index);
@@ -87,12 +102,21 @@ public class CheckBoxList extends JList {
         return checkBox;
     }
 
+    /**
+     * TODO
+     * @param index
+     * @param selected
+     */
     public void setCheckBoxSelected(int index, Boolean selected) {
         ListModel currentList = this.getModel();
         JCheckBox checkBox = (JCheckBox)currentList.getElementAt(index);
         checkBox.setSelected(selected);
     }
 
+    /**
+     * TODO
+     * @param selected
+     */
     public void SetAllCheckBoxSelected(Boolean selected) {
         ListModel currentList = this.getModel();
         int size = currentList.getSize();
@@ -101,6 +125,10 @@ public class CheckBoxList extends JList {
         }
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public ArrayList<Integer> getSelectedCheckBox() {
         ArrayList<Integer> selectedIdx = new ArrayList<Integer>(10);
         int looper = 0;
@@ -115,7 +143,10 @@ public class CheckBoxList extends JList {
         return selectedIdx;
     }
 
-
+    /**
+     * @author wei
+     * TODO
+     */
     protected class CellRenderer implements ListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value,
                                                       int index,
@@ -139,14 +170,18 @@ public class CheckBoxList extends JList {
 
             return checkbox;
         }
-
-
     }
     
+    /**
+     * @author wei
+     * TODO
+     * @param <T>
+     */
     class CheckBoxListModel<T> extends AbstractListModel {
             private LinkedList<ListItem<T>> items = new LinkedList<ListItem<T>>(); 
      
             /**
+             * TODO
              * Initializes a new CheckBoxListModel
              * @param items The items to add to the list
              */
@@ -179,7 +214,8 @@ public class CheckBoxList extends JList {
              * Returns the collection of items in the list
              * @return The collection of items in the list
              */
-            private LinkedHashMap<T, Boolean> getItems() {
+            @SuppressWarnings("unused")
+			private LinkedHashMap<T, Boolean> getItems() {
                 LinkedHashMap<T, Boolean> map = new LinkedHashMap<T, Boolean>();
                 for(ListItem<T> item : items) {
                     map.put(item.dataItem, item.selected);
@@ -206,16 +242,19 @@ public class CheckBoxList extends JList {
             }
         }
     
+    /**
+     * TODO
+     * @param <T>
+     */
     class ListItem<T> {
-            protected T dataItem;
-            protected boolean selected;
+        protected T dataItem;
+        protected boolean selected;
 
-            public ListItem(T dataItem, boolean selected) {
-                this.dataItem = dataItem;
-                this.selected = selected;
-            }
+        public ListItem(T dataItem, boolean selected) {
+            this.dataItem = dataItem;
+            this.selected = selected;
         }
-
+    }
 }
 
 

@@ -1,37 +1,39 @@
 package table;
 
-import editor.EDFInfoPane;
-import editor.MainWindow;
-
-import java.awt.Color;
-import java.awt.Font;
-
 import header.ESA;
 import header.ESAChannel;
 import header.ESAHeader;
 import header.ESATemplateChannel;
 
-import javax.swing.table.TableColumn;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
+import java.awt.Font;
 
+import javax.swing.table.TableColumn;
+
+@SuppressWarnings("serial")
 public class ESATemplateTable extends EDFTable {
     
-    static final int DIGITAL_MAXIMUM_INDEX = 6;
+	static final int DIGITAL_MAXIMUM_INDEX = 6;
     static final int DIGITAL_MINIMUM_INDEX = 7;
     static final String digital_error_msg = "Digtial Maximum should be larger than Digital Minimum.";    
     
     private TableColumn[] allTableColumns;
     private final static int index_of_immutablie = 9;
     protected static final int[] immutableFieldIndices = {index_of_immutablie};
-
     
+    /**
+     * TODO
+     */
     public ESATemplateTable() {
         super(new ESATemplateTableModel(1));
         customizeLook();
         this.setUpdateSinceLastSave(true);
     }
 
+    /**
+     * TODO
+     * @param esaHeader
+     * @param forTemplateOpen
+     */
     public ESATemplateTable(ESAHeader esaHeader, Boolean forTemplateOpen) {
         super(new ESATemplateTableModel(1));
         createESATable(esaHeader, forTemplateOpen);
@@ -39,18 +41,25 @@ public class ESATemplateTable extends EDFTable {
         this.setUpdateSinceLastSave(true);
     }
 
-     public void customizeLook() {
-	        this.stripTable(tableOddRowClr, null, tableEvenRowClr, null);
-	        this.getTableHeader().setFont( new Font( "Dialog" , Font.PLAIN, 16));
-	       // this.getTableHeader().setForeground(Color.black);
+    /**
+     * TODO
+     */
+    public void customizeLook() {
+    	this.stripTable(tableOddRowClr, null, tableEvenRowClr, null);
+	    this.getTableHeader().setFont( new Font( "Dialog" , Font.PLAIN, 16));
+	    // this.getTableHeader().setForeground(Color.black);
                 
-	        this.setRowHeight((int) (this.getRowHeight() * 2.0));
-	        this.setCellSelectionEnabled(true);
-	        this.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-                
-	        this.stripTableInColumn(9, stripBackgroundClr, stripForegroundClr, stripBackgroundClr, stripForegroundClr);
+	    this.setRowHeight((int) (this.getRowHeight() * 2.0));
+	    this.setCellSelectionEnabled(true);
+	    this.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+	    this.stripTableInColumn(9, stripBackgroundClr, stripForegroundClr, stripBackgroundClr, stripForegroundClr);
     }  
 
+    /**
+     * TODO
+     * @param esaHeader
+     * @param forTemplateOpen
+     */
     public void createESATable(ESAHeader esaHeader, boolean forTemplateOpen) {
         int nChannels = esaHeader.getNumberOfChannels();
         this.setModel(new ESATemplateTableModel(nChannels)); //this line is required; otherewise, getValueAt does not work
@@ -85,6 +94,9 @@ public class ESATemplateTable extends EDFTable {
         }
     }
     
+    /**
+     * Store current columns into local fields
+     */
     private void cacheColumns() {
         int ncol = getModel().getColumnCount();
          allTableColumns = new TableColumn[ncol];
@@ -92,6 +104,10 @@ public class ESATemplateTable extends EDFTable {
              allTableColumns[i] =  getColumnModel().getColumn(i);
      }
     
+    /**
+     * Show immutable table fields of this ESA template table
+     * @see table.EDFTable#showImmutableFields()
+     */
     public void showImmutableFields() {
         for (int index: immutableFieldIndices) {
             addColumn(allTableColumns[index]);
@@ -100,6 +116,10 @@ public class ESATemplateTable extends EDFTable {
         validate();
     }
     
+    /**
+     * Hide immutable fields of this ESA template table
+     * @see table.EDFTable#hideImmutableFields()
+     */
     public void hideImmutableFields() {
         cacheColumns();
         int k = 0;

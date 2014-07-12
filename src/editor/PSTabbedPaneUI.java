@@ -23,8 +23,7 @@ import java.awt.*;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class PSTabbedPaneUI extends BasicTabbedPaneUI
-{
+public class PSTabbedPaneUI extends BasicTabbedPaneUI {
 	private static final Insets NO_INSETS = new Insets(2, 0, 0, 0);
 
 	/**
@@ -46,13 +45,19 @@ public class PSTabbedPaneUI extends BasicTabbedPaneUI
 	//  Custom installation methods
 	// ------------------------------------------------------------------------------------------------------------------
 
-	public static ComponentUI createUI(JComponent c)
-	{
+	/**
+	 * TODO
+	 * @param c
+	 * @return
+	 */
+	public static ComponentUI createUI(JComponent c) {
 		return new PSTabbedPaneUI();
 	}
 
-	protected void installDefaults()
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installDefaults()
+	 */
+	protected void installDefaults() {
 		super.installDefaults();
 		tabAreaInsets.left = 4;
 		selectedTabPadInsets = new Insets(0, 0, 0, 0);
@@ -69,28 +74,35 @@ public class PSTabbedPaneUI extends BasicTabbedPaneUI
 	//  Custom sizing methods
 	// ------------------------------------------------------------------------------------------------------------------
 
-	public int getTabRunCount(JTabbedPane pane)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getTabRunCount(javax.swing.JTabbedPane)
+	 */
+	public int getTabRunCount(JTabbedPane pane) {
 		return 1;
 	}
 
-	protected Insets getContentBorderInsets(int tabPlacement)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getContentBorderInsets(int)
+	 */
+	protected Insets getContentBorderInsets(int tabPlacement) {
 		return NO_INSETS;
 	}
 
-	protected int calculateTabHeight(int tabPlacement, int tabIndex, int fontHeight)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateTabHeight(int, int, int)
+	 */
+	protected int calculateTabHeight(int tabPlacement, int tabIndex, int fontHeight) {
 		int vHeight = fontHeight;
-		if (vHeight % 2 > 0)
-		{
+		if (vHeight % 2 > 0) {
 			vHeight += 1;
 		}
 		return vHeight;
 	}
 
-	protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateTabWidth(int, int, java.awt.FontMetrics)
+	 */
+	protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
 		return super.calculateTabWidth(tabPlacement, tabIndex, metrics) + metrics.getHeight();
 	}
 
@@ -103,20 +115,20 @@ public class PSTabbedPaneUI extends BasicTabbedPaneUI
 	//  Methods that we want to suppress the behaviour of the superclass
 	// ------------------------------------------------------------------------------------------------------------------
 
-	protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBackground(java.awt.Graphics, int, int, int, int, int, int, boolean)
+	 */
+	protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, 
+			int x, int y, int w, int h, boolean isSelected) {
 		Polygon shape = new Polygon();
 
 		shape.addPoint(x, y + h);
 		shape.addPoint(x, y);
 		shape.addPoint(x + w - (h / 2), y);
 
-		if (isSelected || (tabIndex == (rects.length - 1)))
-		{
+		if (isSelected || (tabIndex == (rects.length - 1))) {
 			shape.addPoint(x + w + (h / 2), y + h);
-		}
-		else
-		{
+		} else {
 			shape.addPoint(x + w, y + (h / 2));
 			shape.addPoint(x + w, y + h);
 		}
@@ -125,15 +137,17 @@ public class PSTabbedPaneUI extends BasicTabbedPaneUI
 		g.fillPolygon(shape);
 	}
 
-	protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBorder(java.awt.Graphics, int, int, int, int, int, int, boolean)
+	 */
+	protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int x, int y, 
+			int w, int h, boolean isSelected) {
 		g.setColor(Color.BLACK);
 		g.drawLine(x, y, x, y + h);
 		g.drawLine(x, y, x + w - (h / 2), y);
 		g.drawLine(x + w - (h / 2), y, x + w + (h / 2), y + h);
 
-		if (isSelected)
-		{
+		if (isSelected) {
 			g.setColor(Color.WHITE);
 			g.drawLine(x + 1, y + 1, x + 1, y + h);
 			g.drawLine(x + 1, y + 1, x + w - (h / 2), y + 1);
@@ -143,8 +157,11 @@ public class PSTabbedPaneUI extends BasicTabbedPaneUI
 		}
 	}
 
-	protected void paintContentBorderTopEdge(Graphics g, int tabPlacement, int selectedIndex, int x, int y, int w, int h)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorderTopEdge(java.awt.Graphics, int, int, int, int, int, int)
+	 */
+	protected void paintContentBorderTopEdge(Graphics g, int tabPlacement, 
+			int selectedIndex, int x, int y, int w, int h) {
 		Rectangle selectedRect = selectedIndex < 0 ? null : getTabBounds(selectedIndex, calcRect);
 
 		selectedRect.width = selectedRect.width + (selectedRect.height / 2) - 1;
@@ -164,28 +181,42 @@ public class PSTabbedPaneUI extends BasicTabbedPaneUI
 		g.drawLine(selectedRect.x + selectedRect.width, y, selectedRect.x + selectedRect.width + 1, y + 1);
 	}
 
-	protected void paintContentBorderRightEdge(Graphics g, int tabPlacement, int selectedIndex, int x, int y, int w, int h)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorderRightEdge(java.awt.Graphics, int, int, int, int, int, int)
+	 */
+	protected void paintContentBorderRightEdge(Graphics g, int tabPlacement, 
+			int selectedIndex, int x, int y, int w, int h) {
 		// Do nothing
 	}
 
-	protected void paintContentBorderLeftEdge(Graphics g, int tabPlacement, int selectedIndex, int x, int y, int w, int h)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorderLeftEdge(java.awt.Graphics, int, int, int, int, int, int)
+	 */
+	protected void paintContentBorderLeftEdge(Graphics g, int tabPlacement, 
+			int selectedIndex, int x, int y, int w, int h) {
 		// Do nothing
 	}
 
-	protected void paintContentBorderBottomEdge(Graphics g, int tabPlacement, int selectedIndex, int x, int y, int w, int h)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorderBottomEdge(java.awt.Graphics, int, int, int, int, int, int)
+	 */
+	protected void paintContentBorderBottomEdge(Graphics g, int tabPlacement, 
+			int selectedIndex, int x, int y, int w, int h) {
 		// Do nothing
 	}
 
-	protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintFocusIndicator(java.awt.Graphics, int, java.awt.Rectangle[], int, java.awt.Rectangle, java.awt.Rectangle, boolean)
+	 */
+	protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, 
+			int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
 		// Do nothing
 	}
 
-	protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabArea(java.awt.Graphics, int, int)
+	 */
+	protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {
 		int tw = tabPane.getBounds().width;
 
 		g.setColor(fillColor);
@@ -194,22 +225,24 @@ public class PSTabbedPaneUI extends BasicTabbedPaneUI
 		super.paintTabArea(g, tabPlacement, selectedIndex);
 	}
 
-	protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected)
-	{
-		if (isSelected)
-		{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintText(java.awt.Graphics, int, java.awt.Font, java.awt.FontMetrics, int, java.lang.String, java.awt.Rectangle, boolean)
+	 */
+	protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics, 
+			int tabIndex, String title, Rectangle textRect, boolean isSelected) {
+		if (isSelected) {
 			int vDifference = (int)(boldFontMetrics.getStringBounds(title,g).getWidth()) - textRect.width;
 			textRect.x -= (vDifference / 2);
 			super.paintText(g, tabPlacement, boldFont, boldFontMetrics, tabIndex, title, textRect, isSelected);
-		}
-		else
-		{
+		} else {
 			super.paintText(g, tabPlacement, font, metrics, tabIndex, title, textRect, isSelected);
 		}
 	}
 
-	protected int getTabLabelShiftY(int tabPlacement, int tabIndex, boolean isSelected)
-	{
+	/* (non-Javadoc)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getTabLabelShiftY(int, int, boolean)
+	 */
+	protected int getTabLabelShiftY(int tabPlacement, int tabIndex, boolean isSelected) {
 		return 0;
 	}
 }

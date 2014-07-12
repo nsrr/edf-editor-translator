@@ -1,6 +1,5 @@
 package editor;
 
-
 import header.EDFFileHeader;
 import header.EIAHeader;
 import header.ESAHeader;
@@ -103,7 +102,7 @@ import com.jgoodies.forms.layout.FormLayout;
 
 //import jEDF.JEDF.JEDFMainWindow;
 
-
+@SuppressWarnings("serial")
 public class MainWindow extends JFrame implements WindowListener {
 
 	public static String log = "log.txt";
@@ -111,14 +110,13 @@ public class MainWindow extends JFrame implements WindowListener {
     /////////////////////////////////////////////////////////////////////////
     //////////////// START of menu and menu items list //////////////////////
     /////////////////////////////////////////////////////////////////////////
+	
     //File menu items
     private JMenuItem fileNewTaskItem;
     protected static JMenuItem fileCloseTaskItem;
     protected static JMenuItem fileAddFilesItem;
     protected static JMenuItem fileExcludeFileItem;
     protected static JMenuItem fileDeleteFileItem;
-
-    
     protected static JMenuItem fileSaveItem;
     protected static JMenuItem fileSaveAsItem;
     protected static JMenuItem fileRenameItem;
@@ -140,13 +138,10 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static JMenuItem templateNewEIAItem;
     protected static JMenuItem templateOpenEIAItem;
     protected static JMenuItem templateImportEIAItem;
-
     protected static JMenuItem templateNewESAItem;
     protected static JMenuItem templateOpenESAItem;
     protected static JMenuItem templateImportESAItem;
-
     protected static JMenuItem toolFixTableErrorItem;
-    
     protected static JMenuItem templateAddRowItem;
     protected static JMenuItem templateRemoveRowItem;
     
@@ -170,12 +165,11 @@ public class MainWindow extends JFrame implements WindowListener {
 
     ///////////////////////////////////////////////////////////////////////////////
     //////////////// END of menu and menu items list //////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-
+    ///////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////
-    //////////////// START of ToolBar buttons   //////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
+    //////////////// START of ToolBar buttons   ///////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
 
     /*
      * ToolBar buttons
@@ -237,6 +231,7 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static EIATable iniEiaTable = null; // initial EIA table
     protected static EIATable dupEiaTable = null; // clone iniEiaTable
     
+    // undo and redo support
     protected static EDFUndoManager undoManager = new EDFUndoManager();
 
     // store currently active ESA table
@@ -251,9 +246,9 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static ErrorListTable errorListTable = new ErrorListTable();
     
     /*
-     * five cases of incompliances: esa, esatemplate, eia, eiatemplate, and the aggregate of these
-     * When aggregate these four types of incompliances, the order had better be: (1) esa, (2) esaTemplate;
-     * (3) eia, (4) eiaTemplate. In this way, insertion, deletion and searching in the aggregation can 
+     * five cases of incompliances: ESA, esatemplate, EIA, eiatemplate, and the aggregate of these
+     * When aggregate these four types of incompliances, the order had better be: (1) ESA, (2) esaTemplate;
+     * (3) EIA, (4) eiaTemplate. In this way, insertion, deletion and searching in the aggregation can 
      * run more efficiently.
      * Fangping, 10/11/2010    
      */    
@@ -261,14 +256,13 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static ArrayList<Incompliance> esaIncompliances = new ArrayList<Incompliance>();
     protected static ArrayList<Incompliance> esaTemplateIncompliances = new ArrayList<Incompliance>();
     protected static ArrayList<Incompliance> eiaIncompliances = new ArrayList<Incompliance>();
-    protected static ArrayList<Incompliance> eiaTemplateIncompliances = new ArrayList<Incompliance>();
+    protected static ArrayList<Incompliance> eiaTemplateIncompliances = new ArrayList<Incompliance>();    
     
-    
-    /* keep track of opened eia templates */
+//  keep track of opened EIA templates
     protected static ArrayList<File> EIATemplateFiles = new ArrayList<File>(30); 
-    /* keep track of opened esa templates */
+//  keep track of opened ESA templates
     protected static ArrayList<File> ESATemplateFiles = new ArrayList<File>(30); 
-    /* keep track of opened error-fix templates */
+//  keep track of opened error-fix templates
     protected static ArrayList<File> ErrorFixTemplateFiles = new ArrayList<File>(30); 
 
     protected static EDFTreeNode rootNode = new EDFTreeNode("Task"); // root
@@ -378,6 +372,9 @@ public class MainWindow extends JFrame implements WindowListener {
     ///////////// END of static member zone ///////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * TODO
+     */
     public MainWindow() {
 		super("PhysioMIMI EDF Header Editor");
 		setupHelpFiles();
@@ -391,6 +388,9 @@ public class MainWindow extends JFrame implements WindowListener {
     
   //Zendrix Ng 9/10/2010
 
+    /**
+     * TODO
+     */
     private void setupHelpFiles() {
         /*String helpHS = "/helpfiles/Master.hs";
         HelpSet hs;
@@ -425,6 +425,9 @@ public class MainWindow extends JFrame implements WindowListener {
         } 
     }
 
+    /**
+     * TODO
+     */
     private void createMainPane() {
                 
         setJMenuBar(createMenuBar());
@@ -442,6 +445,9 @@ public class MainWindow extends JFrame implements WindowListener {
         setLogo();
     }
 
+    /**
+     * TODO
+     */
     private void createTabPane() {
         tabPane = new EDFTabbedPane();
         tabPane.addChangeListener(new ChangeListener() {
@@ -468,6 +474,10 @@ public class MainWindow extends JFrame implements WindowListener {
             });
     }
 
+    /**
+     * TODO
+     * @return
+     */
     private JPanel createTreePanel() {
         JPanel treePanel = new JPanel(new BorderLayout());
         JLabel navLabel = createTreePaneTitleLabel();
@@ -481,7 +491,11 @@ public class MainWindow extends JFrame implements WindowListener {
         return treePanel;
     }
     
-    private JLabel createTreePaneTitleLabel(){
+    /**
+     * TODO
+     * @return
+     */
+    private JLabel createTreePaneTitleLabel() {
         JLabel navLabel = new JLabel("Task Navigator", JLabel.LEFT);
         navLabel.setBorder(BorderFactory.createRaisedBevelBorder());
         navLabel.setOpaque(true);
@@ -497,7 +511,10 @@ public class MainWindow extends JFrame implements WindowListener {
     public static final float splitting_resize_rate = 0.85f;
     public static final Color consoleTabPaneColor = new Color(240, 240, 200);
     
-    protected void createTaskTabPane(){
+    /**
+     * TODO
+     */
+    protected void createTaskTabPane() {
         taskTabPane.addTab("Source File ", fileInfoIcon, new JScrollPane(fileinfoEdtPane));
         taskTabPane.addTab("Task Summary ", fileInfoIcon, new JScrollPane(taskinfoEdtPane));
         taskTabPane.setOpaque(true);
@@ -508,7 +525,11 @@ public class MainWindow extends JFrame implements WindowListener {
     }
     
     // create leftPanel to contain 
-    private JSplitPane createLeftPanel(){       
+    /**
+     * TODO
+     * @return
+     */
+    private JSplitPane createLeftPanel() {       
         JPanel upPane = createTreePanel();
         
         createTaskTabPane();
@@ -522,12 +543,19 @@ public class MainWindow extends JFrame implements WindowListener {
         return splitter;
     }
     
-    private void createConsoleTabPane(){
+    /**
+     * TODO
+     */
+    private void createConsoleTabPane() {
         consoleTabPane.setOpaque(true);
         //consoleTabPane.setBackground(consoleTabPaneColor.darker());
     }
     
-    private JSplitPane createRightPanel(){
+    /**
+     * TODO
+     * @return
+     */
+    private JSplitPane createRightPanel() {
         JSplitPane splitter = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         splitter.setTopComponent(MainWindow.tabPane);
         createConsoleTabPane();
@@ -553,7 +581,11 @@ public class MainWindow extends JFrame implements WindowListener {
     }
        
 
-    private JSplitPane createMainSplitPane(){
+    /**
+     * TODO
+     * @return
+     */
+    private JSplitPane createMainSplitPane() {
         JSplitPane splitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, createLeftPanel(), createRightPanel()); // tabPane);
         
         splitter.setOneTouchExpandable(false);
@@ -573,6 +605,10 @@ public class MainWindow extends JFrame implements WindowListener {
     protected static final Font barFont = new Font(Font.SERIF, Font.TRUETYPE_FONT, 13);
     // wei wang, 5/27/2014 created barFontBold.
     protected static final Font barFontBold = new Font(Font.SERIF, Font.TRUETYPE_FONT | Font.BOLD, 14);
+    
+    /**
+     * TODO
+     */
     private void createStatusBar() {
         createLeftStatusBar();
         createMidStatusBar();
@@ -599,7 +635,10 @@ public class MainWindow extends JFrame implements WindowListener {
         this.add(statusBars, BorderLayout.SOUTH);
     }
     
-    private void createLeftStatusBar(){
+    /**
+     * TODO
+     */
+    private void createLeftStatusBar() {
         String start_text = "Start New Task...";
         leftStatusBar = new JLabel(start_text, fileNewIcon, JLabel.LEFT);
         leftStatusBar.setFont(barFont);
@@ -615,7 +654,10 @@ public class MainWindow extends JFrame implements WindowListener {
             });
     }
     
-    private void createMidStatusBar(){
+    /**
+     * TODO
+     */
+    private void createMidStatusBar() {
         middleStatusBar = new JLabel(" ", JLabel.CENTER);
         middleStatusBar.setOpaque(true);
         middleStatusBar.setBackground(statusBarColor);
@@ -623,7 +665,10 @@ public class MainWindow extends JFrame implements WindowListener {
         middleStatusBar.setFont(barFontBold); // wei wang, 5/27/2014
     }
     
-    private void createSaveProgressBar(){
+    /**
+     * TODO
+     */
+    private void createSaveProgressBar() {
         saveProgressBar = new JProgressBar();
         saveProgressBar.setOpaque(true);
         saveProgressBar.setBackground(statusBarColor);
@@ -633,7 +678,10 @@ public class MainWindow extends JFrame implements WindowListener {
         saveProgressBar.setIndeterminate(true);
     }
     
-    private void createRightStatusBar(){
+    /**
+     * TODO
+     */
+    private void createRightStatusBar() {
         rightStatusBar = new JLabel(" ", JLabel.RIGHT);
         rightStatusBar.setOpaque(true);
         rightStatusBar.setBackground(statusBarColor);
@@ -642,123 +690,220 @@ public class MainWindow extends JFrame implements WindowListener {
     }
 
 
+    /**
+     * TODO
+     */
     public void showGUI() {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
         //getRootPane().setWindowDecorationStyle(JRootPane.COLOR_CHOOSER_DIALOG);
         setVisible(true);
-        
-        
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static EDFInfoPane getConsolePane() {
         return consolePane;
     }
 
+    /**
+     * TODO
+     * @param tabPane
+     */
     public static void setTabPane(EDFTabbedPane tabPane) {
         MainWindow.tabPane = tabPane;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static EDFTabbedPane getTabPane() {
         return tabPane;
     }
 
-/*     public static void setAggregateIncompliances(ArrayList<Incompliance> incompliances) {
-        MainWindow.aggregateIncompliances = incompliances;
-    } */
+//    public static void setAggregateIncompliances(ArrayList<Incompliance> incompliances) {
+//        MainWindow.aggregateIncompliances = incompliances;
+//    }
+//
+//    public static ArrayList<Incompliance> getAggregateIncompliances() {
+//        return aggregateIncompliances;
+//    }
 
-/*     public static ArrayList<Incompliance> getAggregateIncompliances() {
-        return aggregateIncompliances;
-    } */
-
+    /**
+     * TODO
+     * @param errorListTable
+     */
     public static void setErrorListTable(ErrorListTable errorListTable) {
         MainWindow.errorListTable = errorListTable;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static ErrorListTable getErrorListTable() {
         return errorListTable;
     }
 
+    /**
+     * TODO
+     * @param consolePane
+     */
     public static void setConsolePane(EDFInfoPane consolePane) {
         MainWindow.consolePane = consolePane;
     }
 
+    /**
+     * TODO
+     * @param writeMode
+     */
     public static void setWriteMode(int writeMode) {
         MainWindow.writeMode = writeMode;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static int getWriteMode() {
         return writeMode;
     }
 
+    /**
+     * TODO
+     * @param slectionMode
+     */
     public static void setSelectionMode(int slectionMode) {
         MainWindow.selectionMode = slectionMode;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static int getSelectionMode() {
         return selectionMode;
     }
 
+    /**
+     * TODO
+     * @param sourceDirectoryText
+     */
     public static void setSourceDirectoryText(String sourceDirectoryText) {
         MainWindow.sourceDirectoryText = sourceDirectoryText;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static String getSourceDirectoryText() {
         return sourceDirectoryText;
     }
 
+    /**
+     * TODO
+     * @param saveProgressBar
+     */
     public static void setSaveProgressBar(JProgressBar saveProgressBar) {
         MainWindow.saveProgressBar = saveProgressBar;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static JProgressBar getSaveProgressBar() {
         return saveProgressBar;
     }
 
+    /**
+     * TODO
+     * @param eiaTemplateIncompliances
+     */
     public static void setEiaTemplateIncompliances(ArrayList<Incompliance> eiaTemplateIncompliances) {
         MainWindow.eiaTemplateIncompliances = eiaTemplateIncompliances;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static ArrayList<Incompliance> getEiaTemplateIncompliances() {
         return eiaTemplateIncompliances;
     }
 
+    /**
+     * TODO
+     * @param esaIncompliances
+     */
     public static void setEsaIncompliances(ArrayList<Incompliance> esaIncompliances) {
         MainWindow.esaIncompliances = esaIncompliances;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static ArrayList<Incompliance> getEsaIncompliances() {
         return esaIncompliances;
     }
 
+    /**
+     * TODO
+     * @param esaTemplateIncompliances
+     */
     public static void setEsaTemplateIncompliances(ArrayList<Incompliance> esaTemplateIncompliances) {
         MainWindow.esaTemplateIncompliances = esaTemplateIncompliances;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static ArrayList<Incompliance> getEsaTemplateIncompliances() {
         return esaTemplateIncompliances;
     }
 
+    /**
+     * TODO
+     * @param eiaIncompliances
+     */
     public static void setEiaIncompliances(ArrayList<Incompliance> eiaIncompliances) {
         MainWindow.eiaIncompliances = eiaIncompliances;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static ArrayList<Incompliance> getEiaIncompliances() {
         return eiaIncompliances;
     }
 
     /**
      * @return the menu bar of the main window
+     * TODO
      */
-    
     private class EDFMenuBar extends JMenuBar{
-        EDFMenuBar(){
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * TODO
+		 */
+		EDFMenuBar(){
             super();
             setPreferredSize(new Dimension(30, 30));   
             setOpaque(true);
         }
         
+        /* (non-Javadoc)
+         * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+         */
         @Override
         protected void paintComponent(Graphics g){
             if (!isOpaque()){
@@ -782,6 +927,10 @@ public class MainWindow extends JFrame implements WindowListener {
         }
     }
     
+    /**
+     * TODO
+     * @return
+     */
     public EDFMenuBar createMenuBar() {
         EDFMenuBar menuBar = new EDFMenuBar();
 
@@ -805,6 +954,7 @@ public class MainWindow extends JFrame implements WindowListener {
 
     /**
      * @return the File menu
+     * TODO
      */
     public JMenu createFileMenu() {
         JMenu fileMenu = new JMenu("File");
@@ -860,6 +1010,10 @@ public class MainWindow extends JFrame implements WindowListener {
         return fileMenu;
     }
 
+    /**
+     * TODO
+     * @param frame
+     */
     public void createFileNewTaskItem(final JFrame frame) {
         fileNewTaskItem = new JMenuItem("New Task...");
         fileNewTaskItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
@@ -869,14 +1023,23 @@ public class MainWindow extends JFrame implements WindowListener {
     }
     
 
-    public void createFileCloseTaskItem(){
+    /**
+     * TODO
+     */
+    public void createFileCloseTaskItem() {
         fileCloseTaskItem = new JMenuItem("Close Task");
         fileCloseTaskItem.addActionListener(new CloseTaskItemListener());
     }
     
-  protected static class CloseTaskItemListener implements ActionListener{
+    /**
+     * TODO
+   	 */
+    protected static class CloseTaskItemListener implements ActionListener {
         private final boolean active = false;
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             //do nothing if there is no task at all
             if (tabPane == null || tabPane.getTabCount() == 0 || !(tabPane.getComponentAt(0) instanceof WorkingTablePane))
@@ -895,21 +1058,34 @@ public class MainWindow extends JFrame implements WindowListener {
             activateToolBarItems(active);
         }
         
-        private boolean affirmClose(){
+        /**
+         * TODO
+         * @return
+         */
+        private boolean affirmClose() {
             String prompt = "<html><center> Please make sure to have your task saved before closing current task." +
                             "<p><p> Click on Yes to confirm, No to cancel.<html>";
            return Utility.defaultNoOptionPane(null, prompt, "Close Task", JOptionPane.YES_NO_OPTION);           
         }
         
-        private static void clearFileInfoPane(){
+        /**
+         * TODO
+         */
+        private static void clearFileInfoPane() {
             fileinfoEdtPane.setText("");
         }
         
-        private static void clearTaskInfoPane(){
+        /**
+         * TODO
+         */
+        private static void clearTaskInfoPane() {
             taskinfoEdtPane.setText("");
         }
         
-        private static void clearConsolePane(){
+        /**
+         * TODO
+         */
+        private static void clearConsolePane() {
             Document doc = consolePane.getDocument();
             consolePane.setText("");
             String theme = Utility.currentTimeToString() + ": Task closed. \n";
@@ -921,7 +1097,8 @@ public class MainWindow extends JFrame implements WindowListener {
         }
     }
     
-    /*
+    /**
+     * TODO
      * Fangping, 08/22/2010
      */
     public void createFileAddFilesItem() {
@@ -935,16 +1112,20 @@ public class MainWindow extends JFrame implements WindowListener {
         // selectFilesListener is specified next to createSelectFilesBtn();
     }
     
-    /*
+    /**
+     * TODO
      * Fangping, 08/22/2010
      */
-    public void createFileExcludeFileItem(){
+    public void createFileExcludeFileItem() {
         fileExcludeFileItem = new JMenuItem("Exclude File");
         int cmd = ExcludeFileListener.REMOVE;  
         fileExcludeFileItem.addActionListener(new ExcludeFileListener(cmd));
     }
     
-    public void createFileDeleteFileItem(){
+    /**
+     * TODO
+     */
+    public void createFileDeleteFileItem() {
         fileDeleteFileItem = new JMenuItem("Delete File");
         fileDeleteFileItem.setIcon(fileDeleteIcon);
         int cmd = ExcludeFileListener.DELETE;
@@ -964,6 +1145,9 @@ public class MainWindow extends JFrame implements WindowListener {
         fileSaveItem.addActionListener(new SaveListener("Save"));
     }
 
+    /**
+     * TODO
+     */
     private void createFileSaveAsItem() {
         fileSaveAsItem = new JMenuItem("Save As...");
         fileSaveAsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4,
@@ -972,6 +1156,9 @@ public class MainWindow extends JFrame implements WindowListener {
         fileSaveAsItem.addActionListener(new SaveListener("SaveAs"));
     }
 
+    /**
+     * TODO
+     */
     private void createFileSaveAllItem() {
         fileSaveAllItem = new JMenuItem("Save All", 'A');
         fileSaveAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5,
@@ -980,7 +1167,8 @@ public class MainWindow extends JFrame implements WindowListener {
         fileSaveAllItem.addActionListener(new SaveListener("SaveAll"));
     }    
         
-    /*
+    /**
+     * TODO
      * Fangping, 08/22/2010
      */
     private void createFileRenameItem() {
@@ -990,24 +1178,36 @@ public class MainWindow extends JFrame implements WindowListener {
         fileRenameItem.addActionListener(new RenameFileListener());
     }
 
+    /**
+     * TODO
+     */
     private void createFileExportItem() {
         fileExportItem = new JMenuItem("Export");
         fileExportItem.setIcon(fileExportIcon);
         fileExportItem.addActionListener(new ExportTaskToFileListener());
     }
     
+    /**
+     * TODO
+     */
     protected static class ExportTaskToFileListener implements ActionListener{
         Document doc = consolePane.getDocument();
         String theme;
         String eiaFileName;
         String esaFileName;
         
-        private void printThemeToConsole(){
+        /**
+         * TODO
+         */
+        private void printThemeToConsole() {
             try {
                 doc.insertString(doc.getLength(), theme, EDFInfoPane.theme);
             } catch (BadLocationException f) {;}
         }
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             if (srcEdfFiles == null)
                 return;  // Fangping, 02/28/2010
@@ -1022,7 +1222,7 @@ public class MainWindow extends JFrame implements WindowListener {
             esaFileName = Utility.writeCSVESA(srcHeader, srcFiles);
          
             //Fangping, 08/20/2010
-            String str = "\nReports exported to " + workingDirectory.toString();
+//            String str = "\nReports exported to " + workingDirectory.toString();  // wei wang, commented out on 2014-6-26 TODO:ww
             
             //Fangping, 08/20/2010
             theme = "Done. \n";
@@ -1030,20 +1230,25 @@ public class MainWindow extends JFrame implements WindowListener {
             confirmFinished();
         }
         
-        private void confirmFinished(){
+        /**
+         * TODO
+         */
+        private void confirmFinished() {
             String message = "Export task to files: \n" + eiaFileName + "\n" + esaFileName + "\nis done.";
             message = message + "\nDo you want to open them now?";
             String title = "Export Task";
             boolean reply = Utility.NoThanksOptionPane(null, message, title, JOptionPane.YES_OPTION);
-            if (reply == true){
+            if (reply == true) {
                 Utility.editFile(new File(eiaFileName));
                 Utility.editFile(new File(esaFileName));
             }
             
         }
     }
-    
 
+    /**
+     * TODO
+     */
     private void createFilePrintItem() {
         filePrintItem = new JMenuItem("Print", 'P');
         filePrintItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
@@ -1052,14 +1257,18 @@ public class MainWindow extends JFrame implements WindowListener {
         filePrintItem.addActionListener(new PrintListener());
     }
     
-    /*
+    /**
+     * TODO
      * print listener for print
      * adapted from http://java.sun.com/developer/onlineTraining/Programming/JDCBook/advprint.html#pe
      */
-    private class PrintListener implements ActionListener, Printable{
+    private class PrintListener implements ActionListener, Printable {
         
         JTable wTable = null;
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             if (!MainWindow.tabPane.isPrimaryTabsOpened())
                 return;   
@@ -1077,6 +1286,9 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }        
         
+        /* (non-Javadoc)
+         * @see java.awt.print.Printable#print(java.awt.Graphics, java.awt.print.PageFormat, int)
+         */
         public int print(Graphics graphics, PageFormat pageFormat,
                          int pageIndex) {
             
@@ -1112,7 +1324,7 @@ public class MainWindow extends JFrame implements WindowListener {
             g2.translate(0f, headerHeightOnPage);
             g2.translate(0f, -pageIndex * pageHeightForTable);
             
-            //if this peice of the table is smaller than the size available, clip to the appropriate bounds
+            //if this piece of the table is smaller than the size available, clip to the appropriate bounds
             if (pageIndex + 1 == totalNumPages){
                 int lastRowPrinted = numRowsOnPage * pageIndex;
                 int numRowsLeft = wTable.getRowCount() - lastRowPrinted;
@@ -1144,20 +1356,24 @@ public class MainWindow extends JFrame implements WindowListener {
         }
     }
     
+    /**
+     * TODO
+     */
     private void createFileExitItem() {
         fileExitItem = new JMenuItem("Exit", 'X');
         fileExitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
                                                            Event.CTRL_MASK));
         fileExitItem.setIcon(fileExitIcon);
         fileExitItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                        gracefulCloseWindow();                                                    
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                    gracefulCloseWindow();                                                    
+            }
+        });
     }
 
-
-
+    /**
+     * TODO
+     */
     private void createEditUndoItem() {
         editUndoItem = new JMenuItem("Undo", 'U');
         editUndoItem.setAction(undoManager.getUndoAction());
@@ -1166,6 +1382,9 @@ public class MainWindow extends JFrame implements WindowListener {
         editUndoItem.setIcon(editUndoIcon);
     }
 
+    /**
+     * TODO
+     */
     private void createEditRedoItem() {
         editRedoItem = new JMenuItem("Redo", 'R');
         editRedoItem.setAction(undoManager.getRedoAction());
@@ -1175,6 +1394,9 @@ public class MainWindow extends JFrame implements WindowListener {
         //editRedoItem.addActionListener(redoListener);
     }
 
+    /**
+     * TODO
+     */
     private void createEditCutItem() {
         editCutItem = new JMenuItem("Cut", 'T');
         editCutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
@@ -1182,6 +1404,9 @@ public class MainWindow extends JFrame implements WindowListener {
         editCutItem.setIcon(editCutIcon);
     }
 
+    /**
+     * TODO
+     */
     private void createEditCopyItem() {
         editCopyItem = new JMenuItem("Copy", 'C');
         editCopyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
@@ -1190,6 +1415,9 @@ public class MainWindow extends JFrame implements WindowListener {
         editCopyItem.setIcon(editCopyIcon);
     }
 
+    /**
+     * TODO
+     */
     private void createEditPasteItem() {
         editPasteItem = new JMenuItem("Paste");
         editPasteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
@@ -1198,29 +1426,36 @@ public class MainWindow extends JFrame implements WindowListener {
         editPasteItem.setIcon(editPasteIcon);
     }
     
+    /**
+     * TODO
+     */
     private void createEditDiscardChangesItem() {
     	editDiscardChangesItem = new JMenuItem("Discard Changes");
     	editDiscardChangesItem.addActionListener(new DiscardChangesListener());
     }
 
 
+    /**
+     * TODO
+     */
     private void createToolsApplyEIATemplateItem() {
         toolApplyEIATemplateItem = new JMenuItem("Apply Identity Template");
-        toolApplyEIATemplateItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5,
-                                                                       Event.CTRL_MASK));
+        toolApplyEIATemplateItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, Event.CTRL_MASK));
         toolApplyEIATemplateItem.setIcon(toolsApplyEiaIcon);
         //editApplyEIATemplateItem.addActionListener(new ApplyTemplateListener(this, "eia"));
         toolApplyEIATemplateItem.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent e) {
-                    if (MainWindow.wkEdfFiles == null)
-                        return;
-                    new ApplyTemplateListener(new JFrame(), "eia");
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                if (MainWindow.wkEdfFiles == null)
+                    return;
+                new ApplyTemplateListener(new JFrame(), "eia");
+            }
+        });
     }
 
 
+    /**
+     * TODO
+     */
     private void createToolsApplyESATemplateItem() {
         toolApplyESATemplateItem = new JMenuItem("Apply Signal Template");
         toolApplyESATemplateItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6,
@@ -1228,16 +1463,18 @@ public class MainWindow extends JFrame implements WindowListener {
         toolApplyESATemplateItem.setIcon(toolsApplyEsaIcon);
         //editApplyESATemplateItem.addActionListener(new ApplyTemplateListener(this, "esa"));
         toolApplyESATemplateItem.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent e) {
-                    if (MainWindow.wkEdfFiles == null)
-                        return;
-                    new ApplyTemplateListener(new JFrame(), "esa");
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                if (MainWindow.wkEdfFiles == null)
+                    return;
+                new ApplyTemplateListener(new JFrame(), "esa");
+            }
+        });
     }
     
-    private void createToolsValidateTableItem(){
+    /**
+     * TODO
+     */
+    private void createToolsValidateTableItem() {
     	//TODO
         toolValidateTableItem = new JMenuItem("Find EDF Header Errors");
         toolValidateTableItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
@@ -1245,44 +1482,51 @@ public class MainWindow extends JFrame implements WindowListener {
         toolValidateTableItem.addActionListener(new VerifyHeaderListener());
     }
 
-    private void createToolsFixTableErrors(){
+    /**
+     * TODO
+     */
+    private void createToolsFixTableErrors() {
     	toolFixTableErrorItem = new JMenuItem("Fix EDF Header Errors");
     	toolFixTableErrorItem.setIcon(toolsErrorFixIcon);
     	toolFixTableErrorItem.addActionListener(new NewErrorFixTemplateListener());
     }
     
-    private void createJEDFToolItem(){
+    /**
+     * TODO
+     */
+    private void createJEDFToolItem() {
         jEDFToolItem = new JMenuItem("JEDF Tool");
-        jEDFToolItem.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                	try
-                    {
-                    	Runtime rt = Runtime.getRuntime();
-                    	Process p = rt.exec("java -jar jEDF.jar");
-                    }
-                    catch (Exception exc)
-                    {
-                    	exc.printStackTrace();
-                    }
+        jEDFToolItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	try {
+            		Runtime rt = Runtime.getRuntime();
+            		rt.exec("java -jar jEDF.jar"); // added wei wang, 2014-6-26
+//                  Process p = rt.exec("java -jar jEDF.jar"); // commented out by wei wang TODO:ww
+                } catch (Exception exc) {
+                	exc.printStackTrace();                
                 }
-            });
+            }
+        });
     }
     
-    private void createEDFViewerToolItem(){
+    /**
+     * TODO
+     */
+    private void createEDFViewerToolItem() {
         EdfViewerToolItem = new JMenuItem("EDF MATLAB Viewer");
-        EdfViewerToolItem.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                	MatlabEdfViewer.callEdfViewer();
-                }
-            });
+        EdfViewerToolItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	MatlabEdfViewer.callEdfViewer();
+            }
+        });
         McrDirSettings = new JMenuItem("Setting MATLAB Compiler Runtime (MCR)");
-        McrDirSettings.addActionListener(new ActionListener(){
+        McrDirSettings.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	SettingMcrDir.setMcrDir();
             }
         });
         ViewerDirSettings = new JMenuItem("Setting MATLAB EDF-Viewer");
-        ViewerDirSettings.addActionListener(new ActionListener(){
+        ViewerDirSettings.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	SettingViewerDir.setViewerDir();
             }
@@ -1291,6 +1535,7 @@ public class MainWindow extends JFrame implements WindowListener {
 
 
     /**
+     * TODO
      * @return the Edit menu
      */
     public JMenu createEditMenu() {
@@ -1319,17 +1564,17 @@ public class MainWindow extends JFrame implements WindowListener {
         editMenu.add(templateAddRowItem);
         editMenu.add(templateRemoveRowItem);
         
-/*         editMenu.add(editApplyEIATemplateItem);
-        editMenu.add(editApplyESATemplateItem); */
+//        editMenu.add(editApplyEIATemplateItem);
+//        editMenu.add(editApplyESATemplateItem);
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(editMenu, "menubar.edit", null);
         CSH.setHelpIDString(editMenu, "menubar.edit");
-
         return editMenu;
     }
 
     /**
+     * TODO
      * @return the Template menu
      */
     public JMenu createTemplateMenu() {
@@ -1345,8 +1590,8 @@ public class MainWindow extends JFrame implements WindowListener {
         createToolsFixTableErrors();
         createToolsApplyEIATemplateItem();
         createToolsApplyESATemplateItem();
-/*         createTemplateAddRowItem();
-        createTemplateRemoveRowItem(); */
+//        createTemplateAddRowItem();
+//        createTemplateRemoveRowItem();
 
         templateMenu.add(templateNewEIAItem);
         templateMenu.add(templateOpenEIAItem);
@@ -1361,12 +1606,13 @@ public class MainWindow extends JFrame implements WindowListener {
         
         //context sensitive help
         //hb.enableHelpOnButton(templateMenu, "menubar.template", null);
-        CSH.setHelpIDString(templateMenu, "menubar.template");
-        
+        CSH.setHelpIDString(templateMenu, "menubar.template");        
         return templateMenu;
     }
 
-
+    /**
+     * TODO
+     */
     private void createTemplateNewEIAItem() {
         templateNewEIAItem = new JMenuItem("New Identity Template");
         templateNewEIAItem.setIcon(templateNewEiaIcon);
@@ -1374,31 +1620,53 @@ public class MainWindow extends JFrame implements WindowListener {
         templateNewEIAItem.addActionListener(new NewEIATemplateListener());
     }
 
+    /**
+     * TODO
+     * @param undoManager
+     */
     public static void setUndoManager(EDFUndoManager undoManager) {
         MainWindow.undoManager = undoManager;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static UndoManager getUndoManager() {
         return undoManager;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static JButton getUndoButton() {
         return undoButton;
     }
 
-
+    /**
+     * TODO
+     * @return
+     */
     public static JButton getRedoButton() {
         return redoButton;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static JMenuItem getEditUndoItem() {
         return editUndoItem;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static JMenuItem getEditRedoItem() {
         return editRedoItem;
     }
-
 
     /**
      * TODO
@@ -1420,22 +1688,29 @@ public class MainWindow extends JFrame implements WindowListener {
 			MainWindow.tabPane.setSelectedIndex(fixerrorTab);
 		}
 	} //end of NewErrorFixTemplateListener
+	
     /**
+     * TODO
      * The above code:
      * Feature Improvement by Gang Shu on Feb. 24, 2014
-     */
-    
+     */    
     protected static class NewEIATemplateListener implements ActionListener {
 
         private final String eiaFileNamePrefix = "untitled";
         private File templateFile;
         private long pid;
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             performActions();
         }
         
-        public void performActions(){
+        /**
+         * TODO
+         */
+        public void performActions() {
             if (!generateFileName())
                 return;
             
@@ -1450,6 +1725,10 @@ public class MainWindow extends JFrame implements WindowListener {
             updateEiaTemplatingBtns();
         }
         
+        /**
+         * TODO
+         * @return
+         */
         private boolean generateFileName() {
             String tempFileName;
             int serialNumber = snOfNewEIATemplateFile;
@@ -1494,7 +1773,12 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }
         
-        private String generateTempName(int serialNumber){
+        /**
+         * TODO
+         * @param serialNumber
+         * @return
+         */
+        private String generateTempName(int serialNumber) {
             String tempName = null;
             if (serialNumber == 0)
                 tempName = eiaFileNamePrefix + ".eia";
@@ -1504,7 +1788,9 @@ public class MainWindow extends JFrame implements WindowListener {
             return tempName;
         }
         
-
+        /**
+         * TODO
+         */
         private void yieldEiaTemplateTab() {
             String fileName = templateFile.getAbsolutePath();
             //master file is set as templateFile
@@ -1520,25 +1806,39 @@ public class MainWindow extends JFrame implements WindowListener {
             hb.enableHelpKey(templatePane, "hFileATemp", null);
         }
 
+        /**
+         * TODO
+         */
         private void yieldEiaTemplateTreeNode() {
             MainWindow.taskTree.addFileNodeAt(1, templateFile, pid);
         }
         
-        private void incrementSNofNewEIATemplateFile(){
+        /**
+         * TODO
+         */
+        private void incrementSNofNewEIATemplateFile() {
             snOfNewEIATemplateFile++;
         }
         
-        public void updateEiaTemplateFileList(){
+        /**
+         * TODO
+         */
+        public void updateEiaTemplateFileList() {
             EIATemplateFiles.add(templateFile);
         }
         
-        private void updateEiaTemplatingBtns(){
+        /**
+         * TODO
+         */
+        private void updateEiaTemplatingBtns() {
             fileRenameItem.setEnabled(true);
         }
 
     } //end of NewEIATemplateListener
 
-
+    /**
+     * TODO
+     */
     private void createTemplateNewESAItem() {
         templateNewESAItem = new JMenuItem("New Signal Template");
         templateNewESAItem.setIcon(templateNewEsaIcon);
@@ -1547,17 +1847,26 @@ public class MainWindow extends JFrame implements WindowListener {
         templateNewESAItem.addActionListener(new NewESATemplateListener());
     }
 
+    /**
+     * TODO
+     */
     protected static class NewESATemplateListener implements ActionListener {
 
         private final String esaFileNamePrefix = "untitled";
         private File templateFile;
         private long pid;
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             performActions();
         }
         
-        public void performActions(){
+        /**
+         * TODO
+         */
+        public void performActions() {
             if (!generateFileName())
                 return;
             
@@ -1572,6 +1881,10 @@ public class MainWindow extends JFrame implements WindowListener {
             incrementSNofNewESATemplateFile();
         }
         
+        /**
+         * TODO
+         * @return
+         */
         private boolean generateFileName() {
             String tempFileName;
             int serialNumber = snOfNewESATemplateFile;
@@ -1589,7 +1902,7 @@ public class MainWindow extends JFrame implements WindowListener {
             String tempFullPath;
             File tempFile = null;
             boolean notYetOnDisk = false;
-            while(true){
+            while(true) {
                 tempFileName = generateTempName(serialNumber);                
                 tempFullPath = directoryPath + "/" + tempFileName;
                 tempFile = new File(tempFullPath);
@@ -1607,8 +1920,7 @@ public class MainWindow extends JFrame implements WindowListener {
                     if (Utility.isFileNameCollided(tempFile, ESATemplateFiles)){
                         serialNumber++;
                         continue;
-                    }
-                    else{
+                    } else {
                         templateFile = tempFile;
                         return true;
                     }               
@@ -1616,7 +1928,12 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }
         
-        private String generateTempName(int serialNumber){
+        /**
+         * TODO
+         * @param serialNumber
+         * @return
+         */
+        private String generateTempName(int serialNumber) {
             String tempName = null;
             if (serialNumber == 0)
                 tempName = esaFileNamePrefix + ".esa";
@@ -1626,6 +1943,9 @@ public class MainWindow extends JFrame implements WindowListener {
             return tempName;
         }
         
+        /**
+         * TODO
+         */
         private void yieldEsaTemplateTab() {
             ESATemplatePane templatePane = new ESATemplatePane();            
             String fileName = templateFile.getAbsolutePath();
@@ -1643,32 +1963,50 @@ public class MainWindow extends JFrame implements WindowListener {
             hb.enableHelpKey(templatePane, "hSignalATemp", null);
         }
 
+        /**
+         * TODO
+         */
         private void yieldEsaTemplateTreeNode() {
             MainWindow.taskTree.addFileNodeAt(2, templateFile, pid);
         }
 
+        /**
+         * TODO
+         */
         private void updateEsaTemplateFileList(){
             ESATemplateFiles.add(templateFile);
         }
         
-        private void updateEsaTemplatingBtns(boolean active){
+        /**
+         * TODO
+         * @param active
+         */
+        private void updateEsaTemplatingBtns(boolean active) {
             fileRenameItem.setEnabled(active);
             addRowButton.setEnabled(active);
             removeRowButton.setEnabled(active);            
         }
         
-        private void incrementSNofNewESATemplateFile(){
+        /**
+         * TODO
+         */
+        private void incrementSNofNewESATemplateFile() {
             snOfNewESATemplateFile++;
         }
     }// end of NewESATemplateListener
 
-
+    /**
+     * TODO
+     */
     private void createTemplateOpenEIAItem() {
         templateOpenEIAItem = new JMenuItem("Open Identity Template");
         templateOpenEIAItem.setIcon(templateOpenEiaIcon);
         templateOpenEIAItem.addActionListener(new OpenEIATemplateListener());
     }
 
+    /**
+     * TODO
+     */
     protected static class OpenEIATemplateListener implements ActionListener {
         private final String extName = "eia";
         private final String description = "EDF Identity Attribute Files(*.eia)";
@@ -1679,11 +2017,17 @@ public class MainWindow extends JFrame implements WindowListener {
         private EIAHeader eiaHeader = null;
         private long uid;
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             performActions();
         }
         
-        private void performActions(){
+        /**
+         * TODO
+         */
+        private void performActions() {
             if (!selectTemplateFile())
                 return;
             
@@ -1697,15 +2041,16 @@ public class MainWindow extends JFrame implements WindowListener {
             
             yieldEIAHeader();
             yieldEIATemplateTab();
-            yieldEiaTemplateTreeNode();
-            
-            updateMenuToolBarItems(true);
-            
+            yieldEiaTemplateTreeNode();       
+            updateMenuToolBarItems(true);            
         }
 
+        /**
+         * TODO
+         * @return
+         */
         private boolean selectTemplateFile() {
-            EDFFileFilter filter =
-                new EDFFileFilter(new String[] { extName }, description);
+            EDFFileFilter filter = new EDFFileFilter(new String[] { extName }, description);
 
             JFileChooser chooser = new JFileChooser();
             chooser.setAcceptAllFileFilterUsed(false);
@@ -1724,15 +2069,22 @@ public class MainWindow extends JFrame implements WindowListener {
             return true;
         }
         
-        private void selectTabWhenAlreadyOpened(){
+        /**
+         * TODO
+         */
+        private void selectTabWhenAlreadyOpened() {
             int index = getIndexOfOpenedFile();  
             selectTaskTreeNode(index);
             selectTabWithIndex();
         }
         
-        private int getIndexOfOpenedFile(){
+        /**
+         * TODO
+         * @return
+         */
+        private int getIndexOfOpenedFile() {
             File file;
-            for (int index = 0; index < EIATemplateFiles.size(); index++){
+            for (int index = 0; index < EIATemplateFiles.size(); index++) {
                 file = EIATemplateFiles.get(index);
                 if (openedEIAFile.getAbsolutePath().equalsIgnoreCase(file.getAbsolutePath()))
                     return index;
@@ -1741,6 +2093,10 @@ public class MainWindow extends JFrame implements WindowListener {
             return -1;
         }        
         
+        /**
+         * TODO
+         * @param index
+         */
         private void selectTaskTreeNode(int index) {            
             EDFTreeNode parentNode = MainWindow.taskTree.getEiaRootNode();
             EDFTreeNode greenNode = (EDFTreeNode) parentNode.getChildAt(index);
@@ -1750,42 +2106,50 @@ public class MainWindow extends JFrame implements WindowListener {
             MainWindow.taskTree.setSelectionPath(path);
         }
         
-        private void selectTabWithIndex(){
+        /**
+         * TODO
+         */
+        private void selectTabWithIndex() {
             BasicEDFPane pane;
             String name = openedEIAFile.getAbsolutePath();
-            for (int i = 0; i < tabPane.getTabCount(); i++){
+            for (int i = 0; i < tabPane.getTabCount(); i++) {
                 pane = (BasicEDFPane)tabPane.getComponentAt(i);
-                if ((pane instanceof EIATemplatePane) && pane.getMasterFile().getAbsolutePath().equalsIgnoreCase(name)){
+                if ((pane instanceof EIATemplatePane) && pane.getMasterFile().getAbsolutePath().equalsIgnoreCase(name)) {
                     tabPane.setSelectedIndex(i);
                     return;
                 }     
             }
         }
         
+        /**
+         * TODO
+         */
         private void yieldEIAHeader() {
             try {
                 eiaHeader = EIAHeader.retrieveEIAHeaderFromXml(openedEIAFile.getPath());
-            } 
-            catch (ParserConfigurationException e) {;} 
+            }  catch (ParserConfigurationException e) {;} 
             catch (SAXException e) {;} 
             catch (IOException e) {;}
         }
         
-/*         private void yieldEIAHeader() {
-            RandomAccessFile ras = null;
-            try {
-                ras = new RandomAccessFile(openedEIAFile, "rw");
-            } catch (FileNotFoundException f) {
-                f.printStackTrace();
-            }
+//       private void yieldEIAHeader() {
+//            RandomAccessFile ras = null;
+//            try {
+//                ras = new RandomAccessFile(openedEIAFile, "rw");
+//            } catch (FileNotFoundException f) {
+//                f.printStackTrace();
+//            }
+//
+//            try {
+//                eiaHeader = new EIAHeader(ras, openedEIAFile);
+//            } catch (IOException f) {
+//                f.printStackTrace();
+//            }
+//        }
 
-            try {
-                eiaHeader = new EIAHeader(ras, openedEIAFile);
-            } catch (IOException f) {
-                f.printStackTrace();
-            }
-        } */
-
+        /**
+         * TODO
+         */
         private void yieldEIATemplateTab() {
             //master file is set as opendedEIAFile
             EIATemplatePane templatePane = new EIATemplatePane(eiaHeader, openedEIAFile);
@@ -1805,22 +2169,34 @@ public class MainWindow extends JFrame implements WindowListener {
 
         }
 
+        /**
+         * TODO
+         */
         private void yieldEiaTemplateTreeNode() {
             MainWindow.taskTree.addFileNodeAt(1, openedEIAFile, uid);
         }
         
-        private void updateMenuToolBarItems(boolean active){
+        /**
+         * TODO
+         * @param active
+         */
+        private void updateMenuToolBarItems(boolean active) {
             fileRenameItem.setEnabled(active);
         }
     } // end of OpenEIATemplateListener
 
-
+    /**
+     * TODO
+     */
     private void createTemplateOpenESAItem() {
         templateOpenESAItem = new JMenuItem("Open Signal Template");
         templateOpenESAItem.setIcon(templateOpenEsaIcon);
         templateOpenESAItem.addActionListener(new OpenESATemplateListener());
     }
 
+    /**
+     * TODO
+     */
     protected static class OpenESATemplateListener implements ActionListener {
         private final String extName = "esa";
         private final String description = "EDF Signal Attribute Files(*.esa)";
@@ -1830,11 +2206,17 @@ public class MainWindow extends JFrame implements WindowListener {
         private boolean alreadyOpened;
         private long uid;
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             performActions();
         }
         
-        private void performActions(){
+        /**
+         * TODO
+         */
+        private void performActions() {
             if (!selectTemplateFile())
                 return;
             
@@ -1848,15 +2230,16 @@ public class MainWindow extends JFrame implements WindowListener {
             
             yieldESAHeader();
             yieldESATemplateTab();
-            yieldESATemplateTreeNode();
-            
+            yieldESATemplateTreeNode();            
             updateMenuToolBarItems(true);
-
         }
 
+        /**
+         * TODO
+         * @return
+         */
         private boolean selectTemplateFile() {
-            EDFFileFilter filter =
-                new EDFFileFilter(new String[] { extName }, description);
+            EDFFileFilter filter = new EDFFileFilter(new String[] { extName }, description);
 
             JFileChooser chooser = new JFileChooser();
             chooser.setAcceptAllFileFilterUsed(false);//Fangping, 08/19/2010
@@ -1875,23 +2258,33 @@ public class MainWindow extends JFrame implements WindowListener {
             return true;
         }
         
-        private void selectTabWhenAlreadyOpened(){
+        /**
+         * TODO
+         */
+        private void selectTabWhenAlreadyOpened() {
             int index = getIndexOfOpenedFile();
             selectTaskTreeNode(index);
             selectTabWithIndex();            
         }
         
-        private int getIndexOfOpenedFile(){
+        /**
+         * TODO
+         * @return
+         */
+        private int getIndexOfOpenedFile() {
             File file;
-            for (int index = 0; index < ESATemplateFiles.size(); index++){
+            for (int index = 0; index < ESATemplateFiles.size(); index++) {
                 file = ESATemplateFiles.get(index);
                 if (openedESAFile.getAbsolutePath().equalsIgnoreCase(file.getAbsolutePath()))
                     return index;
-            }
-            
+            }            
             return -1;
         }
 
+        /**
+         * TODO
+         * @param index
+         */
         private void selectTaskTreeNode(int index) {
             EDFTreeNode parentNode = MainWindow.taskTree.getEsaRootNode();
             EDFTreeNode greenNode = (EDFTreeNode)parentNode.getChildAt(index);
@@ -1901,6 +2294,9 @@ public class MainWindow extends JFrame implements WindowListener {
             MainWindow.taskTree.setSelectionPath(path);
         }
 
+        /**
+         * TODO
+         */
         private void selectTabWithIndex() {
             BasicEDFPane pane;
             String name = openedESAFile.getAbsolutePath();
@@ -1913,6 +2309,9 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }
 
+        /**
+         * TODO
+         */
         private void yieldESAHeader() {
             RandomAccessFile raf = null;
             try {
@@ -1927,6 +2326,9 @@ public class MainWindow extends JFrame implements WindowListener {
             esaHeader = edfHeader.getEsaHeader();
         }
 
+        /**
+         * TODO
+         */
         private void yieldESATemplateTab() {
             ESATemplatePane templatePane = new ESATemplatePane(esaHeader, true);
             templatePane.setMasterFile(openedESAFile);
@@ -1945,6 +2347,9 @@ public class MainWindow extends JFrame implements WindowListener {
             hb.enableHelpKey(templatePane, "hSignalATemp", null);
         }
 
+        /**
+         * TODO
+         */
         private void yieldESATemplateTreeNode() {
             MainWindow.taskTree.addFileNodeAt(2, openedESAFile, uid);
         }
@@ -1956,6 +2361,9 @@ public class MainWindow extends JFrame implements WindowListener {
         }    
     } //end of TemplateOpenESAListener
 
+    /**
+     * TODO
+     */
     private void createTemplateImportEIAItem() {
         templateImportEIAItem = new JMenuItem("Extract Identity Template from EDF File");
         templateImportEIAItem.setIcon(templateExtractEiaIcon);
@@ -1963,6 +2371,9 @@ public class MainWindow extends JFrame implements WindowListener {
         templateImportEIAItem.addActionListener(new ExtractEIATemplateListener());
     }
     
+    /**
+     * TODO
+     */
     protected static class ExtractEIATemplateListener implements ActionListener {
         private final String extName = "edf";
         private final String description = "EDF File(*.edf)";
@@ -1975,11 +2386,17 @@ public class MainWindow extends JFrame implements WindowListener {
         private EIAHeader eiaHeader = null;
         private long uid;
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             performActions();
         }
         
-        private void performActions(){
+        /**
+         * TODO
+         */
+        private void performActions() {
             if (!generateFileName())
                 return;
             
@@ -1994,6 +2411,10 @@ public class MainWindow extends JFrame implements WindowListener {
             upateEiaTemplatingBtns(true);
         }
 
+        /**
+         * TODO
+         * @return
+         */
         private boolean generateFileName() {
             openedEDFFile = extractCandidateFileName();
             if (openedEDFFile == null)
@@ -2005,6 +2426,10 @@ public class MainWindow extends JFrame implements WindowListener {
             return true;
         }
         
+        /**
+         * TODO
+         * @return
+         */
         private File extractCandidateFileName(){
             EDFFileFilter filter = new EDFFileFilter(new String[] { extName }, description);
 
@@ -2027,8 +2452,12 @@ public class MainWindow extends JFrame implements WindowListener {
             }
             return candFile;
         }
-        
-       
+               
+        /**
+         * TODO
+         * @return
+         * @throws IOException
+         */
         private boolean yieldOutputPath() throws IOException {
             String tempPath = removeExtName(openedEDFFile.getName()); 
             boolean notYetOnDisk = false;
@@ -2061,16 +2490,31 @@ public class MainWindow extends JFrame implements WindowListener {
             return true;
         }
         
-        private String synthesizeName(String fileName){
+        /**
+         * TODO
+         * @param fileName
+         * @return
+         */
+        private String synthesizeName(String fileName) {
             return directoryPath + "/" + fileName +  ".eia"; 
         }
         
-        private String removeExtName(String fileName){
+        /**
+         * TODO
+         * @param fileName
+         * @return
+         */
+        private String removeExtName(String fileName) {
             int sz = fileName.length();
             return fileName.substring(0, sz - ext_len);
         }
         
-        private String getStrFromInputDialog(String fileName){
+        /**
+         * TODO
+         * @param fileName
+         * @return
+         */
+        private String getStrFromInputDialog(String fileName) {
             String msg = "Invalid file name. Please give another name. ";
             msg += "\n Do not specify the folder name or any extension name of .edf, .eia, or .esa";
             String title = "Specify Name for Extracting Identity Template";
@@ -2080,6 +2524,9 @@ public class MainWindow extends JFrame implements WindowListener {
         //////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////
 
+        /**
+         * TODO
+         */
         private void yieldEIAHeader() {
             RandomAccessFile ras = null;
             try {
@@ -2097,6 +2544,9 @@ public class MainWindow extends JFrame implements WindowListener {
             eiaHeader.setHostEdfFile(newOpenedEDFFile);
         }
 
+        /**
+         * TODO
+         */
         private void yieldEIATemplateTab() {
             EIATemplatePane templatePane = new EIATemplatePane(eiaHeader, newOpenedEDFFile);
             String fileName = newOpenedEDFFile.getAbsolutePath();
@@ -2112,27 +2562,43 @@ public class MainWindow extends JFrame implements WindowListener {
             hb.enableHelpKey(templatePane, "hFileATemp", null);
         }
 
+        /**
+         * TODO
+         */
         private void yieldEiaTemplateTreeNode() {
             MainWindow.taskTree.addFileNodeAt(1, newOpenedEDFFile, uid);
         }
         
-        private void updateEiaTemplateFileList(){
+        /**
+         * TODO
+         */
+        private void updateEiaTemplateFileList() {
             EIATemplateFiles.add(newOpenedEDFFile);
         }
         
-        private void upateEiaTemplatingBtns(boolean active){
+        /**
+         * TODO
+         * @param active
+         */
+        private void upateEiaTemplatingBtns(boolean active) {
             fileRenameItem.setEnabled(active);
         }
         
     } // end of ExtractEIATemplateListener
     
 
+    /**
+     * TODO
+     */
     private void createTemplateImportESAItem() {
         templateImportESAItem = new JMenuItem("Extract Signal Template from EDF File");
         templateImportESAItem.setIcon(templateExtractEiaIcon);
         templateImportESAItem.addActionListener(new ExtractESATemplateListener());
     }
     
+    /**
+     * TODO
+     */
     protected static class ExtractESATemplateListener implements ActionListener {
         private final String extName = "edf";
         private final String description = "EDF File(*.edf)";
@@ -2145,11 +2611,17 @@ public class MainWindow extends JFrame implements WindowListener {
         private ESAHeader esaHeader = null;
         private long uid;
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             performActions();
         }
         
-        private void performActions(){
+        /**
+         * TODO
+         */
+        private void performActions() {
             if (!generateFileName())
                 return;
             
@@ -2166,6 +2638,10 @@ public class MainWindow extends JFrame implements WindowListener {
             updateEsaTemplatingBtns(true);
         }
         
+        /**
+         * TODO
+         * @return
+         */
         private boolean generateFileName() {
             openedEDFFile = extractCandidateFileName();
             if (openedEDFFile == null)
@@ -2177,6 +2653,10 @@ public class MainWindow extends JFrame implements WindowListener {
             return true;
         }
 
+        /**
+         * TODO
+         * @return
+         */
         private File extractCandidateFileName() {
             EDFFileFilter filter = new EDFFileFilter(new String[] {extName}, description);
 
@@ -2200,6 +2680,11 @@ public class MainWindow extends JFrame implements WindowListener {
             return candFile;
         }
         
+        /**
+         * TODO
+         * @return
+         * @throws IOException
+         */
         private boolean yieldOutputPath() throws IOException {
             String tempPath = removeExtName(openedEDFFile.getName()); 
             boolean notYetOnDisk = false;
@@ -2229,20 +2714,34 @@ public class MainWindow extends JFrame implements WindowListener {
                     if (tempPath == null)
                         return false;
                 }
-            }
-            
+            }            
             return true;
         }
 
+        /**
+         * TODO
+         * @param fileName
+         * @return
+         */
         private String synthesizeName(String fileName) {
             return directoryPath + "/" + fileName + ".esa";
         }
 
+        /**
+         * TODO
+         * @param fileName
+         * @return
+         */
         private String removeExtName(String fileName) {
             int sz = fileName.length();
             return fileName.substring(0, sz - ext_len);
         }
 
+        /**
+         * TODO
+         * @param fileName
+         * @return
+         */
         private String getStrFromInputDialog(String fileName) {
             String msg = "Invalid file name. Please give another name. ";
             msg += "\n Do not specify the folder name or any extension name of .edf, .eia, or .esa";
@@ -2250,10 +2749,16 @@ public class MainWindow extends JFrame implements WindowListener {
             return (String)JOptionPane.showInputDialog(null, msg, title, 0, null, null, fileName);
         }
         
-        private void updateEsaTemplateFileList(){
+        /**
+         * TODO
+         */
+        private void updateEsaTemplateFileList() {
             ESATemplateFiles.add(newOpenedEDFFile);
         }
 
+        /**
+         * TODO
+         */
         private void yieldESAHeader() {
             RandomAccessFile raf = null;
             try {
@@ -2269,6 +2774,9 @@ public class MainWindow extends JFrame implements WindowListener {
             esaHeader.setHostEdfFile(newOpenedEDFFile);
         }
 
+        /**
+         * TODO
+         */
         private void yieldESATemplateTab() {
             ESATemplatePane templatePane = new ESATemplatePane(esaHeader, false);            
             String fileName = newOpenedEDFFile.getAbsolutePath();
@@ -2291,7 +2799,7 @@ public class MainWindow extends JFrame implements WindowListener {
              MainWindow.taskTree.addFileNodeAt(2, newOpenedEDFFile, uid);
         }
         
-        private void updateEsaTemplatingBtns(boolean active){
+        private void updateEsaTemplatingBtns(boolean active) {
             fileRenameItem.setEnabled(active);
         }
   
@@ -2299,14 +2807,23 @@ public class MainWindow extends JFrame implements WindowListener {
     
     
 
+    /**
+     * TODO
+     */
     private void createTemplateAddRowItem() {
         templateAddRowItem = new JMenuItem("Add row");
         templateAddRowItem.setIcon(editAddRowIcon);
         templateAddRowItem.addActionListener(new TemplateAddRowListener());
     }
 
+    /**
+     * TODO
+     */
     private class TemplateAddRowListener implements ActionListener {
 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             if (MainWindow.tabPane.getSelectedComponent() == null)
                 return;
@@ -2328,16 +2845,24 @@ public class MainWindow extends JFrame implements WindowListener {
         }
     }
 
+    /**
+     * TODO
+     */
     private void createTemplateRemoveRowItem() {
         templateRemoveRowItem = new JMenuItem("Remove row");
         templateRemoveRowItem.setIcon(editRemoveRowIcon);
         templateRemoveRowItem.addActionListener(new TemplateRemoveRowListener());
     }
 
+    /**
+     * TODO
+     */
     private class TemplateRemoveRowListener implements ActionListener {
 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
- 
             if (MainWindow.tabPane.getSelectedComponent() == null)
                 return;
             
@@ -2365,10 +2890,10 @@ public class MainWindow extends JFrame implements WindowListener {
     }
     
     /**
+     * TODO
      * @return the Help Menu
      */
-    private JMenu createToolsMenu()
-    {
+    private JMenu createToolsMenu() {
     	JMenu toolsMenu = new JMenu("Tools");
     	toolsMenu.setMnemonic('T');
     	
@@ -2384,57 +2909,52 @@ public class MainWindow extends JFrame implements WindowListener {
     	toolsMenu.addSeparator();
     	toolsMenu.add(McrDirSettings);
     	toolsMenu.add(ViewerDirSettings);
-    	toolsMenu.add(EdfViewerToolItem);
-    	
-    	
+    	toolsMenu.add(EdfViewerToolItem);    	    	
 //		toolsMenu.addSeparator();
 //		toolsMenu.add(jEDFToolItem);
         
         //context sensitive help
         //hb.enableHelpOnButton(toolsMenu, "menubar.tools", null);
-        CSH.setHelpIDString(toolsMenu, "menubar.tools");
-    	
+        CSH.setHelpIDString(toolsMenu, "menubar.tools");    	
     	return toolsMenu;
     }
     
-    private void createAnnotationConverterItem()
-    {
+    /**
+     * TODO
+     */
+    private void createAnnotationConverterItem() {
     	annotConverterItem = new JMenuItem("EDF Annotation Translator");
     	annotConverterItem.addActionListener(new ActionListener() {
     		
-                public void actionPerformed(ActionEvent e) {
-                	try
-                    {
-                		/************************************************************** 
-                		 * The following code was hidden by Gang Shu on January 14, 2014
-                		 **************************************************************/ 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent e) {
+        	try {
+        		/************************************************************** 
+        		 * The following code was hidden by Gang Shu on January 14, 2014
+        		 **************************************************************/ 
 //                    	Runtime rt = Runtime.getRuntime();
 //                    	Process p = rt.exec("java -jar Annotation.jar");
 //                    	InputStream in = p.getInputStream() ;
 //                    	 OutputStream out = p.getOutputStream ();
-//                    	 InputStream err = p.getErrorStream() ;
-//                    	 
+//                    	 InputStream err = p.getErrorStream() ;                  	 
 //                    	//do whatever you want
-//                    	 //some more code
-//                    	 
+//                    	 //some more code                   	 
 //                    	 //p.destroy() ;
-
-                		/************************************************************** 
-                		 * The above code was added by Gang Shu on January 14, 2014
-                		 **************************************************************/ 
-                		SubWindowGUI.getInstance();
-                    }
-                    catch (Exception exc)
-                    {
+        		/************************************************************** 
+        		 * The above code was added by Gang Shu on January 14, 2014
+        		 **************************************************************/ 
+        		SubWindowGUI.getInstance();
+             	} catch (Exception exc) {
                     	exc.printStackTrace();
-                    }
                 }
-                	
-            });
+            }                	
+        });
     }
 
-
     /**
+     * TODO
      * @return the Help Menu
      */
     private JMenu createHelpMenu() {
@@ -2452,33 +2972,42 @@ public class MainWindow extends JFrame implements WindowListener {
         helpMenu.add(helpMimiItem);
         helpMenu.add(helpEdfItem);
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(helpMenu, "menubar.help", null);
         CSH.setHelpIDString(helpMenu, "menubar.help");
-
         return helpMenu;
     }
 
+    /**
+     * TODO
+     */
     private void createHelpAboutItem() {
         helpAboutItem = new JMenuItem("About EDF Header Editor");
         helpAboutItem.setIcon(helpAboutIcon);
-        helpAboutItem.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) { 
-                    new AboutListener(new JFrame());
-                }
-            });
+        helpAboutItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                new AboutListener(new JFrame());
+            }
+        });
     }
     
+    /**
+     * TODO
+     */
     protected static class AboutListener extends JDialog {  
-        static final int helpDialogWidth = 520;
+		private static final long serialVersionUID = 1L;
+		static final int helpDialogWidth = 520;
         static final int helpDialogHeight = 440;
         JButton okBtn;        
-         AboutListener(JFrame frame){
-            super(frame, true); // modal
+        AboutListener(JFrame frame){
+        	super(frame, true); // modal
             this.setLocationRelativeTo(frame);
             initUI();
         }
 
+        /**
+         * TODO
+         */
         private void initUI() {
             this.setSize(new Dimension(helpDialogWidth, helpDialogHeight));
             this.setTitle("About PhysioMIMI EDF Header Editor");
@@ -2488,7 +3017,10 @@ public class MainWindow extends JFrame implements WindowListener {
             this.setVisible(true);
         }
         
-        private void addGUIComponents(){
+        /**
+         * TODO
+         */
+        private void addGUIComponents() {
             JPanel mainpane = createMainPanel();
             JPanel okPanel = createOkPanel();  
             setLayout(new BorderLayout());
@@ -2496,7 +3028,11 @@ public class MainWindow extends JFrame implements WindowListener {
             this.add(okPanel, BorderLayout.SOUTH);
         }
         
-        private JPanel createMainPanel(){
+        /**
+         * TODO
+         * @return
+         */
+        private JPanel createMainPanel() {
             JPanel mainpane =  new JPanel(customizeLayout());
             CellConstraints cc = new CellConstraints();
             
@@ -2509,7 +3045,11 @@ public class MainWindow extends JFrame implements WindowListener {
             return mainpane;   
         }
         
-        private FormLayout customizeLayout(){
+        /**
+         * TODO
+         * @return
+         */
+        private FormLayout customizeLayout() {
             String layoutStr1 = "2dlu:n, f:p:g, 2dlu:n";
             String layoutStr2 = "f:p:g, f:p:g";
             FormLayout layout = new FormLayout(layoutStr1, layoutStr2);
@@ -2517,36 +3057,45 @@ public class MainWindow extends JFrame implements WindowListener {
             return layout;
         }
         
-         private JPanel createOkPanel(){       
+         /**
+         * TODO
+         * @return
+         */
+        private JPanel createOkPanel() {       
              JPanel okPanel = new JPanel();
-/*              okPanel.setMinimumSize(new Dimension(helpDialogWidth, 1*helpDialogHeight/6));
-             okPanel.setPreferredSize(new Dimension(helpDialogWidth, 1*helpDialogHeight/6)); */
+//             okPanel.setMinimumSize(new Dimension(helpDialogWidth, 1*helpDialogHeight/6));
+//             okPanel.setPreferredSize(new Dimension(helpDialogWidth, 1*helpDialogHeight/6));
              
              createeOkBtn();
-             okPanel.add(okBtn);
-             
+             okPanel.add(okBtn);             
              return okPanel;
          }
          
-        private void createeOkBtn(){
+        /**
+         * TODO
+         */
+        private void createeOkBtn() {
              okBtn = new JButton("OK");
-             InputMap im =
-                 okBtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+             InputMap im = okBtn.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
              ActionMap am = okBtn.getActionMap();
              im.put(KeyStroke.getKeyStroke("ESCAPE"), "Cancel");
              am.put("Cancel", new AbstractAction(){
-                    public void actionPerformed(ActionEvent e) {
-                        dispose();
-                    }
-                });    
-             okBtn.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                        dispose();
-                    }
-                });
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });    
+             okBtn.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
          }
          
-         private JLabel createLogoLabel(){
+         /**
+         * TODO
+         * @return
+         */
+        private JLabel createLogoLabel() {
              URL url = this.getClass().getClassLoader().getResource("icon/mimilogo128.png");
              ImageIcon image =  new ImageIcon(url, "MIMI Logo "); 
              JLabel imLabel = new JLabel("  ", image, JLabel.CENTER);
@@ -2560,6 +3109,10 @@ public class MainWindow extends JFrame implements WindowListener {
              return imLabel;
          }
 
+        /**
+         * TODO
+         * @return
+         */
         private JEditorPane createCopyrightPane() {
             JEditorPane textPane = new JEditorPane();
             textPane.setContentType("text/html");            
@@ -2573,7 +3126,11 @@ public class MainWindow extends JFrame implements WindowListener {
             return textPane;
         }
         
-        private String makeHTMLTable(){
+        /**
+         * TODO
+         * @return
+         */
+        private String makeHTMLTable() {
             StringWriter sout = new StringWriter();
             PrintWriter out = new PrintWriter(sout);
             String text1 = "EDF Header Editor", text2 = version_text;
@@ -2587,19 +3144,31 @@ public class MainWindow extends JFrame implements WindowListener {
             out.close();
 
             return sout.toString();
-        }
+        }        
         
-        
-        private String appendHeadTail(String text){
+        /**
+         * TODO
+         * @param text
+         * @return
+         */
+        private String appendHeadTail(String text) {
             return "<TABLE width=550>" + text + "</TABLE>";
         }
         
-        private String format(String text1, String text2){
+        /**
+         * TODO
+         * @param text1
+         * @param text2
+         * @return
+         */
+        private String format(String text1, String text2) {
             return "<TR><TH align = left>" + text1 + "</TH><TD>" + text2 + "</TD></TR>\n";
         }
-        
-         
-        private void setLogo(){
+                 
+        /**
+         * TODO
+         */
+        private void setLogo() {
             BufferedImage image = null;
             try {
                 image = ImageIO.read(this.getClass().getResource("/icon/mimilogo.png"));
@@ -2610,6 +3179,9 @@ public class MainWindow extends JFrame implements WindowListener {
         }
     }
 
+    /**
+     * TODO
+     */
     private void createHelpManualItem() {
         helpManualItem = new JMenuItem("How to Use");
         helpManualItem.setIcon(helpHowToUseIcon);
@@ -2619,29 +3191,41 @@ public class MainWindow extends JFrame implements WindowListener {
     }
     
     protected static String MIMI = "http://mimi.case.edu/";
-    private void createHelpMimiItem(){
+    /**
+     * TODO
+     */
+    private void createHelpMimiItem() {
         helpMimiItem = new JMenuItem("PhysioMIMI Resource Sites");
         helpMimiItem.setIcon(helpResourceSiteIcon);
         helpMimiItem.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    Utility.openURL(MIMI);
-                }
-            });
+            public void actionPerformed(ActionEvent e) {
+                Utility.openURL(MIMI);
+            }
+        });
     }
     
     protected static String EDF_SITE = "http://www.edfplus.info/";
-    private void createHelpEdfItem(){
+    /**
+     * TODO
+     */
+    private void createHelpEdfItem() {
         helpEdfItem = new JMenuItem("EDF and EDFPlus Home");
         helpEdfItem.setIcon(helpEDFHomeIcon);
-        helpEdfItem.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    Utility.openURL(EDF_SITE);
-                }
-            }); 
+        helpEdfItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Utility.openURL(EDF_SITE);
+            }
+        }); 
     }
 
-    private class EDFToolBar extends JToolBar{
-        EDFToolBar(){
+    /**
+     * TODO
+     */
+    private class EDFToolBar extends JToolBar {
+        /**
+         * TODO
+         */
+        EDFToolBar() {
             super();
             setPreferredSize(new Dimension(32, 32));
             setFloatable(false);
@@ -2649,8 +3233,11 @@ public class MainWindow extends JFrame implements WindowListener {
             setOpaque(true);
         }
         
+        /* (non-Javadoc)
+         * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+         */
         @Override
-        protected void paintComponent(Graphics g){
+        protected void paintComponent(Graphics g) {
             if (!isOpaque()){
                 super.paintComponent(g);
                 return;
@@ -2672,6 +3259,10 @@ public class MainWindow extends JFrame implements WindowListener {
         }
     }
 
+    /**
+     * TODO
+     * @return
+     */
     private EDFToolBar createToolBar() {
         EDFToolBar toolBar = new EDFToolBar();
         
@@ -2746,7 +3337,10 @@ public class MainWindow extends JFrame implements WindowListener {
         return toolBar;
     }
     
-   private void createNewTaskBtn() {
+   /**
+    * TODO
+    */
+    private void createNewTaskBtn() {
         newTaskButton = new JButton(fileNewIcon);
         newTaskButton.setBorderPainted(false);
         newTaskButton.setToolTipText("Select EDF files");
@@ -2758,8 +3352,14 @@ public class MainWindow extends JFrame implements WindowListener {
     }
 
 
-     protected static class SelectFilesListener implements ActionListener {
+    /**
+     * TODO
+     */
+    protected static class SelectFilesListener implements ActionListener {
 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             if (MainWindow.wkEdfFiles != null && MainWindow.wkEdfFiles.size() > 0) {
                 String prompt = "Current task is to be closed. Click on Yes to confirm, or No to cancel.";
@@ -2773,7 +3373,10 @@ public class MainWindow extends JFrame implements WindowListener {
         }
     } 
     
-    private void createAddFilesBtn(){
+    /**
+     * TODO
+     */
+    private void createAddFilesBtn() {
         addFilesButton = new JButton(fileAddFilesIcon);
         addFilesButton.setBorderPainted(false);
         //addFilesButton.setEnabled(false);
@@ -2785,7 +3388,10 @@ public class MainWindow extends JFrame implements WindowListener {
         CSH.setHelpIDString(addFilesButton, "toolbar.add");
     }
     
-    protected static class AddFilesAdaptor implements ActionListener{
+    /**
+     * TODO
+     */
+    protected static class AddFilesAdaptor implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //when there is no task, do nothing
             if (tabPane == null || tabPane.getTabCount() == 0 || !(tabPane.getComponentAt(0) instanceof WorkingTablePane))
@@ -2794,6 +3400,9 @@ public class MainWindow extends JFrame implements WindowListener {
         }
     }
 
+    /**
+     * TODO
+     */
     private void createSaveBtn() {
        /*  ImageIcon imageIcon =
             new ImageIcon(MainWindow.class.getResource("/icon/Save.png")); */
@@ -2807,40 +3416,47 @@ public class MainWindow extends JFrame implements WindowListener {
         CSH.setHelpIDString(saveButton, "toolbar.save");
     }
 
+    /**
+     * TODO
+     */
     private void createSaveAllBtn() {
-        /* ImageIcon imageIcon =
-            new ImageIcon(MainWindow.class.getResource("/icon/SaveAll.png")); */
+//         ImageIcon imageIcon = new ImageIcon(MainWindow.class.getResource("/icon/SaveAll.png"));
         saveAllButton = new JButton(fileSaveAllIcon);
         saveAllButton.setBorderPainted(false);
         saveAllButton.setToolTipText("save all");
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(saveAllButton, "toolbar.saveall", null);
         CSH.setHelpIDString(saveAllButton, "toolbar.saveall");
     }
 
+    /**
+     * TODO
+     */
     private void createPrintBtn() {
-/*         ImageIcon imageIcon =
-            new ImageIcon(MainWindow.class.getResource("/icon/Print.png")); */
+//         ImageIcon imageIcon = new ImageIcon(MainWindow.class.getResource("/icon/Print.png"));
         printButton = new JButton(filePrintIcon);
         printButton.setBorderPainted(false);
         printButton.setToolTipText("print header files");
         printButton.setEnabled(true);
         printButton.addActionListener(new PrintListener());
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(printButton, "toolbar.print", null);
         CSH.setHelpIDString(printButton, "toolbar.print");
     }
 
-/*     private void createExportBtn() {
-        ImageIcon imageIcon =
-            new ImageIcon(MainWindow.class.getResource("/icon/Print.png"));
-        exportButton = new JButton(imageIcon);
-        exportButton.setBorderPainted(false);
-        exportButton.setToolTipText("");
-    } */
+//   private void createExportBtn() {
+//        ImageIcon imageIcon =
+//            new ImageIcon(MainWindow.class.getResource("/icon/Print.png"));
+//        exportButton = new JButton(imageIcon);
+//        exportButton.setBorderPainted(false);
+//        exportButton.setToolTipText("");
+//    }
 
+    /**
+     * TODO
+     */
     private void createUndoBtn() {
         undoButton = new JButton();
         undoButton.setAction(undoManager.getUndoAction());
@@ -2851,10 +3467,12 @@ public class MainWindow extends JFrame implements WindowListener {
        
         //context sensitive help
         //hb.enableHelpOnButton(undoButton, "toolbar.undo", null);
-        CSH.setHelpIDString(undoButton, "toolbar.undo");
-        
+        CSH.setHelpIDString(undoButton, "toolbar.undo");        
     }
 
+    /**
+     * TODO
+     */
     private void createRedoBtn() {
         redoButton = new JButton();
         redoButton.setAction(undoManager.getRedoAction());
@@ -2863,45 +3481,57 @@ public class MainWindow extends JFrame implements WindowListener {
         redoButton.setBorderPainted(false);
         redoButton.setToolTipText("redo");
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(redoButton, "toolbar.redo", null);
         CSH.setHelpIDString(redoButton, "toolbar.redo");
     }
     
+    /**
+     * TODO
+     */
     private void createCopyBtn() {           
         copyButton = new JButton(editCopyIcon);
         copyButton.setBorderPainted(false);
         copyButton.addActionListener(new CPCAdapter("Copy"));
         copyButton.setToolTipText("copy");
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(copyButton, "toolbar.copy", null);
         CSH.setHelpIDString(copyButton, "toolbar.copy");
     }
 
+    /**
+     * TODO
+     */
     private void createCutBtn() {
         cutButton = new JButton(editCutIcon);
         cutButton.setBorderPainted(false);
         cutButton.addActionListener(new CPCAdapter("Cut"));
         cutButton.setToolTipText("cut");
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(cutButton, "toolbar.cut", null);
         CSH.setHelpIDString(cutButton, "toolbar.cut");
     }
 
 
+    /**
+     * TODO
+     */
     private void createPasteBtn() {
         pasteButton = new JButton(editPasteIcon);
         pasteButton.setBorderPainted(false);
         pasteButton.addActionListener(new CPCAdapter("Paste"));
         pasteButton.setToolTipText("paste");
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(pasteButton, "toolbar.paste", null);
         CSH.setHelpIDString(pasteButton, "toolbar.paste");
     }
 
+    /**
+     * TODO
+     */
     private void createApplyEIATemplateBtn() {
         ImageIcon imageIcon =
             new ImageIcon(MainWindow.class.getResource("/icon/apply-eia.png"));
@@ -2921,22 +3551,24 @@ public class MainWindow extends JFrame implements WindowListener {
         //hb.enableHelpOnButton(applyEIATemplateButton, "toolbar.hFileA", null);
         CSH.setHelpIDString(applyEIATemplateButton, "toolbar.hFileA");
         applyEIATemplateButton.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent e) {
-                    if (MainWindow.wkEdfFiles == null)
-                        return;
-                    BasicEDFPane pane = (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
-                    if (pane == null)
-                        return;
+            public void actionPerformed(ActionEvent e) {
+                if (MainWindow.wkEdfFiles == null)
+                    return;
+                BasicEDFPane pane = (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
+                if (pane == null)
+                    return;
                     
-                    new ApplyTemplateListener(new JFrame(), "eia");                    
-                }
-            });
+                new ApplyTemplateListener(new JFrame(), "eia");                    
+            }
+        });
     }
     
+    /**
+     * TODO
+     * @return
+     */
     private JButton createApplyESATemplateBtn() {
-        ImageIcon imageIcon =
-            new ImageIcon(MainWindow.class.getResource("/icon/apply-esa.png"));
+        ImageIcon imageIcon = new ImageIcon(MainWindow.class.getResource("/icon/apply-esa.png"));
         applyESATemplateButton = new JButton(imageIcon);
         applyESATemplateButton.setBorderPainted(false);
         //applyESATemplateButton.setText("esa");
@@ -2953,21 +3585,21 @@ public class MainWindow extends JFrame implements WindowListener {
         //hb.enableHelpOnButton(applyESATemplateButton, "toolbar.hSignalA", null);
         CSH.setHelpIDString(applyESATemplateButton, "toolbar.hSignalA");
         applyESATemplateButton.addActionListener(new ActionListener() {
-
-                public void actionPerformed(ActionEvent e) {
-                    if (MainWindow.wkEdfFiles == null)
-                        return;
-                    BasicEDFPane pane = (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
-                    if (pane == null)
-                        return;  
-                    new ApplyTemplateListener(new JFrame(), "esa");
-                }
-            });
-        
+            public void actionPerformed(ActionEvent e) {
+                if (MainWindow.wkEdfFiles == null)
+                    return;
+                BasicEDFPane pane = (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
+                if (pane == null)
+                    return;  
+                new ApplyTemplateListener(new JFrame(), "esa");
+            }
+        });    
         return applyESATemplateButton;
-    }
-    
+    }  
 
+    /**
+     * TODO
+     */
     private void createAddRowBtn() {
         addRowButton = new JButton(editAddRowIcon);
         addRowButton.setBorderPainted(false);
@@ -2975,11 +3607,14 @@ public class MainWindow extends JFrame implements WindowListener {
         addRowButton.addActionListener(new TemplateAddRowListener());
         //addRowButton.setEnabled(false);
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(addRowButton, "toolbar.addRow", null);
         CSH.setHelpIDString(addRowButton, "toolbar.addRow");
     }
 
+    /**
+     * TODO
+     */
     private void createRemoveRowBtn() {
         removeRowButton = new JButton(editRemoveRowIcon);
         removeRowButton.setBorderPainted(false);
@@ -2987,12 +3622,15 @@ public class MainWindow extends JFrame implements WindowListener {
         removeRowButton.addActionListener(new TemplateRemoveRowListener());
         //removeRowButton.setEnabled(false);
         
-      //context sensitive help
+        //context sensitive help
         //hb.enableHelpOnButton(removeRowButton, "toolbar.removeRow", null);
         CSH.setHelpIDString(removeRowButton, "toolbar.removeRow");
     }
     
-    private void createHelpBtn(){ 
+    /**
+     * TODO
+     */
+    private void createHelpBtn() { 
     	helpButton = new JButton(helpIntensiveIcon);
     	helpButton.setToolTipText("Help Button");
     	helpButton.addActionListener(new CSH.DisplayHelpAfterTracking(hb));
@@ -3001,23 +3639,23 @@ public class MainWindow extends JFrame implements WindowListener {
         CSH.setHelpIDString(helpButton, "toolbar.help");
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////
     //////////////// start of window listener method ///////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////
-    /*
+    /**
+     * TODO
      * close the window in a graceful way
      * Fangping, 08/04/2010
      */
-    private void gracefulCloseWindow(){
+    private void gracefulCloseWindow() {
         // non-zero number of tabs means prompt to save work
-        if (tabPane.getTabCount() == 0){
+        if (tabPane.getTabCount() == 0) { 
             System.exit(0);
             return;
         }
-        int option = new JOptionPane().showConfirmDialog(null, "Save Files before exit ? ",
+        int option = JOptionPane.showConfirmDialog(null, "Save Files before exit ? ",
                                                          "Exit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-        switch(option){
+        switch(option) {
         case 0:
             new SaveListener("SaveAll").saveAllFilesInAllPanes();
         case 1:
@@ -3029,35 +3667,59 @@ public class MainWindow extends JFrame implements WindowListener {
         } 
     }
     
+    /* (non-Javadoc)
+     * @see java.awt.event.WindowListener#windowClosing(java.awt.event.WindowEvent)
+     */
     public void windowClosing(WindowEvent e) {
         gracefulCloseWindow();
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.WindowListener#windowOpened(java.awt.event.WindowEvent)
+     */
     public void windowOpened(WindowEvent e) {
 
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.WindowListener#windowClosed(java.awt.event.WindowEvent)
+     */
     public void windowClosed(WindowEvent e) { 
         
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.WindowListener#windowIconified(java.awt.event.WindowEvent)
+     */
     public void windowIconified(WindowEvent e) {
 
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.WindowListener#windowDeiconified(java.awt.event.WindowEvent)
+     */
     public void windowDeiconified(WindowEvent e) {
 
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.WindowListener#windowActivated(java.awt.event.WindowEvent)
+     */
     public void windowActivated(WindowEvent e) {
 
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.WindowListener#windowDeactivated(java.awt.event.WindowEvent)
+     */
     public void windowDeactivated(WindowEvent e) {
   
     }
     
-    private void setLogo(){
+    /**
+     * TODO
+     */
+    private void setLogo() {
         BufferedImage image = null;
         try {
             image = ImageIO.read(this.getClass().getResource("/icon/mimilogo.png"));
@@ -3068,7 +3730,11 @@ public class MainWindow extends JFrame implements WindowListener {
         this.setIconImage(image);
     }
     
-    public static void setCellContent(String text){
+    /**
+     * TODO
+     * @param text
+     */
+    public static void setCellContent(String text) {
         middleStatusBar.setText(text);        
     }
 
@@ -3082,6 +3748,7 @@ public class MainWindow extends JFrame implements WindowListener {
     ///////////////////////////////////////////////////////////////////////////////
 
     /**
+     * TODO
      * @param activeESATable current active ESA table in the ESA tab pane.
      * can only be initialized by the New TaskListener
      * can only be updated by the TaskTree Listener
@@ -3091,46 +3758,72 @@ public class MainWindow extends JFrame implements WindowListener {
         MainWindow.activeESATableInTabPane = activeESATable;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static ESATable getActiveESATableInTabPane() {
         return activeESATableInTabPane;
     }
 
+    /**
+     * TODO
+     * @param wkEdfFiles
+     */
     public static void setWkEdfFiles(ArrayList<File> wkEdfFiles) {
         MainWindow.wkEdfFiles = wkEdfFiles;
     }
     
-    public static void addWkEdfFiles(ArrayList<File> wkEdfFiles)
-    {
+    /**
+     * TODO
+     * @param wkEdfFiles
+     */
+    public static void addWkEdfFiles(ArrayList<File> wkEdfFiles) {
     	int size = MainWindow.wkEdfFiles.size() + wkEdfFiles.size();
     	ArrayList<File> tempFiles = new ArrayList<File>(size);
-    	for(int i = 0; i < MainWindow.wkEdfFiles.size(); i++)
-    	{
+    	for(int i = 0; i < MainWindow.wkEdfFiles.size(); i++) {
     		tempFiles.add(i, MainWindow.wkEdfFiles.get(i));
     	}
-    	for(int i = MainWindow.wkEdfFiles.size(), j=0; i < size; i++, j++)
-    	{
+    	for(int i = MainWindow.wkEdfFiles.size(), j=0; i < size; i++, j++) {
     		tempFiles.add(i, wkEdfFiles.get(j));
     	}
         MainWindow.wkEdfFiles = tempFiles;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static ArrayList<File> getWkEdfFiles() {
         return wkEdfFiles;
     }
 
+    /**
+     * TODO
+     * @param workingDirectory
+     */
     public static void setWorkingDirectory(File workingDirectory) {
         MainWindow.workingDirectory = workingDirectory;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static File getWorkingDirectory() {
         return workingDirectory;
     }
 
+    /**
+     * TODO
+     * @param mySrcEdfFiles
+     */
     public static void setSrcEdfFiles(ArrayList<File> mySrcEdfFiles) {
         srcEdfFiles = mySrcEdfFiles;
     }
     
-    /*
+    /**
+     * TODO
      * coded by Zendrix
      * Fangping, 08/19/2010
      */
@@ -3142,20 +3835,28 @@ public class MainWindow extends JFrame implements WindowListener {
             srcEdfFiles.add(mySrcEdfFiles.get(i));        
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static ArrayList<File> getSrcEdfFiles() {
         return srcEdfFiles;
     }
     
+    /**
+     * TODO
+     * @param srcEdfFileHeaders
+     */
     public static void setSrcEdfFileHeaders(ArrayList<EDFFileHeader> srcEdfFileHeaders) {
         MainWindow.srcEdfFileHeaders = srcEdfFileHeaders;
     }
     
-    /*
+    /**
+     * TODO
      * zendrix code
      * Fangping, 08/17/2010
      */
-    public static void addSrcEdfFileHeaders(ArrayList<EDFFileHeader> FileHeaders) {        
-        
+    public static void addSrcEdfFileHeaders(ArrayList<EDFFileHeader> FileHeaders) {                
         //commented by Fangping, 08/19/2010
         int size = MainWindow.srcEdfFileHeaders.size() + FileHeaders.size();
     	ArrayList<EDFFileHeader> tempHeaders = new ArrayList<EDFFileHeader>(size);
@@ -3170,80 +3871,109 @@ public class MainWindow extends JFrame implements WindowListener {
         MainWindow.srcEdfFileHeaders = tempHeaders; 
     } 
     
-    /*
+    /**
      * Fangping, 08/17/2010
+     * TODO
+     * @param srcEdfFileHeaders
      */
     public static void setDupEdfFileHeaders(ArrayList<EDFFileHeader> srcEdfFileHeaders) {
         MainWindow.dupEdfFileHeaders = srcEdfFileHeaders;
     } 
     
-    /*
+    /**
      * Fangping, 08/17/2010
+     * TODO
+     * @param FileHeaders
      */
     public static void addDupEdfFileHeaders(ArrayList<EDFFileHeader> FileHeaders) {
-    /*     for (EDFFileHeader header: FileHeaders)
-            dupEdfFileHeaders.add(header); */
+//         for (EDFFileHeader header: FileHeaders)
+//            dupEdfFileHeaders.add(header);
         // Commnented by Fangping, 08/19/2010
       	int size = MainWindow.dupEdfFileHeaders.size() + FileHeaders.size();
     	ArrayList<EDFFileHeader> tempHeaders = new ArrayList<EDFFileHeader>(size);
-    	for(int i = 0; i < MainWindow.dupEdfFileHeaders.size(); i++)
-    	{
+    	for(int i = 0; i < MainWindow.dupEdfFileHeaders.size(); i++) {
             tempHeaders.add(i, MainWindow.dupEdfFileHeaders.get(i)); 
     	}
-    	for(int i = dupEdfFileHeaders.size(), j=0; i < size; i++, j++)
-    	{
+    	for(int i = dupEdfFileHeaders.size(), j=0; i < size; i++, j++) {
             tempHeaders.add(i, FileHeaders.get(j));
     	}
        dupEdfFileHeaders = tempHeaders;  
     }
 
-    /*
+    /**
+     * TODO
      * Fangping, 08/17/2010
+     * @return
      */
     public static ArrayList<EDFFileHeader> getSrcEdfFileHeaders() {
         return srcEdfFileHeaders;
     }
     
-     public static ArrayList<EDFFileHeader> getDupEdfFileHeaders() {
+     /**
+     * TODO
+     * @return
+     */
+    public static ArrayList<EDFFileHeader> getDupEdfFileHeaders() {
         return dupEdfFileHeaders;
     } 
 
-    /*
+    /**
      * Fangping, 08/17/2010
+     * TODO
+     * @param iniEsaTables
      */
     public static void setIniEsaTables(ArrayList<ESATable> iniEsaTables) {
         MainWindow.iniEsaTables = iniEsaTables;
     }
      
-    /*
+    /**
      * Fangping, 08/17/2010
      * should clone the iniEsaTables, not copy
      * Fangping, 08/20/2010
+     * TODO
+     * @param iniEsaTables
      */
-     public static void setDupEsaTables(ArrayList<ESATable> iniEsaTables) {
+    public static void setDupEsaTables(ArrayList<ESATable> iniEsaTables) {
     	MainWindow.dupEsaTables = iniEsaTables;
     } 
     
-    /*
+    /**
      * Fangping, 08/17/2010
+     * TODO
+     * @param iniEsaTable
+     * @param index
      */
     public static void setIniEsaTable(ESATable iniEsaTable, int index) {
     	MainWindow.iniEsaTables.set(index, iniEsaTable);
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static ArrayList<ESATable> getIniEsaTables() {
         return iniEsaTables;
     }
 
+    /**
+     * TODO
+     * @param iniEiaTable
+     */
     public static void setIniEiaTable(EIATable iniEiaTable) {
         MainWindow.iniEiaTable = iniEiaTable;
     }
     
-    public static EIATable getIniEiaTable(){
+    /**
+     * TODO
+     * @return
+     */
+    public static EIATable getIniEiaTable() {
         return iniEiaTable;
     }
     
-    /*
+    /**
+     * TODO
+     * @param iniEiaTable
      * this one is wrong. 
      * keep it for later correction.
      */
@@ -3251,18 +3981,28 @@ public class MainWindow extends JFrame implements WindowListener {
     	MainWindow.dupEiaTable = iniEiaTable;
     } 
    
-    public static int getSelectedTabIndex(){
+    /**
+     * TODO
+     * @return
+     */
+    public static int getSelectedTabIndex() {
         return tabPane.getSelectedIndex();
     }
     
-    public static int getSelectedEDFIndex(){
+    /**
+     * TODO
+     * @return
+     */
+    public static int getSelectedEDFIndex() {
     	return taskTree.getSelectionRows()[0];
     }
     
-    /*
+    /**
      * called when the window is initialized or when current task is closed
+     * TODO
+     * @param active
      */
-    private static void activateMenuItems(boolean active){
+    private static void activateMenuItems(boolean active) {
         fileCloseTaskItem.setEnabled(active);
         fileAddFilesItem.setEnabled(active);             
 
@@ -3273,7 +4013,11 @@ public class MainWindow extends JFrame implements WindowListener {
         toolApplyESATemplateItem.setEnabled(active);
     }
     
-    private static void activateToolBarItems(boolean active){
+    /**
+     * TODO
+     * @param active
+     */
+    private static void activateToolBarItems(boolean active) {
         addFilesButton.setEnabled(active);  
         applyEIATemplateButton.setEnabled(active);
         applyESATemplateButton.setEnabled(active);
@@ -3282,10 +4026,11 @@ public class MainWindow extends JFrame implements WindowListener {
     }
     
     /**
+     * TODO
      * should remove only the primaryTabs
      */
-    private static void closePrimaryTabs(){
-    	if (fixerrorTab!=-1){
+    private static void closePrimaryTabs() {
+    	if (fixerrorTab!=-1) {
     		tabPane.remove(fixerrorTab);
     		fixerrorTab = -1;
     	}
@@ -3294,15 +4039,19 @@ public class MainWindow extends JFrame implements WindowListener {
         tabPane.setPrimaryTabsOpened(false);
     }
     
-    protected static void setTaskTreeToNull(){
+    /**
+     * TODO
+     */
+    protected static void setTaskTreeToNull() {
         taskTree.removeNodeGroupAt(MainWindow.workingDirNode);
         MainWindow.workingDirNode.setUserObject("EDF Files");
     }
     
-    /*
-     * aggregate all four thype of incompliances into one array list.
+    /**
+     * TODO
+     * aggregate all four types of incompliances into one array list.
      */
-    public static ArrayList<Incompliance> aggregateIncompliances(){
+    public static ArrayList<Incompliance> aggregateIncompliances() {
         ArrayList<Incompliance> inserted = new ArrayList<Incompliance>();
         //do not mix the adding order       
         insertIncompliances(inserted, eiaIncompliances);
@@ -3313,22 +4062,30 @@ public class MainWindow extends JFrame implements WindowListener {
         return inserted;
     }
     
-    /*
-     * The following three methods operates on incompliances
+//    The following three methods operates on incompliances
+    /**
+     * Insert incompliances into aggregate incompliances
+     * @param inserted the target container of incompliances to be added to
+     * @param insertees the origin of incompliances
      */
-    //insert incomps into aggregateIncompliances
     protected static void insertIncompliances(ArrayList<Incompliance> inserted, ArrayList<Incompliance> insertees){
         for (Incompliance incomp: insertees)
             inserted.add(incomp);
     }
     
    
+    /**
+     * TODO
+     */
     protected static void clearErrorListTable(){
         errorListTable.blankOut();        
         ErrorListTable.setIcon(errorListTable, 0);
     }
     
-    protected static void setCoreDataStructuresToNull(){
+    /**
+     * TODO
+     */
+    protected static void setCoreDataStructuresToNull() {
         srcEdfFiles.clear();
         wkEdfFiles.clear();
         iniEiaTable = null;
@@ -3342,20 +4099,27 @@ public class MainWindow extends JFrame implements WindowListener {
         //aggregateIncompliances.clear(); 
     }
     
-    protected static int indexOfSelectedNode(){
+    /**
+     * TODO
+     * @return
+     */
+    protected static int indexOfSelectedNode() {
         TreePath path = taskTree.getSelectionPath();
         if (path == null)
             return -1;
         TreeNode selectedNode = (TreeNode) path.getLastPathComponent();
         TreePath parentPath = path.getParentPath();
-        if (path == null)
-            return -1;
+//        if (path == null)
+//            return -1;  // commented out by wei wang, 2014-6-26 TODO: ww-dead code
         TreeNode parentNode = (TreeNode) parentPath.getLastPathComponent();
               
         return parentNode.getIndex(selectedNode);
     }
     
-    private static void createVerifyBtn(){
+    /**
+     * TODO
+     */
+    private static void createVerifyBtn() {
         verifyBtn = new JButton(toolsValidateIcon);
         verifyBtn.setToolTipText("verify all headers in current task");
         verifyBtn.addActionListener(new VerifyHeaderListener());
@@ -3363,8 +4127,14 @@ public class MainWindow extends JFrame implements WindowListener {
         CSH.setHelpIDString(verifyBtn, "toolbar.verify");
     }
     
-    public static class VerifyHeaderListener implements ActionListener{
+    /**
+     * TODO
+     */
+    public static class VerifyHeaderListener implements ActionListener {
 
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             try {
                 performActions();
@@ -3373,6 +4143,10 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }
                 
+        /**
+         * TODO
+         * @throws BadLocationException
+         */
         public void performActions() throws BadLocationException {
             Document doc = MainWindow.consolePane.getDocument();
             String theme;
@@ -3385,6 +4159,10 @@ public class MainWindow extends JFrame implements WindowListener {
         /*
          * obsolete
          */
+        /**
+         * TODO
+         * @throws BadLocationException
+         */
         void verifyWorkingFilesHeader() throws BadLocationException {
             if (iniEsaTables == null || iniEsaTables.size() == 0)
                 return;
@@ -3395,7 +4173,7 @@ public class MainWindow extends JFrame implements WindowListener {
             String theme;
             EDFTable table;
               
-            for (int i = 0; i < sz; i++){
+            for (int i = 0; i < sz; i++) {
                 theme = "\tScanning " + MainWindow.wkEdfFiles.get(i);
                 doc.insertString(doc.getLength(), theme, EDFInfoPane.getTheme());
 
@@ -3411,6 +4189,10 @@ public class MainWindow extends JFrame implements WindowListener {
         }
         
         //obsolete
+        /**
+         * TODO
+         * @throws BadLocationException
+         */
         void verifyTemplateFilesHeader() throws BadLocationException {
             if (ESATemplateFiles == null || ESATemplateFiles.size() == 0)
                 return;       
@@ -3421,7 +4203,7 @@ public class MainWindow extends JFrame implements WindowListener {
             Document doc = MainWindow.consolePane.getDocument();
             String theme;
             int ntempFiles = 0;
-            for (int i = 0; i < sz; i++){
+            for (int i = 0; i < sz; i++) {
                 Component comp = MainWindow.tabPane.getComponentAt(i);;
                 if (!(comp instanceof ESATemplatePane))
                     continue;
@@ -3442,7 +4224,11 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }
         
-        public ArrayList<Incompliance> verifyHeaders(){
+        /**
+         * TODO
+         * @return
+         */
+        public ArrayList<Incompliance> verifyHeaders() {
         	/**
         	 * [Validation] Validation of EDF Header
         	 */
@@ -3455,7 +4241,10 @@ public class MainWindow extends JFrame implements WindowListener {
             return aggregateIncompliances;
         }
         
-        public void cleanupIncompliances(){
+        /**
+         * TODO
+         */
+        public void cleanupIncompliances() {
             MainWindow.getEiaIncompliances().clear();
             MainWindow.getEsaIncompliances().clear();
             MainWindow.getEiaTemplateIncompliances().clear();
@@ -3463,7 +4252,10 @@ public class MainWindow extends JFrame implements WindowListener {
             MainWindow.errorListTable.blankOut();
         }
         
-        public void parseEIATempalteTables(){
+        /**
+         * TODO
+         */
+        public void parseEIATempalteTables() {
             if (tabPane == null)
                 return;
             ArrayList<Incompliance> temps = new ArrayList<Incompliance>();
@@ -3478,14 +4270,20 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }
         
-        public void parseEIATable(){
+        /**
+         * TODO
+         */
+        public void parseEIATable() {
             if (iniEiaTable == null)
                 return;
             MainWindow.setEiaIncompliances(iniEiaTable.parseEIATable());
             
         }
         
-        public void parseESATables(){
+        /**
+         * TODO
+         */
+        public void parseESATables() {
             if (iniEsaTables == null || iniEsaTables.size() == 0)
                 return;
             
@@ -3497,12 +4295,15 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }
         
-        public void parseESATemplateTables(){
+        /**
+         * TODO
+         */
+        public void parseESATemplateTables() {
             if (tabPane == null)
                 return;
             ArrayList<Incompliance> temps = new ArrayList<Incompliance>();
             for (int i = 0; i < tabPane.getTabCount(); i++){
-                if (tabPane.getComponentAt(i) instanceof ESATemplatePane){
+                if (tabPane.getComponentAt(i) instanceof ESATemplatePane) {
                     ESATemplatePane tpane = (ESATemplatePane) tabPane.getComponentAt(i);
                     ESATemplateTable ttable = tpane.getEsaTemplateTable();
                     temps = ttable.parseESATable();
@@ -3512,8 +4313,11 @@ public class MainWindow extends JFrame implements WindowListener {
             }
         }
 
-        
-        private ArrayList<Incompliance> outputValidationToErrorListTable(){
+        /**
+         * TODO
+         * @return
+         */
+        private ArrayList<Incompliance> outputValidationToErrorListTable() {
         	
             ErrorListTable errorTable = MainWindow.getErrorListTable();
            
@@ -3523,7 +4327,7 @@ public class MainWindow extends JFrame implements WindowListener {
             int count = aggregateIncompliances.size();
             outputMessage(count);
   
-            if (count != 0){
+            if (count != 0) {
                 errorTable.yieldTableFrom(aggregateIncompliances);
                 MainWindow.consoleTabPane.remove(1);
                 MainWindow.consoleTabPane.insertTab("Error List", null, new JScrollPane(errorTable), null, 1);
@@ -3545,7 +4349,11 @@ public class MainWindow extends JFrame implements WindowListener {
             return aggregateIncompliances;
         }
         
-        private void outputMessage(int count){
+        /**
+         * TODO
+         * @param count
+         */
+        private void outputMessage(int count) {
             String theme;
             if (count == 0){
                 theme = "All files in current task are EDF+ compliant.\n";
@@ -3557,19 +4365,24 @@ public class MainWindow extends JFrame implements WindowListener {
                 theme = theme + "Check the error list table for detail. \n";
                 printTheme(theme);
             }
-        }
+        }       
         
-        
+        /**
+         * TODO
+         * @param theme
+         */
         private void printTheme(String theme){
             Document doc = consolePane.getDocument();
             try {
                 doc.insertString(doc.getLength(), theme, EDFInfoPane.theme);
             } catch (BadLocationException e) {; }
-        }
+        }  
         
-        
-        
-        void printTitle(File file){
+        /**
+         * TODO
+         * @param file
+         */
+        void printTitle(File file) {
             String theme = "scanning file " + file.getAbsolutePath() + "\n";
             Document doc = MainWindow.consolePane.getDocument();
             
@@ -3580,11 +4393,16 @@ public class MainWindow extends JFrame implements WindowListener {
         }        
     } //end of VerifyHeaderListener
     
-    private void createSearchCountLabel()
-    {
+    /**
+     * TODO
+     */
+    private void createSearchCountLabel() {
     	searchCount = new JLabel("", JLabel.CENTER);
     }
     
+    /**
+     * TODO
+     */
     private void createSearchTf() {
                
         searchTf = new JTextField("search in current table");
@@ -3597,7 +4415,7 @@ public class MainWindow extends JFrame implements WindowListener {
         
         Font oldfont = searchTf.getFont();
         int fsize = oldfont.getSize();
-        int fstyle = oldfont.ITALIC;
+        int fstyle = Font.ITALIC;
         String fname = oldfont.getName();
         searchTf.setFont(new Font(fname, fstyle, fsize));
         searchTf.setForeground(Color.gray);
@@ -3609,25 +4427,37 @@ public class MainWindow extends JFrame implements WindowListener {
         searchTf.add(searchBtn);
     }
     
-  //////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////
-    
-   class SearchListeners extends MouseAdapter implements ActionListener, KeyListener{
-        private int selectedTabindex;
+   /**
+ 	* TODO
+ 	*/
+    class SearchListeners extends MouseAdapter implements ActionListener, KeyListener {
+	   
+        @SuppressWarnings("unused")
+		private int selectedTabindex;
+        
         private EDFTable currentSearchedTable;
         private BasicEDFPane pane;
-        private boolean primaryTabOpenned = false;
+        
+        @SuppressWarnings("unused")
+		private boolean primaryTabOpenned = false;
+        
         private Font oldfont = MainWindow.taskTree.getFont();
         
-        public SearchListeners(){
+        /**
+         * TODO
+         */
+        public SearchListeners() {
             super();
         }
         
-        public void acquireTable(){
+        /**
+         * TODO
+         */
+        public void acquireTable() {
             pane = (BasicEDFPane) tabPane.getSelectedComponent();
             selectedTabindex = tabPane.getSelectedIndex();
             
-            if (pane instanceof EIATemplatePane){
+            if (pane instanceof EIATemplatePane) {
                 currentSearchedTable = null;
                 return;
             }
@@ -3636,20 +4466,22 @@ public class MainWindow extends JFrame implements WindowListener {
             //interface of getTable();
             //so at the code-cleaning stage, this should be improved.
             //Fangping, 08/29/2010
-            if (pane instanceof WorkingTablePane){
+            if (pane instanceof WorkingTablePane) {
                 primaryTabOpenned = true;
                 currentSearchedTable = ((WorkingTablePane)pane).getEdfTable();    
                 return;
             }
             
-            if (pane instanceof ESATemplatePane){
+            if (pane instanceof ESATemplatePane) {
                 currentSearchedTable = ((ESATemplatePane)pane).getEsaTemplateTable();
                 return;
             }         
         }  
         
-        public void showMatchingCells()
-        {
+        /**
+         * TODO
+         */
+        public void showMatchingCells() {
         	//((EDFTable)currentSearchedTable).clearMatrix();
         	totalCount = 0;
         	if (currentSearchedTable == null)
@@ -3660,7 +4492,7 @@ public class MainWindow extends JFrame implements WindowListener {
             String textInCell;
             
             for (int i = 0; i < ncol; i++)
-                for (int j = 0; j < nrow; j++){
+                for (int j = 0; j < nrow; j++) {
                     if (currentSearchedTable.getValueAt(j, i) == null)
                         continue;
                     textInCell = (String)currentSearchedTable.getValueAt(j, i);
@@ -3670,13 +4502,17 @@ public class MainWindow extends JFrame implements WindowListener {
                     }   
                 }
             System.out.println("\"" + textInSearchTf.trim() + "\"");
-            if(textInSearchTf.trim().equals(""))
-            {
+            if(textInSearchTf.trim().equals("")) {
             	totalCount = 0;
             }
         }
              
-        public void searchTableStartFrom(int rowIndex, int colIndex){
+        /**
+         * TODO
+         * @param rowIndex
+         * @param colIndex
+         */
+        public void searchTableStartFrom(int rowIndex, int colIndex) {
             if (currentSearchedTable == null)
                 return;
             int nrow = currentSearchedTable.getRowCount();
@@ -3690,25 +4526,25 @@ public class MainWindow extends JFrame implements WindowListener {
             }            
            
            //since not a retangular shape search, so the search has to be separated to two parts.
-            for (int j = rowIndex + 1; j < nrow; j++){
-                    if (currentSearchedTable.getValueAt(j, colIndex) == null)
-                        continue;
-                    textInCell = (String)currentSearchedTable.getValueAt(j, colIndex);
-                    if (textInCell.toLowerCase().contains(textInSearchTf)){ //the first match
-                        searchCursor = new Point(j, colIndex);
-                        currentSearchedTable.getSelectionModel().setSelectionInterval(j, j);
-                        currentSearchedTable.getColumnModel().getSelectionModel().setSelectionInterval(colIndex, colIndex); 
-                        currentSearchedTable.scrollToVisible(j, colIndex);
-                        return;
-                    }   
+            for (int j = rowIndex + 1; j < nrow; j++) {
+            	if(currentSearchedTable.getValueAt(j, colIndex) == null)
+            		continue;
+            	textInCell = (String)currentSearchedTable.getValueAt(j, colIndex);
+            	if(textInCell.toLowerCase().contains(textInSearchTf)) { //the first match
+            		searchCursor = new Point(j, colIndex);
+            		currentSearchedTable.getSelectionModel().setSelectionInterval(j, j);
+            		currentSearchedTable.getColumnModel().getSelectionModel().setSelectionInterval(colIndex, colIndex); 
+            		currentSearchedTable.scrollToVisible(j, colIndex);
+            		return;
+            	}   
             }
             
-            for (int i = colIndex + 1; i < ncol; i++){
-                for (int j = 0; j < nrow; j++){
+            for (int i = colIndex + 1; i < ncol; i++) {
+                for (int j = 0; j < nrow; j++) {
                     if (currentSearchedTable.getValueAt(j, i) == null)
                         continue;
                     textInCell = (String)currentSearchedTable.getValueAt(j, i);
-                    if (textInCell.toLowerCase().contains(textInSearchTf)){ //the first match
+                    if (textInCell.toLowerCase().contains(textInSearchTf)) { //the first match
                         searchCursor = new Point(j, i);
                         currentSearchedTable.getSelectionModel().setSelectionInterval(j, j);
                         currentSearchedTable.getColumnModel().getSelectionModel().setSelectionInterval(i, i); 
@@ -3718,24 +4554,28 @@ public class MainWindow extends JFrame implements WindowListener {
                 }
              }
    
-                Toolkit.getDefaultToolkit().beep();
+            Toolkit.getDefaultToolkit().beep();
         }
         
-        
-        public void reverseSearchTableStartFrom(int rowIndex, int colIndex){
+        /**
+         * TODO
+         * @param rowIndex
+         * @param colIndex
+         */
+        public void reverseSearchTableStartFrom(int rowIndex, int colIndex) {
             if (currentSearchedTable == null)
                 return;
             
             String textInSearchTf = searchTf.getText().trim().toLowerCase();
             String textInCell;
             
-            if (rowIndex  == 0){
+            if (rowIndex  == 0) {
                 Toolkit.getDefaultToolkit().beep();
                 return;
             }
             
-            //since not a retangular shape search, so the search has to be separated to two parts.
-            for (int j = rowIndex - 1; j >= 0; j--){
+            //since not a rectangular shape search, so the search has to be separated to two parts.
+            for (int j = rowIndex - 1; j >= 0; j--) {
                 if (currentSearchedTable.getValueAt(j, colIndex) == null)
                     continue;
                 textInCell = (String)currentSearchedTable.getValueAt(j, colIndex);
@@ -3749,7 +4589,7 @@ public class MainWindow extends JFrame implements WindowListener {
             }
            
             for (int i = colIndex - 1; i >= 0; i--)
-                for (int j = rowIndex - 1; j >= 0; j--){
+                for(int j = rowIndex - 1; j >= 0; j--) {
                     if (currentSearchedTable.getValueAt(j, i) == null)
                         continue;
                     textInCell = (String)currentSearchedTable.getValueAt(j, i);
@@ -3764,9 +4604,18 @@ public class MainWindow extends JFrame implements WindowListener {
                 Toolkit.getDefaultToolkit().beep();
         }
         
+        /* (non-Javadoc)
+         * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+         */
         public void keyTyped(KeyEvent e) {/*do nothing*/}
+        /* (non-Javadoc)
+         * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
+         */
         public void keyPressed(KeyEvent e) {/*do nothing*/}
 
+        /* (non-Javadoc)
+         * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
+         */
         public void keyReleased(KeyEvent e) {
         	showMatchingCells();
         	if(totalCount > 0)
@@ -3777,9 +4626,12 @@ public class MainWindow extends JFrame implements WindowListener {
             searchTableStartFrom(-1, 0);
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseAdapter#mouseClicked(java.awt.event.MouseEvent)
+         */
         public void mouseClicked(MouseEvent e) {
             JTextField findtf;
-            if (!(e.getSource() instanceof JTextField)) {
+            if(!(e.getSource() instanceof JTextField)) {
                 return;
             }
             
@@ -3794,17 +4646,20 @@ public class MainWindow extends JFrame implements WindowListener {
             latestSearchedTable = currentSearchedTable;
         }
         
-        public void actionPerformed(ActionEvent e){  
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        public void actionPerformed(ActionEvent e) {  
             acquireTable();
             
-            if (latestSearchedTable != currentSearchedTable){
+            if (latestSearchedTable != currentSearchedTable) {
                 latestSearchedTable = currentSearchedTable;
                 searchCursor = new Point(0, 0);
                 searchTableStartFrom(0, 0);
                 return;
             }            
             
-            if (e.getSource() == MainWindow.searchNextBtn){ 
+            if (e.getSource() == MainWindow.searchNextBtn) { 
             	currentInd+=1;
             	if(currentInd > totalCount)
             	{
@@ -3816,10 +4671,9 @@ public class MainWindow extends JFrame implements WindowListener {
                 return;
             }
             
-            if (e.getSource() == MainWindow.searchPreviousBtn){
+            if (e.getSource() == MainWindow.searchPreviousBtn) {
             	currentInd-=1;
-            	if(currentInd < 1)
-            	{
+            	if(currentInd < 1) {
             		if(totalCount == 0)
             			currentInd = 0;
             		else
@@ -3831,38 +4685,40 @@ public class MainWindow extends JFrame implements WindowListener {
                 return;
             }
         }   
-    }//end of searchListeners
+    } //end of searchListeners
     
-   private static JButton createSearchIconBtn(){
-       JButton searchBtn = new JButton(searchIcon);
-       searchBtn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-       searchBtn.setContentAreaFilled(false);
-       searchBtn.setFocusPainted(false);
-       searchBtn.setBounds(2, 6, 20, 20);
+   	/**
+   	 * TODO
+   	 * @return
+   	 */
+   	private static JButton createSearchIconBtn() {
+       	JButton searchBtn = new JButton(searchIcon);
+       	searchBtn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+       	searchBtn.setContentAreaFilled(false);
+       	searchBtn.setFocusPainted(false);
+       	searchBtn.setBounds(2, 6, 20, 20);
        
-       return searchBtn;
-   }
+       	return searchBtn;
+   	}
     
-    
-    private void createSearchPreviousBtn(){
+    /**
+     * TODO
+     */
+    private void createSearchPreviousBtn() {
         searchPreviousBtn = new JButton("Previous", previousIcon);
         searchPreviousBtn.setBorderPainted(false);
         searchPreviousBtn.setFocusPainted(true);
         searchPreviousBtn.addActionListener(new SearchListeners()); //(new MoveSearchAroundListener("previous"));
     }
     
-    private void createSearchNextBtn(){
+    /**
+     * TODO
+     */
+    private void createSearchNextBtn() {
         searchNextBtn = new JButton("Next", nextIcon);
         searchNextBtn.setBorderPainted(false);
         searchNextBtn.setFocusPainted(true);
        // searchNextBtn.setContentAreaFilled(true);
         searchNextBtn.addActionListener(new SearchListeners());//(new MoveSearchAroundListener("next"));
-    }
-    
-
-    
+    }   
 } //end of the class 
-
-
-
-

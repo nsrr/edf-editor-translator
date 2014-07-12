@@ -5,7 +5,7 @@ import java.io.*;
 import javax.swing.filechooser.FileFilter;
 
 
-/*
+/**
  * five types of File filters
  * (1) EDF filter: new EDFFileFilter({"edf"}, "EDF Files");
  * (2) EIA filter: new EDFFileFilter({"eia"}, "EIA Files");
@@ -18,11 +18,19 @@ public class EDFFileFilter extends FileFilter {
     private String[] allowedExtensions = null;
     private String description = "";
     
+    /**
+     * TODO
+     * @param myAllowedExtensions
+     * @param myDescription
+     */
     public EDFFileFilter(String[] myAllowedExtensions, String myDescription) {
         this.allowedExtensions = myAllowedExtensions;
         this.description = myDescription;   
     }
 
+    /**
+     * TODO
+     */
     public boolean accept(File pathname) {
         String fileName = pathname.getName().toLowerCase();
         if (pathname.isDirectory())
@@ -35,6 +43,9 @@ public class EDFFileFilter extends FileFilter {
         return false;  
     }
     
+    /**
+     * TODO
+     */
     public String getDescription() {
         return description;
     }

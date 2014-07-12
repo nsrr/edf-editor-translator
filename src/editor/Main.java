@@ -41,29 +41,35 @@ public class Main {
     		 * args[3] - output directory
     		 */
     		if(args[0].equalsIgnoreCase("eia")) {
-    			//Read the source and template files
+    			// Read the source and template files
     			RandomAccessFile raf = new RandomAccessFile(args[1], "rw");
     			File edfFile = new File(args[1]);
     			EIAHeader srceia = new EIAHeader(raf, edfFile); // throws IOException
     			EIAHeader tempeia = EIAHeader.retrieveEIAHeaderFromXml(args[2]); // does args[2] exists?, wei wang, 2014-6-18
-    			//Map the template file to the source file
+    			
+    			// Map the template file to the source file
     			Utility.mapEIAHeader(srceia, tempeia);
-    			//Save the file
+    			
+    			// Save the file
     			String dir = "";
     			if(args.length <= 3) {
     				dir = edfFile.getParent();
         			dir = dir + File.separator + "Physiomimi Work";
         			System.out.println(dir);
-        			File newDir = new File(dir);
-        			newDir.mkdir();	
+//        			File newDir = new File(dir);
+//        			newDir.mkdir();	
     			} else {
     				dir = args[3];
-    				File newDir = new File(dir);
-        			newDir.mkdir();
+//    				File newDir = new File(dir);
+//        			newDir.mkdir();
     			}
+    			/// improved by wei wang, 2014-6-19
+    			File newDir = new File(dir);
+    			newDir.mkdir();
+    			/// end
     			String newFile = dir + File.separator + edfFile.getName();
     			File nFile = new File(newFile);
-    			Utility.copyEDFFile(edfFile, nFile);
+    			Utility.copyEDFFile(edfFile, nFile); // maybe throw IOException
     			raf = new RandomAccessFile(nFile, "rw");
     			srceia.saveToDisk(raf, nFile);
     		}
@@ -71,28 +77,28 @@ public class Main {
     			//Read the source and template files
     			RandomAccessFile raf = new RandomAccessFile(args[1], "rw");
     			File edfFile = new File(args[1]);
-    			EDFFileHeader srcFile = new EDFFileHeader(raf, edfFile, false);
+    			EDFFileHeader srcFile = new EDFFileHeader(raf, edfFile, false);  // false : not a template
     			ESAHeader esa = srcFile.getEsaHeader();
     			raf = new RandomAccessFile(args[2], "rw");
     			File templateFile = new File(args[2]);
     			EDFFileHeader tempFile = new EDFFileHeader(raf, templateFile, true);
     			ESAHeader tempEsa = tempFile.getEsaHeader();
+    			
     			//Map the template file to the source file
     			Utility.mapESAHeader(esa, tempEsa);
+    			
     			//Save the file
     			String dir = "";
     			if(args.length <= 3) {
     				dir = edfFile.getParent();
         			dir = dir + File.separator + "Physiomimi Work";
         			System.out.println(dir);
-        			File newDir = new File(dir);
-        			newDir.mkdir();	
     			} else {
     				System.out.println("here");
     				dir = args[3];
-    				File newDir = new File(dir);
-        			newDir.mkdir();
     			}
+    			File newDir = new File(dir); // wei wang, extract these two lines out of if-else clause
+    			newDir.mkdir();
     			String newFile = dir + File.separator + edfFile.getName();
     			File nFile = new File(newFile);
     			Utility.copyEDFFile(edfFile, nFile);

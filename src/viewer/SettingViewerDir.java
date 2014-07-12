@@ -1,10 +1,14 @@
 package viewer;
 
+@SuppressWarnings("serial")
 public class SettingViewerDir extends SettingParameters {
 
-	private static final long serialVersionUID = 1L;
 	private static SettingViewerDir sv = null;
 
+	/**
+	 * TODO
+	 * @return
+	 */
 	public static SettingViewerDir setViewerDir() {
 		if (sv == null) {
 			sv = new SettingViewerDir();
@@ -13,6 +17,9 @@ public class SettingViewerDir extends SettingParameters {
 		return sv;
 	}
 
+	/**
+	 * TODO
+	 */
 	private SettingViewerDir() {
 		super("Viewer_Dir");
 	}

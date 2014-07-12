@@ -5,7 +5,6 @@ import header.ESAHeader;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -21,9 +20,11 @@ public class DiscardChangesListener implements ActionListener{
 	private int tabLocation;
 	
 	/**
-     * build the eia Table
+	 * TODO
+     * build the EIA Table
      */
-    private void yieldEiaTable(){
+    @SuppressWarnings("deprecation")
+	private void yieldEiaTable(){
     	EIATable eiaTable = null;
         int numberOfOpenedFiles = sourceFiles.size(); 
         //MainWindow.iniEiaTable = MainWindow.dupEiaTable;
@@ -37,14 +38,15 @@ public class DiscardChangesListener implements ActionListener{
     }
     
     /**
-     * construct esa Tables
-     * one esa header corresponds to one esa table
+     * TODO
+     * construct ESA Tables
+     * one ESA header corresponds to one ESA table
      * algorithm is:
      * 1. acquire the eiaHeader of the current file;
      * 2. construct the ESA table one channel after another;
      * 3. update the status.
      */
-    private void yieldEsaTable(){
+    private void yieldEsaTable() {
         ESATable esaTable = null;
        
        //need check, Fangping, 08/20/2010
@@ -61,8 +63,11 @@ public class DiscardChangesListener implements ActionListener{
         MainWindow.setIniEsaTable(esaTable, selectedEDF);
     }
 
-	private void updatePrimaryESATab(){
-        if ( MainWindow.tabPane.isPrimaryTabsOpened()){
+	/**
+	 * TODO
+	 */
+	private void updatePrimaryESATab() {
+        if ( MainWindow.tabPane.isPrimaryTabsOpened()) {
             MainWindow.tabPane.removeTabAt(1);
         }
         
@@ -79,8 +84,11 @@ public class DiscardChangesListener implements ActionListener{
         MainWindow.tabPane.setPrimaryTabsOpened(true);   
     }
     
-    private void updatePrimaryEIATab(){
-        if ( MainWindow.tabPane.isPrimaryTabsOpened()){
+    /**
+     * TODO
+     */
+    private void updatePrimaryEIATab() {
+        if ( MainWindow.tabPane.isPrimaryTabsOpened()) {
             MainWindow.tabPane.removeTabAt(0);               
         }
         
@@ -97,11 +105,17 @@ public class DiscardChangesListener implements ActionListener{
         //MainWindow.tabPane.setPrimaryTabsOpened(true);    
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         performActions();
     }
     
-    private void performActions(){
+    /**
+     * TODO
+     */
+    private void performActions() {
         // do nothing is there is not tab pane at all
         if (MainWindow.tabPane == null || MainWindow.tabPane.getTabCount() == 0)
             return;

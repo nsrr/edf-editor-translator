@@ -17,8 +17,10 @@ import javax.swing.tree.TreePath;
 import table.EIATable;
 import table.EIATableModel;
 
-
-public class ExcludeFileListener implements ActionListener{
+/**
+ * TODO
+ */
+public class ExcludeFileListener implements ActionListener {
     protected static final int REMOVE = 0;
     protected static final int DELETE = 1; 
     protected static final String command_remove = "remove";
@@ -30,12 +32,17 @@ public class ExcludeFileListener implements ActionListener{
     private TreeNode redNode;
    
     
+    /**
+     * TODO
+     * @param cmd
+     */
     public ExcludeFileListener(int cmd) {
         super();
         commandType = cmd;
     }
     
-    /*
+    /**
+     * TODO
      * Algorithm:
      * (1) pop up warning dialog, with affirmation
      * (2) remove item from iniEsaTables, dupEsaTables, srcEdfFileHeaders, dupEdffileHeaders, 
@@ -48,6 +55,9 @@ public class ExcludeFileListener implements ActionListener{
         performActions();
     }
 
+    /**
+     * TODO
+     */
     private void performActions() {
         redFile = retrieveRedFile();
         if (redFile == null)
@@ -62,7 +72,6 @@ public class ExcludeFileListener implements ActionListener{
             MainWindow.taskinfoEdtPane.outputTaskInfoWithHtml();
         else
             
-        
         if (commandType == REMOVE) {
             printDoneMsgToConsole();
             return;
@@ -73,6 +82,11 @@ public class ExcludeFileListener implements ActionListener{
             printErrorMsgToConsole();
     }
 
+    /**
+     * TODO
+     * @param file
+     * @return
+     */
     private boolean isAffirmed(File file) {
         String message = "<html>Do you want to remove the selected file  from current task? <p> <center>" + 
                         file.getAbsolutePath() + "</center><p>"
@@ -85,12 +99,19 @@ public class ExcludeFileListener implements ActionListener{
         return affirmative;              
     }
     
-    private void setRedIndex(int index){
+    /**
+     * TODO
+     * @param index
+     */
+    private void setRedIndex(int index) {
         redIndex = index;
     }
     
-    
-    private File retrieveRedFile(){
+    /**
+     * TODO
+     * @return
+     */
+    private File retrieveRedFile() {
         TreePath path = MainWindow.taskTree.getSelectionPath();
         if (path == null)
             return null;
@@ -108,22 +129,30 @@ public class ExcludeFileListener implements ActionListener{
         }
     }
     
-    private void updateESAtables(){
+    /**
+     * TODO
+     */
+    private void updateESAtables() {
         MainWindow.iniEsaTables.remove(redIndex);
         //MainWindow.dupEsaTables.remove(redIndex);// do not use it unless clone() is implemented
     }
     
-    private void updateESAFileHeaders(){
+    /**
+     * TODO
+     */
+    private void updateESAFileHeaders() {
         MainWindow.srcEdfFileHeaders.remove(redIndex);
         //MainWindow.dupEdfFileHeaders.remove(redIndex); // do not use it unless clone() is implemented
     }
 
+    /**
+     * TODO
+     */
     private void updateEIATable() {
         EIATable table = MainWindow.iniEiaTable;
         EIATableModel model = (EIATableModel)table.getModel();
         model.removeRow(redIndex);
         if (table.getRowCount() == 0) {
-        
             /* MainWindow.tabPane.remove(0);
             MainWindow.tabPane.insertTab("Identity attributes", null,
                                          new BasicEDFPane(),
@@ -131,12 +160,18 @@ public class ExcludeFileListener implements ActionListener{
         }
     }
     
-    private void updateSrcWkFiles(){
+    /**
+     * TODO
+     */
+    private void updateSrcWkFiles() {
         MainWindow.wkEdfFiles.remove(redIndex);
         MainWindow.srcEdfFiles.remove(redIndex);
     }
     
-    private void updateTaskTree(){
+    /**
+     * TODO
+     */
+    private void updateTaskTree() {
         DefaultTreeModel model = (DefaultTreeModel) MainWindow.taskTree.getModel();      
         DefaultMutableTreeNode priorNode = (DefaultMutableTreeNode)MainWindow.workingDirNode.getChildBefore(redNode);
         DefaultMutableTreeNode afterNode =  (DefaultMutableTreeNode)MainWindow.workingDirNode.getChildAfter(redNode); 
@@ -155,7 +190,10 @@ public class ExcludeFileListener implements ActionListener{
     }
     
         
-    private void printDoneMsgToConsole(){
+    /**
+     * TODO
+     */
+    private void printDoneMsgToConsole() {
         Document doc = MainWindow.consolePane.getDocument();
         String theme = Utility.currentTimeToString() + ": ";
         
@@ -171,7 +209,10 @@ public class ExcludeFileListener implements ActionListener{
         } catch (BadLocationException e) {;}
     }
     
-    private void printErrorMsgToConsole(){
+    /**
+     * TODO
+     */
+    private void printErrorMsgToConsole() {
         //just in case of misuse of this method
         if (commandType == 0)
             return;
@@ -185,9 +226,11 @@ public class ExcludeFileListener implements ActionListener{
         } catch (BadLocationException e) {;}
     }
     
+    /**
+     * TODO
+     * @return
+     */
     private boolean deleteFile(){
         return redFile.delete();    
     }
-
-
 }

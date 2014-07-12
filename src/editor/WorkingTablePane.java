@@ -8,40 +8,28 @@
 
 package editor;
 
-
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-
 import java.io.File;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 
@@ -49,7 +37,13 @@ import table.EDFTable;
 import table.EIATable;
 import table.ESATable;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
+/**
+ * TODO
+ */
+@SuppressWarnings("serial")
 public class WorkingTablePane extends BasicEDFPane {
 
     private EDFTable edfTable;
@@ -72,6 +66,10 @@ public class WorkingTablePane extends BasicEDFPane {
         customerizeTypePopup.add(customizeItem);
     }
     
+    /**
+     * TODO
+     * @param table
+     */
     public WorkingTablePane(EDFTable table) {
         this.setIsPrimaryTab(true);
         
@@ -83,6 +81,9 @@ public class WorkingTablePane extends BasicEDFPane {
         setupLayout();
     }
     
+    /**
+     * TODO
+     */
     public void setupPaneType() {
         if (edfTable instanceof EIATable) {
             setPaneType(type_eiapane);
@@ -95,12 +96,16 @@ public class WorkingTablePane extends BasicEDFPane {
         }
     }
     
+    /**
+     * TODO
+     */
     void addListeners() {       
         edfTable.getCellEditor(1, 1).addCellEditorListener(new CellEditorListeners());
         customizeItem.addActionListener(new CellMouseClickedListener());
     }
 
     /**
+     * TODO
      *  customerize the table's cell editor, renderer, and so on
      */
     public void setupTable() {
@@ -113,6 +118,7 @@ public class WorkingTablePane extends BasicEDFPane {
     }
 
     /**
+     * TODO
      * @return table panel
      */
     private void setupLayout() {         
@@ -134,6 +140,9 @@ public class WorkingTablePane extends BasicEDFPane {
         this.add(allCellsShownCbox, cc.xy(3, 2));        
     }
     
+    /**
+     * TODO
+     */
     private void createShowHideCheckBox() {
         JCheckBox cbox;
         cbox = new JCheckBox("Show read-only cells");
@@ -145,20 +154,33 @@ public class WorkingTablePane extends BasicEDFPane {
         setupCheckBoxStatus(true);
     }
     
+    /**
+     * TODO
+     * @param active
+     */
     private void setupCheckBoxStatus(boolean active) {
         allCellsShownCbox.setSelected(active);
         setAllCellsShown(active);
     }
     
+    /**
+     * TODO
+     */
     class showHideListener implements ActionListener {
         private boolean selected;
         JCheckBox cbox;
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             cbox = (JCheckBox)e.getSource();
             selected = cbox.isSelected();
             performActions();
         }
         
+        /**
+         * TODO
+         */
         private void performActions() {
             if (selected)
                 edfTable.showImmutableFields();
@@ -166,8 +188,10 @@ public class WorkingTablePane extends BasicEDFPane {
                 edfTable.hideImmutableFields();                
         }        
     }
-
      
+    /**
+     * TODO
+     */
     private void createBtPane() {
         String filename;
         if (edfTable instanceof ESATable) {
@@ -186,34 +210,64 @@ public class WorkingTablePane extends BasicEDFPane {
         repaint();
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public String currentTimeToString() {
         Date time = new Date();
         DateFormat df = new SimpleDateFormat("h:mm a");
         return df.format(time);
     }
 
+    /**
+     * TODO
+     * @param edfTable
+     */
     public void setEdfTable(EDFTable edfTable) {
         this.edfTable = edfTable;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public EDFTable getEdfTable() {
         return edfTable;
     }
 
+    /**
+     * TODO
+     * @param text
+     */
     public void setTextToFilePathLabel(String text) {
         filePathLabel.setText(path_prefix + text);
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public JLabel getFilePathLabel() {
         return filePathLabel;
     }
 
+    /**
+     * TODO
+     * @param filePathLabel
+     */
     public void setFilePathLabel(JLabel filePathLabel) {
         this.filePathLabel = filePathLabel;
     }
 
+    /**
+     * TODO
+     */
     private class CellMouseClickedListener implements MouseListener, ActionListener {
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+         */
         @Override
         public void mouseClicked(MouseEvent e) {
             if (edfTable instanceof ESATable) {
@@ -227,12 +281,18 @@ public class WorkingTablePane extends BasicEDFPane {
             }
         }
         
+        /* (non-Javadoc)
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         public void actionPerformed(ActionEvent e) {
             int sely = edfTable.getSelectedColumn();
             int selx = edfTable.getSelectedRow();
             new TransducerListener(new JFrame(), selx, sely, edfTable);
         }
         
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+         */
         @Override
         public void mouseExited(MouseEvent e) {
             MainWindow.setCellContent("");
@@ -257,8 +317,14 @@ public class WorkingTablePane extends BasicEDFPane {
         }
     }
 
+    /**
+     * TODO
+     */
     private class CellMouseListener implements MouseMotionListener {
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+         */
         public void mouseDragged(MouseEvent e) {
             EDFTable table = (EDFTable)e.getSource();
             int nrows = table.getSelectedRowCount();
@@ -273,6 +339,9 @@ public class WorkingTablePane extends BasicEDFPane {
             MainWindow.setCellContent(text);
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
+         */
         public void mouseMoved(MouseEvent e) {
             EDFTable table = (EDFTable)e.getSource();
             int rr = table.rowAtPoint(e.getPoint());
@@ -282,7 +351,7 @@ public class WorkingTablePane extends BasicEDFPane {
         }
     }
     
-    /*
+    /**
      * TODO: 09/28/2010
      */
     private class CellEditorListeners implements KeyListener, CellEditorListener {
@@ -311,4 +380,3 @@ public class WorkingTablePane extends BasicEDFPane {
         }
     }
 }
-

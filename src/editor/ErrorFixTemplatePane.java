@@ -9,18 +9,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import org.apache.commons.io.FileUtils;
 
 import validator.fix.ErrorFix;
 import validator.fix.ErrorTypes;
 
-import com.jgoodies.forms.layout.*;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
 public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener{
 
@@ -36,6 +41,12 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 
 	private static ErrorFixTemplatePane _ErrorFixTemplatePane = null;
 
+	/**
+	 * TODO
+	 * @param eiaHeader
+	 * @param msFile
+	 * @return
+	 */
 	public static ErrorFixTemplatePane getErrorFixTemplatePane(EIAHeader eiaHeader, File msFile) {
 		
 		if (_ErrorFixTemplatePane == null) {
@@ -47,6 +58,11 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 		return _ErrorFixTemplatePane;
 	}
 
+	/**
+	 * TODO
+	 * @param eiaHeader
+	 * @param msFile
+	 */
 	private ErrorFixTemplatePane(EIAHeader eiaHeader, File msFile) {
 
 		super();
@@ -59,7 +75,10 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 		step4_loadFromConfigureFile(msFile);
 	}
 
-	private void step1_createGuiComponents(){
+	/**
+	 * TODO
+	 */
+	private void step1_createGuiComponents() {
 		
 		err1_Label = new JLabel("Swap Physical Max/Min");
 		err2_Label = new JLabel("Empty Version Field");
@@ -90,6 +109,7 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 					public void valueChanged(ListSelectionEvent e) {
 						if (e.getValueIsAdjusting()) {
 							selected_edf_files = new ArrayList<String>();
+							@SuppressWarnings("deprecation")
 							Object[] selected_Objects = edf_files.getSelectedValues();
 							if (selected_Objects != null)
 								for (Object object : selected_Objects)
@@ -105,7 +125,9 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 		button.addActionListener(this);
 	}
 	
-	
+	/**
+	 * TODO
+	 */
 	private void step2_createFormPane() {
 
 		String colSpec = "r:80dlu:n, 4dlu:n, 12dlu:n, 2dlu:n, f:150dlu:n, 4dlu:n, r:120dlu:n, f:p:g";
@@ -128,6 +150,9 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 		formPane.add(button, cc.xyw(5, 16, 2));
 	}
 
+	/**
+	 * TODO
+	 */
 	public void step3_setupLayout() {
 		FormLayout layout = new FormLayout(
 				"6dlu, f:max(400dlu;p):n, f:p:g, 10dlu:n",
@@ -140,31 +165,42 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 		this.setBorder(BorderFactory.createEtchedBorder());
 	}
 	
+	/**
+	 * TODO
+	 * @param msFile
+	 */
 	private void step4_loadFromConfigureFile(File msFile){
 		
 	}
 	
-	private static void step5_loadEdfFileList(){
+	/**
+	 * TODO
+	 */
+	@SuppressWarnings("unchecked")
+	private static void step5_loadEdfFileList() {
 		
 		if (MainWindow.getWkEdfFiles()==null)
 			return;
 		
 		int i = 0;
 		String[] files = new String[MainWindow.getWkEdfFiles().size()];
-		for (File file : MainWindow.getSrcEdfFiles()){
+		for (File file : MainWindow.getSrcEdfFiles()) {
 			files[i++] = file.getAbsolutePath();
 		}
 		edf_files.setListData(files);
 		
-		if (MainWindow.workingDirectory != null){
+		if (MainWindow.workingDirectory != null) {
 			System.out.println("Working Directory: " + MainWindow.workingDirectory.getAbsolutePath());
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == button){
-			if (selected_edf_files != null){
+		if (e.getSource() == button) {
+			if (selected_edf_files != null) {
 				
 				ArrayList<ErrorTypes> errorTypeAL = new ArrayList<ErrorTypes>();
 				
@@ -173,13 +209,11 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 					if (com instanceof JCheckBox){
 						JCheckBox check = (JCheckBox)com;
 						if (check.isSelected()){
-							if (check.getName().equals(ErrorTypes.phyMaxMin.toString())){
+							if (check.getName().equals(ErrorTypes.phyMaxMin.toString())) {
 								errorTypeAL.add(ErrorTypes.phyMaxMin);
-							}
-							else if (check.getName().equals(ErrorTypes.emptyVersion.toString())){
+							} else if (check.getName().equals(ErrorTypes.emptyVersion.toString())) {
 								errorTypeAL.add(ErrorTypes.emptyVersion);
-							}
-							else if (check.getName().equals(ErrorTypes.InvalidDateTimeSeparator.toString())){
+							} else if (check.getName().equals(ErrorTypes.InvalidDateTimeSeparator.toString())) {
 								errorTypeAL.add(ErrorTypes.InvalidDateTimeSeparator);
 							}
 						}

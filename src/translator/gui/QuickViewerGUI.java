@@ -14,15 +14,21 @@ import javax.swing.JTextField;
 
 import translator.utils.Keywords;
 
+/**
+ * A quick viewer to display the translated annotation file
+ */
+@SuppressWarnings("serial")
 public class QuickViewerGUI extends JPanel implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	
 	public String filename;
-	private JTextArea textArea;
-	
+	private JTextArea textArea;	
 	JButton JButton_Refresh, JButton_Remove;
 	
+	/**
+	 * Construct a QuickViewerGUI using specifying the file name and whether can be closed
+	 * @param filename the file name
+	 * @param canClose true if this viewer can be closed
+	 */
 	public QuickViewerGUI(String filename, boolean canClose) {
 		
 		/* (1) Background */
@@ -32,7 +38,7 @@ public class QuickViewerGUI extends JPanel implements ActionListener {
 		
 		/* ==="Layout Separator"=== */
 		LayoutManager.addFirstField(new JLabel(""), this);
-		LayoutManager.addMiddleField(new JLabel("                                                                                                                                                                            "), this);
+		LayoutManager.addMiddleField(new JLabel("                                                                                                                                                                       "), this);
 		LayoutManager.addLastField(new JLabel(""), this);
 		
 		/* (2) "filename" Title */
@@ -79,26 +85,31 @@ public class QuickViewerGUI extends JPanel implements ActionListener {
 		LayoutManager.addLastField(new JLabel(""), this);
 		
 		/* (7) Fill TextArea with a file */
-		loadFilename(filename);
-		
+		loadFilename(filename);		
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == JButton_Refresh) {
 			loadFilename(filename);
-		}
-		else if (e.getSource() == JButton_Remove) {
+		} else if (e.getSource() == JButton_Remove) {
 			SubWindowGUI.removeViewerTab(this);
 		}
 	}
 	
+	/**
+	 * Loading file into the text area using the specified file name
+	 * @param filename the file to be loaded
+	 */
 	private void loadFilename(String filename) {
 		
 		StringBuffer content = new StringBuffer();
 		
 		File f = new File(filename);
-		if (f.exists()){
+		if (f.exists()) {
 			BufferedReader in = null;
 			try {
 				in = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
@@ -117,9 +128,7 @@ public class QuickViewerGUI extends JPanel implements ActionListener {
 					e.printStackTrace();
 				}
 			}
-		}
-		
+		}	
 		textArea.setText(content.toString());
 	}
-
 }

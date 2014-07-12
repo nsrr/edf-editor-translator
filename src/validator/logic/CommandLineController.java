@@ -7,6 +7,9 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+/**
+ * TODO
+ */
 public class CommandLineController {
 
 	public static void Start(String[] argv) {
@@ -15,7 +18,7 @@ public class CommandLineController {
 		CommandLine cmd = null;
 		try {
 			cmd = parser.parse(OptionParser.options, argv);
-			if (cmd != null){
+			if (cmd != null) {
 				//(1) Obtain the parameters
 				String edf_dir = cmd.getOptionValue(OptionParser.OptionShort.edf.toString());
 				String output  = cmd.getOptionValue(OptionParser.OptionShort.out.toString());
@@ -32,6 +35,9 @@ public class CommandLineController {
 	}
 }
 
+/**
+ * TODO
+ */
 @SuppressWarnings("static-access")
 class OptionParser {
 	public static enum OptionShort{validator, edf, out}

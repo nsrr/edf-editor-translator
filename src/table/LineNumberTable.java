@@ -1,23 +1,35 @@
 package table;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-import java.beans.*;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.UIManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-
-/*
+/**
  *  Use a JTable as a renderer for row numbers of a given main table.
  *  This table must be added to the row header of the scrollpane that
  *  contains the main table.
  */
-public class LineNumberTable extends JTable implements ChangeListener,
-                                                       PropertyChangeListener {
-    private JTable main;
+@SuppressWarnings("serial")
+public class LineNumberTable extends JTable implements ChangeListener,  PropertyChangeListener {
 
+	private JTable main;
+
+    /**
+     * TODO
+     * @param table
+     */
     public LineNumberTable(JTable table) {
         main = table;
         main.addPropertyChangeListener(this);
@@ -36,6 +48,10 @@ public class LineNumberTable extends JTable implements ChangeListener,
         setPreferredScrollableViewportSize(getPreferredSize());
     }
 
+    /**
+     * TODO
+     * @see javax.swing.JTable#addNotify()
+     */
     @Override
     public void addNotify() {
         super.addNotify();
@@ -43,7 +59,6 @@ public class LineNumberTable extends JTable implements ChangeListener,
         Component c = getParent();
 
         //  Keep scrolling of the row table in sync with the main table.
-
         if (c instanceof JViewport) {
             JViewport viewport = (JViewport)c;
             viewport.addChangeListener(this);
@@ -52,47 +67,53 @@ public class LineNumberTable extends JTable implements ChangeListener,
         }
     }
 
-    /*
-    *  Delegate method to main table
-    */
-
+    /**
+     *  Delegate method to main table
+     */
     @Override
     public int getRowCount() {
         return main.getRowCount();
     }
 
+    /**
+     * TODO
+     * @see javax.swing.JTable#getRowHeight(int)
+     */
     @Override
     public int getRowHeight(int row) {
         return main.getRowHeight(row);
     }
 
-    /*
-	 *  This table does not use any data from the main TableModel,
-	 *  so just return a value based on the row parameter.
-	 */
-
+    /**
+     * TODO
+	 * This table does not use any data from the main TableModel,
+	 * so just return a value based on the row parameter.
+     * @see javax.swing.JTable#getValueAt(int, int)
+     */
     @Override
     public Object getValueAt(int row, int column) {
         //System.out.println("here, row = " + row + ", column = " + column);
         return Integer.toString(row + 1);
     }
 
-    /*
+    /**
+     * TODO
 	 *  Don't edit data in the main TableModel by mistake
-	 */
-
+     * @see javax.swing.JTable#isCellEditable(int, int)
+     */
     @Override
     public boolean isCellEditable(int row, int column) {
         return false;
     }
 
+//      Implement the ChangeListener
+//      scrollPane.getVerticalScrollBar().setValue(viewport.getViewPosition().y);  seems not necessary, since
+//      scrollPane.getVerticalScrollBar().getValue() is always equal to viewport.getViewPosition().y
 
-    //  Implement the ChangeListener
-    /*
-     *  scrollPane.getVerticalScrollBar().setValue(viewport.getViewPosition().y);  seems not necessary, since
-     *  scrollPane.getVerticalScrollBar().getValue() is always equal to viewport.getViewPosition().y
+    /**
+     * TODO
+     * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
      */
-
     public void stateChanged(ChangeEvent e) {
         //  Keep the scrolling of the row table in sync with main table
         JViewport viewport = (JViewport)e.getSource();
@@ -105,31 +126,42 @@ public class LineNumberTable extends JTable implements ChangeListener,
     }
 
     //  Implement the PropertyChangeListener
-
+    /**
+     * TODO
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
     public void propertyChange(PropertyChangeEvent e) {
         //  Keep the row table in sync with the main table
-
         if ("selectionModel".equals(e.getPropertyName())) {
             setSelectionModel(main.getSelectionModel());
         }
-
         if ("model".equals(e.getPropertyName())) {
             setModel(main.getModel());
         }
-
     }
 
     /**
+     * TODO
      *  Borrow the renderer from JDK1.4.2 table header
      */
     private static class RowNumberRenderer extends DefaultTableCellRenderer {
-        final static Color bkColor = new Color(246, 207, 134);
-        final static Color fgColor = Color.BLACK;
+		private static final long serialVersionUID = 1L;
+		@SuppressWarnings("unused")
+		final static Color bkColor = new Color(246, 207, 134);
+        @SuppressWarnings("unused")
+		final static Color fgColor = Color.BLACK;
 
+        /**
+         * TODO
+         */
         public RowNumberRenderer() {
             setHorizontalAlignment(JLabel.CENTER);
         }
 
+        /**
+         * TODO
+         * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+         */
         public Component getTableCellRendererComponent(JTable table,
                                                        Object value,
                                                        boolean isSelected,
@@ -137,7 +169,6 @@ public class LineNumberTable extends JTable implements ChangeListener,
                                                        int row, int column) {
             if (table != null) {
                 JTableHeader header = table.getTableHeader();
-
                 if (header != null) {
                     setForeground(header.getForeground());
                     setBackground(header.getBackground());
@@ -156,7 +187,6 @@ public class LineNumberTable extends JTable implements ChangeListener,
 
             validate();
             repaint();
-
             return this;
         }
     }

@@ -3,9 +3,8 @@ package table;
 import header.EIA;
 import header.EIAHeader;
 
-import javax.swing.table.DefaultTableModel;
 
-
+@SuppressWarnings("serial")
 public class EIATableModel extends EDFTableModel {
 
     public EIATableModel() {
@@ -13,22 +12,28 @@ public class EIATableModel extends EDFTableModel {
     }
 
     /**
-     * @param rows the total number of rows to be displayed
      * primary constructor for EIATableModel
+     * @param nrows the total number of rows to be displayed
      */
-    public EIATableModel(int rows) {
-        super(EIA.getEIAAttributes(), rows);
+    public EIATableModel(int nrows) {
+        super(EIA.getEIAAttributes(), nrows);
     }
 
     /**
-     * @return
      * an EIAHeader Image of the current TableModel
+     * @return EIA header of the EIATableModel
      */
     public EIAHeader toEIAHeader() {
         //TODO: transform table data to EIA header
         return new EIAHeader();
     }
 
+    /**
+     * Test whether a cell in the table is editable
+     * @param rowIndex the row index
+     * @param columnIndex the column index
+     * @see javax.swing.table.DefaultTableModel#isCellEditable(int, int)
+     */
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         switch (columnIndex) {
         case 0:
@@ -45,7 +50,7 @@ public class EIATableModel extends EDFTableModel {
     }
 
     /**
-     * Usage: set the class of each column
+     * Get the class of each column
      * @param col the column index
      * @return the class of the indexed column
      */

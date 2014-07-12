@@ -6,6 +6,11 @@ import editor.NewTask_for_ValidityCommandLine;
 
 public class ValidityController {
 	
+	/**
+	 * TODO
+	 * @param edf_dir
+	 * @param output
+	 */
 	public static void conductValidity(String edf_dir, String output) {
 
 		edf_dir = separatorReplacer(edf_dir);
@@ -14,6 +19,11 @@ public class ValidityController {
 		new NewTask_for_ValidityCommandLine(edf_dir, output);
 	}
 	
+	/**
+	 * Formalize the file separator for the string 
+	 * @param oldString the string to be formalized
+	 * @return the formalized string
+	 */
 	private static String separatorReplacer(String oldString) {
 		String newString = oldString;
 		if (newString!=null) {

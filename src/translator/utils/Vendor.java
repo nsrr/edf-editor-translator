@@ -1,6 +1,9 @@
 package translator.utils;
 
-public enum Vendor{
+/**
+ * Vendor names
+ */
+public enum Vendor {
 	Embla,
 	Compumedics,
 	Respironics,

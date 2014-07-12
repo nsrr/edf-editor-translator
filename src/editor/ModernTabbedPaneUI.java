@@ -38,11 +38,11 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
     private static BufferedImage tabSelectedPressed;
     private static BufferedImage tabSelectedEnd;
     private static BufferedImage tabSelected;
-    @SuppressWarnings({ "unused", "UnusedDeclaration", "FieldCanBeLocal" })
+    @SuppressWarnings({ "unused" })
     private static BufferedImage tabClosePressed;
-    @SuppressWarnings({ "unused", "UnusedDeclaration", "FieldCanBeLocal" })
+    @SuppressWarnings({ "unused" })
     private static BufferedImage tabCloseRollover;
-    @SuppressWarnings({ "unused", "UnusedDeclaration", "FieldCanBeLocal" })
+    @SuppressWarnings({ "unused" })
     private static BufferedImage tabClose;
     private static BufferedImage tabRolloverEnd;
     private static BufferedImage tabRollover;
@@ -50,7 +50,8 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
     private static BufferedImage tab;
     private static ResourceBundle bundle;
     private int tabPressed = -1;
-    private int width;
+    @SuppressWarnings("unused")
+	private int width;
     
     static {
         ResourceBundle bundle = getResourceBundle();
@@ -87,10 +88,17 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
 
     // TODO Paint & handle close buttons but on first tab
 
+    /**
+     * TODO
+     * @param width
+     */
     public ModernTabbedPaneUI(int width) {
     	TAB_WIDTH = width;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installUI(javax.swing.JComponent)
+     */
     @Override
     public void installUI(JComponent c) {
         JTabbedPane tabPane = (JTabbedPane) c;
@@ -128,6 +136,9 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
         super.installUI(c);
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installDefaults()
+     */
     @Override
     protected void installDefaults() {
         UIManager.put("TabbedPane.tabAreaInsets", new Insets(0, 0, 0, 0));
@@ -143,6 +154,9 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
         super.installDefaults();
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installListeners()
+     */
     @Override
     protected void installListeners() {
         super.installListeners();
@@ -150,33 +164,51 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
         tabPane.addMouseListener(new TabPressedTracker());
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateTabHeight(int, int, int)
+     */
     @Override
     protected int calculateTabHeight(int tabPlacement, int tabIndex,
                                      int fontHeight) {
         return TAB_HEIGHT;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateMaxTabHeight(int)
+     */
     @Override
     protected int calculateMaxTabHeight(int tabPlacement) {
         return TAB_HEIGHT;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateTabWidth(int, int, java.awt.FontMetrics)
+     */
     @Override
     protected int calculateTabWidth(int tabPlacement, int tabIndex,
                                     FontMetrics metrics) {
         return TAB_WIDTH;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateMaxTabWidth(int)
+     */
     @Override
     protected int calculateMaxTabWidth(int tabPlacement) {
         return TAB_WIDTH;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getTabRunIndent(int, int)
+     */
     @Override
     protected int getTabRunIndent(int tabPlacement, int run) {
         return 0;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#setRolloverTab(int)
+     */
     @Override
     protected void setRolloverTab(int index) {
         int oldIndex = getRolloverTab();
@@ -193,22 +225,31 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
         }
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getTabLabelShiftX(int, int, boolean)
+     */
     @Override
     protected int getTabLabelShiftX(int tabPlacement, int tabIndex,
                                     boolean isSelected) {
         return rects[tabIndex].width % 2;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getTabLabelShiftY(int, int, boolean)
+     */
     @Override
     protected int getTabLabelShiftY(int tabPlacement, int tabIndex,
                                     boolean isSelected) {
         return 0;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paint(java.awt.Graphics, javax.swing.JComponent)
+     */
     @Override
     public void paint(Graphics g, JComponent c) {
         int tabPlacement = tabPane.getTabPlacement();
-    Graphics2D g2d = (Graphics2D)g;
+        Graphics2D g2d = (Graphics2D)g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING , RenderingHints.VALUE_ANTIALIAS_ON);
     	
         Insets insets = c.getInsets();
@@ -226,6 +267,9 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
         super.paint(g2d, c);
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBackground(java.awt.Graphics, int, int, int, int, int, int, boolean)
+     */
     @Override
     protected void paintTabBackground(Graphics g, int tabPlacement,
                                       int tabIndex, int x, int y, int w, int h,
@@ -260,13 +304,19 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
         if (y < 0) {
             y = 0;
         }
-//System.out.println("Width"+TAB_WIDTH);
+        //System.out.println("Width"+TAB_WIDTH);
         g2d.drawImage(background, x, y, TAB_WIDTH, 25, null);
         g2d.drawLine(end.getWidth(), x + TAB_WIDTH - end.getWidth(),end.getWidth(),25);
-       g2d.drawImage(end, x + TAB_WIDTH - end.getWidth(), 25, null);
+        g2d.drawImage(end, x + TAB_WIDTH - end.getWidth(), 25, null);
     }
 
+    /**
+     * TODO
+     */
     private class TabPressedTracker extends MouseAdapter {
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
+         */
         @Override
         public void mousePressed(MouseEvent e) {
             if (!tabPane.isEnabled()) {
@@ -279,6 +329,9 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
             }
         }
 
+        /* (non-Javadoc)
+         * @see java.awt.event.MouseAdapter#mouseReleased(java.awt.event.MouseEvent)
+         */
         @Override
         public void mouseReleased(MouseEvent e) {
             int oldTabPressed = tabPressed;
@@ -291,6 +344,9 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
 
     // Methods below are overriden to get rid of the painting
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintFocusIndicator(java.awt.Graphics, int, java.awt.Rectangle[], int, java.awt.Rectangle, java.awt.Rectangle, boolean)
+     */
     @Override
     protected void paintFocusIndicator(Graphics g, int tabPlacement,
                                        Rectangle[] rects, int tabIndex,
@@ -298,20 +354,34 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
                                        boolean isSelected) {
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBorder(java.awt.Graphics, int, int, int, int, int, int, boolean)
+     */
     @Override
     protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex,
                                   int x, int y, int w, int h,
                                   boolean isSelected) {
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintContentBorder(java.awt.Graphics, int, int)
+     */
     @Override
     protected void paintContentBorder(Graphics g, int tabPlacement,
                                       int selectedIndex) {
     }
 
+    /**
+     * TODO
+     * @return
+     */
     private static Logger getLogger() {
         return LOGGER;
     }
+    /**
+     * TODO
+     * @return
+     */
     public static synchronized ResourceBundle getResourceBundle() {
         if (bundle == null) {
             bundle = ResourceBundle.getBundle("messages");
