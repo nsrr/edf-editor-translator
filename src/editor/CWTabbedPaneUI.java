@@ -1,7 +1,5 @@
 package editor;
 
-
-
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
@@ -10,15 +8,15 @@ import java.awt.*;
 /**
  * An implementation of the TabbedPaneUI that looks like the tabs that were used in the older versions of the
  * Codewarrior IDE.
- * <p/>
+ * <p>
  * Copyright (C) 2005 by Jon Lipsky
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. Y
  * ou may obtain a copy of the License at
- * <p/>
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
+ * <p>
  * Unless required by applicable law or agreed to in writing, software d
  * istributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -78,15 +76,15 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI {
 	// ------------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * TODO
-	 * @param c
-	 * @return
+	 * Creates the CWTabbedPaneUI
+	 * @param c the component
+	 * @return the ComponentUI
 	 */
 	public static ComponentUI createUI(JComponent c) {
 		return new CWTabbedPaneUI();
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installComponents()
 	 */
 	protected void installComponents() {
@@ -116,7 +114,7 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI {
 		}
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installDefaults()
 	 */
 	protected void installDefaults() {
@@ -230,17 +228,23 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI {
 
 			g.setColor(backgroundDarker2);
 			g.drawLine(0, buttonHeight + 1, buttonHeight / 2, buttonHeight + (buttonHeight / 2) + 1);
-			g.drawLine(buttonHeight / 2, buttonHeight + (buttonHeight / 2) + 1, tw - buttonHeight / 2, buttonHeight + (buttonHeight / 2) + 1);
-			g.drawLine(tw - buttonHeight / 2, buttonHeight + (buttonHeight / 2), tw, buttonHeight);
+			g.drawLine(buttonHeight / 2, buttonHeight + (buttonHeight / 2) + 1, 
+					tw - buttonHeight / 2, buttonHeight + (buttonHeight / 2) + 1);
+			g.drawLine(tw - buttonHeight / 2, buttonHeight + (buttonHeight / 2), 
+					tw, buttonHeight);
 
 			g.setColor(Color.black);
-			g.drawLine(buttonHeight / 2 + 1, buttonHeight + (buttonHeight / 2) + 2, tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2);
-			g.drawLine(tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2, tw, buttonHeight + 1);
+			g.drawLine(buttonHeight / 2 + 1, buttonHeight + (buttonHeight / 2) + 2, 
+					tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2);
+			g.drawLine(tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2, 
+					tw, buttonHeight + 1);
 
 			for (int i = 1; i <= fadeColorCount; i++) {
 				g.setColor(fadeColors[i - 1]);
-				g.drawLine(buttonHeight / 2 + 2 + i, buttonHeight + (buttonHeight / 2) + 2 + i, tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2 + i);
-				g.drawLine(tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2 + i, tw, buttonHeight + 1 + i);
+				g.drawLine(buttonHeight / 2 + 2 + i, buttonHeight + (buttonHeight / 2) 
+						+ 2 + i, tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) + 2 + i);
+				g.drawLine(tw - buttonHeight / 2 - 1, buttonHeight + (buttonHeight / 2) 
+						+ 2 + i, tw, buttonHeight + 1 + i);
 			}
 		} else {
 			g.setColor(tabColor);
@@ -262,7 +266,8 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/* (non-Javadoc)
-	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintText(java.awt.Graphics, int, java.awt.Font, java.awt.FontMetrics, int, java.lang.String, java.awt.Rectangle, boolean)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintText(java.awt.Graphics, 
+	 * int, java.awt.Font, java.awt.FontMetrics, int, java.lang.String, java.awt.Rectangle, boolean)
 	 */
 	protected void paintText(Graphics g, int tabPlacement, Font font, 
 			FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected) {
@@ -291,7 +296,8 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI {
 	// ------------------------------------------------------------------------------------------------------------------
 
 	/* (non-Javadoc)
-	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBackground(java.awt.Graphics, int, int, int, int, int, int, boolean)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBackground(java.awt.Graphics, int, 
+	 * int, int, int, int, int, boolean)
 	 */
 	protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, 
 			int y, int w, int h, boolean isSelected) {
@@ -299,7 +305,8 @@ public class CWTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/* (non-Javadoc)
-	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintFocusIndicator(java.awt.Graphics, int, java.awt.Rectangle[], int, java.awt.Rectangle, java.awt.Rectangle, boolean)
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintFocusIndicator(java.awt.Graphics, 
+	 * int, java.awt.Rectangle[], int, java.awt.Rectangle, java.awt.Rectangle, boolean)
 	 */
 	protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, 
 			int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {

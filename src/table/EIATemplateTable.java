@@ -7,6 +7,10 @@ import java.io.File;
 
 import javax.swing.table.TableModel;
 
+/**
+ * The EIA template table
+ * Used for EIA template editing
+ */
 @SuppressWarnings("serial")
 public class EIATemplateTable extends EIATable {
 	/**
@@ -23,9 +27,11 @@ public class EIATemplateTable extends EIATable {
     public EIATemplateTable(EIAHeader eiaHeader) {
         super();
         setEiaTemplate(true);
-        immutableFieldIndices = new int[]{EIA.index_filename, EIA.index_version, 
+        immutableFieldIndices = new int[]{
+        		EIA.index_filename, EIA.index_version, 
         		EIA.index_start_time, EIA.index_of_bytes, EIA.index_reserved, 
-                EIA.index_number_of_datarecord, EIA.index_duration, EIA.index_number_of_channels};
+                EIA.index_number_of_datarecord, EIA.index_duration, EIA.index_number_of_channels
+        };
         hideImmutableFields();
         TableModel model = this.getModel(); //new EIATableModel(1);
         String key, value;

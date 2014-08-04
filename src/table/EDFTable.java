@@ -24,11 +24,14 @@ import javax.swing.table.TableModel;
 
 import validator.fix.ValidateEDF;
 
+/**
+ * A customized JTable to represent the ESA, EIA table information 
+ */
 @SuppressWarnings("serial")
 public class EDFTable extends JTable {
 	
 	protected Boolean savedOnce = false; // usage: if the body should be copied in current save
-	// TODO: what is updateSinceLastSave: updated or not since last save
+	// what is updateSinceLastSave: updated or not since last save
     protected Boolean updateSinceLastSave = false; // false when ESA/EIA table is created; true when template file is created
     protected File masterFile = null; // usage: keep the master file of the table
     protected int masterFileIndex; // index of the master file in the master file array
@@ -135,7 +138,7 @@ public class EDFTable extends JTable {
     }
 
     /**
-     * Set the customized look from different data type
+     * Sets the customized look from different data type
      * @param dataType the data type that responsible for different look of this table
      */
     public void customizeLook(String dataType) {
@@ -174,7 +177,7 @@ public class EDFTable extends JTable {
     }
 
     /**
-     * Set the header renderer using EDFTableHeaderRenderer
+     * Sets the header renderer using EDFTableHeaderRenderer
      */
     private void renderHeader() {
         int ncol = this.getColumnCount();
@@ -185,7 +188,7 @@ public class EDFTable extends JTable {
     }
 
     /**
-     * Scroll the specified cell to be visible
+     * Scrolls the specified cell to be visible
      * this function has been reformed in Utility. They have the same functionality
      * Fangping, 09/28/2010
      * @param rr row of the cell
@@ -297,6 +300,7 @@ public class EDFTable extends JTable {
      * @param updated updated or not since last save
      * @param masterFile master file of the table
      * @param categoryValue category of the table
+     * @param indexofmasterFile the index of master file
      */
     public void setStatesAllInOne(Boolean saved, Boolean updated,
                                   File masterFile, int categoryValue,
@@ -309,12 +313,12 @@ public class EDFTable extends JTable {
     }
     
     /**
-     * TODO
+     * Validates ESA table
      * used for both ESA and ESA template tables
-     * Fangping, 09/29/2010
-     * Validation improvement for ESA tables
-     * Gang Shu, 02/20/2014
-     */
+     * @author Fangping, 09/29/2010
+     * @author Gang Shu, 02/20/2014, Validation improvement for ESA tables
+	 * @return An array of Incompliances
+	 */
 	public ArrayList<Incompliance> parseESATable() {
 		
 		String wrkFileName = this.getMasterFile().getAbsolutePath();
@@ -331,8 +335,8 @@ public class EDFTable extends JTable {
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Validates EIA tables
+	 * @return an array list of Incompliances generated during parsing
 	 */
     public ArrayList<Incompliance> parseEIATable() {
     	
@@ -347,8 +351,8 @@ public class EDFTable extends JTable {
     }
     
     /**
-     * TODO
-     * @return
+     * Validates EIA template table
+     * @return the Incompliances generated during parsing
      */
     public ArrayList<Incompliance> parseEIATemplateTable() {    	
     	return ValidateEDF.parseEIATemplateTable(this);
@@ -463,7 +467,7 @@ public class EDFTable extends JTable {
         protected Color oddFore;
         
         /**
-         * Construct a StripedTableCellRenderer using a TableCellRenderer and some attributes
+         * Constructs a StripedTableCellRenderer using a TableCellRenderer and some attributes
          * @param targetRenderer the TableCellRenderer to be used
          * @param evenBack even background color
          * @param evenFore even foreground color
@@ -518,7 +522,8 @@ public class EDFTable extends JTable {
      * @param oddBack odd background color
      * @param oddFore odd foreground color
      */
-    public void stripTableInColumn(int columnIndex, Color evenBack, Color evenFore, Color oddBack, Color oddFore) {
+    public void stripTableInColumn(int columnIndex, Color evenBack, 
+    		Color evenFore, Color oddBack, Color oddFore) {
       TableColumn tc = this.getColumnModel().getColumn(columnIndex);
       TableCellRenderer targetRenderer = tc.getCellRenderer();
       
@@ -527,29 +532,29 @@ public class EDFTable extends JTable {
     }
     
     /**
-     * Render table using different color theme
+     * Renders table using different color theme
      * @param evenBack even background color
      * @param evenFore even foreground color
      * @param oddBack odd background color
      * @param oddFore odd foreground color
      */
     public void stripTable(Color evenBack, Color evenFore, Color oddBack, Color oddFore) {
-      StripedTableCellRenderer sharedInstance = null;
-      int columns = this.getColumnCount();
-      for (int i = 0; i < columns; i++) {
-        TableColumn tc = this.getColumnModel().getColumn(i);
-        TableCellRenderer targetRenderer = tc.getCellRenderer();
-        if (targetRenderer != null) {
-          tc.setCellRenderer(new StripedTableCellRenderer(targetRenderer,
-              evenBack, evenFore, oddBack, oddFore));
-        } else {
-          if (sharedInstance == null) {
-            sharedInstance = new StripedTableCellRenderer(null,
-                evenBack, evenFore, oddBack, oddFore);
-          }
-          tc.setCellRenderer(sharedInstance);
-        }
-      }
+    	StripedTableCellRenderer sharedInstance = null;
+    	int columns = this.getColumnCount();
+    	for (int i = 0; i < columns; i++) {
+    		TableColumn tc = this.getColumnModel().getColumn(i);
+    		TableCellRenderer targetRenderer = tc.getCellRenderer();
+    		if (targetRenderer != null) {
+    			tc.setCellRenderer(new StripedTableCellRenderer(targetRenderer,
+    					evenBack, evenFore, oddBack, oddFore));
+    		} else {
+    			if (sharedInstance == null) {
+    				sharedInstance = new StripedTableCellRenderer(null,
+    						evenBack, evenFore, oddBack, oddFore);
+    			}
+    			tc.setCellRenderer(sharedInstance);
+    		}
+    	}
     }
     
     /**

@@ -2,6 +2,9 @@ package configure;
 
 import java.util.HashMap;
 
+/**
+ * TODO
+ */
 public class ConfigureManager {
 
 	final static String configurationFilename = "configuration.txt";

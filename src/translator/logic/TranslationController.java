@@ -15,7 +15,7 @@ import translator.utils.MyDate;
 import translator.utils.Vendor;
 
 /**
- * TODO
+ * A controller that manages the annotation translation process
  */
 public class TranslationController {
 
@@ -24,16 +24,16 @@ public class TranslationController {
 	public static DefaultListModel<String> ListModel_Messages = null;  // wei wang, change DefaultListModel to DefaultListModel<String>
 	
 	/**
-	 * TODO
-	 * @param vendor
-	 * @param mapping_file
-	 * @param edf_dir
-	 * @param selected_Edf_files
-	 * @param annotation_dir
-	 * @param stage_dir
-	 * @param output_dir
-	 * @param outname
-	 * @return
+	 * Conducts translation from different vendor and log the result
+	 * @param vendor vender name
+	 * @param mapping_file vender-specific mapping file 
+	 * @param edf_dir directory of containing edf file
+	 * @param selected_Edf_files array of selected edf files
+	 * @param annotation_dir directory containing the annotation
+	 * @param stage_dir directory containing the stage file
+	 * @param output_dir output directory
+	 * @param outname output name before translation
+	 * @return array of translated files
 	 */
 	public static ArrayList<String> conductTranslation(
 			String vendor, String mapping_file, String edf_dir, ArrayList<String> selected_Edf_files, 
@@ -47,7 +47,7 @@ public class TranslationController {
 
 		ArrayList<String> successfulOutAL = new ArrayList<String>();
 		
-		String annotation_file = null, stage_file = null, out_file = null;
+		String annotation_file = null, stage_file = null, out_file_name = null;
 		
 		for (String edf_file : selected_Edf_files) {
 			
@@ -62,40 +62,39 @@ public class TranslationController {
 			String basename = edf_file_postfix.replaceAll(".(?i)edf", "");
 			String out_file_postfix = customize_out_file(outname, basename, vendor);
 			
-			out_file = separatorReplacer(out_file_prefix + File.separator + out_file_postfix);
+			out_file_name = separatorReplacer(out_file_prefix + File.separator + out_file_postfix);
 			
 			boolean bTranslation = false;
 			AnnotationConverter converter = new AnnotationConverter();
 			try {
-				new File(out_file).getParentFile().mkdirs();
+				new File(out_file_name).getParentFile().mkdirs();
 				if (vendor.equals(Vendor.Embla.toString())) {
-					annotation_file = validize_file(annotation_dir, basename, ".txt");
+					annotation_file = validate_file(annotation_dir, basename, ".txt");
 					if ((new File(annotation_file)).exists()) {
-						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file);	
+						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name);	
 					}
 				} else if (vendor.equals(Vendor.Compumedics.toString())) {
-					annotation_file = validize_file(annotation_dir, basename, ".xml");
+					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file);
+						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name);
 					}
 				} else if (vendor.equals(Vendor.Respironics.toString())) {
-					annotation_file = validize_file(annotation_dir, basename, ".events.csv");
-					stage_file = validize_file(stage_dir, basename, ".events.csv");
+					annotation_file = validate_file(annotation_dir, basename, ".events.csv");
+					stage_file = validate_file(stage_dir, basename, ".events.csv");
 					if ((new File(annotation_file)).exists() && (new File(stage_file)).exists()) {
-						bTranslation = converter.convertCSV(annotation_file, stage_file, edf_file, mapping_file, out_file);
+						bTranslation = converter.convertCSV(annotation_file, stage_file, edf_file, mapping_file, out_file_name);
 					}
 				} else if (vendor.equals(Vendor.Sandman.toString())) {
-					annotation_file = validize_file(annotation_dir, basename, ".txt");
+					annotation_file = validate_file(annotation_dir, basename, ".txt");
 					if ((new File(annotation_file)).exists()) {
-						bTranslation = converter.convertSandman(annotation_file, edf_file, mapping_file, out_file);
+						bTranslation = converter.convertSandman(annotation_file, edf_file, mapping_file, out_file_name);
 					}
 				}
-				
+
 				if (bTranslation) {
-					successfulOutAL.add(out_file);
+					successfulOutAL.add(out_file_name);
 				}
-			}
-			catch(Exception e) {
+			} catch(Exception e) {
 				bTranslation = false;
 				e.printStackTrace();
 			} finally {
@@ -114,7 +113,7 @@ public class TranslationController {
 				addElementIntoLog("   * Annotation:\t" + annotation_file + "(" + ((new File(annotation_file)).exists() ? "Existed" : "Not exist!") + ")", true);
 				if (vendor.equals(Vendor.Respironics.toString()))
 				addElementIntoLog("   * Stage file:\t" + stage_file + "(" + ((new File(stage_file)).exists() ? "Existed" : "Not exist!") + ")", false);
-				addElementIntoLog("   * Output file:\t" + out_file, true);
+				addElementIntoLog("   * Output file:\t" + out_file_name, true);
 				addElementIntoLog("   * Translation:\t" + (bTranslation ? "Successful!" : "Failed!"), true);
 				
 				//(3) record transaction error into log history
@@ -123,8 +122,7 @@ public class TranslationController {
 					addElementIntoLog(translationErrors, true);
 				}
 				translationErrors = "";
-			}
-			
+			}			
 		}
 		
 		addElementIntoLog(" .....................", true);
@@ -135,7 +133,7 @@ public class TranslationController {
 	}
 	
 	/**
-	 * Add message into log file
+	 * Adds message into log file
 	 * @param message the message to be logged
 	 * @param showOnScreen if true, also show message on the console
 	 */
@@ -168,7 +166,7 @@ public class TranslationController {
 	}
 	
 	/**
-	 * Formalize the string with standard file separator
+	 * Formalizes the string with standard file separator
 	 * @param oldString the string to be standardized
 	 * @return the standardized string
 	 */
@@ -183,16 +181,16 @@ public class TranslationController {
 	}
 	
 	/**
-	 * Customize output file name using the specified base name and vendor name
+	 * Customizes output file name using the specified base name and vendor name
 	 * @param pattern output file pattern 
 	 * @param basename base file name
 	 * @param vendor vendor name
 	 * @return the customized output file name
 	 */
 	public static String customize_out_file(String pattern, String basename, String vendor) {
-		
+
 		basename = basename == null ? "filename" : basename;
-		
+
 		String example = pattern;
 		example = example.replace(Keywords.key_edfname, basename);
 		example = vendor==null ? example : example.replace(Keywords.key_vendor, vendor);
@@ -200,21 +198,22 @@ public class TranslationController {
 		example = example.replace(Keywords.key_time, MyDate.currentTime());
 		return example;
 	}
-	
+
 	/**
-	 * TODO
-	 * @param dir
-	 * @param basename
-	 * @param extension
-	 * @return
+	 * Validates the full path of a file consists of dir, basename and extension
+	 * @param dir directory containing the file	
+	 * @param basename the base name of the file(without extension)
+	 * @param extension the extension of the file
+	 * @return the full path of the validated file
 	 */
-	private static String validize_file(String dir, String basename, String extension) {
-		
+	// wei wang: change 'validize_file' to 'validate_file'
+	private static String validate_file(String dir, String basename, String extension) {
+
 		if (dir == null || basename == null || extension == null)
 			return null;
-		
+
 		String file = separatorReplacer(dir + File.separator + basename + extension.toUpperCase());
-		
+
 		if (!(new File(file)).exists()) {
 			file = separatorReplacer(dir + File.separator + basename + extension);
 //			if (!(new File(file)).exists())
@@ -222,29 +221,30 @@ public class TranslationController {
 		}		
 		return file;
 	}
-	
+
 	/**
-	 * TODO
-	 * @param pattern
-	 * @param key
-	 * @param e
-	 * @return
+	 * Updates patterns corresponding to CheckBox event
+	 * @param pattern the pattern to be updated 
+	 * @param key section of the new pattern related to different event
+	 * @param e the event generated by selecting or deselecting CheckBox items
+	 * @return the updated pattern
 	 */
 	public static String updateOutputPattern(String pattern, String key, ItemEvent e) {
-		
+
 		final String str_xml = ".xml";
+		// turn on case insensitive matching by (?i), wei wang
 		pattern = pattern.replaceAll(".(?i)xml", str_xml);
 		pattern = pattern.endsWith(str_xml) ? pattern : pattern + str_xml;
 		pattern = pattern.substring(0, pattern.lastIndexOf(str_xml));
 		pattern = pattern.contains(Keywords.key_edfname) 
 				? pattern 
 				: Keywords.key_edfname + pattern;
-		
+
 		if (e.getStateChange() == ItemEvent.SELECTED && !pattern.contains(key))
 			pattern = pattern + "_" + key + str_xml;
 		else if (e.getStateChange() == ItemEvent.DESELECTED && pattern.contains(key))
 			pattern = pattern.replace(key, "") + str_xml;
-		
+
 		pattern = pattern.replace("]__", "]_");
 		pattern = pattern.replace("__[", "_[");
 		pattern = pattern.replace("][", "]_[");

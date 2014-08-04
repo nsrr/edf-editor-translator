@@ -5,11 +5,9 @@ import header.ESAHeader;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -17,25 +15,29 @@ import javax.swing.JLabel;
 import table.EIATable;
 import table.ESATable;
 
-
 /**
- * this class is to acts as the listener for the menu item "File -> Select Files"
+ * This class is to act as the listener for the menu item "File to Select Files"
  * usage: fileSelectFilesItem.addActionListener(frame, eiaTable, esaTable)
  */
 public class SelectFilesListener implements ActionListener {
-    private JLabel statusLabel;
-    private EIATable eiaTable;
+    @SuppressWarnings("unused")
+	private JLabel statusLabel;
+    @SuppressWarnings("unused")
+	private EIATable eiaTable;
     private ArrayList<ESATable> esaTables;
     private ArrayList<EDFFileHeader> edfFileHeaders;
     private ArrayList<File> edfFiles;
     private int numberOfOpenedFiles = 0;
     
+    /**
+     * Default constructor
+     */
     public SelectFilesListener() {
-    	// 
+    	// ...
     }
 
     /**
-     * TODO
+     * Initialize a SelectFilesListener
      * @param wkLabel status label in the main frame
      * @param iniEiaTable the initial EIA table built from source files
      * @param iniEsaTables the initial group of ESA tables built from source files
@@ -53,8 +55,7 @@ public class SelectFilesListener implements ActionListener {
 
 
     /**
-     * TODO
-     * @param event the actionEvent
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      * algorithm:
      * (1) first, select files through JFileChooser
      * (2) build an array of EIA headers and ESA headers;
@@ -89,7 +90,7 @@ public class SelectFilesListener implements ActionListener {
          * (1) create the EIA and ESA headers;
          * (2) render the EIA and ESA tables;
          */
-        numberOfOpenedFiles = edfFiles.size(); //evaluate the number of opened files
+        numberOfOpenedFiles = edfFiles.size(); // evaluate the number of opened files
 
         edfFileHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
 

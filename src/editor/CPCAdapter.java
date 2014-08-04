@@ -1,7 +1,3 @@
-/**
- * this class is to implement Cut/Copy/Paste and Redo/Undo.
- */
-
 package editor;
 
 import java.awt.Toolkit;
@@ -11,18 +7,20 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.io.IOException;
 
 import table.EDFTable;
 
+/**
+ * This class is to implement Cut/Copy/Paste and Redo/Undo functionalities.
+ */
 public class CPCAdapter implements ActionListener {
-    private String operationCode;
+    @SuppressWarnings("unused")
+	private String operationCode;
     private int codeIndex;
-    private Clipboard systemBuf =
-        Toolkit.getDefaultToolkit().getSystemClipboard(); // system buffer for data transfer
+    // system buffer for data transfer
+    private Clipboard systemBuf = Toolkit.getDefaultToolkit().getSystemClipboard(); 
     private StringSelection strSel = null;
-
 
     protected final static String COPY = "Copy";
     private final static String CUT = "Cut";
@@ -30,8 +28,8 @@ public class CPCAdapter implements ActionListener {
     EDFTable dataTable = null;
 
     /**
-     * TODO
-     * @param code
+     * Construct this CPCAdapter using COPY, CUT, or PASTE instruction
+     * @param code the mode to initialize this CPCAdapter
      */
     public CPCAdapter(String code) {
         super();
@@ -47,14 +45,13 @@ public class CPCAdapter implements ActionListener {
     }
 
     /**
-     * TODO
+     * Get the table from current selected tabbed pane 
      */
     public void acquireDataTable() {
         if (MainWindow.tabPane.getSelectedComponent() == null)
             return;
 
-        BasicEDFPane splitPane =
-            (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
+        BasicEDFPane splitPane = (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
         if (splitPane instanceof WorkingTablePane) {
             WorkingTablePane pane = (WorkingTablePane)splitPane;
             dataTable = pane.getEdfTable();
@@ -64,15 +61,15 @@ public class CPCAdapter implements ActionListener {
         }
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
+    	
         acquireDataTable();
         if (dataTable == null)
             return;
-        if (dataTable.getSelectedColumnCount() != 1 ||
-            dataTable.getSelectedRowCount() != 1)
+        if (dataTable.getSelectedColumnCount() != 1 || dataTable.getSelectedRowCount() != 1)
             return;
 
         switch (codeIndex) {
@@ -91,7 +88,7 @@ public class CPCAdapter implements ActionListener {
     }
 
     /**
-     * TODO
+     * Copy operation
      */
     public void copyOperation() {
         String strBuf = "";
@@ -104,7 +101,7 @@ public class CPCAdapter implements ActionListener {
     }
 
     /**
-     * TODO
+     * Cut operation
      */
     public void cutOperation() {
         String strBuf = "";
@@ -118,17 +115,15 @@ public class CPCAdapter implements ActionListener {
     }
 
     /**
-     * TODO
+     * Paste operation
      */
     public void pasteOperation() {
         int rr = dataTable.getSelectedRow();
         int cc = dataTable.getSelectedColumn();
 
         String buffer = null;
-
         try {
-            buffer =
-                    (String)(systemBuf.getContents(this).getTransferData(DataFlavor.stringFlavor));
+            buffer = (String)(systemBuf.getContents(this).getTransferData(DataFlavor.stringFlavor));
         } catch (UnsupportedFlavorException e) {
             e.printStackTrace();
         } catch (IOException e) {

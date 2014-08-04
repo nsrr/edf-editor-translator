@@ -1,7 +1,3 @@
-/**
- * signal header consists of multiple signal channels.
-*/
-
 package header;
 
 import java.io.File;
@@ -12,6 +8,9 @@ import java.util.HashMap;
 
 import javax.swing.JTable;
 
+/**
+ * Records signal attributes of all channels, one by one, contained in an EDF file
+ */
 public class ESAHeader extends ESAChannel {
 
     private ESAChannel[] signalHeader = null; // all attribute values of the channel
@@ -24,26 +23,30 @@ public class ESAHeader extends ESAChannel {
     //////////////////////////////////////////////////////////////////////////////    
     
     /**
-     * to be implemented
+     * To be implemented
      */
     public ESAHeader() {
-        //TODO: may not code for this. go and see;
+        // may not code for this. go and see;
     }
     
     /**
-     * Construct an ESA header from a file (in form of RandomAccessFile).
-     * Algorithm:
-     * 1. set the number of channels;
-     * 2. set the host file of the header
-     * 3. attach channels to the header
+     * Constructs an ESAheader from a file (in form of RandomAccessFile).
      * @param raf Random file accessor  
      * @param edfFile host EDF file of the header
      * @param nChannels the number of Channels
+     * @param istemplate true if this header is template
      */
-    public ESAHeader(RandomAccessFile raf, File edfFile, int nChannels, boolean istemplate) {   
+    public ESAHeader(RandomAccessFile raf, File edfFile, int nChannels, boolean istemplate) {  
+//      Algorithm:
+//      1. set the number of channels;
+//      2. set the host file of the header
+//      3. attach channels to the header
+    	// Clean code: Move the next two lines out of the outer if statement, because
+    	//             they are duplicated in both case
+    	// wei wang, 2014-7-16
+    	setNumberOfChannels(nChannels); // end of 1.
+	    setHostEdfFile(edfFile); // end of 2.
     	if(!istemplate) {
-    		setNumberOfChannels(nChannels); // end of 1.
-    	    setHostEdfFile(edfFile); // end of 2.
     	    if (nChannels == 0) {
     	        signalHeader = null;
     	        return;
@@ -53,8 +56,6 @@ public class ESAHeader extends ESAChannel {
     	        signalHeader[i] = new ESAChannel(raf, i, nChannels);          
     	    } // end of 3.
     	} else {
-    		setNumberOfChannels(nChannels); // end of 1.
-    	    setHostEdfFile(edfFile); // end of 2.
     	    if (nChannels == 0) {
     	        signalTemplateHeader = null;
     	        return;
@@ -67,19 +68,19 @@ public class ESAHeader extends ESAChannel {
     }
 
     /**
-     * Construct an ESA header from an ESA table
-     * Algorithm:
-     * 1. calculate the number of rows and assign it to the numberOfChannels
-     * 2. set host file (!! this depends on the table has been saved or not)
-     * 3. turn each row of the table into a channel which is attached the header
-     * @param table  ESA table
+     * Constructs an ESA header from an ESA table
+     * @param table  ESA table used to extract ESA header
+     * @param template true if this ESA header is template
      */
     public ESAHeader(JTable table, boolean template) { 
-    	if(!template) {
-            int nRows = table.getRowCount();
-            int nColumns = table.getColumnCount();
-            int nChannels = nRows; // number of channels, end of 1.
-            
+//      Algorithm:
+//      1. calculate the number of rows and assign it to the numberOfChannels
+//      2. set host file (!! this depends on the table has been saved or not)
+//      3. turn each row of the table into a channel which is attached to the header
+    	int nRows = table.getRowCount();
+        int nColumns = table.getColumnCount();
+        int nChannels = nRows; // number of channels, end of 1.
+    	if(!template) {            
             signalHeader = new ESAChannel[nChannels];
             for (int i = 0; i < nChannels; i++) {
                 signalHeader[i] = new ESAChannel();
@@ -101,11 +102,7 @@ public class ESAHeader extends ESAChannel {
                 //signalHeader[row].setEsaChannel(tempHeader);
             }            
             this.setNumberOfChannels(nChannels);
-    	} else {
-            int nRows = table.getRowCount();
-            int nColumns = table.getColumnCount();
-            int nChannels = nRows; // number of channels
-            
+    	} else {            
             signalTemplateHeader = new ESATemplateChannel[nChannels];
             for (int i = 0; i < nChannels; i++) {
                 signalTemplateHeader[i] = new ESATemplateChannel();
@@ -132,10 +129,10 @@ public class ESAHeader extends ESAChannel {
     
     /**
      * Construct an empty table for, for example, ESA template creating
-     * Note: seems to be obsolete. Not removed before finalized
      * @param nChannels the number of channels of an EDF file
      */
     public ESAHeader(int nChannels) {
+//    	Note: seems to be obsolete. Not removed before finalized
         signalHeader = new ESAChannel[nChannels];
         signalTemplateHeader = new ESATemplateChannel[nChannels];
     }
@@ -145,30 +142,28 @@ public class ESAHeader extends ESAChannel {
     //////////////////////////////////////////////////////////////////////////////
     
     /**
-     * Save ESA header part to disk
-     * Algorithm: 
-     * 1. get the number of channels;
-     * 2. create an EIA Header only nChannels valid. only for ESA template header
-     * 3. designate the saving tasks to every channel.
-     * Note: index is required for saving designation.
+     * Saves ESA header part to disk
      * @param raf random file accessor
      * @param file the file to store the header. the file must conform to raf
      * @param alreadyHasEIAHeader true for EDF file, false for ESA template header
-     * @throws IOException
+     * @param template true if this header is a template
+     * @throws IOException IOException
      */
-    public void saveToDisk(
-    		RandomAccessFile raf, File file, boolean alreadyHasEIAHeader, boolean template) throws IOException {
+    public void saveToDisk(RandomAccessFile raf, File file, boolean alreadyHasEIAHeader, boolean template) throws IOException {
+//      Algorithm: 
+//      1. get the number of channels;
+//      2. create an EIA Header only nChannels valid. only for ESA template header
+//      3. designate the saving tasks to every channel.
+//      Note: index is required for saving designation.
+    	int nChannels = this.getNumberOfChannels(); // 1.
         if(!template) {
-        	int nChannels = this.getNumberOfChannels(); // end of 1.
-            
             if (!alreadyHasEIAHeader)  // end of 2.
                 writeNumberOfChannelsToHeader(raf, file, nChannels);
-            for (int index = 0; index < nChannels; index++) { // start of 3.
+            for(int index = 0; index < nChannels; index++) { // start of 3.
                 ESAChannel currentChannel = this.getSignalChannelAt(index);
                 currentChannel.writeESAChannelToDisk(raf, index, nChannels);
             }//end of 3.
         } else {
-            int nChannels = this.getNumberOfChannels(); // 1.
             if (!alreadyHasEIAHeader)  // 2.
                 writeNumberOfChannelsToHeader(raf, file, nChannels);
             
@@ -183,7 +178,7 @@ public class ESAHeader extends ESAChannel {
     }
 
     /**
-     * Write the number of channels to EIA header
+     * Writes the number of channels to EIA header
      * @param raf file to save the EIA information to
      * @param file host file of the header
      * @param nChannel the number of channels of this file
@@ -200,25 +195,25 @@ public class ESAHeader extends ESAChannel {
     ///////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Set the channel number
+     * Sets the channel number
      * @param nChannels number of Channels
-     * @literal numberOfChannels setter
+     * {@literal numberOfChannels setter}
      */
     public void setNumberOfChannels(int nChannels) {
         this.numberOfChannels = nChannels;
     }
 
     /**
-     * Get the channel number
+     * Gets the channel number
      * @return number of Channels
-     * @literal numberOfChannels getter
+     * {@literal numberOfChannels getter}
      */
     public int getNumberOfChannels() {
         return numberOfChannels;
     }
 
     /**
-     * Get the ESA channel at specified position
+     * Gets the ESA channel at specified position
      * @param index the index of channel to be acquired
      * @return the ESA channel with indexed channel
      */
@@ -227,7 +222,7 @@ public class ESAHeader extends ESAChannel {
     }
     
     /**
-     * Get ESA template channel at specified position
+     * Gets ESA template channel at specified position
      * @param index the specified position
      * @return ESA template channel  
      */
@@ -236,7 +231,7 @@ public class ESAHeader extends ESAChannel {
     }
 
     /**
-     * Set the host file
+     * Sets the host file
      * @param hostEdfFile the host file of this header
      */
     public void setHostEdfFile(File hostEdfFile) {
@@ -244,7 +239,7 @@ public class ESAHeader extends ESAChannel {
     }
 
     /**
-     * Get the host file of this header
+     * Gets the host file of this header
      * @return a File represent the host EDF file
      */
     public File getHostEdfFile() {
@@ -252,7 +247,7 @@ public class ESAHeader extends ESAChannel {
     }
     
     /**
-     * Set the signal header from an array of ESA channel
+     * Sets the signal header from an array of ESA channel
      * @param signalHeader an array of ESA channel
      */
     public void setSignalHeader(ESAChannel[] signalHeader) {
@@ -260,7 +255,7 @@ public class ESAHeader extends ESAChannel {
     }
     
     /**
-     * Set the signal channel at specified position
+     * Sets the signal channel at specified position
      * @param index the position to set 
      * @param channel the channel to set at the specified position
      */
@@ -269,7 +264,7 @@ public class ESAHeader extends ESAChannel {
     }
 
     /**
-     * Get Signal header
+     * Gets Signal header
      * @return signal header
      */
     public ESAChannel[] getSignalHeader() {
@@ -277,7 +272,7 @@ public class ESAHeader extends ESAChannel {
     }
     
     /**
-     * Get ESA template channel
+     * Gets ESA template channel
      * @return ESA template channel
      */
     public ESATemplateChannel[] getSignalTemplateHeader() {
@@ -285,7 +280,7 @@ public class ESAHeader extends ESAChannel {
     }
     
     /**
-     * Get ESA channel at specified position
+     * Gets ESA channel at specified position
      * @param index the specified position
      * @return the ESA channel at index 
      */
@@ -294,7 +289,7 @@ public class ESAHeader extends ESAChannel {
     }
     
     /**
-     * Get the ESA template channel at the specified position
+     * Gets the ESA template channel at the specified position
      * @param index the specified position
      * @return the ESA template channel 
      */
@@ -303,7 +298,7 @@ public class ESAHeader extends ESAChannel {
     }
     
     /**
-     * Get the attribute of a specified channel
+     * Gets the attribute of a specified channel
      * @param indexOfChannel the channel position
      * @param indexOfAttribute the attribute position of a channel
      * @return the String value of an attribute
@@ -319,7 +314,7 @@ public class ESAHeader extends ESAChannel {
     ////////////////////// END of getter and setter zone ///////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
     /**
-     * Print the ESA header information to screen
+     * Prints the ESA header information to screen
      */
     public void printEsaHeaderToScreen() {
         int nChannels = this.getNumberOfChannels();

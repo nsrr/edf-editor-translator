@@ -38,12 +38,16 @@ import table.EDFTable;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+/**
+ * A JDialog that used for editing transducer type
+ */
 @SuppressWarnings("serial")
 public class TransducerListener extends JDialog {
-    protected static JComboBox procedureBox;
-    protected static JComboBox deviceBox;
-    protected static JComboBox locationBox;
-    protected static JComboBox refLocBox;
+	// JComboBox deviceBox, procedureBox, locationBox, refLocBox to JComboBox<String>. wei wang, 2014-7-21
+    protected static JComboBox<String> procedureBox;
+    protected static JComboBox<String> deviceBox;
+    protected static JComboBox<String> locationBox;
+    protected static JComboBox<String> refLocBox;
     protected static JLabel procedureLabel;
     protected static JLabel deviceLabel;
     protected static JLabel locationLabel;
@@ -85,11 +89,11 @@ public class TransducerListener extends JDialog {
 
 
     /**
-     * TODO
-     * @param frame
-     * @param x
-     * @param y
-     * @param esaTemp
+     * Constructs a TransducerListener given a parent frame, an EDFTable and the column and row index
+     * @param frame the parent frame of this JDialog
+     * @param x the row index
+     * @param y the column index
+     * @param esaTemp the EDFTable 
      */
     public TransducerListener(JFrame frame, int x, int y, EDFTable esaTemp) {
         super(frame, true); // modal
@@ -106,24 +110,23 @@ public class TransducerListener extends JDialog {
         */
         if (curVal != null) {
             if (!curVal.equals("")) {
-                int indC = curVal.indexOf(COMMA);
+                int indxOfComma = curVal.indexOf(COMMA);
                 //this is wrong for "Respiratory Effort:Impedance Belt at SUM of Chest and Abdomen";
-                int indAt = curVal.indexOf(AT);
-                int indRef = curVal.indexOf(REFERENCED_TO);
-                if (indC != -1) {
-                    aFinalString[0] = curVal.substring(0, indC).trim();
-                    if (indAt != -1) {
-                        aFinalString[1] = curVal.substring(indC + COMMA.length(), indAt).trim();
-                        if (indRef != -1) {
-                            aFinalString[2] = curVal.substring(indAt + AT.length(), indRef).trim();
+                int indxOfAt = curVal.indexOf(AT);
+                int indxOfReferencedTo = curVal.indexOf(REFERENCED_TO);
+                if (indxOfComma != -1) {
+                    aFinalString[0] = curVal.substring(0, indxOfComma).trim();
+                    if (indxOfAt != -1) {
+                        aFinalString[1] = curVal.substring(indxOfComma + COMMA.length(), indxOfAt).trim();
+                        if (indxOfReferencedTo != -1) {
+                            aFinalString[2] = curVal.substring(indxOfAt + AT.length(), indxOfReferencedTo).trim();
                             aFinalString[3] =
-                                    curVal.substring(indRef + REFERENCED_TO.length(), curVal.length()).trim();
+                                    curVal.substring(indxOfReferencedTo + REFERENCED_TO.length(), curVal.length()).trim();
                         } else {
-                            aFinalString[2] =
-                                    curVal.substring(indAt + AT.length(), curVal.length());
+                            aFinalString[2] = curVal.substring(indxOfAt + AT.length(), curVal.length());
                         }
                     } else {
-                        aFinalString[1] = curVal.substring(indC + 1, curVal.length()).trim();
+                        aFinalString[1] = curVal.substring(indxOfComma + 1, curVal.length()).trim();
                     }
                 } else {
                     aFinalString[0] = curVal;
@@ -136,9 +139,6 @@ public class TransducerListener extends JDialog {
         visualize();
     }
 
-    /**
-     * TODO
-     */
     private void initUI() {
         this.setSize(new Dimension(dialogWidth, dialogHeight));
 
@@ -171,17 +171,18 @@ public class TransducerListener extends JDialog {
         finalStringCount = new JLabel();
         finalStringCount.setBorder(border);
 
+        // This file might not exist, might throw NullPointerException TODO
         procedures = readFile("/SignalTypes/procedures.txt");
         revProcedures = revHReadFile("/SignalTypes/procedures.txt");
-        procedureBox = new JComboBox(procedures.values().toArray());
+        procedureBox = new JComboBox<String>((String[])procedures.values().toArray());
 
-        deviceBox = new JComboBox();
+        deviceBox = new JComboBox<String>();
         deviceBox.setVisible(false);
 
-        locationBox = new JComboBox();
+        locationBox = new JComboBox<String>();
         locationBox.setVisible(false);
 
-        refLocBox = new JComboBox();
+        refLocBox = new JComboBox<String>();
         refLocBox.setVisible(false);
 
         if (!aFinalString[0].equals("")) {
@@ -200,7 +201,8 @@ public class TransducerListener extends JDialog {
         
         procedureBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    JComboBox cb = (JComboBox)e.getSource();
+                    @SuppressWarnings("unchecked")
+					JComboBox<String> cb = (JComboBox<String>)e.getSource();
                     updateLabels(0, cb);
                     setDeviceBox(revProcedures.get(aFinalString[0]));
                     setLocationBox(revProcedures.get(aFinalString[0]));                        
@@ -221,8 +223,8 @@ public class TransducerListener extends JDialog {
     }
 
     /**
-     * TODO
-     * @param procID
+     * Sets the device box
+     * @param procID TODO
      */
     public void setDeviceBox(int procID) {
         deviceLabel.setVisible(true);
@@ -232,8 +234,7 @@ public class TransducerListener extends JDialog {
         HashMap<Integer, String> devices = readFile("/SignalTypes/devices.txt");
         ArrayList<Integer> keep = new ArrayList<Integer>();
         try {
-            InputStream is =
-                Main.class.getResourceAsStream("/SignalTypes/proceduredevices.txt");
+            InputStream is = Main.class.getResourceAsStream("/SignalTypes/proceduredevices.txt");
             BufferedReader in = new BufferedReader(new InputStreamReader(is));
             String line = in.readLine();
             while (line != null) {
@@ -246,10 +247,8 @@ public class TransducerListener extends JDialog {
                 line = in.readLine();
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         if (!keep.isEmpty()) {
@@ -267,18 +266,14 @@ public class TransducerListener extends JDialog {
         }
         
         deviceBox.addActionListener(new TransducerBoxesListener(1, deviceBox));
-/*         deviceBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    JComboBox cb = (JComboBox)e.getSource();
-                    updateLabels(1, cb);
-                }
-            }); */
+//         deviceBox.addActionListener(new ActionListener() {
+//                public void actionPerformed(ActionEvent e) {
+//                    JComboBox cb = (JComboBox)e.getSource();
+//                    updateLabels(1, cb);
+//                }
+//            });
     }
 
-    /**
-     * TODO
-     * @param devSel
-     */
     private void setLocationBox(int devSel) {
         HashMap<Integer, String> locations =
             readFile("/SignalTypes/locations.txt");
@@ -304,10 +299,8 @@ public class TransducerListener extends JDialog {
                 line = in.readLine();
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         if (!locPriStore.isEmpty()) {
@@ -362,13 +355,12 @@ public class TransducerListener extends JDialog {
     }
     
     /**
-     * TODO
      * Fangping, 08/10/2010
      */
     private class TransducerBoxesListener implements ActionListener {
         private int option;
-        private JComboBox box;
-        TransducerBoxesListener(int opt, JComboBox bx) {
+        private JComboBox<String> box;
+        TransducerBoxesListener(int opt, JComboBox<String> bx) {
             option = opt; box = bx;
         }
         public void actionPerformed(ActionEvent e) {
@@ -376,9 +368,6 @@ public class TransducerListener extends JDialog {
         }
     }
 
-    /**
-     * TODO
-     */
     private void visualize() {
         this.setTitle("Customize Transducer Type");
         setLogo();
@@ -387,41 +376,32 @@ public class TransducerListener extends JDialog {
         this.setResizable(false);
     }
 
-    /**
-     * TODO
-     * @param loc
-     * @return
-     */
     private HashMap<Integer, String> readFile(String loc) {
         HashMap<Integer, String> ret = new HashMap<Integer, String>();
         ret.put(0, "");
         try {
             InputStream is = this.getClass().getResourceAsStream(loc);
+            // test: is == null  through test
             BufferedReader in = new BufferedReader(new InputStreamReader(is)); 
 
-            String line = in.readLine();
-            while (line != null) {
-                String[] delimited = line.split(",");
-                ret.put(Integer.parseInt(delimited[0]),
-                        delimited[1].substring(1, delimited[1].length() - 1));
-                line = in.readLine();
+            try {
+            	String line = in.readLine();
+            	while (line != null) {
+            		String[] delimited = line.split(",");
+            		ret.put(Integer.parseInt(delimited[0]), delimited[1].substring(1, delimited[1].length() - 1));
+            		line = in.readLine();
+            	}
+            } finally {
+            	in.close(); // wei wang, 2014-7-22
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return ret;
     }
     
-    /**
-     * TODO
-     * @param loc
-     * @return
-     */
     private HashMap<String, Integer> revHReadFile(String loc) {
         HashMap<String, Integer> ret = new HashMap<String, Integer>();
         ret.put("", 0);
@@ -436,10 +416,8 @@ public class TransducerListener extends JDialog {
                 line = in.readLine();
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -447,10 +425,8 @@ public class TransducerListener extends JDialog {
     }
     
     /**
-     * create the main panel
-     * Fangping, 08/09/2010
-     * TODO
-     * @return
+     * Creates the main panel
+     * @author Fangping, 08/09/2010
      */
     private JPanel createMainPanel() {
         FormLayout layout = new FormLayout(
@@ -479,9 +455,6 @@ public class TransducerListener extends JDialog {
         return mainPanel;      
     }
 
-    /**
-     * TODO
-     */
     private void setDialogLayout() {
 
 /*         JPanel specPanel = new JPanel(new GridLayout(5, 1));
@@ -517,12 +490,12 @@ public class TransducerListener extends JDialog {
     }
 
     /**
-     * TODO
-     * @param label
-     * @param cBox
-     * @return
+     * Creates a label with a combobox
+     * @param label the label
+     * @param cBox the combobox
+     * @return the panel created
      */
-    public JPanel createPanel(JLabel label, JComboBox cBox) {
+    public JPanel createPanel(JLabel label, JComboBox<String> cBox) {
 
         JPanel selectionPanel = new JPanel();
         selectionPanel.add(label);
@@ -532,8 +505,8 @@ public class TransducerListener extends JDialog {
     }
 
     /**
-     * TODO
-     * @return
+     * Creates the control panel, with finish and cancel button
+     * @return the control panel created
      */
     public JPanel createControlPanel() {
         JPanel controlPanel = new JPanel();
@@ -547,8 +520,8 @@ public class TransducerListener extends JDialog {
     }
 
     /**
-     * TODO
-     * @return
+     * Creates the tip panel
+     * @return the tip panel created
      */
     public JPanel createTipPanel() {
         JPanel tipPanel = new JPanel();
@@ -556,8 +529,7 @@ public class TransducerListener extends JDialog {
         tipPanel.setPreferredSize(new Dimension(dialogWidth, 40));
         
         String title = "Customize transducer signal type. Start with selecting procedure.";
-        JLabel tipLabel =
-            new JLabel(title, JLabel.LEFT);
+        JLabel tipLabel = new JLabel(title, JLabel.LEFT);
         tipLabel.setHorizontalAlignment(JLabel.LEADING);
         tipPanel.add(tipLabel);
         tipPanel.setBackground(new Color(255, 240, 188));
@@ -566,12 +538,7 @@ public class TransducerListener extends JDialog {
         return tipPanel;
     }
 
-    /**
-     * TODO
-     * @param part
-     * @param cb
-     */
-    private void updateLabels(int part, JComboBox cb) {        
+    private void updateLabels(int part, JComboBox<String> cb) {        
         
         aFinalString[part] = (String)cb.getSelectedItem(); 
         /*
@@ -619,15 +586,14 @@ public class TransducerListener extends JDialog {
     }
 
     /**
-     * TODO
+     * A finish button listener
      */
     class FinishButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            // TODO Auto-generated method stub
             String value = finalValueLabel.getText();
-            if (value.length() > 80){
+            if (value.length() > 80) {
                 JOptionPane.showMessageDialog(null,
                              "Transducer label is longer than 80 characters. Label will be truncated.",
                              "Transducer Label Too Long",
@@ -642,7 +608,7 @@ public class TransducerListener extends JDialog {
     } //end of FinishButtonListener class
 
     /**
-     * TODO
+     * A cancel button list
      */
     class CancelButtonListener implements ActionListener {
 
@@ -652,7 +618,7 @@ public class TransducerListener extends JDialog {
     }
 
     /**
-     * TODO	
+     * A cancel action
      */
     class CancelAction extends AbstractAction {
         public void actionPerformed(ActionEvent ev) {
@@ -660,14 +626,10 @@ public class TransducerListener extends JDialog {
         }
     }
 
-    /**
-     * TODO
-     */
     private void setLogo() {
         BufferedImage image = null;
         try {
-            image =
-                    ImageIO.read(this.getClass().getResource("/icon/mimilogo.png"));
+            image = ImageIO.read(this.getClass().getResource("/icon/mimilogo.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

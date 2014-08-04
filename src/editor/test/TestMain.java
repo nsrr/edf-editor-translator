@@ -4,6 +4,10 @@ import editor.Main;
 import translator.utils.Keywords;
 import translator.utils.Vendor;
 
+/**
+ * A test case for Main GUI, Translator, and Validator
+ * Using hard coded file path
+ */
 public class TestMain {
 
 	public static void main(String[] args) throws Exception {
@@ -14,7 +18,7 @@ public class TestMain {
 	}
 	
 	/**
-	 * TODO
+	 * Test for Main GUI
 	 * @throws Exception
 	 */
 	private static void testMainGUI() throws Exception {
@@ -23,7 +27,7 @@ public class TestMain {
 	}
 	
 	/**
-	 * TODO
+	 * Test for Validator
 	 * @throws Exception
 	 */
 	private static void testValidator() throws Exception {
@@ -40,7 +44,7 @@ public class TestMain {
 	}
 	
 	/**
-	 * TODO
+	 * Test for Translator
 	 * @throws Exception
 	 */
 	private static void testTranslator() throws Exception {

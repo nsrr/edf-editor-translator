@@ -2,27 +2,24 @@ package editor;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.io.File;
-import java.util.LinkedList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JTabbedPane;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ColorUIResource;
 
+/**
+ * An EDF tabbed pane for holding different header table
+ */
 @SuppressWarnings("serial")
 public class EDFTabbedPane extends JTabbedPane {
     
     Boolean primaryTabsOpened = false;
     
     /**
-     * TODO
+     * Default constructor for EDFTabbedPane
      */
     public EDFTabbedPane() {
         super();
@@ -30,84 +27,82 @@ public class EDFTabbedPane extends JTabbedPane {
     }
     
     /**
-     * TODO
+     * Customizes the look of this tabbed pane
      */
     private void setdisplay() {
         this.setPreferredSize(new Dimension(2*MainWindow.MAINWINDOW_DLG_WIDTH/3, 2*MainWindow.MAINWINDOW_DLG_WIDTH/5));
         this.setMaximumSize(new Dimension(2*MainWindow.MAINWINDOW_DLG_WIDTH/3, 2*MainWindow.MAINWINDOW_DLG_WIDTH/5));
         this.setOpaque(true);       
         //this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);       
-        //customizeAdvancedUI();
-        
+        //customizeAdvancedUI();        
     }
     
     /**
-     * TODO
+     * @deprecated
      */
     @SuppressWarnings("unused")
 	private void customizeAdvancedUI(){
         //BasicTabbedPaneUI ui = (BasicTabbedPaneUI) this.getUI();      
         
-        /*         UIManager.put("TabbedPane.lightHighlight", UIManager.get("TabbedPane.background") );
-        UIManager.put("TabbedPane.darkShadow", UIManager.get("TabbedPane.background") );
-        UIManager.put("TabbedPane.shadow", UIManager.get("TabbedPane.background") ); */
+//        UIManager.put("TabbedPane.lightHighlight", UIManager.get("TabbedPane.background") );
+//        UIManager.put("TabbedPane.darkShadow", UIManager.get("TabbedPane.background") );
+//        UIManager.put("TabbedPane.shadow", UIManager.get("TabbedPane.background") );
     }
 
     /**
-     * TODO
-     * @param tabPlacement
-     * @return
+     * Returns insets of the content border
+     * @param tabPlacement tab placement indicator
+     * @return Insets of the tabbed-pane content border
      */
     protected Insets getContentBorderInsets(int tabPlacement) {
         return new Insets(0, 0, 0, 0);
     }
 
     /**
-     * TODO
-     * @param g
-     * @param tabPlacement
-     * @param selectedIndex
+     * Paints content border using tab placement indicator and selected tab index
+     * @param g the Graphics context in which to paint
+     * @param tabPlacement tab placement indicator
+     * @param selectedIndex selected tab index
      */
-    protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {
-    }
+    protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {}
 
       
     /**
-     * TODO
-     * @param masterFileOfNode
-     * @return
+     * Returns the index of this tab with a master file
+     * @param masterFileOfNode the master file of this tab
+     * @return the index of this tab
      */
     public int getTabIndexWithMasterFile(File masterFileOfNode) {
         return Utility.getTabIndexofMasterFile(masterFileOfNode);         
     }
     
     /**
-     * TODO
-     * @param mFile
+     * Sets the selected tab index using the master file of this tab
+     * @param mFile the master file of this tab
      */
-    public void setVisibleofTabWithMasterFile(File mFile) {
+    public void setVisibleOfTabWithMasterFile(File mFile) {
         int tabIndex = this.getTabIndexWithMasterFile(mFile);
         this.setSelectedIndex(tabIndex);
     }
 
     /**
-     * TODO
-     * @param primaryTabsOpened
+     * Sets the primary tab opened status
+     * @param primaryTabsOpened true to set the primary tab is opened
      */
     public void setPrimaryTabsOpened(Boolean primaryTabsOpened) {
         this.primaryTabsOpened = primaryTabsOpened;
     }
 
     /**
-     * TODO
-     * @return
+     * Tests if the primary tab is opened
+     * @return true if the primary tab is opened
      */
     public Boolean isPrimaryTabsOpened() {
         return primaryTabsOpened;
     }
     
-    //for gradient background
-    /* (non-Javadoc)
+    /**
+     * For gradient background
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     @Override

@@ -1,6 +1,5 @@
 package editor;
 
-
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
@@ -25,11 +24,13 @@ import javax.swing.JScrollPane;
 import table.EDFTable;
 import table.ESATemplateTable;
 
-
+/**
+ * Creates and sets up the layout of an ESA template table
+ */
+@SuppressWarnings("serial")
 public class ESATemplatePane extends BasicEDFPane {
 
     ESATemplateTable esaTemplateTable;
-
     private static long uid = 0;
     private long pid;
 
@@ -40,7 +41,7 @@ public class ESATemplatePane extends BasicEDFPane {
     private Font oldFont = MainWindow.tabPane.getFont();
 
     /**
-     * TODO
+     * Default ESATemplatePane used for constructing a new ESATemplatePane and adding corresponding listeners
      */
     public ESATemplatePane() {
         super();
@@ -56,9 +57,9 @@ public class ESATemplatePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
-     * @param esaHeader
-     * @param istemplate
+     * Creates the ESATemplatePane using an ESAHeader
+     * @param esaHeader an ESAHeader used to construct this ESATemplatePane
+     * @param istemplate true to construct this pane as template
      */
     public ESATemplatePane(ESAHeader esaHeader, boolean istemplate) {
         super();
@@ -76,7 +77,7 @@ public class ESATemplatePane extends BasicEDFPane {
     }
 
     /**
-     *  customize the table's cell editor, renderer, and so on
+     *  Customizes the table's cell editor, renderer, and so on
      */
     public void addListeners() {
         esaTemplateTable.addMouseMotionListener(new CellMouseListener());
@@ -84,7 +85,7 @@ public class ESATemplatePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
+     * Creates the file path label to show the file path
      */
     private void createFilePathLabel() {
         String filename;
@@ -107,8 +108,8 @@ public class ESATemplatePane extends BasicEDFPane {
 
 
     /**
-     * TODO
-     * @return table panel
+     * Sets up the pane for this ESATemplateTable
+     * @return table panel the ESATemplateTable panel
      */
     public JPanel createTablePane() {
         FormLayout layout = new FormLayout("f:p:g:", "f:p:g");
@@ -127,7 +128,7 @@ public class ESATemplatePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
+     * Sets up the layout
      */
     public void setupLayout() {
         FormLayout layout =
@@ -142,7 +143,7 @@ public class ESATemplatePane extends BasicEDFPane {
     }
     
     /**
-     * TODO
+     * Creates the show/hide check box
      */
     private void createShowHideCheckBox() {
         JCheckBox cbox;
@@ -156,7 +157,7 @@ public class ESATemplatePane extends BasicEDFPane {
     }
     
     /**
-     * TODO
+     * A listener for showing or hiding the immutable fields of this template table
      */
     class showHideListener implements ActionListener {
         private boolean selected;
@@ -168,7 +169,7 @@ public class ESATemplatePane extends BasicEDFPane {
         }
         
         /**
-         * TODO
+         * Action performed when the check box is selected
          */
         private void performActions() {
             if (selected)
@@ -179,55 +180,55 @@ public class ESATemplatePane extends BasicEDFPane {
     }
     
     /**
-     * TODO
-     * @param active
+     * Sets up the check box status
+     * @param active if true then the check box is selected 
      */
-    private void setupCheckBoxStatus(boolean active){
+    private void setupCheckBoxStatus(boolean active) {
         allCellsShownCbox.setSelected(active);
         setAllCellsShown(active);
     }
 
     /**
-     * TODO
-     * @param esaTemplateTable
+     * Sets the ESATemplateTable
+     * @param esaTemplateTable the ESATemplateTable to be used
      */
     public void setEsaTemplateTable(ESATemplateTable esaTemplateTable) {
         this.esaTemplateTable = esaTemplateTable;
     }
 
     /**
-     * TODO
-     * @return
+     * Gets the ESATemplate table
+     * @return the ESATemplate table
      */
     public ESATemplateTable getEsaTemplateTable() {
         return esaTemplateTable;
     }
 
     /**
-     * TODO
-     * @param myPid
+     * Sets the pid field
+     * @param myPid the pid
      */
     public void setPid(long myPid) {
         pid = myPid;
     }
 
     /**
-     * TODO
-     * @return
+     * Gets the pid
+     * @return the pid
      */
     public long getPid() {
         return pid;
     }
 
     /**
-     * TODO
+     * Increases the static uid field by one
      */
     public static void incrementUid() {
         uid++;
     }
 
     /**
-     * TODO
+     * Constructs an ESAHeader using this template table
      * @return ESAHeader which can be used when saving or applyint template
      * Fangping, 02/26/2010
      */
@@ -238,7 +239,7 @@ public class ESATemplatePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
+     * A mouse clicked listener
      */
     private class CellMouseClickedListener implements MouseListener {
 
@@ -258,7 +259,7 @@ public class ESATemplatePane extends BasicEDFPane {
          */
         @Override
         public void mouseEntered(MouseEvent e) {
-            // TODO Auto-generated method stub
+            // 
 
         }
 
@@ -275,7 +276,7 @@ public class ESATemplatePane extends BasicEDFPane {
          */
         @Override
         public void mousePressed(MouseEvent e) {
-            // TODO Auto-generated method stub
+            // 
 
         }
 
@@ -284,13 +285,13 @@ public class ESATemplatePane extends BasicEDFPane {
          */
         @Override
         public void mouseReleased(MouseEvent e) {
-            // TODO Auto-generated method stub
+            // 
 
         }
     }
 
     /**
-     * TODO
+     * A mouse listener responde to mouse drag event
      */
     private class CellMouseListener implements MouseMotionListener {
 

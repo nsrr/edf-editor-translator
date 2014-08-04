@@ -4,59 +4,62 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+/**
+ * EDF file header, consists of EIAHeader and ESA header
+ */
 public class EDFFileHeader {
 
     private EIAHeader eiaHeader;
     private ESAHeader esaHeader;
 
     /**
-     * TODO
+     * Default constructor
      */
     public EDFFileHeader() {
         super();
     }
 
     /**
-     * header saving options.
+     * Header saving options.
      */
+    // Consider using enum, wei wang, 2014-7-16
     protected static final int SAVE_EIA_ONLY = 0;
     protected static final int SAVE_ESA_ONLY = 1;
     protected static final int SAVE_EIA_ESA_BOTH = 2;
 
     /**
-     * TODO
-     * @param raf
-     * @param edfFile
-     * @param istemplate
+     * Constructs EDFFileHeader using RandomAccessFile, EDF file name and whether or not it is a template	 
+     * @param raf the file to be read
+     * @param edfFile the host EDF file
+     * @param istemplate true if this is a template
      */
     public EDFFileHeader(RandomAccessFile raf, File edfFile, boolean istemplate) {
         try {
             eiaHeader = new EIAHeader(raf, edfFile);
             
             if (edfFile.getAbsolutePath().indexOf(".eia") == -1) {
-                int numberOfChannels =
-                    Integer.parseInt(eiaHeader.getAttributeValueAt(EIA.NUMBER_OF_SIGNALS)); //2.
+                int numberOfChannels = Integer.parseInt(eiaHeader.getAttributeValueAt(EIA.NUMBER_OF_SIGNALS)); //2.
                 esaHeader = new ESAHeader(raf, edfFile, numberOfChannels, istemplate); //3.
             }
-
             raf.close(); //4.
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } //1.
     }
 
-
     /**
-     * TODO
-     * @param raf the Random AccessFile for saving data in tables
-     * Usage: used to save the EDFHeader, not including the signal  data body.
-     * Algorithm:
-     * 1. save EIA Header to disk
-     * 2. save ESA Headers to disk
-     * 3. close the file accessor
+     * Saves both EIA and ESA header to disk. Assuming EIA, ESA header are not template and EIA header not existed before 
+     * Used to save the EDFHeader, not including the signal data body.
+     * @param raf the Random AccessFile for saving data in tables 
+     * @param file the file to store the header. the file must conform to raf 
+     * @param saveOption save according to save_options provided
+     * @throws IOException IOException
      */
     public void saveToDisk(RandomAccessFile raf, File file, int saveOption) throws IOException {
+//      Algorithm:
+//      1. save EIA Header to disk
+//      2. save ESA Headers to disk
+//      3. close the file accessor
         switch (saveOption) {
         case SAVE_EIA_ONLY:
             this.eiaHeader.saveToDisk(raf, file); //1.
@@ -84,24 +87,24 @@ public class EDFFileHeader {
 
     
     /**
-     * TODO
-     * @param eiaHeader
+     * Sets EIAHeader using an EIHeader
+     * @param eiaHeader the EIAHeader to set
      */
     public void setEiaHeader(EIAHeader eiaHeader) {
         this.eiaHeader = eiaHeader;
     }
 
     /**
-     * TODO
-     * @return
+     * Returns the EIAHeader
+     * @return the EIAHeader of this EDFFileHeader
      */
     public EIAHeader getEiaHeader() {
         return eiaHeader;
     }
 
     /**
-     * TODO
-     * @param esaHeader
+     * Sets ESAHeader using an ESAHeader
+     * @param esaHeader the ESAHeader to set
      */
     public void setEsaHeader(ESAHeader esaHeader) {
         this.esaHeader = esaHeader;
@@ -109,8 +112,8 @@ public class EDFFileHeader {
 
 
     /**
-     * TODO
-     * @return
+     * Returns the ESAHeader
+     * @return the ESAHeader of this EDFFileHeader
      */
     public ESAHeader getEsaHeader() {
         return esaHeader;

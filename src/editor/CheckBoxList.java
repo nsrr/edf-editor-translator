@@ -20,36 +20,46 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-
-public class CheckBoxList extends JList {
+/**
+ * A customized JList containing items of check boxes 
+ */
+@SuppressWarnings("serial")
+public class CheckBoxList extends JList<JCheckBox> {
+	
+	////////////////////////////////////////////////////////////////////////////////////////
+	// ListModel to ListModel<JCheckBox>; DefaultListModel to DefaultListModel<JCheckBox> //
+	// JList to JList<JCheckBox>, AbstractListModel to AbstractListModel<ListItem<T>> 	  //
+	// ListCellRenderer to ListCellRenderer<Object>, JList to JList<?>  				  //
+	// AbstractListModel to AbstractListModel<ListItem<T>>								  //
+	// by wei wang, 2014-7-15														      //
+	////////////////////////////////////////////////////////////////////////////////////////
 
     protected static Border noFocusBorder = new EmptyBorder(1, 4, 1, 4);
-    DefaultListModel model;
+    DefaultListModel<JCheckBox> model;
 
     /**
-     * TODO
+     * Default constructor for CheckBoxList
      */
     public CheckBoxList() {
         setCellRenderer(new CellRenderer());
         addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    int index = locationToIndex(e.getPoint());
-                    if (index != -1) {
-                        JCheckBox checkbox =
-                            (JCheckBox)getModel().getElementAt(index);
-                        checkbox.setSelected(!checkbox.isSelected());
-                        checkbox.setText(checkbox.getText());
-                        revalidate();
-                        repaint();
-                    }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int index = locationToIndex(e.getPoint());
+                if (index != -1) {
+                    JCheckBox checkbox = (JCheckBox)getModel().getElementAt(index);
+                    checkbox.setSelected(!checkbox.isSelected());
+                    checkbox.setText(checkbox.getText());
+                    revalidate();
+                    repaint();
                 }
-            });
+            }
+        });
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     //Fangping, 08/23/2010
-    /* (non-Javadoc)
+    /**
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     @Override
@@ -61,11 +71,11 @@ public class CheckBoxList extends JList {
     } 
 
     /**
-     * TODO
-     * @param checkBox
+     * Adds a check box to this list
+     * @param checkBox the new check box to be added
      */
     public void addCheckbox(JCheckBox checkBox) {
-        ListModel currentList = this.getModel();
+		ListModel<JCheckBox> currentList = (ListModel<JCheckBox>)this.getModel();
         int currentSize = currentList.getSize();
         JCheckBox[] newList = new JCheckBox[currentSize + 1];
         for (int i = 0; i < currentSize; i++) {
@@ -76,11 +86,11 @@ public class CheckBoxList extends JList {
     }
 
     /**
-     * TODO
-     * @param checkBox
+     * Appends a check box to this list, same as method: {@link #addCheckbox(JCheckBox)}
+     * @param checkBox the new check box to be appended
      */
-    public void appendCheckbox(JCheckBox checkBox) {
-        ListModel currentList = this.getModel();
+    public void appendCheckbox(JCheckBox checkBox) {    	
+        ListModel<JCheckBox> currentList = (ListModel<JCheckBox>)this.getModel();
         int currentSize = currentList.getSize();
         JCheckBox[] newList = new JCheckBox[currentSize + 1];
         for (int i = 0; i < currentSize; i++) {
@@ -91,34 +101,34 @@ public class CheckBoxList extends JList {
     }
 
     /**
-     * TODO
-     * @param index
-     * @return
+     * Gets the check box at specific index
+     * @param index the index
+     * @return the check box at index 'index'
      */
     public JCheckBox getCheckBox(int index) {
-        ListModel currentList = this.getModel();
+        ListModel<JCheckBox> currentList = (ListModel<JCheckBox>)this.getModel();
         JCheckBox checkBox = (JCheckBox)currentList.getElementAt(index);
 
         return checkBox;
     }
 
     /**
-     * TODO
-     * @param index
-     * @param selected
+     * Sets the specified check box selected
+     * @param index the index of the check box to be set selected
+     * @param selected true to select the sepcified check box
      */
     public void setCheckBoxSelected(int index, Boolean selected) {
-        ListModel currentList = this.getModel();
+    	ListModel<JCheckBox> currentList = (ListModel<JCheckBox>)this.getModel();
         JCheckBox checkBox = (JCheckBox)currentList.getElementAt(index);
         checkBox.setSelected(selected);
     }
 
     /**
-     * TODO
-     * @param selected
+     * Sets all check box selected according to the parameter
+     * @param selected true to select all checkbox, false otherwise
      */
     public void SetAllCheckBoxSelected(Boolean selected) {
-        ListModel currentList = this.getModel();
+    	ListModel<JCheckBox> currentList = (ListModel<JCheckBox>)this.getModel();
         int size = currentList.getSize();
         for (int i = 0; i < size; i++) {
             setCheckBoxSelected(i, selected);
@@ -126,12 +136,13 @@ public class CheckBoxList extends JList {
     }
 
     /**
-     * TODO
-     * @return
+     * Returns a list of the index of the selected check box
+     * @return the index list
      */
     public ArrayList<Integer> getSelectedCheckBox() {
         ArrayList<Integer> selectedIdx = new ArrayList<Integer>(10);
-        int looper = 0;
+        @SuppressWarnings("unused")
+		int looper = 0;
         int count = this.getModel().getSize();
         for (int i = 0; i < count; i++) {
             if (this.getCheckBox(i).isSelected()) {
@@ -144,44 +155,38 @@ public class CheckBoxList extends JList {
     }
 
     /**
-     * @author wei
-     * TODO
+     * A cell renderer for this CheckBoxList
      */
-    protected class CellRenderer implements ListCellRenderer {
-        public Component getListCellRendererComponent(JList list, Object value,
+    protected class CellRenderer implements ListCellRenderer<Object> {
+        public Component getListCellRendererComponent(JList<?> list, Object value,
                                                       int index,
                                                       boolean isSelected,
                                                       boolean cellHasFocus) {
             JCheckBox checkbox = (JCheckBox)value;
-            //checkbox.setBackground(isSelected ? getSelectionBackground() :
-             //                      getBackground());
-           // checkbox.setForeground(isSelected ? getSelectionForeground() :
-           //                        getForeground());
+            // checkbox.setBackground(isSelected ? getSelectionBackground() :
+            // getBackground());
+            // checkbox.setForeground(isSelected ? getSelectionForeground() :
+            // getForeground());
             checkbox.setEnabled(isEnabled());
             checkbox.setFont(getFont());
             checkbox.setFocusable(true);
             checkbox.setFocusPainted(true);
             checkbox.setBorderPainted(true);
-            checkbox.setBorder(isSelected ?
-                               UIManager.getBorder("List.focusCellHighlightBorder") :
-                               noFocusBorder);
-
+            checkbox.setBorder(isSelected ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder);
             repaint();
-
             return checkbox;
         }
     }
     
     /**
-     * @author wei
-     * TODO
-     * @param <T>
+     * The model of this CheckBoxList
+     * @param <T> the data type
      */
-    class CheckBoxListModel<T> extends AbstractListModel {
+    class CheckBoxListModel<T> extends AbstractListModel<ListItem<T>> {
+    	
             private LinkedList<ListItem<T>> items = new LinkedList<ListItem<T>>(); 
      
             /**
-             * TODO
              * Initializes a new CheckBoxListModel
              * @param items The items to add to the list
              */
@@ -243,18 +248,21 @@ public class CheckBoxList extends JList {
         }
     
     /**
-     * TODO
-     * @param <T>
+     * A list item used as this check box list model data
+     * @param <T> the type of data to be stored
      */
     class ListItem<T> {
         protected T dataItem;
         protected boolean selected;
 
+        /**
+         * Constructor using the data item and a boolean flag
+         * @param dataItem the data to be stored
+         * @param selected true indicates the item stored is selected
+         */
         public ListItem(T dataItem, boolean selected) {
             this.dataItem = dataItem;
             this.selected = selected;
         }
     }
 }
-
-

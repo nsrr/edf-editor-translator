@@ -31,10 +31,12 @@ import table.ESATable;
 
 
 /**
- *  MouseListener is implemented to support popup menu
+ * A {@code TaskTree} represents the tree structure of related EDF, EIA and ESA files shown in the Task Navigator. 
+ * MouseListener is implemented to support popup menu
  */
 @SuppressWarnings("serial")
 public class TaskTree extends JTree implements TreeSelectionListener, MouseListener {
+	// Changed Enumeration to Enumeration<?>, wei wang, 2014-7-21
 	
     private static JPopupMenu rootNodePopup = new JPopupMenu();
     private static JPopupMenu leafNodePopup = new JPopupMenu();
@@ -44,7 +46,7 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     private static JMenuItem excludeMenu = new JMenuItem("Exclude file from task");
     private static JMenuItem deleteMenu = new JMenuItem("Delete file");
     private static JMenuItem addFilesMenu = new JMenuItem("Add files");
-    //private JMenuItem compareMenu = new JMenuItem("compare with source file");
+    // private JMenuItem compareMenu = new JMenuItem("compare with source file");
     private static JMenuItem newEiaTemplateMenu =  new JMenuItem("New identity template");
     private static JMenuItem openEiaTemplateMenu = new JMenuItem("Open identity template");
     private static JMenuItem extractEiaTemplateMenu = new JMenuItem("Extract identity template");
@@ -78,7 +80,7 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     public static final ImageIcon eiaLeafIcon = new ImageIcon(MainWindow.class.getResource("/icon/Eialeaf.png"));
     public static final ImageIcon esaLeafIcon = new ImageIcon(MainWindow.class.getResource("/icon/Esaleaf.png"));
     
-    //attach listeners
+    // attach listeners
     static {        
         newTaskMenu.addActionListener(new MainWindow.SelectFilesListener());
         closeTaskMenu.addActionListener(new MainWindow.CloseTaskItemListener());
@@ -109,17 +111,17 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
             }
         });     
         
-/*         saveFileMenu.addActionListener(new SaveListener("Save"));
-        saveFileAsMenu.addActionListener(new SaveListener("SaveAs"));
-        saveAllFilesMenu.addActionListener(new SaveListener("SaveAll")); */
+//        saveFileMenu.addActionListener(new SaveListener("Save"));
+//        saveFileAsMenu.addActionListener(new SaveListener("SaveAs"));
+//        saveAllFilesMenu.addActionListener(new SaveListener("SaveAll"));
     }
     
     /**
-     * TODO	 
-     * @param rootNode
-     * @param workingEDFsNode
-     * @param eiaTemplateNode
-     * @param esaTemplateNode
+     * Constructs a {@code TaskTree} using EDFTreeNodes	 
+     * @param rootNode the root node
+     * @param workingEDFsNode the working EDF file node
+     * @param eiaTemplateNode the EIA template file node
+     * @param esaTemplateNode the ESA template file node
      */
     public TaskTree(EDFTreeNode rootNode,
                     EDFTreeNode workingEDFsNode,
@@ -133,11 +135,11 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
-     * @param rootNode
-     * @param workingEDFsNode
-     * @param eiaTemplateNode
-     * @param esaTemplateNode
+     * Initializes the tree nodes using root node and other related nodes
+     * @param rootNode the root EDFTreeNode
+     * @param workingEDFsNode the working EDF file nodes
+     * @param eiaTemplateNode the EIA template file nodes
+     * @param esaTemplateNode the ESA template file nodes
      */
     private void initialzeTreeNodes(EDFTreeNode rootNode,
                     EDFTreeNode workingEDFsNode,
@@ -159,24 +161,24 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
+     * Sets the look and feel of this task tree
      */
     private void setlaf() {
         this.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        this.getModel().addTreeModelListener(new  EDFTreeModelListener());
+        this.getModel().addTreeModelListener(new EDFTreeModelListener());
         this.setShowsRootHandles(true);
         this.putClientProperty("JTree.lineStyle", "Horizontal");
         this.addTreeSelectionListener(this);
         this.addMouseListener(this);  
         this.setEditable(false);
         this.setCellRenderer(new EDFTaskTreeCellRenderer());
-        //expand layer 1 nodes
+        // expand layer 1 nodes
         this.setExpandedState(rootPath, true);
 
     }
     
     /**
-     * TODO
+     * Builds the popup menu for root nodes
      */
     private void buildRootNodePopup() {
         rootNodePopup = new JPopupMenu();
@@ -184,9 +186,9 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
         rootNodePopup.add(closeTaskMenu);
         rootNodePopup.add(addFilesMenu);
         rootNodePopup.addSeparator();
-/*         rootNodePopup.add(saveAllFilesMenu); 
-        saveAllFilesMenu.addActionListener(new SaveListener("SaveAll"));
-        rootNodePopup.addSeparator() ;*/
+//        rootNodePopup.add(saveAllFilesMenu); 
+//        saveAllFilesMenu.addActionListener(new SaveListener("SaveAll"));
+//        rootNodePopup.addSeparator() ;
         rootNodePopup.add(newEiaTemplateMenu);
         rootNodePopup.add(openEiaTemplateMenu);
         rootNodePopup.add(extractEiaTemplateMenu);
@@ -202,7 +204,7 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
+     * Builds the popup menu for leaf nodes
      */
     private void buildLeafNodePopup() {
         leafNodePopup = new JPopupMenu();
@@ -211,12 +213,11 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
         leafNodePopup.add(renameMenu);
         //fileNodePopup.add(addFilesMenu);
         //popup.add(compareMenu);
-/*         leafNodePopup.addSeparator();
-        
-        leafNodePopup.add(saveFileMenu);
-        saveFileMenu.addActionListener(new SaveListener("Save"));
-        leafNodePopup.add(saveFileAsMenu);
-        saveFileAsMenu.addActionListener(new SaveListener("SaveAs")); */
+//        leafNodePopup.addSeparator();
+//        leafNodePopup.add(saveFileMenu);
+//        saveFileMenu.addActionListener(new SaveListener("Save"));
+//        leafNodePopup.add(saveFileAsMenu);
+//        saveFileAsMenu.addActionListener(new SaveListener("SaveAs"));
         leafNodePopup.addSeparator();
         leafNodePopup.add(applyEiaTemplateMenu);
         leafNodePopup.add(applyEsaTemplateMenu);
@@ -224,10 +225,10 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /** 
-     * TODO
-     * this is to override the isPathEditable() method in
+     * This is to override the isPathEditable() method in
      * JTree so that only tree pathes with permission can be
-     * edited
+     * edited.
+     * @param treePath the {@code TreePath} to be tested on
      */ 
     public boolean isPathEditable(TreePath treePath) {
          if (treePath.toString().equals(rootPath.toString()))
@@ -245,16 +246,14 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
         return true;
     }
     
-
     /**
-     * TODO
-     * 1. add file nodes to the parent node;
-     * 2. expand and display the node
-     * @param parentNode
-     * @param files
+     * Adds an array of files to the task tree
+     * @param parentNode the parent tree node
+     * @param files an array of files to be added
      */
-    public void addNodeGroupAt(EDFTreeNode parentNode,
-                               ArrayList<File> files) {
+    public void addNodeGroupAt(EDFTreeNode parentNode, ArrayList<File> files) {
+//      1. add file nodes to the parent node;
+//      2. expand and display the node
         DefaultTreeModel model = (DefaultTreeModel) this.getModel();
         for (int i = 0; i < files.size(); i++) {
             File file = files.get(i);
@@ -270,8 +269,8 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
-     * @param parentNode
+     * Removes child nodes from a given parent node in the task tree
+     * @param parentNode the parent node
      */
     public void removeNodeGroupAt(EDFTreeNode parentNode) {
        
@@ -283,10 +282,10 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO 
-     * this one will be merged with the next one.
-     * @param rootChild
-     * @param file
+     * Adds a new file node at {@code rootChild}.  
+     * This one will be merged with the next one.
+     * @param rootChild the index where to insert the new file node
+     * @param file the file to be added
      */
     public void addFileNodeAt(int rootChild, File file) {
    
@@ -309,10 +308,10 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
-     * @param rootChild
-     * @param file
-     * @param uid
+     * Adds a new file node at {@code rootChild}
+     * @param rootChild the index where to insert the new file node
+     * @param file the file to be added
+     * @param uid the uid of this file
      */
     public void addFileNodeAt(int rootChild, File file, long uid) {
     
@@ -336,14 +335,14 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
 
     /**
-     * TODO
+     * A listener that listens {@code TreeSelectionEvent} and update the UI to reflect the result
      * @param e tree selection event
-     * Algorithm:
-     * 1. aquire the index of the selected file
-     * 2. show the table in the tabbed pane
-     * 3. update the active ESA table in the tabbed pane
      */
     public void valueChanged(TreeSelectionEvent e) {
+//      Algorithm:
+//      1. aquire the index of the selected file
+//      2. show the table in the tabbed pane
+//      3. update the active ESA table in the tabbed pane
         EDFTreeNode selectedNode = (EDFTreeNode)this.getLastSelectedPathComponent();
         if (selectedNode == null)
             return;
@@ -356,7 +355,8 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
          * Fangping, 08/25/2010
          */
         //Object parentNodeInfo = parentNode.getUserObject();
-        Object selectedNodeInfo = selectedNode.getUserObject();
+        @SuppressWarnings("unused")
+		Object selectedNodeInfo = selectedNode.getUserObject();
         
         File masterFile = null;
         
@@ -373,23 +373,21 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
         if (parentNode == MainWindow.eiaTemplateFilesNode) {
             int nodeIndex = parentNode.getIndex(selectedNode);
             masterFile = MainWindow.EIATemplateFiles.get(nodeIndex); 
-            MainWindow.tabPane.setVisibleofTabWithMasterFile(masterFile);
+            MainWindow.tabPane.setVisibleOfTabWithMasterFile(masterFile);
             if (masterFile !=  null)
                 this.outputFileInfoPane(masterFile);
                  //setTextInfoPane(masterFile);
-
             return;
         }
         
         if (parentNode == MainWindow.esaTemplateFilesNode) {
             int nodeIndex = parentNode.getIndex(selectedNode);
             masterFile = MainWindow.ESATemplateFiles.get(nodeIndex);
-            MainWindow.tabPane.setVisibleofTabWithMasterFile(masterFile);
+            MainWindow.tabPane.setVisibleOfTabWithMasterFile(masterFile);
  
             if (masterFile !=  null)
                 outputFileInfoPane(masterFile);
                 //setTextInfoPane(masterFile);
-
             return;
         }        
         
@@ -397,8 +395,8 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
-     * @param file
+     * Outputs file information to {@code fileinfoEdtPane}
+     * @param file the file used to be printed out its information
      */
     private void outputFileInfoPane(File file) {
         MainWindow.fileinfoEdtPane.outputFileInfoWithHtml(file);
@@ -451,38 +449,39 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     } */
     
     /**
-     * TODO
-     * @param tree
-     * @param nodes
-     * @return
+     * Finds the {@code TreePath} from the root node and of depth zero
+     * @param tree the tree to be searched
+     * @param nodes an array of nodes that to be searched from
+     * @return the path of the to be found node
      */
-    private TreePath findByNodes(JTree tree, Object[] nodes) {
+    @SuppressWarnings("unused")
+	private TreePath findByNodes(JTree tree, Object[] nodes) {
         TreeNode root = (TreeNode) tree.getModel().getRoot();
         return findTreePath(tree, new TreePath(root), nodes, 0, false);
     }
     
     /**
-     * TODO
-     * @param tree
-     * @param names
-     * @return
+     * Finds the {@code TreePath} from the root node and of depth zero
+     * @param tree the tree to be searched
+     * @param names an array of names that to be searched from
+     * @return the path of the to be found node
      */
-    private TreePath findByName(JTree tree, String[] names) {
+    @SuppressWarnings("unused")
+	private TreePath findByName(JTree tree, String[] names) {
         TreeNode root = (TreeNode) tree.getModel().getRoot();
         return findTreePath(tree, new TreePath(root), names, 0, false);
     }
 
     /**
-     * TODO
-     * @param tree
-     * @param parent
-     * @param nodes
-     * @param depth
-     * @param byName
-     * @return
+     * Recursively finds path from a parent path
+     * @param tree the tree to be searched
+     * @param parent the parent path
+     * @param nodes an array of nodes containing the path objects
+     * @param depth the index of the node to be found in array {@code nodes}
+     * @param byName true if this search is based on string name
+     * @return the path that contains the path specified by the {@code depth}
      */
-    private TreePath findTreePath(JTree tree, TreePath parent, Object[] nodes,
-                           int depth, boolean byName) {
+    private TreePath findTreePath(JTree tree, TreePath parent, Object[] nodes, int depth, boolean byName) {
         TreeNode node = (TreeNode)parent.getLastPathComponent();
         Object obj = node; // If by name, convert node to a string
         if (byName) {
@@ -493,11 +492,10 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
                 return parent;
             }
             if (node.getChildCount() >= 0) {
-                for (Enumeration e = node.children(); e.hasMoreElements(); ) {
+                for (Enumeration<?> e = node.children(); e.hasMoreElements(); ) {
                     TreeNode n = (TreeNode)e.nextElement();
                     TreePath path = parent.pathByAddingChild(n);
-                    TreePath result =
-                        findTreePath(tree, path, nodes, depth + 1, byName);
+                    TreePath result = findTreePath(tree, path, nodes, depth + 1, byName);
                     if (result != null) {
                         return result;
                     }
@@ -508,15 +506,15 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
-     * @param parent
-     * @param userObject
-     * @return
+     * Gets the index of a node by its name and its parent node
+     * @param parent the parent of the node to return
+     * @param userObject the name of the node to return
+     * @return the index of the node searched
      */
     public int getIndexOfNodeByName(EDFTreeNode parent, Object userObject) {
         int index = 0;
         
-        for (Enumeration e = parent.children(); e.hasMoreElements();) {
+        for (Enumeration<?> e = parent.children(); e.hasMoreElements();) {
             if (userObject.equals(((EDFTreeNode)e.nextElement()).getUserObject()))
                 return index;
             index++;
@@ -526,15 +524,15 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
 
     /**
-     * TODO
-     * @param index
+     * Sets the ESA table visible by selecting a file using the specified index in this task tree
+     * @param index the index of the selected file
      */
     public void setESATableVisible(int index) {
         ArrayList<ESATable> esaTables = MainWindow.iniEsaTables;
           
         ESATable active = esaTables.get(index);
         if (MainWindow.tabPane.isPrimaryTabsOpened()) {
-            MainWindow.tabPane.remove(1);
+            MainWindow.tabPane.remove(1);  // removes existed ESA table
             MainWindow.tabPane.setPrimaryTabsOpened(true);
         }
         
@@ -548,15 +546,14 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
         
         MainWindow.tabPane.insertTab(ft, null, pane, null, 1);
         MainWindow.tabPane.setSelectedIndex(1);         
-        MainWindow.tabPane.setToolTipTextAt(1,  mfile.getPath()); 
+        MainWindow.tabPane.setToolTipTextAt(1, mfile.getPath()); 
               
         MainWindow.setActiveESATableInTabPane(active);
     }
-
       
     /**
-     * TODO
-     * @param nodeName
+     * Removes a node by its name
+     * @param nodeName the node to be removed
      */
     public void removeFileNode(String nodeName) {
                
@@ -572,9 +569,9 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
-     * @param parentIndex
-     * @param uid
+     * Removes a node from the task tree
+     * @param parentIndex the parent of the node to be removed
+     * @param uid the uid of the node
      */
     public void removeFileNode(int parentIndex, long uid) {
         DefaultTreeModel model = (DefaultTreeModel) this.getModel();  
@@ -592,13 +589,15 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
 
 
-    /* (non-Javadoc)
+    /**
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
     public void mouseClicked(MouseEvent e) { //e.getButton() to identify left or right click
 
-        int selRow = this.getRowForLocation(e.getX(), e.getY());
-        TreePath selPath = this.getPathForLocation(e.getX(), e.getY());
+        @SuppressWarnings("unused")
+		int selRow = this.getRowForLocation(e.getX(), e.getY());
+        @SuppressWarnings("unused")
+		TreePath selPath = this.getPathForLocation(e.getX(), e.getY());
 
         BasicEDFPane pane =
             (BasicEDFPane)MainWindow.tabPane.getSelectedComponent();
@@ -615,9 +614,8 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
-     * This is for pop up menu
-     * @param e MourseEvent
+     * This is used for pop up menu
+     * @param e a mouse event 
      */
     public void mousePressed(MouseEvent e) {
     	int row = this.getRowForLocation(e.getX(), e.getY());
@@ -637,7 +635,7 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
         }
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
     public void mouseReleased(MouseEvent e) {
@@ -658,11 +656,9 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
         }
     }
     
-    public void mouseEntered(MouseEvent e) {
-    }
+    public void mouseEntered(MouseEvent e) {}
 
-    public void mouseExited(MouseEvent e) {
-    }
+    public void mouseExited(MouseEvent e) {}
 
     public EDFTreeNode getEiaRootNode() {
         return eiaRootNode;
@@ -683,18 +679,13 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     public void setEsaRootNode(EDFTreeNode esaRootNode) {
         this.esaRootNode = esaRootNode;
     }
-
-//    void valueForPathChanged(TreePath path, Object newValue) {
-//
-//    }
     
     /**
-     * TODO
-     * this is used to support file name change
+     * An EDF tree model listener. This is used to support file name change
      */
     private class EDFTreeModelListener implements TreeModelListener {
         public void treeNodesChanged(TreeModelEvent e) {
-            
+        	//
         }
 
         public void treeNodesInserted(TreeModelEvent e) {
@@ -702,8 +693,7 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
         }
 
         public void treeNodesRemoved(TreeModelEvent e) {
-            //System.out.println("3");
-            
+            //System.out.println("3");            
         }
 
         public void treeStructureChanged(TreeModelEvent e) {
@@ -712,13 +702,13 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
     }
     
     /**
-     * TODO
-     * class to customize tree layout
+     * A class to customize tree layout
      * Fangping, 08/22/2010
      */
     class EDFTaskTreeCellRenderer extends DefaultTreeCellRenderer {
-        /* (non-Javadoc)
-         * @see javax.swing.tree.DefaultTreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
+        /**
+         * @see javax.swing.tree.DefaultTreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, 
+         * java.lang.Object, boolean, boolean, boolean, int, boolean)
          */
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -771,11 +761,11 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
          * Fangping, 08/22/2010
          */
         /**
-         * TODO
-         * @param value
-         * @return
+         * Returns the type of this node represented by the value argument
+         * @param value the tree node to be tested on
+         * @return an integer that represet different type of this tree node. EDF(1), EIA(2), ESA(3)
          */
-        private int getLeafNodeType(Object value){
+        private int getLeafNodeType(Object value) {
             
             EDFTreeNode node = (EDFTreeNode) value;
             EDFTreeNode pnode = (EDFTreeNode) node.getParent();
@@ -799,4 +789,4 @@ public class TaskTree extends JTree implements TreeSelectionListener, MouseListe
         }
     }
 
-}//end of TaskTree class
+} //end of TaskTree class

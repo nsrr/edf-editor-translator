@@ -27,7 +27,11 @@ import validator.fix.ErrorTypes;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+/**
+ * The UI part of the "Fix EDF Header Errors" functionality 
+ */
 public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener{
+	// JList to JList<String>, by wei wang, 2014-7-18
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,21 +39,21 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 	private JLabel err1_Label, err2_Label, err3_Label;
 	private JCheckBox err1_Check, err2_Check, err3_Check;
 	private JButton button;
-	private static JList edf_files;
+	private static JList<String> edf_files;
 	private ArrayList<String> selected_edf_files;
 	private JScrollPane edf_sroll;
 
 	private static ErrorFixTemplatePane _ErrorFixTemplatePane = null;
 
 	/**
-	 * TODO
-	 * @param eiaHeader
-	 * @param msFile
-	 * @return
+	 * Gets the ErrorFixTemplatePane using an EIA header and a master file
+	 * @param eiaHeader not used in this implementation
+	 * @param msFile the form configure file, not used in this implementation
+	 * @return an ErrorFixTemplatePane
 	 */
 	public static ErrorFixTemplatePane getErrorFixTemplatePane(EIAHeader eiaHeader, File msFile) {
 		
-		if (_ErrorFixTemplatePane == null) {
+		if(_ErrorFixTemplatePane == null) {
 			_ErrorFixTemplatePane = new ErrorFixTemplatePane(eiaHeader, msFile);
 		}
 		
@@ -59,9 +63,9 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 	}
 
 	/**
-	 * TODO
-	 * @param eiaHeader
-	 * @param msFile
+	 * Constructor of this ErrorFixTemplatePane using an EIA header and a master file
+	 * @param eiaHeader not used in this implementation
+	 * @param msFile the master file of this pane. Not used in this implementation
 	 */
 	private ErrorFixTemplatePane(EIAHeader eiaHeader, File msFile) {
 
@@ -76,7 +80,9 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 	}
 
 	/**
-	 * TODO
+	 * Creates the related GUI components and 
+	 * attach listeners to the list model and
+	 * the Apply error-fixes button
 	 */
 	private void step1_createGuiComponents() {
 		
@@ -84,7 +90,8 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 		err2_Label = new JLabel("Empty Version Field");
 		err3_Label = new JLabel("Invalid Date/time Separator");
 		
-		Font font = new Font(MainWindow.tabPane.getFont().getName(), MainWindow.tabPane.getFont().getStyle(),MainWindow.tabPane.getFont().getSize() + 2);
+		Font font = new Font(MainWindow.tabPane.getFont().getName(), MainWindow.tabPane.getFont().getStyle(),
+				MainWindow.tabPane.getFont().getSize() + 2);
 		
 		err1_Label.setFont(font);
 		err2_Label.setFont(font);
@@ -101,7 +108,7 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 		err2_Check.setEnabled(false);
 		err3_Check.setEnabled(false);
 		
-		edf_files = new JList();
+		edf_files = new JList<String>();
 		edf_files.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		ListSelectionModel listSelectionModel1 = edf_files.getSelectionModel();
 		listSelectionModel1
@@ -126,32 +133,32 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 	}
 	
 	/**
-	 * TODO
+	 * Creates the layout, default is error1("Swap Physical Max/Min") form
 	 */
 	private void step2_createFormPane() {
 
 		String colSpec = "r:80dlu:n, 4dlu:n, 12dlu:n, 2dlu:n, f:150dlu:n, 4dlu:n, r:120dlu:n, f:p:g";
-		String rowSpec = "4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:35dlu:n, 4dlu:n";
+		String rowSpec = 
+				"4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:35dlu:n, 4dlu:n";
 		FormLayout layout = new FormLayout(colSpec, rowSpec);
 		formPane = new JPanel(layout);
-		formPane.setBorder(BorderFactory.createTitledBorder("Apply Error-fix on Invalid EDF Tables"));CellConstraints cc = new CellConstraints();
+		formPane.setBorder(BorderFactory.createTitledBorder("Apply Error-fix on Invalid EDF Tables"));
+		CellConstraints cc = new CellConstraints();
 
 		formPane.add(err1_Check, cc.xy(1, 2));
 		formPane.add(err1_Label, cc.xy(5, 2));
 
 //		formPane.add(err2_Check, cc.xy(1, 4));
 //		formPane.add(err2_Label, cc.xy(5, 4));
-
 //		formPane.add(err3_Check, cc.xy(1, 6));
 //		formPane.add(err3_Label, cc.xy(5, 6));
 
 		formPane.add(edf_sroll, cc.xyw(2, 14, 6));
-
 		formPane.add(button, cc.xyw(5, 16, 2));
 	}
 
 	/**
-	 * TODO
+	 * Sets up the layout
 	 */
 	public void step3_setupLayout() {
 		FormLayout layout = new FormLayout(
@@ -166,20 +173,20 @@ public class ErrorFixTemplatePane extends BasicEDFPane implements ActionListener
 	}
 	
 	/**
-	 * TODO
-	 * @param msFile
+	 * Loads form configure file, not implemented
+	 * @param msFile the form configure file, to be implemented
 	 */
 	private void step4_loadFromConfigureFile(File msFile){
 		
 	}
 	
 	/**
-	 * TODO
+	 * Loads source EDF files into local variable {@link ErrorFixTemplatePane#edf_files}
+	 * , and display the working directory to console
 	 */
-	@SuppressWarnings("unchecked")
 	private static void step5_loadEdfFileList() {
 		
-		if (MainWindow.getWkEdfFiles()==null)
+		if (MainWindow.getWkEdfFiles() == null)
 			return;
 		
 		int i = 0;

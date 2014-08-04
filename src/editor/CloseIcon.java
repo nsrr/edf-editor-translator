@@ -6,12 +6,11 @@ import java.awt.Graphics;
 import javax.swing.Icon;
 
 /**
- * TODO
+ * A close icon
  */
 class CloseIcon implements Icon {
 
 	/**
-	 * TODO
 	 * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
 	 */
 	public void paintIcon(Component c, Graphics g, int x, int y) {

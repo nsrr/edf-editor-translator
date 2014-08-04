@@ -29,11 +29,11 @@ public class ESA {
     	"prefiltering", "number of samples", "reserved" 
     };
     
-    //ESA attribute names + corrected label field
+    // ESA attribute names + corrected label field
     protected final static String[] esaTemplateAttributes = {
-    	"label", "corrected label", "transducer type", "physical dimension", "physical minimum",
-        "physical maximum", "digital minimum", "digital maximum",
-        "prefiltering", "number of samples", "reserved" 
+    	"label", "corrected label", "transducer type", "physical dimension", 
+    	"physical minimum", "physical maximum", "digital minimum", 
+    	"digital maximum", "prefiltering", "number of samples", "reserved" 
     };
     
     // array of space sizes to be stored in file for ESA attributes
@@ -96,7 +96,7 @@ public class ESA {
 
     /**
      * Note: the returned value may have better length than expected when <BR>
-     * myString.length() > length. This is definitely a shortback
+     * myString.length() larger than length. This is definitely a shortback
      * Note: this method is the same as the one in the EIA class.
      * @param myString string to be regularied
      * @param length the expected length

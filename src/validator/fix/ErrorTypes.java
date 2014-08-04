@@ -1,7 +1,7 @@
 package validator.fix;
 
 /**
- * Error types
+ * Error types used in validating EDF files
  */
 public enum ErrorTypes {
 	phyMaxMin, 

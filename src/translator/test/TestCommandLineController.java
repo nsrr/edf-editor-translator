@@ -5,7 +5,7 @@ import translator.utils.Keywords;
 import translator.utils.Vendor;
 
 /**
- * TODO
+ * A test class for CommandLineController class
  */
 public class TestCommandLineController {
 

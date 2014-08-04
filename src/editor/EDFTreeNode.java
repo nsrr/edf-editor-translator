@@ -4,6 +4,9 @@ import java.io.File;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+/**
+ * A tree node representing an EDF file
+ */
 @SuppressWarnings("serial")
 public class EDFTreeNode extends DefaultMutableTreeNode {
 	
@@ -25,7 +28,7 @@ public class EDFTreeNode extends DefaultMutableTreeNode {
     }
     
     /**
-     * Construct an EDF tree node using a host file
+     * Constructs an EDF tree node using a host file
      * @param file the file this node pointed to 
      */
     public EDFTreeNode(File file){
@@ -34,7 +37,7 @@ public class EDFTreeNode extends DefaultMutableTreeNode {
     }
     
     /**
-     * Construct an EDF tree node with a name
+     * Constructs an EDF tree node with a name
      * @param name the name of this tree node
      */
     public EDFTreeNode(String name){
@@ -42,23 +45,23 @@ public class EDFTreeNode extends DefaultMutableTreeNode {
     }
 
     /**
-     * Set the uid for this node
-     * @param uid
+     * Sets the uid for this node
+     * @param uid the uid to be set
      */
     public void setUid(long uid) {
         this.uid = uid;
     }
 
     /**
-     * Get the uid for this node
-     * @return
+     * Gets the uid for this node
+     * @return the uid of this node
      */
     public long getUid() {
         return uid;
     }
 
     /**
-     * Set the host file of this tree node
+     * Sets the host file of this tree node
      * @param hostFile the host file
      */
     public void setHostFile(File hostFile) {

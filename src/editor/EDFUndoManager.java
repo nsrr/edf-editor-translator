@@ -9,6 +9,9 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
+/**
+ * A undo manager used for EDF editing
+ */
 @SuppressWarnings("serial")
 public class EDFUndoManager extends UndoManager {
     protected Action undoAction;

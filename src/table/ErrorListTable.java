@@ -24,6 +24,9 @@ import editor.Utility;
 import editor.WorkingTablePane;
 
 
+/**
+ * A JTable that displays error messages and can be clicked to select corresponding cell
+ */
 @SuppressWarnings("serial")
 public class ErrorListTable extends JTable {
 
@@ -51,7 +54,7 @@ public class ErrorListTable extends JTable {
     public static final int maxViewableRows = 10;  
     
     /**
-     * TODO
+     * Default constructor for this ErrorListTable
      */
     public ErrorListTable() {
         super();
@@ -61,8 +64,8 @@ public class ErrorListTable extends JTable {
     }
     
     /**
-     * TODO
-     * @param incompliances
+     * Constructs the ErrorListTable using provided incompliances
+     * @param incompliances Incompliances used to get the error list
      */
     public ErrorListTable(ArrayList<Incompliance> incompliances) {
         super();
@@ -74,7 +77,7 @@ public class ErrorListTable extends JTable {
     }
         
     /**
-     * TODO
+     * Customizes the appearance of this table
      */
     public void customizeLook() {
         this.getTableHeader().setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -101,9 +104,9 @@ public class ErrorListTable extends JTable {
     }
 
     /**
-     * TODO
-     * @param table
-     * @param errorCount
+     * Sets the icon of this error list table
+     * @param table the table to set the icon for
+     * @param errorCount the number of errors
      */
     public static void setIcon(JTable table, int errorCount) {
         ImageIcon icon = MainWindow.errorIcon;
@@ -111,24 +114,22 @@ public class ErrorListTable extends JTable {
         String name = (errorCount > 1)? " Errors": " Error";
         name = " " + errorCount + name;
         table.getTableHeader().getColumnModel().getColumn(colIndex).setHeaderRenderer(new HeaderIconRenderer());
-        table.getColumnModel().getColumn(colIndex).setHeaderValue(new TextIcon(name, icon));
-        
-        table.validate();
-        
+        table.getColumnModel().getColumn(colIndex).setHeaderValue(new TextIcon(name, icon));        
+        table.validate();        
     }
     
     /**
-     * TODO
+     * Clears and reset the number of rows to the maxViewableRows in the model
      */
     public void blankOut() {
         ErrorListModel model = (ErrorListModel)getModel();
-        model.setRowCount(0);//clean all rows
+        model.setRowCount(0);// clean all rows
         model.setRowCount(maxViewableRows);
     }
     
     /**
-     * TODO
-     * @param incompliances
+     * Inserts incompliances using the incompliances provided as an ArrayList
+     * @param incompliances the incompliances used to generate the ErrorListTable
      */
     public void yieldTableFrom(ArrayList<Incompliance> incompliances) {        
         blankOut();      
@@ -142,9 +143,9 @@ public class ErrorListTable extends JTable {
     }
     
     /**
-     * TODO
-     * @param incomp
-     * @param rr
+     * Inserts an Incompliance at specific row, expand the table accordingly
+     * @param incomp the Incompliance to be inserted
+     * @param rr the row number
      */
     public void insertRowAt(Incompliance incomp, int rr) {
         String type;
@@ -165,24 +166,21 @@ public class ErrorListTable extends JTable {
             model.setValueAt(description, rr, description_number);
             model.setValueAt(fileName, rr, file_number);
             model.setValueAt(rowIndex + 1, /*starting from 1*/rr, row_number);
-            model.setValueAt(columnIndex + 1, /*starting from 1*/rr,
-                             column_number);
-        } else {//when row count exceeds maxViewableRows
+            model.setValueAt(columnIndex + 1, /*starting from 1*/rr, column_number);
+        } else { 
+        	// when row count exceeds maxViewableRows
             model.addRow(new Object[]{rr + 1, type, description, fileName, rowIndex + 1, columnIndex + 1});
         }    
     }
     
     /**
-     * TODO
+     * Adds a mouse listener
      */
     public void addListeners() {
         this.addMouseListener(new CellMouseClickedListener());
         //this.addKeyListener(null);
     }
         
-    /**
-     * TODO
-     */
     private class CellMouseClickedListener extends MouseAdapter {
         JTable table;
         String fileName, type;
@@ -192,11 +190,11 @@ public class ErrorListTable extends JTable {
             int count = e.getClickCount();
             if (count < 1)
                 return;
+            
             table = (JTable) e.getSource(); 
             int selRow = table.getSelectedRow(); 
-
             try {
-                if (retrieveLocation(selRow) == false)
+                if(retrieveLocation(selRow) == false)
                     return;
             } catch(NumberFormatException exception) {
                 return;
@@ -223,7 +221,7 @@ public class ErrorListTable extends JTable {
     			}
     		}
             
-    		if (wrkFileName!=null) {
+    		if (wrkFileName != null) {
     			for (int i = 0; i < MainWindow.taskTree.getEdfRootNode().getChildCount(); i++) {
             		EDFTreeNode child = (EDFTreeNode)MainWindow.taskTree.getEdfRootNode().getChildAt(i);
             		if (wrkFileName.equals(child.getHostFile().getAbsolutePath())){
@@ -256,9 +254,9 @@ public class ErrorListTable extends JTable {
         }
         
         /**
-         * TODO
-         * @param rr
-         * @param cc
+         * Redirects the view to EIA table
+         * @param rr the row index
+         * @param cc the column index
          */
         public void redirectToEIATable(int rr, int cc) {
             MainWindow.getTabPane().setSelectedIndex(0);
@@ -269,15 +267,13 @@ public class ErrorListTable extends JTable {
         }
         
         /**
-         * TODO
-         * @param fileName
-         * @param rr
-         * @param cc
+         * Redirects the view to ESA table
+         * @param fileName the file containing the ESA table
+         * @param rr row index
+         * @param cc column index
          */
-        public void redirectToESATable(String fileName, int rr, int cc) {
-        	
+        public void redirectToESATable(String fileName, int rr, int cc) {        	
 //        	System.out.println("[" + rr + "," + cc + "]" + fileName);
-        	
         	String srcFileName = fileName;
     		String wrkFileName = "";
     		for (int i = 0; i < MainWindow.getSrcEdfFiles().size(); i++) {
@@ -301,10 +297,10 @@ public class ErrorListTable extends JTable {
         }
         
         /**
-         * TODO
-         * @param fileName
-         * @param rr
-         * @param cc
+         * Redirects the view to EIA template table
+         * @param fileName the file containing the EIA template table
+         * @param rr row index
+         * @param cc column index
          */
         public void redirectToEIATemplateTable(String fileName, int rr, int cc) {
             int tabs = MainWindow.getTabPane().getTabCount();
@@ -326,10 +322,10 @@ public class ErrorListTable extends JTable {
         }
         
         /**
-         * TODO
-         * @param fileName
-         * @param rr
-         * @param cc
+         * Redirects the view to ESA template table
+         * @param fileName the file containing the ESA template table
+         * @param rr row index
+         * @param cc column index
          */
         public void redirectToESATemplateTable(String fileName, int rr, int cc) {
             int tabs = MainWindow.getTabPane().getTabCount();
@@ -351,21 +347,24 @@ public class ErrorListTable extends JTable {
         }
         
         /**
-         * TODO
-         * @param jtable
-         * @param rr
-         * @param cc
+         * Makes the specific cell of the table to be viewable
+         * @param jtable the table used
+         * @param rr the row index
+         * @param cc the column index
          */
         void highlightCell(JTable jtable, int rr, int cc) {
+        	// row selection
             jtable.getSelectionModel().setSelectionInterval(rr, rr);
-            jtable.getColumnModel().getSelectionModel().setSelectionInterval(cc, cc); 
+            // column selection
+            jtable.getColumnModel().getSelectionModel().setSelectionInterval(cc, cc);
+            // scroll to viewable
             Utility.scrollTableRowToVisible(jtable, rr, cc);           
         }
                 
         /**
-         * TODO
-         * @param selRow
-         * @return
+         * Given a selected row, retrieve the error information if possible
+         * @param selRow the selected row number
+         * @return true if the error information is retrieved, false otherwise
          */
         boolean retrieveLocation(int selRow) {
             fileName = (String)table.getModel().getValueAt(selRow, file_number);
@@ -386,8 +385,8 @@ public class ErrorListTable extends JTable {
         }
 
         /**
-         * TODO
-         * @return
+         * Retrieves the index of the error type, -1 if not found
+         * @return the index of the error type according to {@link Incompliance#typeOfErrorHeader}
          */
         private int retrieveHeaderTableTypeCode() {
         	int count = Incompliance.typeOfErrorHeader.length;
@@ -399,7 +398,7 @@ public class ErrorListTable extends JTable {
     } //end of class CellMouseClickedListener
     
     /**
-     * TODO
+     * A text icon
      */
     public static class TextIcon {
     	private String text;
@@ -411,13 +410,12 @@ public class ErrorListTable extends JTable {
     }
     
     /**
-     * TODO
+     * A DefaultTableCellRenderer that sets the icon cell
      */
     public static class HeaderIconRenderer extends DefaultTableCellRenderer {
 	    private static final long serialVersionUID = 1L;
 
 	    /**
-	     * TODO
 	     * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(
 	     * javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
 	     */

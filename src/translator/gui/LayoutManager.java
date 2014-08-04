@@ -69,7 +69,7 @@ public class LayoutManager {
 	}
 	
 	/**
-	 * Add a component using this layout manager
+	 * Adds a component using this layout manager
 	 * @param c the component to be added
 	 * @param parent the container
 	 */

@@ -15,7 +15,9 @@ import javax.swing.tree.TreePath;
 
 import table.EDFTableModel;
 
-
+/**
+ * An ActionListener for renaming a file
+ */
 public class RenameFileListener implements ActionListener {
 
     private final static int edf_type = 0;
@@ -34,13 +36,13 @@ public class RenameFileListener implements ActionListener {
     private ArrayList<File> siblingFiles;
 
     /**
-     * TODO
+     * Default constructor
      */
     public RenameFileListener() {
         super();
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
@@ -48,7 +50,7 @@ public class RenameFileListener implements ActionListener {
     }
 
     /**
-     * TODO
+     * Actions performs when renaming event occurs
      */
     private void performActions() {
         if (!validateNodeType() || nodeType == IMMUTE)
@@ -69,8 +71,8 @@ public class RenameFileListener implements ActionListener {
     }
 
     /**
-     * TODO
-     * @return
+     * Detects node type and return false if not exist or the node is immutable
+     * @return true the node pass the node test
      */
     private boolean validateNodeType() {
         TreePath path = MainWindow.taskTree.getSelectionPath();
@@ -89,12 +91,10 @@ public class RenameFileListener implements ActionListener {
         return true;
     }
 
-    /*
-     * this method can be improved for oldFile retrieve part.
-     */
+    //  this method can be improved for oldFile retrieve part.
 
     /**
-     * TODO
+     * Stores the selected file and its sibling files
      */
     private void retrieveOldeFileName() {
         if (nodeType == edf_type) {
@@ -120,7 +120,7 @@ public class RenameFileListener implements ActionListener {
     }
     
     /**
-     * TODO
+     * Gets the new file name when renamed an old one
      */
     private void retrieveFreshName() {
         String oldName = oldFile.getName();
@@ -153,7 +153,7 @@ public class RenameFileListener implements ActionListener {
                     JOptionPane.showMessageDialog(null, msgstr, title, JOptionPane.ERROR_MESSAGE);
                     continue;
                 } else {
-                    newFile.delete(); //need to improve, Fangping, 08/26/2010
+                    newFile.delete(); // needs to improve, Fangping, 08/26/2010
                     if (!Utility.isFileNameCollided(newFile, siblingFiles, redIndex)) {
                         freshFile = newFile;
                         freshName = newFile.getName();
@@ -162,13 +162,13 @@ public class RenameFileListener implements ActionListener {
                     }
                 }
             } catch (IOException e) {
-                ;
+                // handle IOException
             }
         } while (true);
     }
 
     /**
-     * TODO
+     * Renames the old file to new name
      */
     private void updateOnDiskName() {
         if (oldFile.exists())
@@ -176,7 +176,7 @@ public class RenameFileListener implements ActionListener {
     }
 
     /**
-     * TODO
+     * Updates the task tree after renaming a file
      */
     private void updateTaskTreeNodeName() {
         DefaultTreeModel model = (DefaultTreeModel)MainWindow.taskTree.getModel();
@@ -191,7 +191,7 @@ public class RenameFileListener implements ActionListener {
     }
 
     /**
-     * TODO
+     * Updates the records in the working file list
      */
     private void updateRecordInFileList() {
         switch (nodeType) {
@@ -205,12 +205,12 @@ public class RenameFileListener implements ActionListener {
             MainWindow.ESATemplateFiles.set(redIndex, freshFile);
             break;
         default:
-            //do nothing;
+            // do nothing;
         }
     }
 
     /**
-     * TODO
+     * Updates current tabpane after renaming a file
      */
     private void updateCurrentTabPane() {       
         EDFTabbedPane tabbedPane = MainWindow.tabPane;
@@ -220,15 +220,14 @@ public class RenameFileListener implements ActionListener {
         // retrieve index of current tab
         BasicEDFPane tempane;
         for (int i = 0; i < tabCount; i++){
-            tempane = (BasicEDFPane)tabbedPane.getComponentAt(i);//           
-            if (oldFile == tempane.getMasterFile()){
+            tempane = (BasicEDFPane)tabbedPane.getComponentAt(i);
+            if (oldFile == tempane.getMasterFile()) {
                 tabIndex = i;
                 break;
             }
         }
-        
-        //tabbedPane.removeTabAt(tabIndex);
 
+        //tabbedPane.removeTabAt(tabIndex);
         BasicEDFPane currentPane = (BasicEDFPane)tabbedPane.getComponentAt(tabIndex);
         
         if (currentPane instanceof WorkingTablePane && tabIndex == 1) {
@@ -250,20 +249,20 @@ public class RenameFileListener implements ActionListener {
             icon = MainWindow.esaTemplateTabIcon;
         }
         
-        tabbedPane.insertTab(freshFile.getName(), icon, currentPane, freshFile.getAbsolutePath(), tabIndex); //?     
+        tabbedPane.insertTab(freshFile.getName(), icon, currentPane, freshFile.getAbsolutePath(), tabIndex); // ?     
         new CloseTabButton(tabbedPane, tabIndex);
         tabbedPane.setToolTipTextAt(tabIndex, freshFile.getPath());
         
-       currentPane.setMasterFile(freshFile);   
-       tabbedPane.setSelectedIndex(tabIndex);            
+        currentPane.setMasterFile(freshFile);   
+        tabbedPane.setSelectedIndex(tabIndex);            
     }
     
     
     /**
-     * TODO
+     * Updates the EIA table after renaming
      */
     private void updateEIATable() {
-        if (nodeType == edf_type && MainWindow.iniEiaTable != null){
+        if (nodeType == edf_type && MainWindow.iniEiaTable != null) {
             EDFTableModel model = (EDFTableModel)MainWindow.iniEiaTable.getModel();
             String fileName = freshFile.getName();
             int truncLen = fileName.length() - ".edf".length();
@@ -272,7 +271,7 @@ public class RenameFileListener implements ActionListener {
     }
 
     /**
-     * TODO
+     * Prints message to console pane indicating the renaming process
      */
     private void printMsgToConsole() {
         String timeStr = Utility.currentTimeToString() + ": ";
@@ -285,8 +284,8 @@ public class RenameFileListener implements ActionListener {
         try {
             doc.insertString(doc.getLength(), theme, EDFInfoPane.theme);
         } catch (BadLocationException e) {
-            ;
+            // handles the BadLocationException
         }
     }
 
-}//End of the listener
+} //End of the listener

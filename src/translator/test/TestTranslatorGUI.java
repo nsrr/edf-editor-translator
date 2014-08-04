@@ -3,7 +3,7 @@ package translator.test;
 import translator.gui.SubWindowGUI;
 
 /**
- * TODO
+ * A test class for SubWindowGUI
  */
 public class TestTranslatorGUI {
 	

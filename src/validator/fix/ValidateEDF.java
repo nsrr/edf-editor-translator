@@ -59,10 +59,10 @@ public class ValidateEDF {
 //	}
 	
 	/**
-	 * TODO
-	 * @param esaTable
-	 * @param edfFile
-	 * @return
+	 * Parse ESA table and report them as array of Incompliances
+	 * @param esaTable the ESA table to be processed
+	 * @param edfFile the EDF file name
+	 * @return an array of Incompliances
 	 */
 	public static ArrayList<Incompliance> parseESATable(EDFTable esaTable, String edfFile) {
 		
@@ -138,7 +138,7 @@ public class ValidateEDF {
 				incomp = new Incompliance(incomplianceType, description,
 						fileName, i, col, errorSrcTypeIndex);
 				esaIncompliances.add(incomp);
-			} else{
+			} else {
 				//[Label](K.1) check for ascii 
 				bASCII = checkAsciiF(alabel);
 				if (!bASCII) {
@@ -519,10 +519,10 @@ public class ValidateEDF {
 	}
 	
     /**
-     * TODO
-     * @param eiaTable
-     * @param fileList
-     * @return
+     * Parse EIA table and report the Incompliances
+     * @param eiaTable the EIA table to be processed
+     * @param fileList the list of file name used to generate Incompliances
+     * @return an array of Incompliances
      */
     public static ArrayList<Incompliance> parseEIATable(EIATable eiaTable, String[] fileList) {
     	
@@ -913,9 +913,9 @@ public class ValidateEDF {
     }
 	
     /**
-     * TODO
-     * @param eiaTemplate
-     * @return
+     * Validate EIA template table
+     * @param eiaTemplate the EIA template table to be parsed
+     * @return an array of Incompliances
      */
     public static ArrayList<Incompliance> parseEIATemplateTable(EDFTable eiaTemplate) {
     	

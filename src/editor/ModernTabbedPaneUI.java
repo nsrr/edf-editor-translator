@@ -1,6 +1,5 @@
 package editor;
 
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -26,7 +25,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
-
+/**
+ * A modern tabbed pane UI
+ */
 public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
     private static final String TABBED_PANE_UI_LOGGER = "TabbedPaneUI";
     private static final Logger LOGGER = Logger.getLogger(TABBED_PANE_UI_LOGGER);
@@ -89,14 +90,14 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
     // TODO Paint & handle close buttons but on first tab
 
     /**
-     * TODO
-     * @param width
+     * Sets the default tab width
+     * @param width default tab width
      */
     public ModernTabbedPaneUI(int width) {
     	TAB_WIDTH = width;
     }
 
-    /* (non-Javadoc)
+    /**
      * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installUI(javax.swing.JComponent)
      */
     @Override
@@ -136,7 +137,7 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
         super.installUI(c);
     }
 
-    /* (non-Javadoc)
+    /**
      * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installDefaults()
      */
     @Override
@@ -145,16 +146,15 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
         UIManager.put("TabbedPane.font",
                       ((Font) UIManager.get("TabbedPane.font")).deriveFont(Font.BOLD));
      
-       /* UIManager.put("TabbedPane.font",
-                new Font("Thoma",Font.BOLD,12));
-*/
+//      UIManager.put("TabbedPane.font", new Font("Thoma",Font.BOLD,12));
+        
         UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
         UIManager.put("TabbedPane.selectedTabPadInsets", new Insets(0, 0, 0, 0));
 
         super.installDefaults();
     }
 
-    /* (non-Javadoc)
+    /**
      * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installListeners()
      */
     @Override
@@ -311,7 +311,7 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
     }
 
     /**
-     * TODO
+     * A mouse adapter for tracking tab pressed event
      */
     private class TabPressedTracker extends MouseAdapter {
         /* (non-Javadoc)
@@ -372,15 +372,16 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
     }
 
     /**
-     * TODO
-     * @return
+     * Gets the logger
+     * @return the logger
      */
     private static Logger getLogger() {
         return LOGGER;
     }
+    
     /**
-     * TODO
-     * @return
+     * If not exists, return the ResourceBundle of base name "messages"
+     * @return the ResourceBundle for 
      */
     public static synchronized ResourceBundle getResourceBundle() {
         if (bundle == null) {

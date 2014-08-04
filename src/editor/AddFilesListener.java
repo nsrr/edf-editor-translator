@@ -1,9 +1,5 @@
 package editor;
 
-
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
-
 import header.EDFFileHeader;
 import header.ESAHeader;
 
@@ -47,7 +43,12 @@ import table.EDFTable;
 import table.EIATable;
 import table.ESATable;
 
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 
+/**
+ * A JDialog that has the functionality of adding new files and updating the UI
+ */
 public class AddFilesListener extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -63,30 +64,32 @@ public class AddFilesListener extends JDialog {
     private static final Color alertColor = new Color(255, 240, 188);
     private final static String srctip = "Select one or mulitple EDF source files";
     private final static String helptip = "To add new files to current task, select source EDF files";
-    private final static String alerttip = " EDF files have been selected.";
+    @SuppressWarnings("unused")
+	private final static String alerttip = " EDF files have been selected.";
 
     /*
      * workFiles is used to store the new file names for working
      * it facilitate renaming, message printing, etc.
      * it is initialized in renewFileRecords.
      * Fangping, 08/20/2010
-    */ 
+     */ 
     protected ArrayList<File> sourceFiles;
-    private File selectedFiles[]; // alias of sourceFiles;//Fangping, 08/23/2010
+    private File selectedFiles[]; // alias of sourceFiles; //Fangping, 08/23/2010
     private File sourceDirectory;
     
     //Fangping, 08/23/2010
-
-    //list of selected to add yet alreay in the working directory, 
-    //so that they cannot be added finally
+    // list of selected to add yet already in the working directory, 
+    // so that they cannot be added finally
     private ArrayList<Integer> multiaddedFileIndices;     
     private static CheckBoxList checkBoxList = new CheckBoxList();
    
     private static JPanel tipPanel;
-    private static JLabel tipLabel = new JLabel();
-    //private static JLabel notificationLabel = new JLabel("", JLabel.LEFT);
+    @SuppressWarnings("unused")
+	private static JLabel tipLabel = new JLabel();
+    // private static JLabel notificationLabel = new JLabel("", JLabel.LEFT);
     private JPanel edfPanel;
-    private JPanel selectionPane; // contains both browsePanel and edfPanel
+    @SuppressWarnings("unused")
+	private JPanel selectionPane; // contains both browsePanel and edfPanel
     private JPanel controlPanel;
     protected static JTextField sourceFilesDirField = new JTextField();
     protected static JLabel selectedFilesLabel = new JLabel();
@@ -113,21 +116,18 @@ public class AddFilesListener extends JDialog {
     }
     
     /**
-     * add a mouse listener for dir field
+     * Adds a mouse listener for dir field
      * @param frame parent window frame
      */       
     public AddFilesListener(JFrame frame) {
         super(frame, true); // modal
         this.setLocationRelativeTo(frame);
         
-         initUI();
-         setDialogLayout();
-         visualize();
+        initUI();
+        setDialogLayout();
+        visualize();
      }
 
-    /**
-     * TODO
-     */
     private void initUI() {
         this.setSize(new Dimension(dialogWidth, dialogHeight));
         
@@ -138,9 +138,6 @@ public class AddFilesListener extends JDialog {
         buildCancelButton();      
     }
 
-    /**
-     * TODO
-     */
     private void visualize() {
         this.setTitle("Add Files");
         setLogo();
@@ -149,10 +146,7 @@ public class AddFilesListener extends JDialog {
         this.setResizable(false);
     }
 
-    /**
-     * TODO
-     */
-    private void setDialogLayout(){
+    private void setDialogLayout() {
         
         buildEdfPanel();
         buildTipPanel();
@@ -165,14 +159,14 @@ public class AddFilesListener extends JDialog {
     }
 
     /**
-     * TODO: ww
-     * @param title
-     * @param textField
-     * @param button
-     * @return
+     * Creates the selection panel of the window
+     * @param title the title of this window
+     * @param textField a JTextField for displaying the source file directory
+     * @param button browse file button
+     * @return the JPanel
      */
-    public JPanel createSelectionPanel(String title, JTextField textField,
-                                       JButton button) {
+    public JPanel createSelectionPanel(String title, JTextField textField, JButton button) {
+    	// used for GridLayout
         int layer;
         if (title == srctip)
             layer = 3;
@@ -198,42 +192,33 @@ public class AddFilesListener extends JDialog {
     }
 
     /**
-     * TODO: ww
+     * Creates the source file directory field and customizes it
      */
     public void buildSourceFileDirField() {
         sourceFilesDirField = new JTextField();
-/*         sourceFilesDirField.setPreferredSize(new Dimension(350, 25));
-        sourceFilesDirField.setMinimumSize(new Dimension(350, 25)); */
-        //sourceFilesDirField.setHorizontalAlignment(JTextField.LEFT);
+        // sourceFilesDirField.setPreferredSize(new Dimension(350, 25));
+        // sourceFilesDirField.setMinimumSize(new Dimension(350, 25));
+        // sourceFilesDirField.setHorizontalAlignment(JTextField.LEFT);
         sourceFilesDirField.setBackground(Color.white);
         sourceFilesDirField.setPreferredSize(favoriteSize);
         sourceFilesDirField.setMinimumSize(favoriteSize);
         sourceFilesDirField.setEditable(false);
-        //sourceFilesDirField.setEnabled(true);
+        // sourceFilesDirField.setEnabled(true);
         sourceFilesDirField.addMouseListener(new BrowseSourceFilesButtonListenser());
     }
-    
-    /**
-     * TODO
-     */
-    private void buildFileBrowseButton(){
+
+    private void buildFileBrowseButton() {
         browseButton = new JButton("Browse...");
         browseButton.addActionListener(new BrowseSourceFilesButtonListenser());
     }
-    
-    /**
-     * TODO
-     */
-    private void buildFinishButton(){
+
+    private void buildFinishButton() {
         finishButton = new JButton("Finish");
         finishButton.setEnabled(false); //Fangping, 08/19/2010
         finishButton.addActionListener(new FinishButtonListener());
     }
 
-    /**
-     * TODO
-     */
-    private void buildCancelButton(){
+    private void buildCancelButton() {
         cancelButton = new JButton("Cancel");
         InputMap im = cancelButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = cancelButton.getActionMap();
@@ -243,7 +228,7 @@ public class AddFilesListener extends JDialog {
     }
     
     /**
-     * TODO: ww
+     * Builds the control panel that containing finish and cancel button
      */
     public void buildControlPanel() {
         controlPanel = new JPanel();
@@ -255,7 +240,7 @@ public class AddFilesListener extends JDialog {
     }
     
     /**
-     * TODO: ww
+     * Builds the tip panel
      */
     public void buildTipPanel() {
         tipPanel = new JPanel();
@@ -269,9 +254,6 @@ public class AddFilesListener extends JDialog {
         tipPanel.setBorder(BorderFactory.createEtchedBorder());
     }
 
-    /**
-     * TODO
-     */
     private class BrowseSourceFilesButtonListenser extends MouseAdapter implements ActionListener {
         public void performActions() {        
             selectedFiles = selectSourceFiles();
@@ -285,10 +267,6 @@ public class AddFilesListener extends JDialog {
             showResultAreas(true);                       
         }
         
-        /**
-         * TODO
-         * @return
-         */
         private File[] selectSourceFiles() {
             EDFFileFilter filter =
                 new EDFFileFilter(new String[] { extName }, description);
@@ -305,11 +283,7 @@ public class AddFilesListener extends JDialog {
                       
             return chooser.getSelectedFiles();
         }
-        
-        /**
-         * TODO
-         * @return
-         */
+
         private ArrayList<File> selectedFilesArrayToArayList() {
             int nfiles = selectedFiles.length;
             ArrayList<File> sourceFiles = new ArrayList<File>(nfiles);
@@ -318,12 +292,8 @@ public class AddFilesListener extends JDialog {
             
             return sourceFiles;
         }
-            
-        /**
-         * TODO
-         * @return
-         */
-        private String getPromptMsg(){
+
+        private String getPromptMsg() {
             String text;
             int nfiles = sourceFiles.size();
             if (nfiles == 1)
@@ -336,11 +306,7 @@ public class AddFilesListener extends JDialog {
             return text;
         }
         
-        /**
-         * TODO
-         * @param affirmative
-         */
-        private void showResultAreas(boolean affirmative){
+        private void showResultAreas(boolean affirmative) {
             sourceFilesDirField.setText(sourceDirectory.toString());      
             updateCheckBoxList();
             activateBoxAndNotificationArea(affirmative, getPromptMsg());            
@@ -348,22 +314,22 @@ public class AddFilesListener extends JDialog {
         }
 
         /**
-         * TODO
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         public void actionPerformed(ActionEvent e) {
             performActions();
         }
         
         /**
-         * TODO
+         * @see java.awt.event.MouseAdapter#mouseClicked(java.awt.event.MouseEvent)
          */
-        public void mouseClicked(MouseEvent e){
+        public void mouseClicked(MouseEvent e) {
              performActions();
         }
     }
     
     /**
-     * TODO:Listener for FinishButton
+     * A listener for FinishButton
      */
     private class FinishButtonListener implements ActionListener {
         private ArrayList<File> finalAddedFiles = new ArrayList<File>();
@@ -378,7 +344,7 @@ public class AddFilesListener extends JDialog {
             
             acquiredFinalAddedFiles();
             
-            //all added files have been loaded in the task
+            // all added files have been loaded in the task
             if (finalAddedFiles.size() == 0)
                 return;
             renewFileRecords();
@@ -396,25 +362,21 @@ public class AddFilesListener extends JDialog {
             dispose();
         }
         
-        //removed already opened files
-        /**
-         * TODO
-         */
-        private void acquiredFinalAddedFiles(){
+        // removed already opened files
+        private void acquiredFinalAddedFiles() {
             finalAddedFiles = sourceFiles;
                 
             ArrayList<Integer> rlist = reverseOrderOf(multiaddedFileIndices);
-            for (Integer index: rlist){
+            for (Integer index: rlist) {
                 finalAddedFiles.remove(index.intValue());
             }
         }
         
         /**
-         * TODO
-         * helper of acquiredFinalAddedFiles();
+         * Helper of acquiredFinalAddedFiles();
          * reverse elements in the olist to facilitate remove opearation
          */
-        private ArrayList<Integer> reverseOrderOf(ArrayList<Integer> olist){
+        private ArrayList<Integer> reverseOrderOf(ArrayList<Integer> olist) {
             if (olist == null)
                 return null;
             
@@ -433,7 +395,7 @@ public class AddFilesListener extends JDialog {
         }
         
         /**
-         * re-register a new group of EDF files
+         * Re-registers a new group of EDF files
          */
         private void renewFileRecords() {           
             MainWindow.addSrcEdfFiles(sourceFiles);
@@ -443,7 +405,8 @@ public class AddFilesListener extends JDialog {
             String fullPath = "";
             String fileName, dirName = "";
             File clone;
-            File dirFile = null;
+            @SuppressWarnings("unused")
+			File dirFile = null;
             if (wkDirectory != null){//!dir mode
                 dirName = wkDirectory.getAbsolutePath();
                 dirFile = new File(dirName);
@@ -466,22 +429,24 @@ public class AddFilesListener extends JDialog {
         }
         
         /**
-         * create the EIA and ESA headers;
+         * Creates the EIA and ESA headers;
          */
-        private void yieldNewEDFHeaders(){
+        private void yieldNewEDFHeaders() {
             if (finalAddedFiles == null || finalAddedFiles.size() == 0)
                 return;
             ArrayList<EDFFileHeader> headers = new ArrayList<EDFFileHeader>();
 
             //read each file to build headers            
-            for (File currentFile: finalAddedFiles){
+            for (File currentFile: finalAddedFiles) {
                 try {
                     RandomAccessFile raf = new RandomAccessFile(currentFile, "r");
-                    if (raf == null)
-                        return;
+                    // following is dead code. removed by wei wang, 2014-7-15
+//                    if (raf == null)
+//                        return;
                     headers.add(new EDFFileHeader(raf, currentFile, false));
                 } catch (IOException f) {
-                    JOptionPane.showMessageDialog(null, "File invalid file: wrong format or empty file. ", "Data read error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, 
+                    		"File invalid file: wrong format or empty file. ", "Data read error", JOptionPane.ERROR_MESSAGE);
                 }
             }       
             
@@ -491,10 +456,10 @@ public class AddFilesListener extends JDialog {
                
 
         /**
-         * build the eia Table
+         * Builds the EIA Table
          */
         @SuppressWarnings("deprecation")
-		private void yieldEiaTable(){
+		private void yieldEiaTable() {
             int numberOfOpenedFiles = MainWindow.getSrcEdfFileHeaders().size(); 
             MainWindow.iniEiaTable = new EIATable(MainWindow.getSrcEdfFileHeaders(), numberOfOpenedFiles);
             MainWindow.iniEiaTable.setUpdateSinceLastSave(true); //the initial update status should be true
@@ -504,14 +469,14 @@ public class AddFilesListener extends JDialog {
         }
         
         /**
-         * construct esa Tables
+         * Constructs esa Tables
          * one esa header corresponds to one esa table
-         * algorithm is:
-         * 1. acquire the eiaHeader of the current file;
-         * 2. construct the ESA table one channel after another;
-         * 3. update the status.
          */
-        private void yieldEsaTables(){
+        private void yieldEsaTables() {
+//        	algorithm is:
+//          1. acquire the eiaHeader of the current file;
+//          2. construct the ESA table one channel after another;
+//          3. update the status.
             int sz = MainWindow.srcEdfFileHeaders.size();
             ArrayList<ESATable> esaTables = new ArrayList<ESATable>(sz);
             
@@ -534,10 +499,11 @@ public class AddFilesListener extends JDialog {
         
                  
         /**
-         * update/replace nodes under workingDir node
-         * passed test. -- Fangping 02/23/10, 10:55pm
+         * Updates/replaces nodes under workingDir node
+         * passed test.  
+         * @author Fangping 02/23/10, 10:55pm
          */
-        private void updateTaskTreeWkfileNodes(){
+        private void updateTaskTreeWkfileNodes() {
             TaskTree tree = MainWindow.taskTree;
             tree.removeNodeGroupAt(MainWindow.workingDirNode);
             MainWindow.workingDirNode.setUserObject("EDF Files" + " ( " + MainWindow.wkEdfFiles.size() + " files )");
@@ -545,9 +511,6 @@ public class AddFilesListener extends JDialog {
                                 //MainWindow.srcEdfFiles);                     
         }
         
-        /**
-         * TODO
-         */
         private void updatePrimaryESATab() {
             if ( MainWindow.tabPane.isPrimaryTabsOpened()) {
                 MainWindow.tabPane.removeTabAt(1);
@@ -565,9 +528,6 @@ public class AddFilesListener extends JDialog {
             MainWindow.tabPane.setPrimaryTabsOpened(true);   
         }
         
-        /**
-         * TODO
-         */
         private void updatePrimaryEIATab() {
             if ( MainWindow.tabPane.isPrimaryTabsOpened()){
                 MainWindow.tabPane.removeTabAt(0);               
@@ -587,7 +547,7 @@ public class AddFilesListener extends JDialog {
         }
         
         /**
-         * update primary tabs
+         * Updates primary tabs
          */
         private void updatePrimaryTabs(){
             updatePrimaryEIATab();
@@ -595,7 +555,7 @@ public class AddFilesListener extends JDialog {
         }
                
         /**
-         * TODO
+         * Prints messages to console when finished adding files
          */
         public void printMessageToConsole() {
             int sz = sourceFiles.size();
@@ -614,7 +574,7 @@ public class AddFilesListener extends JDialog {
             //print the action content
             
             String srcFileName, workFileName;
-            for (int i = 0; i < sz; i++){
+            for (int i = 0; i < sz; i++) {
                 srcFileName = sourceFiles.get(i).getAbsolutePath();
                 workFileName = workFiles.get(i).getAbsolutePath();
                 try{
@@ -629,8 +589,7 @@ public class AddFilesListener extends JDialog {
         }
         
         /**
-         * TODO
-         * print information about sourcefiles and workfiles to the console window.
+         * Prints information about sourcefiles and workfiles to the console window.
          */
         public void printNoFileAddedMsgToConsole() {
             String theme = Utility.currentTimeToString() + ": ";
@@ -644,13 +603,8 @@ public class AddFilesListener extends JDialog {
         public void actionPerformed(ActionEvent e) {
             performActions();
         }   
-    }//end of FinishButtonListener class
+    } //end of FinishButtonListener class
     
-    /**
-     * TODO
-     * @author wei
-     *
-     */
     private class CancelButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             dispose();
@@ -658,19 +612,15 @@ public class AddFilesListener extends JDialog {
     }
     
     /**
-     * TODO
-     * @author wei
-     *
+     * Cancels adding file action
      */
-    class CancelAction extends AbstractAction {
+    @SuppressWarnings("serial")
+	class CancelAction extends AbstractAction {
         public void actionPerformed(ActionEvent ev) {
             dispose();
         }
     }
     
-    /**
-     * TODO
-     */
     private void setLogo() {
         BufferedImage image = null;
         try {
@@ -683,7 +633,6 @@ public class AddFilesListener extends JDialog {
     }
     
     //Fangping:
-    //TODO
     private ArrayList<Integer> geteMultiTbaFilesIndices(File[] tbaFiles,
                             /*to be added list*/ArrayList<File> aaList) /*already added list*/ {
         if (tbaFiles == null)
@@ -705,16 +654,10 @@ public class AddFilesListener extends JDialog {
         return indices;
     }
 
-    /**
-     * TODO
-     */
     private void getMultiaddedFileIndexList() {
         multiaddedFileIndices = geteMultiTbaFilesIndices(selectedFiles, MainWindow.srcEdfFiles);
     }
 
-    /**
-     * TODO
-     */
     private void updateCheckBoxList() {
         int nfiles = selectedFiles.length;
         if (nfiles == 0)
@@ -742,10 +685,7 @@ public class AddFilesListener extends JDialog {
             }
         }   
     }
-    
-    /**
-     * TODO
-     */
+
     private void buildEdfPanel(){
         
         //6 cols, 6 rows
@@ -766,12 +706,7 @@ public class AddFilesListener extends JDialog {
         
         activateBoxAndNotificationArea(false, "");
     }
-    
-    /**
-     * TODO
-     * @param visible
-     * @param notetext
-     */
+
     private void activateBoxAndNotificationArea(boolean visible, String notetext) {
         selectedFilesLabel.setVisible(visible);
         checkBoxList.setVisible(visible);

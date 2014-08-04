@@ -11,14 +11,14 @@ import editor.MainWindow;
 import editor.NewTask_for_ValidityCommandLine;
 
 /**
- * TODO
+ * A Fix-error routine found in the headers
  */
 public class ErrorFix {
 	
 	/**
-	 * TODO
-	 * @param selected_edf_files
-	 * @param errorTypeAL
+	 * This procedure is used for fixing errors in the selected EDF files
+	 * @param selected_edf_files the selected EDF files
+	 * @param errorTypeAL a list of error types
 	 */
 	public static void fixErrors(ArrayList<String> selected_edf_files, ArrayList<ErrorTypes> errorTypeAL) {
 		
@@ -78,57 +78,11 @@ public class ErrorFix {
 		
 	}
 	
-//	public static void fixErrors2(ArrayList<String> selected_edf_files, ArrayList<ErrorTypes> errorTypeAL){
-//		
-//		String[] fileList = selected_edf_files.toArray(new String[selected_edf_files.size()]);
-//		for (String filename : selected_edf_files){
-//			
-//			System.out.println(filename);
-//			
-//			ArrayList<Incompliance> incompliances2 = new ArrayList<Incompliance>();
-//			try {
-//				//(1) Validate EDF file, and generate a summary for all kinds of EDF errors
-//				RandomAccessFile raf = new RandomAccessFile(filename, "rw");
-//				File edfFile = new File(filename);
-//				
-//				EDFFileHeader srcFile = new EDFFileHeader(raf, edfFile, false);
-//				EIATable eiaTable = new EIATable(srcFile);
-//				ESATable esaTable = new ESATable(srcFile, true);
-//				
-//				ArrayList<Incompliance> eiaIncompliances = ValidateEDF.parseEIATable(eiaTable, fileList);
-//				ArrayList<Incompliance> esaIncompliances = ValidateEDF.parseESATable(esaTable, filename);
-//				
-//				incompliances2.addAll(eiaIncompliances);
-//				incompliances2.addAll(esaIncompliances);
-//				
-//
-//				//(2)Fix certain errors
-//				for (ErrorTypes errorType : errorTypeAL){
-//					System.out.println(errorType.toString());
-//					switch(errorType){
-//						case phyMaxMin:
-//							fix01_SwapPhyMaxMin(incompliances2, esaTable);
-//							break;
-//						case emptyVersion:
-//							break;
-//						case InvalidDateTimeSeparator:
-//							break;
-//					}
-//				}
-//				
-//				
-//			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-//			}
-//			
-//		}
-//	}
-	
 	/**
-	 * TODO
-	 * @param incompliances
-	 * @param esaTable
-	 * @return
+	 * Fixes error by swapping physical max and min value
+	 * @param incompliances the incompliances 
+	 * @param esaTable the ESA table that the Incompliances coming from
+	 * @return a list of Incompliances solved
 	 */
 	public static ArrayList<Incompliance> fix01_SwapPhyMaxMin(ArrayList<Incompliance> incompliances, 
 			ESATable esaTable) {
@@ -163,12 +117,9 @@ public class ErrorFix {
 				message += "     Fixed Physical Min/Max:" + phy_Max + "/" + phy_Min + "";
 				NewTask_for_ValidityCommandLine.addElementIntoLog(message, true, MainWindow.log);
 			}
-		}
-		
+		}		
 		esaTable.setModel(tableModel);
-		esaTable.repaint();
-		
+		esaTable.repaint();		
 		return incompliances_solved;
-	}
-	
+	}	
 }

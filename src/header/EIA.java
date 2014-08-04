@@ -1,5 +1,8 @@
 package header;
 
+/**
+ * EDF Identity Attributes and related information
+ */
 public class EIA {
 
 	// A list of EIA attribute names
@@ -47,17 +50,28 @@ public class EIA {
     public static final String key_mm = "{mm}";
     public static final String key_dd = "{dd}";
     
-    public static final String[] Keys = {key_blank, key_rand, key_skip, key_filename, key_pid,
-                                                  key_rid, key_yy, key_mm, key_dd};
+    public static final String[] Keys = {
+    	key_blank, 
+    	key_rand, 
+    	key_skip, 
+    	key_filename, 
+    	key_pid, 
+    	key_rid, 
+    	key_yy, 
+    	key_mm, 
+    	key_dd
+    };
 
-    protected static int[] byteLength = { 8, 80, 80, 8, 8, 8, 44, 8, 8, 4 };
+    protected static int[] byteLength = { 
+    	8, 80, 80, 8, 8, 8, 44, 8, 8, 4 
+    };
 
 ///////////////////////////////////////////////////////////////////////////////
 ////////////////////START of getter and setter zone ///////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Usage: used to construct the table header.
+     * Used to construct the table header.
      * @return all attributes in the order compliant with the EDF file
      */
     public static String[] getEIAAttributes() {
@@ -66,7 +80,7 @@ public class EIA {
 
     /**
      * Get the index-th attribute of the EIA attributes
-     * @param index
+     * @param index the index of the attribute 
      * @return the index-th EIA attribute
      */
     public static String getEIAAttributeAt(int index) {
@@ -82,24 +96,25 @@ public class EIA {
     }
 
     /**
-     * Get the attribute byte length of the specified index
-     * @param index the attribute index
-     * @return an integer of the specified attribute's length
+     * Get the byte length of an EIA template attribute
+     * @param index the position to return a byte length of an EIA template attribute
+     * @return the number of bytes an EIA template attribute occupies
      */
     public static int getByteLengthAt(int index) {
         return byteLength[index];
     }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //////////////////// END of getter and setter zone ///////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Regulars the specified string to take up length space. 
-     * @param myString the specified string to be formatted
-     * @param length the length of the specified string to be formatted
-     * @return the formatted string
+     * Note: the returned value may have better length than expected when <BR>
+     * myString.length() larger than length. This is definitely a shortback
+     * Note: this method is the same as the one in the ESA class.
+     * @param myString string to be regularied
+     * @param length the expected length
+     * @return the regularized string with length max(myString.length(), length)
      */
     public String regularizeKey(String myString, int length) {
         String format = "%1$-" + length + "s";

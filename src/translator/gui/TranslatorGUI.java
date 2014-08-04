@@ -79,7 +79,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		LayoutManager.addMiddleField(new JLabel(""), this);
 		LayoutManager.addLastField(new JLabel(""), this);
 		
-		/* (2) "Selection of Vendor" */
+		/* (2) "Selection of Vendor" */ //TODO: added Embla new xml format
 		String[] vendorList = new String[] { 
 				"----- Select a vender from the dropdown menu -----                                                                                       ", 
 				Vendor.Embla.toString(), Vendor.Compumedics.toString(),

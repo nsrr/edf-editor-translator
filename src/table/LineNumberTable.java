@@ -17,9 +17,9 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 /**
- *  Use a JTable as a renderer for row numbers of a given main table.
- *  This table must be added to the row header of the scrollpane that
- *  contains the main table.
+ * Use a JTable as a renderer for row numbers of a given main table.
+ * This table must be added to the row header of the scrollpane that
+ * contains the main table.
  */
 @SuppressWarnings("serial")
 public class LineNumberTable extends JTable implements ChangeListener,  PropertyChangeListener {
@@ -27,8 +27,8 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
 	private JTable main;
 
     /**
-     * TODO
-     * @param table
+     * Constructs a LineNumberTable using a table
+     * @param table the main table to operate on 
      */
     public LineNumberTable(JTable table) {
         main = table;
@@ -49,7 +49,6 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
     }
 
     /**
-     * TODO
      * @see javax.swing.JTable#addNotify()
      */
     @Override
@@ -68,7 +67,7 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
     }
 
     /**
-     *  Delegate method to main table
+     *  Delegates method to main table
      */
     @Override
     public int getRowCount() {
@@ -76,7 +75,6 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
     }
 
     /**
-     * TODO
      * @see javax.swing.JTable#getRowHeight(int)
      */
     @Override
@@ -85,7 +83,6 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
     }
 
     /**
-     * TODO
 	 * This table does not use any data from the main TableModel,
 	 * so just return a value based on the row parameter.
      * @see javax.swing.JTable#getValueAt(int, int)
@@ -97,7 +94,6 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
     }
 
     /**
-     * TODO
 	 *  Don't edit data in the main TableModel by mistake
      * @see javax.swing.JTable#isCellEditable(int, int)
      */
@@ -111,7 +107,6 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
 //      scrollPane.getVerticalScrollBar().getValue() is always equal to viewport.getViewPosition().y
 
     /**
-     * TODO
      * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
      */
     public void stateChanged(ChangeEvent e) {
@@ -127,7 +122,6 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
 
     //  Implement the PropertyChangeListener
     /**
-     * TODO
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent e) {
@@ -141,8 +135,7 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
     }
 
     /**
-     * TODO
-     *  Borrow the renderer from JDK1.4.2 table header
+     *  Borrows the renderer from JDK1.4.2 table header
      */
     private static class RowNumberRenderer extends DefaultTableCellRenderer {
 		private static final long serialVersionUID = 1L;
@@ -152,14 +145,13 @@ public class LineNumberTable extends JTable implements ChangeListener,  Property
 		final static Color fgColor = Color.BLACK;
 
         /**
-         * TODO
+         * Default RowNumberRenderer constructor
          */
         public RowNumberRenderer() {
             setHorizontalAlignment(JLabel.CENTER);
         }
 
         /**
-         * TODO
          * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
          */
         public Component getTableCellRendererComponent(JTable table,

@@ -4,6 +4,9 @@ import header.ESA;
 import header.ESAChannel;
 import header.ESAHeader;
 
+/**
+ * An EDFTableModel that is used for ESA table data
+ */
 @SuppressWarnings("serial")
 public class ESATableModel extends EDFTableModel {
 	
@@ -37,7 +40,7 @@ public class ESATableModel extends EDFTableModel {
      * @return an ESA header generated from this table model
      */
     public ESAHeader toESAHeader() {
-        //TODO: transform table data to ESA header
+        // TODO: transform table data to ESA header
         return new ESAHeader();
     }
 
@@ -70,7 +73,7 @@ public class ESATableModel extends EDFTableModel {
 //     * Usage: set the class of each column
 //     * @param col
 //     * @return
-//     * TODO:
+//     * 
 //     */
 //     public Class<?> getColumnClass(int col) {
 //        switch (col) {

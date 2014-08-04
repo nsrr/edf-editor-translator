@@ -15,6 +15,9 @@ import javax.swing.JTabbedPane;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
+/**
+ * CloseTabButton acts as a button to close the tab
+ */
 @SuppressWarnings("serial")
 class CloseTabButton extends JPanel implements ActionListener {
     
@@ -22,15 +25,14 @@ class CloseTabButton extends JPanel implements ActionListener {
   JButton btClose;
   
   /**
-   * TODO
-   * @param pane
-   * @param index
+   * Initialize CloseTabButton with a specific JTabbedPane and its index
+   * @param pane the JTabbedPane to be closed
+   * @param index the tab index where the component should be set
    */
   public CloseTabButton(JTabbedPane pane, int index) {
       
     FormLayout layout = new FormLayout("f:p:g, f:8dlu:n", "f:p:g");
-    this.setLayout(layout); 
-    
+    this.setLayout(layout);     
     CellConstraints cc = new CellConstraints();
     
     this.pane = pane;
@@ -46,22 +48,20 @@ class CloseTabButton extends JPanel implements ActionListener {
   }
   
   /**
-   * TODO
+   * Initialize the close button for closing a tab
    */
   public void setCloseButton() {
       Icon closeIcon = new CloseIcon(); 
       btClose = new JButton(closeIcon);
-      btClose.setPreferredSize(new Dimension(
-          closeIcon.getIconWidth(), closeIcon.getIconHeight()));
+      btClose.setPreferredSize(new Dimension(closeIcon.getIconWidth(), closeIcon.getIconHeight()));
       btClose.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); 
       //btClose.setFocusPainted(false);
       btClose.setBounds(2,2,10,10);
       btClose.setContentAreaFilled(false);
-
-     btClose.addActionListener(this);
+      btClose.addActionListener(this);
   }
   
-  	/* (non-Javadoc)
+  	/**
   	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
   	 */
     public void actionPerformed(ActionEvent e) {
@@ -98,8 +98,8 @@ class CloseTabButton extends JPanel implements ActionListener {
     }
 
     /**
-     * TODO
-     * @param index
+     * Removes a tab provided by its index
+     * @param index the tab index where the tab should be removed
      */
     private void removeTabAt(int index) {
         if (index != -1) {
@@ -108,9 +108,9 @@ class CloseTabButton extends JPanel implements ActionListener {
     }
     
     /**
-     * TODO
-     * @param tempFile
-     * @param tempType
+     * Unregisters the template file opened
+     * @param tempFile the template file opened
+     * @param tempType the type of the template file
      */
     private void unregisterTemplateFile(File tempFile, int tempType) {
         if (tempType == 0)
@@ -124,10 +124,10 @@ class CloseTabButton extends JPanel implements ActionListener {
 //  }
     
     /**
-     * TODO
-     * @param tree
-     * @param parentIndex
-     * @param uid
+     * Removes a node from a given TaskTree, the node is denoted by its uid
+     * @param tree the tree from which to delete a specific node
+     * @param parentIndex the node's parent index
+     * @param uid the node's uid
      */
     private void removeNodeFromTree(TaskTree tree, int parentIndex, long uid) {
         tree.removeFileNode(parentIndex, uid);    

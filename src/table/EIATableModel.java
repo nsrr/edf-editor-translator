@@ -3,7 +3,9 @@ package table;
 import header.EIA;
 import header.EIAHeader;
 
-
+/**
+ * EIATableModel has facility methods that can test the status of cells
+ */
 @SuppressWarnings("serial")
 public class EIATableModel extends EDFTableModel {
 
@@ -12,7 +14,7 @@ public class EIATableModel extends EDFTableModel {
     }
 
     /**
-     * primary constructor for EIATableModel
+     * Constructs an EIATableModel by providing a row number
      * @param nrows the total number of rows to be displayed
      */
     public EIATableModel(int nrows) {
@@ -20,11 +22,11 @@ public class EIATableModel extends EDFTableModel {
     }
 
     /**
-     * an EIAHeader Image of the current TableModel
-     * @return EIA header of the EIATableModel
+     * An EIAHeader Image of the current TableModel
+     * @return an EIA header of the current EIATableModel
      */
     public EIAHeader toEIAHeader() {
-        //TODO: transform table data to EIA header
+        // TODO: transform table data to EIA header
         return new EIAHeader();
     }
 

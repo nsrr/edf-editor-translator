@@ -4,11 +4,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * TODO
+ * A listener listens responsible for disabling or enabling different buttons according to 
+ * different pane selected
  */
 public class TabbedPaneListener implements ChangeListener {
 
-	/* (non-Javadoc)
+	/**
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
 	 */
 	@Override

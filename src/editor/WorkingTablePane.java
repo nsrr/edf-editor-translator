@@ -1,11 +1,3 @@
-/**
- * this class serves two-fold purposes:
- * <ul>
- * <li> create a panel to tabbed pane which contains table and a log TextArea
- * <li> customize the table. For example, designate cell editor, render and constraints.
- * </ul>
- */
-
 package editor;
 
 import java.awt.Color;
@@ -41,23 +33,22 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 /**
- * TODO
+ * This class serves two-fold purposes:
+ * <ul>
+ * <li> create a panel to tabbed pane which contains table and a log TextArea
+ * <li> customize the table. For example, designate cell editor, render and constraints.
+ * </ul>
  */
 @SuppressWarnings("serial")
 public class WorkingTablePane extends BasicEDFPane {
 
     private EDFTable edfTable;
-
     private JLabel filePathLabel;
-    private  JLabel warningLabel;
+    private JLabel warningLabel;
     private static JPopupMenu customerizeTypePopup;
     private static JMenuItem customizeItem;
-    
-    private static final String path_prefix = "Path: ";    
-    
-    //private JPopupMenu editorPopup;
-    //private JPopupMenu tablePopup;
-    
+
+    private static final String path_prefix = "Path: "; 
     private Font oldFont = MainWindow.tabPane.getFont();
 
     static {
@@ -65,14 +56,14 @@ public class WorkingTablePane extends BasicEDFPane {
         customizeItem = new JMenuItem("Customerize type");
         customerizeTypePopup.add(customizeItem);
     }
-    
+
     /**
-     * TODO
-     * @param table
+     * Initializes the WorkingTablePane using an EDFTable
+     * @param table the EDFTable
      */
     public WorkingTablePane(EDFTable table) {
         this.setIsPrimaryTab(true);
-        
+
         edfTable = table;
         edfTable.setAutoscrolls(true);        
         setupTable(); 
@@ -80,9 +71,10 @@ public class WorkingTablePane extends BasicEDFPane {
         addListeners();        
         setupLayout();
     }
-    
+
     /**
-     * TODO
+     * Sets up this pane type, the type is defined in BasicEDFPane
+     * @see BasicEDFPane#type_eiapane
      */
     public void setupPaneType() {
         if (edfTable instanceof EIATable) {
@@ -97,7 +89,7 @@ public class WorkingTablePane extends BasicEDFPane {
     }
     
     /**
-     * TODO
+     * Adds listeners to cell
      */
     void addListeners() {       
         edfTable.getCellEditor(1, 1).addCellEditorListener(new CellEditorListeners());
@@ -105,11 +97,10 @@ public class WorkingTablePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
-     *  customerize the table's cell editor, renderer, and so on
+     * Customerizes the table's cell editor, renderer, and so on
      */
     public void setupTable() {
-        //if (edfTable instanceof ESATable)
+        // if (edfTable instanceof ESATable)
         MouseListener mList[] = edfTable.getMouseListeners();
         if (mList.length < 3) {
             edfTable.addMouseMotionListener(new CellMouseListener());
@@ -118,8 +109,7 @@ public class WorkingTablePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
-     * @return table panel
+     * Sets up layout
      */
     private void setupLayout() {         
         FormLayout layout = new FormLayout("d:n, f:d:g, l:p:n, 4dlu:n, 6dlu:n", "2dlu, 15dlu:n, 2dlu:n, f:d:g, 6dlu:n, b:d:n");
@@ -127,8 +117,7 @@ public class WorkingTablePane extends BasicEDFPane {
         this.setLayout(layout);
         CellConstraints cc = new CellConstraints();
                
-        JScrollPane scroller =
-            new JScrollPane(edfTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+        JScrollPane scroller = new JScrollPane(edfTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                             JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroller.setBorder(BorderFactory.createLineBorder(new Color(79, 136, 199)));
         editor.Utility.setRowHeader(edfTable);
@@ -141,7 +130,7 @@ public class WorkingTablePane extends BasicEDFPane {
     }
     
     /**
-     * TODO
+     * Creates the show hide check box
      */
     private void createShowHideCheckBox() {
         JCheckBox cbox;
@@ -155,8 +144,8 @@ public class WorkingTablePane extends BasicEDFPane {
     }
     
     /**
-     * TODO
-     * @param active
+     * Sets the all cells shown status of the check box	
+     * @param active true to show all cells
      */
     private void setupCheckBoxStatus(boolean active) {
         allCellsShownCbox.setSelected(active);
@@ -164,7 +153,7 @@ public class WorkingTablePane extends BasicEDFPane {
     }
     
     /**
-     * TODO
+     * Show/hide immutable fields according to check box status
      */
     class showHideListener implements ActionListener {
         private boolean selected;
@@ -179,7 +168,7 @@ public class WorkingTablePane extends BasicEDFPane {
         }
         
         /**
-         * TODO
+         * Perform actions based on the check box selection status
          */
         private void performActions() {
             if (selected)
@@ -190,7 +179,7 @@ public class WorkingTablePane extends BasicEDFPane {
     }
      
     /**
-     * TODO
+     * Creates the labels of file name and warning messages
      */
     private void createBtPane() {
         String filename;
@@ -206,13 +195,13 @@ public class WorkingTablePane extends BasicEDFPane {
         Font newFont = new Font(oldFont.getName(), oldFont.getStyle(), oldFont.getSize() + 2);
         filePathLabel.setFont(newFont);
         warningLabel.setFont(newFont);
-        
+
         repaint();
     }
 
     /**
-     * TODO
-     * @return
+     * Returns the current time as string
+     * @return the current time
      */
     public String currentTimeToString() {
         Date time = new Date();
@@ -221,67 +210,67 @@ public class WorkingTablePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
-     * @param edfTable
+     * Sets the EDF table
+     * @param edfTable the EDF table
      */
     public void setEdfTable(EDFTable edfTable) {
         this.edfTable = edfTable;
     }
 
     /**
-     * TODO
-     * @return
+     * Returns the EDF table
+     * @return the EDF table
      */
     public EDFTable getEdfTable() {
         return edfTable;
     }
 
     /**
-     * TODO
-     * @param text
+     * Adds text to file path text string
+     * @param text the text to be added
      */
     public void setTextToFilePathLabel(String text) {
         filePathLabel.setText(path_prefix + text);
     }
 
     /**
-     * TODO
-     * @return
+     * Returns the label which contains file path
+     * @return the {@code JLable} contains the file path
      */
     public JLabel getFilePathLabel() {
         return filePathLabel;
     }
 
     /**
-     * TODO
-     * @param filePathLabel
+     * Sets the label containing the file path
+     * @param filePathLabel the file label
      */
     public void setFilePathLabel(JLabel filePathLabel) {
         this.filePathLabel = filePathLabel;
     }
 
     /**
-     * TODO
+     * Handles mouse clicked event
      */
     private class CellMouseClickedListener implements MouseListener, ActionListener {
 
-        /* (non-Javadoc)
+        /**
          * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
          */
         @Override
         public void mouseClicked(MouseEvent e) {
-            if (edfTable instanceof ESATable) {
+            if (edfTable instanceof ESATable) {            	
                 int sely = edfTable.getSelectedColumn();
                 int selx = edfTable.getSelectedRow();
                  
                 int mouseMod = e.getModifiers();
-                if (mouseMod == 24 && sely == 1) 
+                if (mouseMod == 24 && sely == 1)  // what is 24? might be alt + mouse_button_1
                     new TransducerListener(new JFrame(), selx, sely, edfTable);
                     //customerizeTypePopup.show((JComponent)e.getSource(), e.getX(), e.getY());
             }
         }
         
-        /* (non-Javadoc)
+        /**
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         public void actionPerformed(ActionEvent e) {
@@ -290,7 +279,7 @@ public class WorkingTablePane extends BasicEDFPane {
             new TransducerListener(new JFrame(), selx, sely, edfTable);
         }
         
-        /* (non-Javadoc)
+        /**
          * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
          */
         @Override
@@ -299,30 +288,21 @@ public class WorkingTablePane extends BasicEDFPane {
         }
 
         @Override
-        public void mouseEntered(MouseEvent e) {
-            // TODO Auto-generated method stub
-
-        }
+        public void mouseEntered(MouseEvent e) {}
 
         @Override
-        public void mousePressed(MouseEvent e) {
-            // TODO Auto-generated method stub
-
-        }
+        public void mousePressed(MouseEvent e) {}
 
         @Override
-        public void mouseReleased(MouseEvent e) {
-            // TODO Auto-generated method stub
-
-        }
+        public void mouseReleased(MouseEvent e) {}
     }
 
     /**
-     * TODO
+     * Handles mouse drag and move event
      */
     private class CellMouseListener implements MouseMotionListener {
 
-        /* (non-Javadoc)
+        /**
          * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
          */
         public void mouseDragged(MouseEvent e) {
@@ -339,7 +319,7 @@ public class WorkingTablePane extends BasicEDFPane {
             MainWindow.setCellContent(text);
         }
 
-        /* (non-Javadoc)
+        /**
          * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
          */
         public void mouseMoved(MouseEvent e) {
@@ -369,14 +349,11 @@ public class WorkingTablePane extends BasicEDFPane {
         }
         
         //this is the right place to update the cell list table when editing is finished
-        //TODO:
         public void editingStopped(ChangeEvent e) {
-/*             DefaultCellEditor editor = (DefaultCellEditor)e.getSource();
-            MainWindow.consolePane.outputMessage((String)editor.getCellEditorValue()); */
+//            DefaultCellEditor editor = (DefaultCellEditor)e.getSource();
+//            MainWindow.consolePane.outputMessage((String)editor.getCellEditorValue());
         }
 
-        public void editingCanceled(ChangeEvent e) {
-            //TODO: system stub
-        }
+        public void editingCanceled(ChangeEvent e) {}
     }
 }

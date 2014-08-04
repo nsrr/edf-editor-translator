@@ -24,7 +24,7 @@ public class TableRowHeader extends JList {
 	private JTable table;
 
     /**
-     * Construct the TableRowHeader using a specific JTable
+     * Constructs the TableRowHeader using a specific JTable
      * @param table the JTable used to construct TableRowHeader
      */
     @SuppressWarnings("unchecked")
@@ -62,7 +62,7 @@ public class TableRowHeader extends JList {
     // assume that row header width should be big enough to display row number Integer.MAX_VALUE completely
 
     /**
-     * Get the preferred header width
+     * Gets the preferred header width
      * @return the preferred header width
      */
     private int preferredHeaderWidth() {
@@ -85,7 +85,6 @@ public class TableRowHeader extends JList {
 
 /**
  * Model of this TableRowHeader
- * @author wei
  */
 @SuppressWarnings({ "serial", "rawtypes" })
 class TableRowHeaderModel extends AbstractListModel {
@@ -93,7 +92,7 @@ class TableRowHeaderModel extends AbstractListModel {
 	private JTable table;
 
     /**
-     * Construct this model using a JTable	
+     * Constructs this model using a JTable	
      * @param table
      */
     public TableRowHeaderModel(JTable table) {
@@ -101,7 +100,7 @@ class TableRowHeaderModel extends AbstractListModel {
     }
 
     /**
-     * Get the size of this header
+     * Gets the size of this header
      * @return the number of fields in this header
      */
     public int getSize() {
@@ -109,7 +108,7 @@ class TableRowHeaderModel extends AbstractListModel {
     }
 
     /**
-     * Get the element at index <code>index</code>
+     * Gets the element at index <code>index</code>
      * @return the element at index <code>index</code>
      */
     public Object getElementAt(int index) {
@@ -118,6 +117,9 @@ class TableRowHeaderModel extends AbstractListModel {
 }
 
 
+/**
+ * A cell renderer for the table header
+ */
 @SuppressWarnings({ "serial", "rawtypes" })
 class RowHeaderRenderer extends JLabel implements ListCellRenderer {
 
@@ -153,7 +155,7 @@ class RowHeaderRenderer extends JLabel implements ListCellRenderer {
     }
 
     /**
-     * Return a component that has been configured to display the specified value
+     * Returns a component that has been configured to display the specified value
      * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     public Component getListCellRendererComponent(JList list, Object value,

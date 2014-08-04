@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.util.Map;
 
 /**
- * TODO
+ * Setting MCR directory class. Responsible for setting up the MCR(MATLAB Compiler Runtime) path
  */
 @SuppressWarnings("serial")
 public class SettingMcrDir extends SettingParameters {
@@ -13,8 +13,8 @@ public class SettingMcrDir extends SettingParameters {
 	private static SettingMcrDir sm = null;
 
 	/**
-	 * TODO
-	 * @return
+	 * Create a new JFrame, if not exist,  for setting up MCR path
+	 * @return SettingMcrDir
 	 */
 	public static SettingMcrDir setMcrDir() {
 		if (sm == null) {
@@ -25,14 +25,14 @@ public class SettingMcrDir extends SettingParameters {
 	}
 
 	/**
-	 * TODO
+	 * Setting up MCR path if this is the first time
 	 */
 	private SettingMcrDir() {
 		super("MCR_Dir");
 		if (bfirst) {
 			bfirst = false;
 			String mcr_dir = getSystemMcrDir();
-			if (mcr_dir!=null){
+			if (mcr_dir != null) {
 				chosenDirectory.setText(mcr_dir);
 				chosenDirectory.setForeground(Color.BLUE);
 				chosenDirectory.setFont(new Font("Serif", Font.BOLD, 14));
@@ -43,8 +43,8 @@ public class SettingMcrDir extends SettingParameters {
 	private static boolean bfirst = true;
 
 	/**
-	 * TODO
-	 * @return
+	 * Search and return the MCR path from the system environment
+	 * @return the MCR path if exist, null other wise
 	 */
 	public static String getSystemMcrDir() {
 		Map<String, String> env = System.getenv();

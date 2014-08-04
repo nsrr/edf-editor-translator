@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
+import listener.EDFFileFilter;
+
 import org.openide.util.Utilities;
 
 import configure.ConfigureManager;
@@ -16,7 +18,7 @@ import editor.EDFInfoPane;
 import editor.MainWindow;
 
 /**
- * TODO
+ * This class resolves the naming issue and is responsible for calling the EDF-viewer application
  */
 public class MatlabEdfViewer {
 
@@ -25,21 +27,22 @@ public class MatlabEdfViewer {
 	}
 
 	/**
-	 * TODO
+	 * Set up and call the EDF-viewer
 	 */
 	public static void callEdfViewer() {
 
 		//(1) set Edf and Xml (if any)
 		if (MainWindow.masterFile == null) {
-			JOptionPane.showMessageDialog(null, "No EDF file for EDF-Viewer is selected from the task tree.");
+			JOptionPane.showMessageDialog(null, 
+					"No EDF file for EDF-Viewer is selected from the task tree.");
 			return;
 		} else {
 			String EdfFilePath = MainWindow.masterFile.getParentFile().getAbsolutePath() + File.separator;
 			String EdfFileName = MainWindow.masterFile.getName();
-			String XmlFilePath = EdfFilePath;////////////////////
+			String XmlFilePath = EdfFilePath;
 			String XmlFileName;
 
-			//optional name for annotation xml file#1
+			// optional name for annotation xml file#1
 			XmlFileName = EdfFileName.replaceAll("\\.[eE][dD][fF]$", "_MIMI.xml");
 			if (!(new File(XmlFilePath + XmlFileName)).exists()){
 				//option#2
@@ -75,13 +78,14 @@ public class MatlabEdfViewer {
 	}
 
 	/**
-	 * TODO
-	 * @param EdfFilePath
-	 * @param EdfFileName
-	 * @param XmlFilePath
-	 * @param XmlFileName
+	 * Helper method of calling EDF-viewer
+	 * @param EdfFilePath the EDF file path
+	 * @param EdfFileName the EDF file name
+	 * @param XmlFilePath the xml file path
+	 * @param XmlFileName the xml file name
 	 */
-	private static void callEdfViewer(String EdfFilePath, String EdfFileName, String XmlFilePath, String XmlFileName) {
+	private static void callEdfViewer(String EdfFilePath, String EdfFileName, 
+			String XmlFilePath, String XmlFileName) {
 
 		String mcrDir = ConfigureManager.retrieveConfiguration("MCR_Dir");
 		String viewerDir = ConfigureManager.retrieveConfiguration("Viewer_Dir");
@@ -97,7 +101,8 @@ public class MatlabEdfViewer {
 			if (tmp != null) {
 				ConfigureManager.addOrUpdateConfiguration("MCR_Dir", tmp);
 			} else {
-				JOptionPane.showMessageDialog(null, "Please first set the diectory of MATLAB Compiler Runtime (MCR)!");
+				JOptionPane.showMessageDialog(null, 
+						"Please first set the diectory of MATLAB Compiler Runtime (MCR)!");
 				SettingMcrDir.setMcrDir();
 				return;
 			}
@@ -125,20 +130,20 @@ public class MatlabEdfViewer {
 	}
 
 	/**
-	 * @author wei
-	 * TODO
+	 * A class for retrieving the environment this viewer is running in
 	 */
 	private static class ViewerAppEnvir {
 		static String operatingSystem = null;
 		static String viewerApp = null;
 
 		/**
-		 * TODO
+		 * Set up the viewer running environment including os name and application name
 		 */
 		@SuppressWarnings("deprecation")
 		static void setting() {
 			int os = Utilities.getOperatingSystem();
 			boolean is64bit = is64bit();
+			// Utilities.OS_WINDOWS_MASK is deprecated, use Utilities.isWindows() instead
 			if (os != Utilities.OS_WINDOWS_MASK){
 				if (is64bit) {
 					viewerApp = "SleepPortalViewerR2013bWin64.exe";
@@ -164,8 +169,8 @@ public class MatlabEdfViewer {
 		}
 
 		/**
-		 * TODO
-		 * @return
+		 * Tests if the operating system is 64-bit
+		 * @return true if this application is running on a 64-bit operating system
 		 */
 		static boolean is64bit() {
 			boolean is64bit = false;
@@ -180,31 +185,33 @@ public class MatlabEdfViewer {
 
 
 	/**
-	 * TODO
-	 * @param mcrDir
-	 * @param viewerDir
-	 * @param viewerApp
-	 * @param EdfFilePath
-	 * @param EdfFileName
-	 * @param XmlFilePath
-	 * @param XmlFileName
+	 * A helper method of calling EDF-viewer
+	 * @param mcrDir the MCR path
+	 * @param viewerDir the viewer path
+	 * @param viewerApp the viewer name
+	 * @param EdfFilePath the EDF file path
+	 * @param EdfFileName the EDF file name
+	 * @param XmlFilePath the xml file path
+	 * @param XmlFileName the xml file name
 	 */
-	private static void callEdfViewer(String mcrDir, String viewerDir, String viewerApp, String EdfFilePath, String EdfFileName, String XmlFilePath, String XmlFileName){
+	private static void callEdfViewer(String mcrDir, String viewerDir, String viewerApp, 
+			String EdfFilePath, String EdfFileName, String XmlFilePath, String XmlFileName) {
 
 		/**
 		 * (1) Examine existence of paths and files
 		 */
-		//mcrDir
+		// mcrDir
 		if (!(new File(mcrDir)).exists()) {
-			JOptionPane.showMessageDialog(null, "Diectory of MATLAB Compiler Runtime (MCR) does not exist. Please check it!");
+			JOptionPane.showMessageDialog(null, 
+					"Diectory of MATLAB Compiler Runtime (MCR) does not exist. Please check it!");
 			return;
 		}
-		//viewerDir
+		// viewerDir
 		if (!(new File(viewerDir)).exists()) {
 			JOptionPane.showMessageDialog(null, "Diectory of ViewerDir does not exist. Please check it!");
 			return;
 		}
-		//viewer
+		// viewer
 		String viewer = viewerDir + File.separator + viewerApp;
 		viewer.replace("\\", File.separator);
 		viewer.replace("/", File.separator);
@@ -213,12 +220,12 @@ public class MatlabEdfViewer {
 			JOptionPane.showMessageDialog(null, "Matlab Viewer App does not exist. Please check it!");
 			return;
 		}
-		//EdfFilePath
+		// EdfFilePath
 		if (!(new File(EdfFilePath)).exists()) {
 			JOptionPane.showMessageDialog(null, "EDF file does not exist. Please check it!");
 			return;
 		}
-		//EdfFile
+		// EdfFile
 		String EdfFile = EdfFilePath + File.separator + EdfFileName;
 		EdfFile.replace("\\", File.separator);
 		EdfFile.replace("/", File.separator);
@@ -227,14 +234,14 @@ public class MatlabEdfViewer {
 			JOptionPane.showMessageDialog(null, "EDF file does not exist. Please check it!");
 			return;
 		}
-		//XmlFilePath & XmlFile
+		// XmlFilePath & XmlFile
 		if (!(XmlFilePath.equals("") && XmlFileName.equals(""))) {
-			//XmlFilePath
+			// XmlFilePath
 			if (!(new File(XmlFilePath)).exists()){
 				JOptionPane.showMessageDialog(null, "Annotation file does not exist. Please check it!");
 				return;
 			}
-			//XmlFile
+			// XmlFile
 			String XmlFile = XmlFilePath + File.separator + XmlFileName;
 			XmlFile.replace("\\", File.separator);
 			XmlFile.replace("/", File.separator);
@@ -248,13 +255,13 @@ public class MatlabEdfViewer {
 		/**
 		 * (2) Prepare BATCH commands
 		 */
-		//mcrDir
+		// mcrDir
 		mcrDir = formatDir(mcrDir);
 		mcrDir = mcrDir.replace(File.pathSeparator, "\\");
-		//viewerDir
+		// viewerDir
 		viewerDir = formatDir(viewerDir);
 		viewerDir = viewerDir.replace(File.pathSeparator, "\\");		
-		//EdfFilePath
+		// EdfFilePath
 		EdfFilePath = formatDir(EdfFilePath);
 		EdfFilePath = EdfFilePath + File.separator;
 		EdfFilePath = EdfFilePath.replace(File.separator + File.separator, File.separator);
@@ -329,8 +336,7 @@ public class MatlabEdfViewer {
 	}
     
 	/**
-	 * @author wei
-	 * TODO
+	 * A runnable pipe that can be created in different thread to redirect input and output 
 	 */
 	private static class SyncPipe implements Runnable {
 		public SyncPipe(InputStream istrm, OutputStream ostrm) {
@@ -354,9 +360,9 @@ public class MatlabEdfViewer {
 	}
 
 	/**
-	 * TODO
-	 * @param path
-	 * @return
+	 * Formalize the directory path on different operating system
+	 * @param path the original directory path
+	 * @return the formalized directory path
 	 */
 	private static String formatDir(String path) {
 		String str = path;

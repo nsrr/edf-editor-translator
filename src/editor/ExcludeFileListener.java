@@ -18,7 +18,7 @@ import table.EIATable;
 import table.EIATableModel;
 
 /**
- * TODO
+ * An action listener used for remove or delete nodes in the task navigation area
  */
 public class ExcludeFileListener implements ActionListener {
     protected static final int REMOVE = 0;
@@ -33,8 +33,8 @@ public class ExcludeFileListener implements ActionListener {
    
     
     /**
-     * TODO
-     * @param cmd
+     * Initializes the ExcludeFileListener using an int command type
+     * @param cmd the command type
      */
     public ExcludeFileListener(int cmd) {
         super();
@@ -42,22 +42,19 @@ public class ExcludeFileListener implements ActionListener {
     }
     
     /**
-     * TODO
-     * Algorithm:
-     * (1) pop up warning dialog, with affirmation
-     * (2) remove item from iniEsaTables, dupEsaTables, srcEdfFileHeaders, dupEdffileHeaders, 
-     *     srcEdfFiles, wkEdfFiles
-     * (3) update the task tree;
-     * (4) remove the item from EIA primary tab
-     * (5) delete the file if commandType = DELETE;
-     */    
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
+//    	Algorithm:
+//    	(1) pop up warning dialog, with affirmation
+//      (2) remove item from iniEsaTables, dupEsaTables, srcEdfFileHeaders, dupEdffileHeaders, 
+//    		srcEdfFiles, wkEdfFiles
+//    	(3) update the task tree;
+//    	(4) remove the item from EIA primary tab
+//    	(5) delete the file if commandType = DELETE;
         performActions();
     }
 
-    /**
-     * TODO
-     */
     private void performActions() {
         redFile = retrieveRedFile();
         if (redFile == null)
@@ -82,11 +79,6 @@ public class ExcludeFileListener implements ActionListener {
             printErrorMsgToConsole();
     }
 
-    /**
-     * TODO
-     * @param file
-     * @return
-     */
     private boolean isAffirmed(File file) {
         String message = "<html>Do you want to remove the selected file  from current task? <p> <center>" + 
                         file.getAbsolutePath() + "</center><p>"
@@ -99,18 +91,10 @@ public class ExcludeFileListener implements ActionListener {
         return affirmative;              
     }
     
-    /**
-     * TODO
-     * @param index
-     */
     private void setRedIndex(int index) {
         redIndex = index;
     }
     
-    /**
-     * TODO
-     * @return
-     */
     private File retrieveRedFile() {
         TreePath path = MainWindow.taskTree.getSelectionPath();
         if (path == null)
@@ -129,48 +113,33 @@ public class ExcludeFileListener implements ActionListener {
         }
     }
     
-    /**
-     * TODO
-     */
     private void updateESAtables() {
         MainWindow.iniEsaTables.remove(redIndex);
-        //MainWindow.dupEsaTables.remove(redIndex);// do not use it unless clone() is implemented
+        // MainWindow.dupEsaTables.remove(redIndex);// do not use it unless clone() is implemented
     }
     
-    /**
-     * TODO
-     */
     private void updateESAFileHeaders() {
         MainWindow.srcEdfFileHeaders.remove(redIndex);
-        //MainWindow.dupEdfFileHeaders.remove(redIndex); // do not use it unless clone() is implemented
+        // MainWindow.dupEdfFileHeaders.remove(redIndex); // do not use it unless clone() is implemented
     }
 
-    /**
-     * TODO
-     */
     private void updateEIATable() {
         EIATable table = MainWindow.iniEiaTable;
         EIATableModel model = (EIATableModel)table.getModel();
         model.removeRow(redIndex);
         if (table.getRowCount() == 0) {
-            /* MainWindow.tabPane.remove(0);
-            MainWindow.tabPane.insertTab("Identity attributes", null,
-                                         new BasicEDFPane(),
-                                         "no file in current task", 0); */
+//      	MainWindow.tabPane.remove(0);
+//          MainWindow.tabPane.insertTab("Identity attributes", null,
+//                                       new BasicEDFPane(),
+//                                       "no file in current task", 0);
         }
     }
     
-    /**
-     * TODO
-     */
     private void updateSrcWkFiles() {
         MainWindow.wkEdfFiles.remove(redIndex);
         MainWindow.srcEdfFiles.remove(redIndex);
     }
     
-    /**
-     * TODO
-     */
     private void updateTaskTree() {
         DefaultTreeModel model = (DefaultTreeModel) MainWindow.taskTree.getModel();      
         DefaultMutableTreeNode priorNode = (DefaultMutableTreeNode)MainWindow.workingDirNode.getChildBefore(redNode);
@@ -180,38 +149,31 @@ public class ExcludeFileListener implements ActionListener {
             MainWindow.taskTree.setSelectionPath(new TreePath(priorNode.getPath()));
         else if (afterNode != null)
             MainWindow.taskTree.setSelectionPath(new TreePath(afterNode.getPath()));
-        else{
+        else {
             MainWindow.tabPane.remove(1);
             MainWindow.tabPane.insertTab("Signal Header", null, new BasicEDFPane(), "no file in current task", 1);
         }
         
         MainWindow.workingDirNode.setUserObject("EDF Files" + " ( " + MainWindow.wkEdfFiles.size() + " files )");
-            
     }
     
-        
-    /**
-     * TODO
-     */
     private void printDoneMsgToConsole() {
         Document doc = MainWindow.consolePane.getDocument();
         String theme = Utility.currentTimeToString() + ": ";
         
         if (commandType == REMOVE){
             theme = theme + redFile.getName() + " has been removed from current task. \n";
-        }
-        else{
+        } else {
             theme = theme + redFile.getName() + " has been deleted.\n";
         }
 
         try {
             doc.insertString(doc.getLength(), theme, EDFInfoPane.theme);
-        } catch (BadLocationException e) {;}
+        } catch (BadLocationException e) {
+        	// handles BadLocationException
+        }
     }
     
-    /**
-     * TODO
-     */
     private void printErrorMsgToConsole() {
         //just in case of misuse of this method
         if (commandType == 0)
@@ -223,14 +185,12 @@ public class ExcludeFileListener implements ActionListener {
         theme = " fail to delete " + redFile.getName() + ". \n";
         try {
             doc.insertString(doc.getLength(), theme, EDFInfoPane.theme);
-        } catch (BadLocationException e) {;}
+        } catch (BadLocationException e) {
+        	// handles BadLocationException
+        }
     }
-    
-    /**
-     * TODO
-     * @return
-     */
-    private boolean deleteFile(){
+
+    private boolean deleteFile() {
         return redFile.delete();    
     }
 }

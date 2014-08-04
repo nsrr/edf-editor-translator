@@ -10,13 +10,13 @@ import org.apache.commons.io.FileUtils;
 import translator.utils.Keywords;
 
 /**
- * TODO
+ * A command line tool to help annotation translation
  */
 public class CommandLineController {
     
 	/**
-	 * TODO
-	 * @param argv
+	 * Start point of translation including options
+	 * @param argv command line options to pass in for translation
 	 */
 	public static void Start(String[] argv) {
 
@@ -60,11 +60,11 @@ public class CommandLineController {
 }
 
 /**
- * TODO
+ * Options needed for command line processing annotation translation
  */
 @SuppressWarnings("static-access")
 class OptionParser {
-	public static enum OptionShort{translator, vendor, map, edf, ann, stage, out, name, help}
+	public static enum OptionShort{ translator, vendor, map, edf, ann, stage, out, name, help }
 	public static Options options;
 	
 	static {

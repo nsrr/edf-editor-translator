@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+/**
+ * An EIATable is a customized EDFTable
+ */
 @SuppressWarnings("serial")
 public class EIATable extends EDFTable {    
     
@@ -16,9 +19,15 @@ public class EIATable extends EDFTable {
     public static final int number_local_recordingID = 3;
     public static final int number_start_date_recording = 4;
     private TableColumn[] allTableColumns;
-    protected int[] immutableFieldIndices = {/*EIA.index_filename,*/ EIA.index_version, EIA.index_start_time,
-    		EIA.index_of_bytes, EIA.index_reserved, EIA.index_number_of_datarecord, EIA.index_duration,
-    		EIA.index_number_of_channels};
+    protected int[] immutableFieldIndices = {
+    		EIA.index_version, // EIA.index_filename
+    		EIA.index_start_time,
+    		EIA.index_of_bytes, 
+    		EIA.index_reserved, 
+    		EIA.index_number_of_datarecord, 
+    		EIA.index_duration,
+    		EIA.index_number_of_channels
+    };
     private boolean isEiaTemplate;
 
     /**
@@ -33,9 +42,16 @@ public class EIATable extends EDFTable {
         customizeLook("eia");        
         //for template table, hide one more column of file name
         if (isEIATemplate) {
-            immutableFieldIndices = new int[]{EIA.index_filename, EIA.index_version, EIA.index_start_time, 
-            		EIA.index_of_bytes, EIA.index_reserved, EIA.index_number_of_datarecord, EIA.index_duration, 
-            		EIA.index_number_of_channels};
+            immutableFieldIndices = new int[]{
+            	EIA.index_filename, 
+            	EIA.index_version, 
+            	EIA.index_start_time, 
+            	EIA.index_of_bytes, 
+            	EIA.index_reserved, 
+            	EIA.index_number_of_datarecord, 
+            	EIA.index_duration, 
+            	EIA.index_number_of_channels
+            };
             hideImmutableFields();
         }
     }
@@ -49,7 +65,7 @@ public class EIATable extends EDFTable {
     }
     
     /**
-     * Construct EIATable using a EDF file header
+     * Constructs EIATable using an EDF file header
      * @param edfHeader an EDF file header 
      */
     public EIATable(EDFFileHeader edfHeader) {
@@ -69,7 +85,7 @@ public class EIATable extends EDFTable {
     }
 
     /**
-     * Store current columns into local fields
+     * Stores current columns into local fields
      */
     private void cacheColumns() {
         int ncol = getModel().getColumnCount();
@@ -80,10 +96,10 @@ public class EIATable extends EDFTable {
     
     //Fangping, 10/04/2010
     /**
-     * Show immutable table fields
+     * Shows immutable table fields
      */
     public void showImmutableFields() {
-        for (int index: immutableFieldIndices){
+        for (int index: immutableFieldIndices) {
             addColumn(allTableColumns[index]); // should test whether allTableColumns[index] exists
             getColumnModel().moveColumn(getColumnCount() - 1, index);
         }        
@@ -91,7 +107,7 @@ public class EIATable extends EDFTable {
     }
     
     /**
-     * Hide immutable fields of this EIA table
+     * Hides immutable fields of this EIA table
      */
     public void hideImmutableFields() {
         cacheColumns();
@@ -123,7 +139,7 @@ public class EIATable extends EDFTable {
      }
     
     /**
-     * Update specified table row value
+     * Updates specified table row value
      * @param header the EIA header used to construct this EIA table
      * @param rowIndex the row to be updated
      */
@@ -138,15 +154,15 @@ public class EIATable extends EDFTable {
     }
     
     /**
-     * Set the forEiaTemplate 
-     * @param forEiaTemplate true if this is an EIA template
+     * Sets the forEiaTemplate 
+     * @param isEiaTemplate true if this is an EIA template
      */
     public void setEiaTemplate(boolean isEiaTemplate) {
         this.isEiaTemplate = isEiaTemplate;
     }
         
     /**
-     * Test whether this is an EIA template
+     * Tests whether this is an EIA template
      * @return true if this is an EIA template
      */
     public boolean isForEiaTemplate() {

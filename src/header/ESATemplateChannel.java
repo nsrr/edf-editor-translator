@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 
+/**
+ * ESATemplateChannel is responsible of reading and writing signal template channel information from and to a file
+ */
 public class ESATemplateChannel extends ESA {
+	
 	 private HashMap<String,Object> esaChannel = null;
-
 	 ///////////////////////////////////////////////////////////////////////////////
-	 ///////////////// START of constructor zone //////////////////////////////////
+	 ///////////////// START of constructor zone ///////////////////////////////////
 	 ///////////////////////////////////////////////////////////////////////////////
-
 	 /**
 	  * Construct the ESA template channel
 	  */
@@ -32,10 +34,9 @@ public class ESATemplateChannel extends ESA {
 	  * @param channelNumber the serial number of current channel
 	  * @param numberOfChannels the total number of channels in current EDF file
 	  */
-	 public ESATemplateChannel(RandomAccessFile raf, int channelNumber,
-			 int numberOfChannels) {
+	 public ESATemplateChannel(RandomAccessFile raf, int channelNumber, int numberOfChannels) {
 		 byte[] label = new byte[16];
-		 byte[] correctedLabel = new byte[16];
+		 byte[] correctedLabel = new byte[16];  // this field is different from ESAChannel
 		 byte[] transducerType = new byte[80];
 		 byte[] physDim = new byte[8];
 		 byte[] physMin = new byte[8];
@@ -50,7 +51,7 @@ public class ESATemplateChannel extends ESA {
 		
 		 esaChannel = new HashMap<String,Object>(NUMBER_OF_ATTRIBUTES+1);
 		
-		 /**
+		 /*
 		  * the algorithm is:
 		  * (1) first search for our signal position
 		  * (2) then read it and transform it to String type
@@ -167,16 +168,16 @@ public class ESATemplateChannel extends ESA {
 
 
 	/**
-	 * Regularize the attribute value to byte array
-	 * Algorithm:
-	 * 1. single out the attribute value from the header;
-	 * 2. get the size of the attribute specified by EDF Standard;
-	 * 3. regularize the attribute value to bytes.
+	 * Regularizes the attribute value to byte array
 	 * @param channelHeader the attribute values of current channel
 	 * @param index the index number of the selected attribute
 	 * @return byte value of the selected attribute
 	 */
 	 public byte[] regularizeToBytes(HashMap<String,Object> channelHeader, int index) {
+//		 Algorithm:
+//		 1. single out the attribute value from the header;
+//		 2. get the size of the attribute specified by EDF Standard;
+//		 3. regularize the attribute value to bytes.
 		 String key = getESATemplateAttributeAt(index);
 		 String srcValue = (String) channelHeader.get(key); // 1.
 		 int byteSize = getTByteLengthAt(index); // 2.
@@ -186,19 +187,18 @@ public class ESATemplateChannel extends ESA {
 	 }
 	
 	 /**
-	  * Usage: to write current ESA channel to file in manner of random file accessor
-  	  * Algorithm:
-  	  * 1. regularize each attribute value of current channel to byte form;
- 	  * 2. write each attribute in bytes to file
-	  * Note: since ESA attribute values in file is non-linear, so step 1 and 2 are manually pieced together
+	  * Writes current ESA channel to file in manner of random file accessor
 	  * @param raf random file accessor
 	  * @param indexOfChannel index of current channel
 	  * @param numberOfChannels the number of channels
-	  * @throws IOException
+	  * @throws IOException IOException
 	  */
-	 public void writeESATemplateChannelToDisk(
-			 RandomAccessFile raf, int indexOfChannel, int numberOfChannels) throws IOException {
+	 public void writeESATemplateChannelToDisk(RandomAccessFile raf, int indexOfChannel, int numberOfChannels) throws IOException {
 	
+//	  	 Algorithm:
+//	  	 1. regularize each attribute value of current channel to byte form;
+//	  	 2. write each attribute in bytes to file
+//	  	 Note: since ESA attribute values in file is non-linear, so step 1 and 2 are manually pieced together
 		 HashMap<String,Object> header = getEsaChannel();
 		
 //		byte[][] byteValue = new byte[NUMBER_OF_ATTRIBUTES][90]; //this might be problematic

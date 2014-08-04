@@ -30,7 +30,7 @@ public class SubWindowGUI extends JFrame {
 
     		Dimension dim1 = Toolkit.getDefaultToolkit().getScreenSize();
     		Dimension dim2 = new Dimension(1100,800);
-    		if (dim1.width > dim2.width || dim1.height > dim2.height){
+    		if (dim1.width > dim2.width || dim1.height > dim2.height) {
     			_instance.setSize(dim2);
     			_instance.setMinimumSize(dim2);
     		} else {
@@ -63,7 +63,7 @@ public class SubWindowGUI extends JFrame {
 	}
 	
 	/**
-	 * Return <code>true</code> if this SubWindowGUI contains the specified file viewer
+	 * Returns <code>true</code> if this SubWindowGUI contains the specified file viewer
 	 * @param filename the file name to be tested
 	 * @return true if the file exists
 	 */
@@ -72,7 +72,7 @@ public class SubWindowGUI extends JFrame {
 	}
 	
 	/**
-	 * Add a file viewer tab using file name and tab name
+	 * Adds a file viewer tab using file name and tab name
 	 * @param tabName the tab name
 	 * @param filename the file name
 	 */

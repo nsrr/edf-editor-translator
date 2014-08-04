@@ -13,40 +13,41 @@ import table.EDFTable;
 import table.EIATable;
 import table.ESATable;
 
-public class DiscardChangesListener implements ActionListener{
+/**
+ * A ActionListener that discard changes made in the working area
+ */
+public class DiscardChangesListener implements ActionListener {
 	
 	private int selectedEDF;
 	private ArrayList<File> sourceFiles;
 	private int tabLocation;
 	
 	/**
-	 * TODO
-     * build the EIA Table
+     * Builds the EIA Table
      */
     @SuppressWarnings("deprecation")
-	private void yieldEiaTable(){
+	private void yieldEiaTable() {
     	EIATable eiaTable = null;
         int numberOfOpenedFiles = sourceFiles.size(); 
-        //MainWindow.iniEiaTable = MainWindow.dupEiaTable;
+        // MainWindow.iniEiaTable = MainWindow.dupEiaTable;
         eiaTable = new EIATable(MainWindow.dupEdfFileHeaders, numberOfOpenedFiles);
-        eiaTable.setUpdateSinceLastSave(true); //the initial update status should be true
+        eiaTable.setUpdateSinceLastSave(true); // the initial update status should be true
         eiaTable.setSavedOnce(false);
 
-        eiaTable.setMasterHeaderCategory(EDFTable.MasterHeaderCategory.EIA_WORKSET); //obsolete line
+        eiaTable.setMasterHeaderCategory(EDFTable.MasterHeaderCategory.EIA_WORKSET); // obsolete line
         
         MainWindow.setIniEiaTable(eiaTable);
     }
     
     /**
-     * TODO
-     * construct ESA Tables
-     * one ESA header corresponds to one ESA table
-     * algorithm is:
-     * 1. acquire the eiaHeader of the current file;
-     * 2. construct the ESA table one channel after another;
-     * 3. update the status.
+     * Builds ESA table at index {@code index} in initial ESA table list  
+     * , one ESA header corresponds to one ESA table
      */
     private void yieldEsaTable() {
+//      algorithm is:
+//      1. acquire the eiaHeader of the current file;
+//      2. construct the ESA table one channel after another;
+//      3. update the status.
         ESATable esaTable = null;
        
        //need check, Fangping, 08/20/2010
@@ -63,11 +64,8 @@ public class DiscardChangesListener implements ActionListener{
         MainWindow.setIniEsaTable(esaTable, selectedEDF);
     }
 
-	/**
-	 * TODO
-	 */
 	private void updatePrimaryESATab() {
-        if ( MainWindow.tabPane.isPrimaryTabsOpened()) {
+        if (MainWindow.tabPane.isPrimaryTabsOpened()) {
             MainWindow.tabPane.removeTabAt(1);
         }
         
@@ -84,9 +82,6 @@ public class DiscardChangesListener implements ActionListener{
         MainWindow.tabPane.setPrimaryTabsOpened(true);   
     }
     
-    /**
-     * TODO
-     */
     private void updatePrimaryEIATab() {
         if ( MainWindow.tabPane.isPrimaryTabsOpened()) {
             MainWindow.tabPane.removeTabAt(0);               
@@ -94,27 +89,24 @@ public class DiscardChangesListener implements ActionListener{
         
         String ft = "Identity attributes";
         
-/*             String ft = "<html><body leftmargin=10 topmargin=10 marginwidth=10" +
-            "marginheight=10>De-identify</body></html>"; */
+//      String ft = "<html><body leftmargin=10 topmargin=10 marginwidth=10" +
+//      "marginheight=10>De-identify</body></html>";
                    
         EIATable eiaTable = MainWindow.getIniEiaTable();
         WorkingTablePane pane = new WorkingTablePane(eiaTable);
         MainWindow.tabPane.insertTab(ft, null, pane, null, 0);
         MainWindow.tabPane.setToolTipTextAt(0, "Deidentify Attributes of EDF Files");
         
-        //MainWindow.tabPane.setPrimaryTabsOpened(true);    
+        // MainWindow.tabPane.setPrimaryTabsOpened(true);    
     }
 
-    /* (non-Javadoc)
+    /**
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
         performActions();
     }
     
-    /**
-     * TODO
-     */
     private void performActions() {
         // do nothing is there is not tab pane at all
         if (MainWindow.tabPane == null || MainWindow.tabPane.getTabCount() == 0)

@@ -66,10 +66,10 @@ public class Utility {
 	// Changed HashMap to HashMap<String,Object>
 	
 	/**
-	 * Copy File from <code>source</code> to <code>target</code>
+	 * Copies File from <code>source</code> to <code>target</code>
 	 * @param source the source file to be copied
 	 * @param target the target to copy to
-	 * @throws IOException
+	 * @throws IOException IOException
 	 */
     public static void copyEDFFile(File source, File target) throws IOException {
         final ByteBuffer buffer = ByteBuffer.allocate(4096);
@@ -96,7 +96,7 @@ public class Utility {
     }
 
     /**
-     * Build file name from file directory name, file name and file type
+     * Builds file name from file directory name, file name and file type
      * @param directory path name of the file
      * @param file name of the file
      * @param fileType file type: eia, esa, edf, xml, csv, etc.
@@ -112,7 +112,7 @@ public class Utility {
     }
 
     /**
-     * Rename a file
+     * Renames a file
      * @param old the old file
      * @param newName the new name of the old file
      */
@@ -125,10 +125,10 @@ public class Utility {
 
 
     /**
-     * Map the EIA attributes in the template header to EDF file header
+     * Maps the EIA attributes in the template header to EDF file header
      * serves for template applying
-     * @param edfFileHeader
-     * @param eiaTemplateHeader
+     * @param eiaHeader EIAHeader used 
+     * @param eiaTemplateHeader EIATemplateHeader used
      */
     public static void mapEIAHeader(EIAHeader eiaHeader, EIAHeader eiaTemplateHeader) {
         HashMap<String,Object> eiaHeaderMap = eiaHeader.getEIAHeader();        
@@ -150,7 +150,7 @@ public class Utility {
     }
 
     /**
-     * Disassemble date string separated by '.'
+     * Disassembles date string separated by '.'
      * @param datestr date string
      * @return an array with length 3, corresponding to the number of fields of date
      * @author Fangping, 10/12/10
@@ -175,10 +175,10 @@ public class Utility {
 
     /**
      * @deprecated obsolete // wei wang
-     * @param EIAHeaderMap
-     * @param dupEDFEIAHeaderMap
-     * @param templateHeaderMap
-     * @param dateStore
+     * @param EIAHeaderMap EIAHeaderMap
+     * @param dupEDFEIAHeaderMap dupEDFEIAHeaderMap
+     * @param templateHeaderMap templateHeaderMap
+     * @param dateStore dateStore
      */
     public static void mapPID(HashMap<String,Object> EIAHeaderMap, HashMap<String,Object> dupEDFEIAHeaderMap,
                               HashMap<String,Object> templateHeaderMap, String[] dateStore) {
@@ -301,7 +301,7 @@ public class Utility {
                                             reg_key_pid, reg_key_rid, reg_key_yy, reg_key_mm, reg_key_dd};
     
     /**
-     * Map specified field of attribute of a template to EIA header
+     * Maps specified field of attribute of a template to EIA header
      * @param EIAHeaderMap the EIA header to be mapped
      * @param dupEDFEIAHeaderMap duplicate of the current EIA header
      * @param templateHeaderMap the template header to map from
@@ -355,7 +355,7 @@ public class Utility {
         }
 
     /**
-     * Generate random ID
+     * Generates random ID
      * @return random ID of string format
      */
     public static String generateRandomID() {
@@ -366,12 +366,11 @@ public class Utility {
     }
 
     /**
-     * obsolete
      * @deprecated  // wei wang, 2014-6-19
-     * @param edfEIAHeaderMap
-     * @param dupEDFEIAHeaderMap
-     * @param templateHeaderMap
-     * @param dateStore
+     * @param edfEIAHeaderMap edfEIAHeaderMap
+     * @param dupEDFEIAHeaderMap dupEDFEIAHeaderMap
+     * @param templateHeaderMap templateHeaderMap
+     * @param dateStore dateStore
      * map RID
      */
     public static void mapRID(HashMap<String,Object> edfEIAHeaderMap, HashMap<String,Object> dupEDFEIAHeaderMap,
@@ -465,7 +464,7 @@ public class Utility {
     }
     
     /**
-     * Map start date field from a template to the EIA headers 
+     * Maps start date field from a template to the EIA headers 
      * @param edfEIAHeaderMap the EIA header to be mapped
      * @param dupEDFEIAHeaderMap duplicate of the EIA header 
      * @param templateHeaderMap the template to be mapped from
@@ -568,7 +567,7 @@ public class Utility {
     }
     
   /**
-   * Map start date from a template to the EIA headers  
+   * Maps start date from a template to the EIA headers  
    * @param edfEIAHeaderMap the EIA header to be mapped
    * @param dupEDFEIAHeaderMap duplicate of the EIA header 
    * @param templateHeaderMap the template to be mapped from
@@ -672,7 +671,7 @@ public class Utility {
     }
 
   	/**
-  	 * Generate random date string
+  	 * Generates random date string
   	 * @param choice specify which attribute to return. 0 for day, 1 for month, 2 for year, 3 for randomly generated date including day, month and year
   	 * @return string representation of the date specified by the choice option
   	 */
@@ -755,7 +754,7 @@ public class Utility {
 //    }
 
     /**
-     * Map the ESA attributes in the template header to the EDF file header.
+     * Maps the ESA attributes in the template header to the EDF file header.
      * serves for template applying.
      * @param edfFileHeader the ESA header to map to
      * @param esaTemplateHeader the template to be mapped from
@@ -807,7 +806,7 @@ public class Utility {
     }
     
     /**
-     * Get current time as string 
+     * Gets current time as string 
      * @return the formatted time string
      */
     public static String currentTimeToString() {
@@ -822,7 +821,7 @@ public class Utility {
 
     // each attribute eia.VERSION is changed to EIA.VERSION format
     /**
-     * Write EIA header to XML specified by File object
+     * Writes EIA header to XML specified by File object
      * @param file the File object used to save EIA header information
      * @param eia EIA header
      */
@@ -870,7 +869,7 @@ public class Utility {
     }
 
     /**
-     * Write out EDF headers to CSV file
+     * Writes out EDF headers to CSV file
      * @param edfHeaders EDF headers to write out
      * @param fileNames list of files used for writing CSV file
      * @return the name of output CSV file
@@ -912,7 +911,7 @@ public class Utility {
     }
 
     /**
-     * Write XML file from existing ESA header
+     * Writes XML file from existing ESA header
      * @param file output xml file path
      * @param esa ESA header used to generate xml file
      */
@@ -966,7 +965,7 @@ public class Utility {
     }
 
     /**
-     * Write out the ESA headers to csv file
+     * Writes out the ESA headers to csv file
      * @param edfHeaders the EDF file headers 
      * @param fileNames the corresponding EDF files
      * @return the csv file name to be written out
@@ -1012,7 +1011,7 @@ public class Utility {
     }
 
     /**
-     * Read EIA header from XML file
+     * Reads EIA header from XML file
      * @param file XML file to be read
      * @return EIA header corresponding to this XML file
      */
@@ -1080,7 +1079,7 @@ public class Utility {
     }
 
     /**
-     * Extract string between start tag string and end tag string
+     * Extracts string between start tag string and end tag string
      * @param startTag the start tag string
      * @param endTag the end tag string
      * @param str the target string to be extract from		
@@ -1096,7 +1095,7 @@ public class Utility {
     }
 
     /**
-     * Parse CSV file into EIA header
+     * Parses CSV file into EIA header
      * @param file CSV file to be processed
      * @return EIA header extracted from this CSV file
      */
@@ -1137,7 +1136,7 @@ public class Utility {
     }
 
     /**
-     * Read XML file and converted to ESA header
+     * Reads XML file and converted to ESA header
      * @param file the XML file to be converted from
      * @return the constructed ESA header
      */
@@ -1210,7 +1209,7 @@ public class Utility {
     }
 
     /**
-     * Read CSV file and converted to ESA header
+     * Reads CSV file and converted to ESA header
      * @param file the CSV file
      * @return the ESA header constructed from this CSV file
      */
@@ -1257,7 +1256,7 @@ public class Utility {
     }
     
     /**
-     * Get string representation of the current date
+     * Gets string representation of the current date
      * @return a string representation of the date and time
      */
     private static String getDateTime(){
@@ -1267,7 +1266,7 @@ public class Utility {
     }
         
     /**
-     * Increment the system font size
+     * Increments the system font size
      * @param scale the scale to increase the system font size
      * @author Fangping, 08/04/2010
      * @author wei wang, commented on 2014-6-19
@@ -1290,7 +1289,7 @@ public class Utility {
     }
     
     /** 
-     * Test if the row header if visible in order to implement header for table
+     * Tests if the row header if visible in order to implement header for table
      * @param table the table to be tested against
      * @return true if the row header is visible
      * @author Fangping, 08/11/2010
@@ -1326,9 +1325,8 @@ public class Utility {
     }
 
     /**
-     * TODO
      * Creates row header for table with row number (starting with 1) displayed
-     * @param table 
+     * @param table the table used to extract header
      */
     public static void setRowHeader(JTable table) {
         Container p = table.getParent();
@@ -1356,9 +1354,11 @@ public class Utility {
      * Name collision/auto new name for creating Physiomimi Work directory
      * this method should be merged with checkSingleFileNameCollision.
      * @author Fangping, 08/17/2010
+     * @param sourceDir source file directory
+     * @param subdirName the subdirectory to be tested
+     * @return the subdirectory name 
      */
-    public static File parseDirNameCollision(File sourceDir,
-                                             String subdirName) {
+    public static File parseDirNameCollision(File sourceDir, String subdirName) {
         
         File newDir = (subdirName.equals(""))? sourceDir: new File(sourceDir.toString() + "/" + subdirName);
 
@@ -1400,23 +1400,23 @@ public class Utility {
     }
     
     /**
-     * TODO
      * Name collision check for a single file, called when renameing a single file
      * @author Fangping, 08/17/2010
-     * @param afile
-     * @param filelist can be null, in which case name collision scope is restricted in the afile's directory 
+     * @param afile the target file
+     * @param filelist can be null, in which case name collision scope is restricted in the afile's directory
+     * @return the file name without conflicting with the file list 
      */
     @SuppressWarnings("unused") // added for "filelist == null" if statement, by wei wang on 2014-6-19
-	public static File parseSingleFileNameCollision(File afile, ArrayList<File> filelist){
+	public static File parseSingleFileNameCollision(File afile, ArrayList<File> filelist) {
         // do nothing to a directory
-        if (afile.isDirectory()){
+        if (afile.isDirectory()) {
             System.out.println("invalid file. directory not allowed");
             return null;
         }
         
         File parentDir = afile.getParentFile();
         int sz = filelist.size();
-        //take Array because listFiles return that type of data structure
+        // take Array because listFiles return that type of data structure
         File sibFiles[] = new File[sz]; 
         
         if (filelist == null) {
@@ -1439,15 +1439,15 @@ public class Utility {
     }
     
     /**
-     * TODO
-     * check if the afile has name collided with files in fileList except fileList.get(eindex)
+     * Checks if the {@code afile} has name collided with files in fileList except fileList.get(eindex)
      * eindex can be -1, means go through the whole fileList;
      * @author Fangping Huang, 08/26/2010
-     * @param afile
-     * @param fileList
-     * @param eindex
+     * @param afile the file to be checked
+     * @param fileList a list of files to be tested on
+     * @param eindex index of the {@code afile} in working directory
+     * @return true if the file has conflicted with the file list except for the file at index {@code eindex}
      */
-    public static boolean isFileNameCollided(File afile, ArrayList<File> fileList, int eindex){   
+    public static boolean isFileNameCollided(File afile, ArrayList<File> fileList, int eindex) {   
         if (afile == null || afile.isDirectory() || fileList == null || fileList.size() == 0)
             return false;
         
@@ -1463,12 +1463,12 @@ public class Utility {
     }
     
     /**
-     * TODO
-     * @param afile
-     * @param fileList
-     * @return
+     * Checks if the {@code afile} has name collided with files in the {@code fileList}
+     * @param afile the file to be checked
+     * @param fileList the file list to be tested on
+     * @return true the file name is not collided with any one of the files in the {@code fileList}
      */
-    public static boolean isFileNameCollided(File afile, ArrayList<File> fileList){   
+    public static boolean isFileNameCollided(File afile, ArrayList<File> fileList) {   
         if (afile == null || afile.isDirectory() || fileList == null || fileList.size() == 0)
             return false;
         
@@ -1482,19 +1482,20 @@ public class Utility {
     }
 
     /**
-     * TODO
+     * Renames a file name if it conflicted with other files in the {@code filelist}
      * @author Fangping, 08/21/2010
      * @param filelist the list of files to be parsed with name collision
      * @return the collision-free files after renamed
      */
-    public static ArrayList<File> parseFileGroupNameCollision(ArrayList<File> filelist){
+    @SuppressWarnings("deprecation")
+	public static ArrayList<File> parseFileGroupNameCollision(ArrayList<File> filelist) {
         int sz = filelist.size();
         
-        //if there is no valid list of files
+        // if there is no valid list of files
         if (sz == 0)
             return null;
         
-        //file-wise analysis procedure
+        // file-wise analysis procedure
         File curfile;
         int num = 0; // test, wei wang, 5/27/2014
         for (int k = 1; k < sz; k++) {
@@ -1508,7 +1509,7 @@ public class Utility {
             num++;
             curfile = filelist.get(k); 
             curfile = parseSingleFileNameCollision(curfile, sublist(filelist, 0, k-1)); 
-            //curfile = parseSingleFileNameCollision(curfile, (ArrayList<File>)(filelist.subList(0, k-1)));
+            // curfile = parseSingleFileNameCollision(curfile, (ArrayList<File>)(filelist.subList(0, k-1)));
             filelist.set(k, curfile);
         }
         
@@ -1516,40 +1517,42 @@ public class Utility {
     }
     
     /**
-     * TODO
-     * @param files
-     * @param start
-     * @param end
-     * @return
+     * Creates a sublist from the given ArrayList
+     * @param files the ArrayList of files  
+     * @param start the start index from which to extract sublist, inclusive
+     * @param end the end index inclusive
+     * @return an ArrayList of newly constructed sublist
      */
     public static ArrayList<File> sublist(ArrayList<File> files, int start, int end) {
-        ArrayList<File> output = new ArrayList<File>(end+1-start);
+        ArrayList<File> output = new ArrayList<File>(end + 1 - start);
         for (int i = start; i <= end; i++)
-            output.add(files.get(i));
-        
+            output.add(files.get(i));        
         return output;
     }
     
     /*
      * alert: works only if all working files have been saved in dir.
      */
-/*     public static File replicateSingleFileToDirectory(File file, File dir){
-        File[] dirfiles = dir.listFiles();
-        ArrayList<File> dirList = new ArrayList<File>();
-        for (int i = 0; i < dirfiles.length; i++)
-            dirList.add(dirfiles[i]);
-        
-        return parseSingleFileNameCollision(file, dirList);
-    } */
+//   public static File replicateSingleFileToDirectory(File file, File dir){
+//        File[] dirfiles = dir.listFiles();
+//        ArrayList<File> dirList = new ArrayList<File>();
+//        for (int i = 0; i < dirfiles.length; i++)
+//            dirList.add(dirfiles[i]);
+//        
+//        return parseSingleFileNameCollision(file, dirList);
+//    }
 
     /**
-     * TODO
-     * used for new task mode of: File_Selections, NO_Override
+     * Copies a list of files into the output directory
+     * Used for new task mode of: File_Selections, NO_Override
+     * @param srcfiles source file list
+     * @param outputDir output directory
+     * @return the list of added files 
      */
     public static ArrayList<File> copyFilestoDirectory(ArrayList<File> srcfiles, File outputDir) {
     	/***
     	 * This method need a progress bar to indicate progress, TBD
-    	 * TODO: wei wang 05/22/2014
+    	 * wei wang 05/22/2014
     	 */
     	JFrame frame = new JFrame("Copying files...");
     	JPanel pane = new JPanel();
@@ -1576,15 +1579,14 @@ public class Utility {
     }
 
     /**
-     * TODO
+     * Checks if there is name collision. If it is, return the index of the file
      * @author Fangping, 08/21/2010
      * @param target the file to be renamed
      * @param fileList the list of files to be referred to
      * @return the index having the same file name with target in the fileList
-     * check if there is name collision. If it is, return the index of the file
      */
-    public static int indexOfCollision(File target, File fileList[]){        
-        for (int i = 0; i < fileList.length; i++){
+    public static int indexOfCollision(File target, File fileList[]) {        
+        for (int i = 0; i < fileList.length; i++) {
             if ((target.isDirectory() != fileList[i].isDirectory())) // dir does not collide with file with the same name
                 continue;
             if (target.getAbsolutePath().equalsIgnoreCase(fileList[i].getAbsolutePath()))
@@ -1595,22 +1597,22 @@ public class Utility {
     }
 
     /**
-     * TODO
+     * Renames a target file in a file list to avoid naming conflict
      * @author Fangping, 08/21/2010
      * @param target the file to be renamed
      * @param filelist the list of files to be compared to target
      * @return the renamed file of the target
-     * verified
      */
     public static File getSuffixNamedFile(File target, File filelist[]) {
-        
+    	// verified
+
         String fullName = target.getName();
         int idx = fullName.lastIndexOf(".");
         String ordName = (idx == -1)? fullName: fullName.substring(0, idx);
         String dotExtName = (idx == -1)? "": fullName.substring(idx);
-        
+
         boolean isDir = target.isDirectory();
-        
+
         int suffix, k;
         out_loop:
         for (suffix = 1; suffix < Integer.MAX_VALUE; suffix++) {
@@ -1621,42 +1623,45 @@ public class Utility {
             }
             break;
         }
-        
+
         String newName = ordName + "(" + suffix + ")" + dotExtName;
         return new File(target.getParent() + "/" + newName);
     }    
-    
+
+//   Helper to set the default focus on No button instead of Yes
+//   copyied from http://forums.sun.com/thread.jspa?threadID=5395347
+//   Fangping, 08/22/2010
     /**
-     * TODO
-     * Helper to set the default focus on No button instead of Yes
-     * copyied from http://forums.sun.com/thread.jspa?threadID=5395347
-     * Fangping, 08/22/2010
+     * Shows customized option dialog, default on "No" button
+     * @param parent parent determines the Frame in which the dialog is displayed; if null, or if the parentComponent has no Frame, a default Frame is used
+     * @param message the Object to display
+     * @param title title the title string for the dialog
+     * @param messageType messageType an integer designating the kind of message this is, primarily used to determine the icon from the pluggable Look and Feel
+     * @return true if the user chose "Yes" option, false otherwise
      */
-    public static boolean defaultNoOptionPane(Component parent, String message, String title,
-                                              int messageType) {
-        
+    public static boolean defaultNoOptionPane(Component parent, String message, String title, int messageType) {
+
         int reply = JOptionPane.showOptionDialog(parent, message, title,
             JOptionPane.YES_NO_OPTION, messageType, null,
             new String[] { "Yes", "No" }, "No");
-        
+
         return (reply == 0? true: false);
-      }
+    }
     
     /**
-     * TODO
-     * @param parent
-     * @param message
-     * @param title
-     * @param messageType
-     * @return
+     * Show customized option dialog
+     * @param parent determines the Frame in which the dialog is displayed; if null, or if the parentComponent has no Frame, a default Frame is used
+     * @param message the Object to display
+     * @param title the title string for the dialog
+     * @param messageType an integer designating the kind of message this is, primarily used to determine the icon from the pluggable Look and Feel
+     * @return true if the user chose "Yes" option, false otherwise
      */
-    public static boolean NoThanksOptionPane(Component parent, String message, String title,
-                                              int messageType) {
-        
+    public static boolean NoThanksOptionPane(Component parent, String message, String title, int messageType) {
+
         int reply = JOptionPane.showOptionDialog(parent, message, title,
             JOptionPane.YES_NO_OPTION, messageType, null,
             new String[] { "Yes", "No, thanks" }, "Yes");
-        
+
         return (reply == 0? true: false);
     }
     
@@ -1664,7 +1669,7 @@ public class Utility {
     //refer to: https://jdic.dev.java.net/
     //refer to: http://stackoverflow.com/questions/526037/java-how-to-open-user-system-preffered-editor-for-given-file
     /**
-     * Open default application according to the user operating system to process the file
+     * Opens default application according to the user operating system to process the file
      * @param file the file to be edited
      * @return true if this file can be edited
      */
@@ -1726,10 +1731,10 @@ public class Utility {
     }    
      
     /**
-     * TODO
-     * @param table
-     * @param rr
-     * @param cc
+     * Scroll the table to specific location that can be viewed
+     * @param table the table currently viewed
+     * @param rr the row number
+     * @param cc the column number
      */
     public static void scrollTableRowToVisible(JTable table, int rr, int cc) {
         if (!(table.getParent() instanceof JViewport)) {
@@ -1743,9 +1748,9 @@ public class Utility {
     }
     
     /**
-     * TODO
-     * @param file
-     * @return
+     * Given a file, return the index of the tab it belongs
+     * @param file the master file of the tab
+     * @return the index of the tab of the file
      */
     public static int getTabIndexofMasterFile(File file) {
 //        int index;  // deleted by wei wang on 2014-6-19
@@ -1768,6 +1773,7 @@ public class Utility {
      * Recursively find files, which name ends with ".edf"
      * @param root root file to search.
      * @param tmp output ArrayList of found files.
+     * @return a list of files found
      * wei wang, 5/23/2014
      */
     public static ArrayList<File> findFileAddRecursive(File root, ArrayList<File> tmp) {
@@ -1792,7 +1798,8 @@ public class Utility {
     
     /**
      * Start and end of busy waiting cursor.
-     * wei wang, 5/27/2014
+     * @param component the component the cursor rested upon
+     * wei wang, 5/27/2014 
      */
     public static void startWaitCurosr(JComponent component) {
     	int cursorType = Cursor.CROSSHAIR_CURSOR;
@@ -1802,8 +1809,8 @@ public class Utility {
     }
     
     /**
-     * TODO
-     * @param component
+     * Changes cursor to default cursor
+     * @param component where the cursor stays upon
      */
     public static void endWaitCursor(JComponent component) {
     	int cursorType = Cursor.DEFAULT_CURSOR;

@@ -26,32 +26,31 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import javax.swing.text.StyleContext;
 
-/**
- * this class is to customize the layout of info panes
- * including the file information pane, the log pane, and the message pane
- * To be customized items: foreground/background color/font, keyword color/font,
- * plain text color/font, and so on.
- */
-
 /* EDFInfoPane should extend JTextPane, instead of JEditorPane which is better for 
  * displaying already formatted data but less fantastic if things want to be
  * manipulated by oneself.
  */
 
+/**
+ * This class is to customize the layout of info panes
+ * including the file information pane, the log pane, and the message pane
+ * To be customized items: foreground/background color/font, keyword color/font,
+ * plain text color/font, and so on.
+ */
 @SuppressWarnings("serial")
 public class EDFInfoPane extends JTextPane {
     
     protected static String fontName = Font.MONOSPACED;
     protected static Color foregroundColor = new Color(0, 255, 0);
     protected static Color backgroundColor = new Color(0, 55, 0);
-    //theme, like new task, add files, apply template, save
+    // theme, like new task, add files, apply template, save
     public static MutableAttributeSet theme = new SimpleAttributeSet();
-    //content
+    // content
     protected static MutableAttributeSet content = new SimpleAttributeSet();
-    //actions registered in log, such as open, save, export, add, remove, delete
+    // actions registered in log, such as open, save, export, add, remove, delete
     protected static MutableAttributeSet logaction = new SimpleAttributeSet();
-    //commented by fangping, 10/07/2010
-    //protected static final String finfoTitle = "======== Source File Info ========\n";
+    // commented by fangping, 10/07/2010
+    // protected static final String finfoTitle = "======== Source File Info ========\n";
     protected static final String finfoTitle = "";
     protected static final int finfoTitleLength = finfoTitle.length();
     protected static final String logTitle = "";
@@ -75,7 +74,7 @@ public class EDFInfoPane extends JTextPane {
     public static final String output_dir = "Output Path: ";
     public static final String task_files = "Files: ";    
 
-    public static final String html_table_beg= "<tr><th>";
+    public static final String html_table_beg = "<tr><th>";
     public static final String html_table_mid = "</th><td>";
     public static final String html_table_end = "</td></tr>";
     public static final String tale_tag_start =  "<table width = 250>";
@@ -83,10 +82,10 @@ public class EDFInfoPane extends JTextPane {
    
     private JPopupMenu popup = new JPopupMenu();
     private JMenuItem clearMenu = new JMenuItem("Clear");
-   // private JMenuItem copyMenu = new JMenuItem("Copy");
-   // private JMenuItem selectallMenu = new JMenuItem("Select All");
-   // private JMenuItem findMenu = new JMenuItem("Find");
-   // private JMenuItem saveasMenu = new JMenuItem("Save As");
+    // private JMenuItem copyMenu = new JMenuItem("Copy");
+    // private JMenuItem selectallMenu = new JMenuItem("Select All");
+    // private JMenuItem findMenu = new JMenuItem("Find");
+    // private JMenuItem saveasMenu = new JMenuItem("Save As");
     
     static {
         StyleConstants.setForeground(theme, foregroundColor);
@@ -97,15 +96,15 @@ public class EDFInfoPane extends JTextPane {
     private StyledDocument doc;
     
     /**
-     * TODO
-     * @param paneType
+     * Set up the EDF info pane according to different pane type
+     * @param paneType the pane type of this EDFInfoPane
      */
     public EDFInfoPane(int paneType) {       
         super();
         this.setOpaque(false);
         
-        //this is needed if using Nimbus laf
-        //see http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6687960
+        // this is needed if using Nimbus laf
+        // see http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6687960
         this.setBackground(new Color(0, 0, 0, 0));
         this.setForeground(foregroundColor);
         
@@ -113,7 +112,7 @@ public class EDFInfoPane extends JTextPane {
         setPopupMenu();
         addMouseListener(new InfoPaneMouseAdapter());
         
-        //obsolete
+//      obsolete
 //        if (paneType == FINFO)
 //            this.setText("");
 //        else
@@ -121,44 +120,40 @@ public class EDFInfoPane extends JTextPane {
     }
     
     /**
-     * TODO
+     * Set the StyledDocument of this JTextPane
      */
     private void setupDoc() {
         doc = this.getStyledDocument();        
     }
     
     /**
-     * TODO
-     * @param message
+     * Add the message to the data model for display
+     * @param message message for display
      */
     public void outputMessage(String message) {
         try {
             doc.insertString(doc.getLength(), message, theme);
         } catch (BadLocationException e) {;}
     }
-    
-    
-    /* (non-Javadoc)
+        
+    /**
      * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
      */
     @Override
     protected void paintComponent(Graphics g) {
         g.setColor(backgroundColor);
-        g.fillRect(0,0, getWidth(), getHeight());
-        
+        g.fillRect(0,0, getWidth(), getHeight());        
         super.paintComponent(g);
     }
     
-    //print the message header for each type of events
     /**
-     * TODO
-     * @param headerText
+     * print the message header for each type of events
+     * @param headerText the header text to be printed out
      */
     public static void printMessageHeader(String headerText) {
         StyleContext context = new StyleContext();
         StyledDocument document = new DefaultStyledDocument(context);
-        Style labelStyle = context.getStyle(StyleContext.DEFAULT_STYLE);
-        
+        Style labelStyle = context.getStyle(StyleContext.DEFAULT_STYLE);        
         JLabel label = new JLabel(MainWindow.messageIcon);
         StyleConstants.setComponent(labelStyle, label);
         
@@ -174,7 +169,7 @@ public class EDFInfoPane extends JTextPane {
     }
     
     /**
-     * TODO
+     * Create a pop up menu to clear the console window
      */
     public void setPopupMenu() {
         popup.add(clearMenu);      
@@ -187,26 +182,24 @@ public class EDFInfoPane extends JTextPane {
         });
     }
     
-    //erase all content in the console window    
     /**
-     * TODO
+     * erase all content in the console window   
      */
     private void clearMessage(){
         this.setText("");
     }
 
     /**
-     * TODO
-     * @return
+     * Returns the MutableAttributeSet associated with this JTextPane
+     * @return the MutableAttributeSet object
      */
     public static MutableAttributeSet getTheme() {
         return theme;
     }
     
     /**
-     * TODO
-     * output file information in table to editorPane
-     * @param file
+     * Outputs file information in table to editorPane
+     * @param file the file from which the information is extracted
      */
     public void outputFileInfoWithHtml(File file) {
         this.setContentType("text/html");
@@ -223,8 +216,7 @@ public class EDFInfoPane extends JTextPane {
     }
 
     /**
-     * TODO
-     * output task information in table to editorPane
+     * Outputs task information in table to editorPane
      */
     public void outputTaskInfoWithHtml() {
         this.setContentType("text/html");
@@ -255,9 +247,9 @@ public class EDFInfoPane extends JTextPane {
 
 
     /**
-     * TODO
-     * @param size
-     * @return
+     * Converting file size from bytes to Megabytes in string
+     * @param size the original file size in long
+     * @return the file size in Megabyte
      */
     private String formatFileSize(long size) {
         String lenstr = "";
@@ -272,19 +264,19 @@ public class EDFInfoPane extends JTextPane {
     }
     
     /**
-     * TODO
-     * @param size
-     * @return
+     * Convert this 'size'(Byte) to corresponding MB(Megabyte)
+     * @param size size in byte
+     * @return the corresponding Megabyte
      */
     private long toMegaBytes(long size) {
-        int mb = 1000*1000;
-        return (size < 1)? 1: (size/mb);
+        int mb = 1000 * 1000;
+        return (size < 1)? 1: (size / mb);
     }
     
     /**
-     * TODO
-     * @param date
-     * @return
+     * Get formated file date
+     * @param date the date in long type
+     * @return the date in string format: "yyy.MM.dd at HH:mm:ss"
      */
     private String formatFileDate(long date) {        
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss");      
@@ -294,12 +286,12 @@ public class EDFInfoPane extends JTextPane {
     }
 
     /**
-     * TODO
-     * @param name
-     * @param path
-     * @param size
-     * @param date
-     * @return
+     * Converting the file information into HTML format
+     * @param name the file name
+     * @param path the file path
+     * @param size the file size
+     * @param date the date of the file creating time
+     * @return the HTML format information of the file
      */
     private String tabulateFileInfo(String name, String path,  String size, String date) {
         name = appendformattedHeader(file_name, name);
@@ -307,31 +299,31 @@ public class EDFInfoPane extends JTextPane {
         size = appendformattedHeader(file_size, size);
         date = appendformattedHeader(file_date, date);
         
-        String content = name + path + size + date;
-        
+        String content = name + path + size + date;        
         return tale_tag_start  + content + table_tag_end;
     }
     
     /**
-     * TODO
-     * @param header
-     * @param content
-     * @return
+     * Append formatted header information with content
+     * @param header the header 
+     * @param content the content corresponding to this header
+     * @return the formatted string containing the header and the content
      */
     private String appendformattedHeader(String header, String content) {
         return html_table_beg + header + html_table_mid + content + html_table_end;
     }
     
     /**
-     * TODO
-     * @param srcDir
-     * @param outputDir
-     * @param taskFilesCount
-     * @param writeMode
-     * @param selectionMode
-     * @return
+     * Converting the task information into HTML format
+     * @param srcDir source directory
+     * @param outputDir output directory
+     * @param taskFilesCount task file count
+     * @param writeMode write mode, override or duplicate
+     * @param selectionMode selection mode, by directory or by file
+     * @return the formatted string containing the task information
      */
-    private String tabulateTaskInfo(String srcDir, String outputDir, String taskFilesCount, String writeMode, String selectionMode){
+    private String tabulateTaskInfo(String srcDir, String outputDir, String taskFilesCount, 
+    		String writeMode, String selectionMode) {
         srcDir = appendformattedHeader(source_dir, srcDir);
         outputDir = appendformattedHeader(output_dir, outputDir);
         taskFilesCount = appendformattedHeader(task_files, taskFilesCount);
@@ -344,14 +336,15 @@ public class EDFInfoPane extends JTextPane {
     }
 
     /**
-     * TODO
+     * A MouseAdapter that respond to the right mouse click and shows the pop-up menu
      */
     class InfoPaneMouseAdapter extends MouseAdapter {
         
-        /* (non-Javadoc)
+        /**
          * @see java.awt.event.MouseAdapter#mousePressed(java.awt.event.MouseEvent)
          */
-        public void mousePressed(MouseEvent e){
+        public void mousePressed(MouseEvent e) {
+        	// BUTTON3: equal to the right mouse button
             if (e.getButton() == MouseEvent.BUTTON3){
                 popup.show((JComponent)e.getSource(), e.getX(), e.getY());
             }

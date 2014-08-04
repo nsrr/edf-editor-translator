@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 
+/**
+ * ESAChannel is responsible of reading and writing signal channel information from and to a file
+ */
 public class ESAChannel extends ESA {
+	
 	// wei wang, 2014-6-18:
 	// Change HashMap to HashMap<String,Object>
     private HashMap<String,Object> esaChannel = null;
@@ -145,28 +149,25 @@ public class ESAChannel extends ESA {
 ////////////////////// END of constructor zone ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-//     public byte[] regularizeToBytes(HashMap currentChannel, int index){
+//     public byte[] regularizeToBytes(HashMap currentChannel, int index) {
 //        String key = getESAattributes()[index];
-//        String srcValue = (String) header.get(key); //1.
-//
-//        int byteSize = byteLength[index]; //2.
-//
-//        byte[] rgdValue = regularizeKey(srcValue, byteSize).getBytes(); //3.
-//
+//        String srcValue = (String) header.get(key); // 1.
+//        int byteSize = byteLength[index]; // 2.
+//        byte[] rgdValue = regularizeKey(srcValue, byteSize).getBytes(); // 3.
 //        return rgdValue;
 //    }
 
     /**
-     * Returns the byte value of the selected attribute
-     * Algorithm:
-     * 1. single out the attribute value from the header;
-     * 2. get the size of the attribute specified by EDF Standard;
-     * 3. regularize the attribute value to bytes.
+     * Returns the byte array value of the selected attribute
      * @param channelHeader the attribute values of current channel
      * @param index the index number of the selected attribute
      * @return byte value of the selected attribute
      */
     public byte[] regularizeToBytes(HashMap<String,Object> channelHeader, int index) {
+//      Algorithm:
+//      1. single out the attribute value from the header;
+//      2. get the size of the attribute specified by EDF Standard;
+//      3. regularize the attribute value to bytes.
         String key = getESAAttributeAt(index);
         String srcValue = (String) channelHeader.get(key); // end of 1.
         int byteSize = getByteLengthAt(index); // end of 2.
@@ -176,17 +177,16 @@ public class ESAChannel extends ESA {
 
     /**
      * Usage: to write current ESA channel to file in manner of random file accessor
-     * Algorithm:
-     * 1. regularize each attribute value of current channel to byte form;
-     * 2. write each attribute in bytes to file
-     * Note: since ESA attribute values in file is non-linear, so step 1 and 2 are manually pieced together
      * @param raf random file accessor
      * @param indexOfChannel index of current channel
      * @param numberOfChannels the number of channels
-     * @throws IOException
+     * @throws IOException IOException
      */
-    public void writeESAChannelToDisk(
-    	RandomAccessFile raf, int indexOfChannel, int numberOfChannels) throws IOException {
+    public void writeESAChannelToDisk(RandomAccessFile raf, int indexOfChannel, int numberOfChannels) throws IOException {    	
+//      Algorithm:
+//      1. regularize each attribute value of current channel to byte form;
+//      2. write each attribute in bytes to file
+//    	Note: since ESA attribute values in file is non-linear, so step 1 and 2 are manually pieced together
         
         HashMap<String,Object> header = getEsaChannel();
         
@@ -246,7 +246,7 @@ public class ESAChannel extends ESA {
 ///////////////////////////////////////////////////////////////////////////////
 
     /**
-     * Get the ESA channel in map form
+     * Get the ESA channel in hashmap form
      * @return the complete channel in form of HashMap
      */
     public HashMap<String,Object> getThisChannel() {
@@ -290,7 +290,7 @@ public class ESAChannel extends ESA {
     }
     
     /**
-     * Get ESA channel
+     * Get ESA channel of HashMap format
      * @return the HashMap representation of the current ESA channel
      */
     public HashMap<String,Object> getEsaChannel(){
@@ -299,7 +299,7 @@ public class ESAChannel extends ESA {
  
     /**
      * Initialize the ESA channel by returning a HashMap representation of this channel
-     * @return A new HashMap for this channel
+     * @return A new empty HashMap for this channel
      */
     public HashMap<String,Object> initializeEsaChannel(){
         return new HashMap<String,Object>();

@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+/**
+ * An AquaBarTabbedPaneUI
+ */
 public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 
 	private static final Insets NO_INSETS = new Insets(0, 0, 0, 0);
@@ -21,16 +24,16 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	private int lastRollOverTab = -1;
 
 	/**
-	 * TODO
-	 * @param c
-	 * @return
+	 * A static method to create a new AquaBarTabbedPaneUI
+	 * @param c the component
+	 * @return the ComponentUI
 	 */
 	public static ComponentUI createUI(JComponent c) {
 		return new AquaBarTabbedPaneUI();
 	}
 
 	/**
-	 * TODO
+	 * Default constructor
 	 */
 	public AquaBarTabbedPaneUI() {
 
@@ -61,31 +64,30 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * TODO
-	 * @param b
+	 * Sets the contentTopBorderDrawn
+	 * @param b true to enable contentTopBorderDrawn
 	 */
 	public void setContentTopBorderDrawn(boolean b) {
 		contentTopBorderDrawn = b;
 	}
 
 	/**
-	 * TODO
-	 * @param i
+	 * Sets the content insets
+	 * @param i the same space used to create insets
 	 */
 	public void setContentInsets(Insets i) {
-		contentInsets = i;
+		contentInsets = i; // ?
 	}
 
 	/**
-	 * TODO
-	 * @param i
+	 * Sets the content insets using parameter 
+	 * @param i the same space used to create insets
 	 */
 	public void setContentInsets(int i) {
 		contentInsets = new Insets(i, i, i, i);
 	}
 
 	/**
-	 * TODO
 	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getTabRunCount(javax.swing.JTabbedPane)
 	 */
 	public int getTabRunCount(JTabbedPane pane) {
@@ -93,7 +95,7 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * TODO
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#installDefaults()
 	 */
 	protected void installDefaults() {
 		super.installDefaults();
@@ -107,22 +109,21 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * TODO
-	 * @return
+	 * Returns if the tab layout is scrollable
+	 * @return false for default
 	 */
 	protected boolean scrollableTabLayoutEnabled() {
 		return false;
 	}
 
 	/**
-	 * TODO
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#getContentBorderInsets(int)
 	 */
 	protected Insets getContentBorderInsets(int tabPlacement) {
 		return contentInsets;
 	}
 
 	/**
-	 * TODO
 	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateTabHeight(int, int, int)
 	 */
 	protected int calculateTabHeight(int tabPlacement, int tabIndex, int fontHeight) {
@@ -130,7 +131,7 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * TODO
+	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#calculateTabWidth(int, int, java.awt.FontMetrics)
 	 */
 	protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
 		int w = super.calculateTabWidth(tabPlacement, tabIndex, metrics);
@@ -140,14 +141,15 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * TODO
+	 * Returns the maximum tab height
+	 * @return 21 for default
 	 */
 	protected int calculateMaxTabHeight(int tabPlacement) {
 		return 21;
 	}
 
 	/**
-	 * TODO
+	 * A method to paint tab area
 	 */
 	protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {
 		Graphics2D g2d = (Graphics2D) g;
@@ -167,7 +169,7 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * TODO
+	 * A method to paint tab background
 	 * @see javax.swing.plaf.basic.BasicTabbedPaneUI#paintTabBackground(java.awt.Graphics, int, int, int, int, int, int, boolean)
 	 */
 	protected void paintTabBackground(Graphics g, int tabPlacement,
@@ -269,7 +271,7 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * TODO
+	 * 
 	 */
 	private class ColorSet {
 		Color topGradColor1;
@@ -280,7 +282,7 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 	}
 
 	/**
-	 * TODO
+	 * A mouse motion listener that listens for roll over event
 	 */
 	private class RollOverListener implements MouseMotionListener,
 			MouseListener {
@@ -309,9 +311,6 @@ public class AquaBarTabbedPaneUI extends BasicTabbedPaneUI {
 			tabPane.repaint();
 		}
 
-		/**
-		 * TODO
-		 */
 		private void checkRollOver() {
 			int currentRollOver = getRolloverTab();
 			if (currentRollOver != lastRollOverTab) {

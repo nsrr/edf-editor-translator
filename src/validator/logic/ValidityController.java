@@ -7,9 +7,9 @@ import editor.NewTask_for_ValidityCommandLine;
 public class ValidityController {
 	
 	/**
-	 * TODO
-	 * @param edf_dir
-	 * @param output
+	 * Conducts validation using EDF file directory and the output directory
+	 * @param edf_dir the EDF file directory
+	 * @param output the output directory 
 	 */
 	public static void conductValidity(String edf_dir, String output) {
 
@@ -20,7 +20,7 @@ public class ValidityController {
 	}
 	
 	/**
-	 * Formalize the file separator for the string 
+	 * Formalizes the file separator for the string 
 	 * @param oldString the string to be formalized
 	 * @return the formalized string
 	 */

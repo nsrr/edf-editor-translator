@@ -18,6 +18,9 @@ import javax.swing.JPanel;
 
 import configure.ConfigureManager;
 
+/**
+ * This class is responsible for setting up the MCR and Viewer path 
+ */
 @SuppressWarnings("serial")
 public class SettingParameters extends JFrame {
 
@@ -25,8 +28,8 @@ public class SettingParameters extends JFrame {
 	protected JLabel chosenDirectory = null;
 
 	/**
-	 * TODO
-	 * @param dialogType
+	 * Setting MCR and Viewer path
+	 * @param dialogType shows MCR or Viewer dialog
 	 */
 	public SettingParameters(final String dialogType) {
 
@@ -39,6 +42,7 @@ public class SettingParameters extends JFrame {
 		} else{
 			this.setTitle("");
 		}
+		
 		this.setSize(600, 300);
 		this.setLayout(new GridLayout(3, 1));
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -46,13 +50,12 @@ public class SettingParameters extends JFrame {
 	    int y = dimension.height / 2 - this.getHeight() / 2;
 	    this.setLocation(x, y);
 
-	    //controlPanel1
+	    // controlPanel1
 		JPanel controlPanel1 = new JPanel();
 		controlPanel1.setLayout(new FlowLayout());
 		this.add(controlPanel1);
 		JButton button = new JButton("Select Directory");
 		controlPanel1.add(button);
-
 
 		button.addActionListener(new ActionListener() {
 			@Override
@@ -72,7 +75,7 @@ public class SettingParameters extends JFrame {
 			}
 		});
 
-		//controlPanel2
+		// controlPanel2
 		JPanel controlPanel2 = new JPanel();
 		controlPanel2.setLayout(new GridLayout(2, 1));
 		this.add(controlPanel2);

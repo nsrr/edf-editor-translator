@@ -6,6 +6,9 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * An EDFTableModel is a DefaultTableModel that support undoable events
+ */
 @SuppressWarnings("serial")
 public class EDFTableModel extends DefaultTableModel {
 	
@@ -18,7 +21,7 @@ public class EDFTableModel extends DefaultTableModel {
     }
     
     /**
-     * Construct a EDFTableModel with as many columns as there are
+     * Construct an EDFTableModel with as many columns as there are
      * elements in <code>columnNames</code> and <code>rowCount</code> 
      * of <code>null</code> object values.  Each column's name will 
      * be taken from the <code>columnNames</code> array.
@@ -48,9 +51,9 @@ public class EDFTableModel extends DefaultTableModel {
 
     /**
      * Sets the object value for the cell at column and row. aValue is the new value
-     * @value the new value 
-     * @row the row whose value is to be changed
-     * @column the column whose value is to be changed
+     * @param value the new value 
+     * @param row the row whose value is to be changed
+     * @param column the column whose value is to be changed
      * @see javax.swing.table.DefaultTableModel#setValueAt(java.lang.Object, int, int)
      */
     @Override

@@ -15,6 +15,9 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+/**
+ * An ESA table used to represent the data model of the EDF Signal Attributes
+ */
 @SuppressWarnings("serial")
 public class ESATable extends EDFTable {
 	
@@ -24,8 +27,7 @@ public class ESATable extends EDFTable {
     protected static final int[] immutableFieldIndices = { index_of_immutablie };
 
     /**
-     * TODO
-     * this constructor builds a table with 1 empty row
+     * This constructor builds a table with 1 empty row
      */
     public ESATable() {
         super(new ESATableModel(1));  
@@ -34,8 +36,8 @@ public class ESATable extends EDFTable {
     }
     
     /**
-     * TODO
-     * @param esa
+     * Constructs ESATable using an ESATableModel
+     * @param esa the table model
      */
     public ESATable(ESATableModel esa) {
     	super(esa);
@@ -44,14 +46,14 @@ public class ESATable extends EDFTable {
     }
     
     /**
-     * TODO
-     * @param esaHeader
-     * @param forTemplateOpen
+     * Creates ESATable using an ESAHeader
+     * @param esaHeader the ESAHeader
+     * @param forTemplateOpen if true, creates the ESATable using this ESAHeader
      */
     public ESATable(ESAHeader esaHeader, Boolean forTemplateOpen) {
         super();
         
-        if (forTemplateOpen == true) {
+        if (true == forTemplateOpen) {
             createESATable(esaHeader);
             customizeLook("esa");
         }
@@ -60,14 +62,15 @@ public class ESATable extends EDFTable {
 
 
     /**
-     * TODO
+     * Constructs the ESATable using an EDFHeader
      * @param edfHeader a group of edf files' headers
+     * @param forTemplateOpen if true using the EDFHeader to creates the ESATable
      */
     public ESATable(EDFFileHeader edfHeader, Boolean forTemplateOpen) {
         super();
 
         ESAHeader esaHeader = edfHeader.getEsaHeader();
-        if (forTemplateOpen == true) {
+        if (true == forTemplateOpen) {
             createESATable(esaHeader);
             customizeLook("esa");
         }
@@ -89,8 +92,8 @@ public class ESATable extends EDFTable {
 //    }
     
     /**
-     * TODO
-     * @param edfFileHeader
+     * Updates the ESATable using an ESAHeader
+     * @param edfFileHeader the ESAHeader used to update this ESATable
      */
     public void updateTable(ESAHeader edfFileHeader) {
 
@@ -108,9 +111,9 @@ public class ESATable extends EDFTable {
         this.setUpdateSinceLastSave(true); // update the save status of the table
     }
     
-    //Fangping, 10/04/2010
+      // Fangping, 10/04/2010
       /**
-       * TODO
+       * Saves this ESATable's column to local variables
        */
       private void cacheColumns() {
     	  int ncol = getModel().getColumnCount();
@@ -121,7 +124,7 @@ public class ESATable extends EDFTable {
     
     //Fangping, 10/04/2010
     /**
-     * TODO
+     * Shows the immutable fields of this ESATable
      * @see table.EDFTable#showImmutableFields()
      */
     public void showImmutableFields() {
@@ -133,7 +136,7 @@ public class ESATable extends EDFTable {
     }
     
     /**
-     * TODO
+     * Hides the immutable table fields of this ESATable
      * @see table.EDFTable#hideImmutableFields()
      */
     public void hideImmutableFields() {
@@ -148,14 +151,13 @@ public class ESATable extends EDFTable {
     }
     
     /**
-     * TODO
-     * @param esaHeader ESA header
-     * one header corresponds to one ESA Table
-     * algorithm: map each attribute value of each channel to each cell
+     * Creates the ESATable using an ESAHeader, one header corresponds to one ESA Table
+     * @param esaHeader ESA header the ESA header used
      */
     public void createESATable(ESAHeader esaHeader) {
+    	// algorithm: map each attribute value of each channel to each cell
         int nChannels = esaHeader.getNumberOfChannels();
-        this.setModel(new  ESATableModel(nChannels)); //this line is required; otherwise, getValueAt does not work
+        this.setModel(new ESATableModel(nChannels)); //this line is required; otherwise, getValueAt does not work
         ESAChannel esaChannel;
         String key, aValue;
         for (int nrow = 0; nrow < nChannels; nrow++)
@@ -166,28 +168,27 @@ public class ESATable extends EDFTable {
                 //System.out.println(aValue);
                 this.setValueAt(aValue, nrow, ncolumn); //map attribute values to cells
             }
-
         this.stripTable(tableOddRowClr, null, tableEvenRowClr, null);
     }
     
     /**
-     * TODO
-     * @param sourceOfMasterFile
+     * Sets the master file of this ESATable
+     * @param sourceOfMasterFile the file this ESATable belongs to
      */
     public void setSourceMasterFile(File sourceOfMasterFile) {
         this.hostFile = sourceOfMasterFile;
     }
 
     /**
-     * TODO
-     * @return
+     * Gets the master file of this ESATable
+     * @return the master file this ESATable belongs to 
      */
     public File getSourceMasterFile() {
         return hostFile;
     }
 
     /**
-     * TODO
+     * A table cell renderer that renders the ESATable different colors between rows
      */
     class StripedTableCellRenderer extends JLabel implements TableCellRenderer {
         
@@ -198,7 +199,7 @@ public class ESATable extends EDFTable {
         protected Color oddFore;
 
         /**
-         * TODO
+         * Default constructor
          * @param targetRenderer
          * @param evenBack
          * @param evenFore
@@ -215,9 +216,8 @@ public class ESATable extends EDFTable {
             this.oddFore = oddFore;
         }
 
-        // Implementation of TableCellRenderer interface
         /**
-         * TODO
+         * Implementation of TableCellRenderer interface
          * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
          */
         public Component getTableCellRendererComponent(JTable table,
@@ -253,7 +253,12 @@ public class ESATable extends EDFTable {
 
     // Convenient method to apply this renderer to single column
     /**
-     * TODO
+     * Convenience method to apply this renderer to single column
+     * @param columnIndex the column index
+     * @param evenBack even background color
+     * @param evenFore even foreground color
+     * @param oddBack odd background color
+     * @param oddFore odd foreground color
      * @see table.EDFTable#stripTableInColumn(int, java.awt.Color, java.awt.Color, java.awt.Color, java.awt.Color)
      */
     public void stripTableInColumn(int columnIndex, Color evenBack,
@@ -268,7 +273,11 @@ public class ESATable extends EDFTable {
     }
 
     /**
-     * TODO
+     * Renders table using different color theme
+     * @param evenBack even background color
+     * @param evenFore even foreground color
+     * @param oddBack odd background color
+     * @param oddFore odd foreground color
      * @see table.EDFTable#stripTable(java.awt.Color, java.awt.Color, java.awt.Color, java.awt.Color)
      */
     public void stripTable(Color evenBack, Color evenFore, Color oddBack, Color oddFore) {

@@ -53,7 +53,7 @@ public interface AbstracTableIO {
     void read(EIAHeader eiaHeader, File file);
 
     /**
-     * @param esaHeader
+     * @param esaHeader ESA header to be read from
      * @param file the source file to be read
      */
     void read(ESAHeader esaHeader, File file);    

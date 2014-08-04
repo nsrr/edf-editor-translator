@@ -9,6 +9,9 @@ import java.awt.Font;
 
 import javax.swing.table.TableColumn;
 
+/**
+ * An ESATemplateTable used to create and costomize the ESATemplateTable
+ */
 @SuppressWarnings("serial")
 public class ESATemplateTable extends EDFTable {
     
@@ -21,7 +24,7 @@ public class ESATemplateTable extends EDFTable {
     protected static final int[] immutableFieldIndices = {index_of_immutablie};
     
     /**
-     * TODO
+     * Default constructor
      */
     public ESATemplateTable() {
         super(new ESATemplateTableModel(1));
@@ -30,9 +33,9 @@ public class ESATemplateTable extends EDFTable {
     }
 
     /**
-     * TODO
-     * @param esaHeader
-     * @param forTemplateOpen
+     * Creates ESATemplateTable using an ESAHeader
+     * @param esaHeader the ESAHeader
+     * @param forTemplateOpen if true, creates the ESATemplateTable, false creates ESATable
      */
     public ESATemplateTable(ESAHeader esaHeader, Boolean forTemplateOpen) {
         super(new ESATemplateTableModel(1));
@@ -42,7 +45,7 @@ public class ESATemplateTable extends EDFTable {
     }
 
     /**
-     * TODO
+     * Customizes the look of this table
      */
     public void customizeLook() {
     	this.stripTable(tableOddRowClr, null, tableEvenRowClr, null);
@@ -56,15 +59,15 @@ public class ESATemplateTable extends EDFTable {
     }  
 
     /**
-     * TODO
-     * @param esaHeader
-     * @param forTemplateOpen
+     * Creates ESA table using an ESAHeader
+     * @param esaHeader ESAHeader used to construct the ESATemplateTable
+     * @param forTemplateOpen true if created as template
      */
     public void createESATable(ESAHeader esaHeader, boolean forTemplateOpen) {
         int nChannels = esaHeader.getNumberOfChannels();
-        this.setModel(new ESATemplateTableModel(nChannels)); //this line is required; otherewise, getValueAt does not work
-        if (forTemplateOpen) {
+        this.setModel(new ESATemplateTableModel(nChannels)); // this line is required; otherewise, getValueAt does not work
         
+        if (forTemplateOpen) {        
             ESATemplateChannel esaChannel;
             String key;
             String aValue;
@@ -73,29 +76,27 @@ public class ESATemplateTable extends EDFTable {
                     esaChannel = esaHeader.getEsaTemplateChannelAt(nrow);
                     key = ESA.getESATemplateAttributes()[ncolumn];
                     aValue = (String)esaChannel.getSignalAttributeValueAt(key);
-                    this.setValueAt(aValue, nrow,
-                                    ncolumn); //map attribute values to cells
+                    this.setValueAt(aValue, nrow, ncolumn); //map attribute values to cells
                 }
-           // this.stripTable(Color.lightGray, Color.white, null, null);
+        // this.stripTable(Color.lightGray, Color.white, null, null);
         } else {
             ESAChannel esaChannel;
             String key;
             String aValue;
             for (int nrow = 0; nrow < nChannels; nrow++) {
-                for (int ncolumn = 0; ncolumn < ESA.NUMBER_OF_ATTRIBUTES;
-                     ncolumn++) {
+                for (int ncolumn = 0; ncolumn < ESA.NUMBER_OF_ATTRIBUTES; ncolumn++) {
                     esaChannel = esaHeader.getEsaChannelAt(nrow);
                     key = ESA.getESATemplateAttributes()[ncolumn];
                     aValue = (String)esaChannel.getSignalAttributeValueAt(key);
                     this.setValueAt(aValue, nrow, ncolumn); //map attribute values to cells
                 }
             }
-            //this.stripTable( stripBackgroundClr, stripForegroundClr,  stripBackgroundClr, stripForegroundClr);
+        //this.stripTable( stripBackgroundClr, stripForegroundClr,  stripBackgroundClr, stripForegroundClr);
         }
     }
     
     /**
-     * Store current columns into local fields
+     * Stores current columns into local fields
      */
     private void cacheColumns() {
         int ncol = getModel().getColumnCount();
@@ -105,7 +106,7 @@ public class ESATemplateTable extends EDFTable {
      }
     
     /**
-     * Show immutable table fields of this ESA template table
+     * Shows immutable table fields of this ESA template table
      * @see table.EDFTable#showImmutableFields()
      */
     public void showImmutableFields() {
@@ -117,7 +118,7 @@ public class ESATemplateTable extends EDFTable {
     }
     
     /**
-     * Hide immutable fields of this ESA template table
+     * Hides immutable fields of this ESA template table
      * @see table.EDFTable#hideImmutableFields()
      */
     public void hideImmutableFields() {
@@ -130,5 +131,4 @@ public class ESATemplateTable extends EDFTable {
         }
         validate();
     }
-    
 }

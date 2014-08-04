@@ -4,13 +4,16 @@ import java.net.URL;
 
 import javax.help.*;
 
+/**
+ * Reads the data that comprises the help system
+ */
 public class EDFEditorHelp {
 
     @SuppressWarnings("unused")
 	private HelpSet hs;
 
     /**
-     * TODO
+     * Gets the EDF help system
      */
     public EDFEditorHelp() {
         String helpHS = "/helpfiles/mhHelpSet.hs";

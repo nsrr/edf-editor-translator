@@ -1,6 +1,5 @@
 package editor;
 
-
 import header.EIA;
 import header.EIAHeader;
 
@@ -39,41 +38,54 @@ import table.EIATemplateTable;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-
+/**
+ * A BasicEDFPane for creating or modifying EIATemplate
+ * @see editor.BasicEDFPane
+ */
 @SuppressWarnings("serial")
 public class EIATemplatePane extends BasicEDFPane {
+	
+	//////////////////////////////////////////////////////////////////////////////
+	// Fixed: JComboBox to JComboBox<String>, HashMap to HashMap<String,Object>///
+	// by wei wang, 2014-7-15												   ///
+	//////////////////////////////////////////////////////////////////////////////
 
     protected static final String prtags[] = EIA.getKeys();
     //protected static final String 
-    protected static final String datetags[] = {EIA.key_blank, EIA.key_rand, EIA.key_skip, EIA.key_yy, EIA.key_mm, EIA.key_dd};
-    
-    protected static final String mutableKeys[] ={"Local Patient ID", "Local Recording ID", "Start Date of Recording",
-      "Start Time of Recording"};
+    protected static final String datetags[] = {
+    	EIA.key_blank, EIA.key_rand, EIA.key_skip, EIA.key_yy, EIA.key_mm, EIA.key_dd
+    };
+    protected static final String mutableKeys[] = {
+    	"Local Patient ID", 
+    	"Local Recording ID", 
+    	"Start Date of Recording", 
+    	"Start Time of Recording"
+    };
 
     private JLabel pidLabel = new JLabel(mutableKeys[0]);
     private JRadioButton pidRadio = new JRadioButton();
     private JFormattedTextField pidField = new JFormattedTextField();
     private JLabel pidTipLabel = new JLabel("(No more than 80 characters)");
     private JRadioButton pidTagRadio = new JRadioButton();
-    private JComboBox pidTagBox = this.createPRBox();
+    private JComboBox<String> pidTagBox = this.createPRBox();
 
     private JLabel ridLabel = new JLabel(mutableKeys[1]);
     private JRadioButton ridRadio = new JRadioButton();
     private JFormattedTextField ridField = new JFormattedTextField();
     private JLabel ridTipLabel = new JLabel("(No more than 80 characters)");
     private JRadioButton ridTagRadio = new JRadioButton();
-    private JComboBox ridTagBox = this.createPRBox();
+    private JComboBox<String> ridTagBox = this.createPRBox();
 
     private JLabel dateLabel = new JLabel(mutableKeys[2]);
     private JRadioButton dateRadio = new JRadioButton();
     private JFormattedTextField dateField = new JFormattedTextField();
     private JLabel dateTipLabel = new JLabel("(Format: dd.mm.yy)");
     private JRadioButton dateTagRadio = new JRadioButton();
-    private JComboBox dateTagBox = createDateBox();
+    private JComboBox<String> dateTagBox = createDateBox();
    
     private JLabel previewLabel;
 
-    //two main components in the panel
+    // two main components in the panel
     private JPanel formPane;
     private EIATemplateTable previewTable;
     
@@ -84,46 +96,41 @@ public class EIATemplatePane extends BasicEDFPane {
     private final static Font font = new Font(MainWindow.tabPane.getFont().getName(),
                 MainWindow.tabPane.getFont().getStyle(),
                  MainWindow.tabPane.getFont().getSize() + 2);
-    //private final static Font previewLable_font = new Font(font.getName(), font.getStyle(), font.getSize() + 4);
+    // private final static Font previewLable_font = new Font(font.getName(), font.getStyle(), font.getSize() + 4);
     
 
     /**
-     * create pane for opened EIA template
-     * TODO
-     * @param eiaHeader
-     * @param msFile
+     * Creates pane for opened EIA template
+     * @param eiaHeader the EIA header associated with this template
+     * @param msFile the file this template belongs to
      */
     public EIATemplatePane(EIAHeader eiaHeader, File msFile) {
+    	
         super();
-        
         incrementUid();
         pid = uid;
-
         this.setIsPrimaryTab(false);
         
         if (eiaHeader == null)
             previewTable = new EIATemplateTable(); 
         else
-            previewTable = new EIATemplateTable(eiaHeader);//createPreviewTable(eiaHeader);
+            previewTable = new EIATemplateTable(eiaHeader); // createPreviewTable(eiaHeader);
         
         previewTable.setEnabled(false);
-        
-        //added by Fangping, 10/01/2010        
+        // added by Fangping, 10/01/2010        
         previewTable.setMasterFile(msFile);
         this.setMasterFile(msFile);
-                
         formPane = createFormPane();
-
         setupLayout();
     }
 
     /**
-     * TODO
-     * @param box
-     * @param widthRatio
-     * @param heightRatio
+     * Resizes the combo box
+     * @param box the combo box used for resizing
+     * @param widthRatio the width ratio to resize the combo box
+     * @param heightRatio the height ratio to resize the combo box
      */
-    private void adjustBoxSize(JComboBox box, double widthRatio, double heightRatio) {
+    private void adjustBoxSize(JComboBox<String> box, double widthRatio, double heightRatio) {
         Dimension boxSize = box.getPreferredSize();
         int width = (int)(boxSize.getWidth() * widthRatio);
         int height = (int)(boxSize.getHeight() * heightRatio);
@@ -134,94 +141,92 @@ public class EIATemplatePane extends BasicEDFPane {
 
 
     /**
-     * TODO
-     * @return
+     * the combo box used for patient ID and recording ID area
+     * @return the pid and rid combo box
      */
-    private JComboBox createPRBox() {
-        JComboBox box = new JComboBox();
+    private JComboBox<String> createPRBox() {
+        JComboBox<String> box = new JComboBox<String>();
         adjustBoxSize(box, 1.0, 1.3);
 
-        for (int i = 0; i < prtags.length; i++) {
+        for(int i = 0; i < prtags.length; i++) {
             box.addItem(prtags[i]);
         }
 
         box.setEditable(false);
-
         return box;
     } 
     
     /**
-     * TODO
-     * @return
+     * Creates the combo box related to the start date of recording field
+     * @return the start date combo box
      */
-    private JComboBox createDateBox() {
-        JComboBox box = new JComboBox();
+    private JComboBox<String> createDateBox() {
+        JComboBox<String> box = new JComboBox<String>();
         adjustBoxSize(box, 1.0, 1.3);
 
-        for (int i = 0; i < datetags.length; i++) {
+        for(int i = 0; i < datetags.length; i++) {
             box.addItem(datetags[i]);
         }
 
         box.setEditable(false);
-
         return box;
     }
-    
 
-   /*  private void writeInstructionToLogContentPane() {
-        this.appendToLog("Each attribute field can specify with a specific value, or one of the eight attribute tags: " +
-                         "<BLANK/>, <RAND/>, <SKIP/>, <Local Patient ID/>, <Local Recording ID/>, <YY/>, <MM/>, <DD/>.",
-                         "instruction");
-        this.appendToLog("<BLANK/> : Blank out target attribute value when applied. ",
-                         "instruction");
-        this.appendToLog("<RAND/>  : Yield a random value and substitute target attribute value when applied.",
-                         "instruction");
-        this.appendToLog("<SKIP/>  : Untouch target attribute value when applied.",
-                         "instruction");
-        this.appendToLog("<FileName/> : Uses the file name", "instruction");
-        this.appendToLog("<PID/> : Uses the value in the Local Patient ID field",
-                         "instruction");
-        this.appendToLog("<RID/>: Uses the value in the Local Recording ID field",
-                         "instruction");
-        this.appendToLog("<YY/> : Uses the Year value from the Start Date of Recording field",
-                         "instruction");
-        this.appendToLog("<MM/> : Uses the Month value from the Start Date of Recording field",
-                         "instruction");
-        this.appendToLog("<DD/> : Uses the Day value from the Start Date of Recording field",
-                         "instruction");
-        this.appendToLog("========================================================================================\n",
-                         "instruction");
-        this.appendToLog("Caution: Any fields that exceed 80 characters in length will automatically be truncated.",
-                         "instruction");
-    } */
+//    private void writeInstructionToLogContentPane() {
+//        this.appendToLog("Each attribute field can specify with a specific value, or one of the eight attribute tags: " +
+//                         "<BLANK/>, <RAND/>, <SKIP/>, <Local Patient ID/>, <Local Recording ID/>, <YY/>, <MM/>, <DD/>.",
+//                         "instruction");
+//        this.appendToLog("<BLANK/> : Blank out target attribute value when applied. ",
+//                         "instruction");
+//        this.appendToLog("<RAND/>  : Yield a random value and substitute target attribute value when applied.",
+//                         "instruction");
+//        this.appendToLog("<SKIP/>  : Untouch target attribute value when applied.",
+//                         "instruction");
+//        this.appendToLog("<FileName/> : Uses the file name", "instruction");
+//        this.appendToLog("<PID/> : Uses the value in the Local Patient ID field",
+//                         "instruction");
+//        this.appendToLog("<RID/>: Uses the value in the Local Recording ID field",
+//                         "instruction");
+//        this.appendToLog("<YY/> : Uses the Year value from the Start Date of Recording field",
+//                         "instruction");
+//        this.appendToLog("<MM/> : Uses the Month value from the Start Date of Recording field",
+//                         "instruction");
+//        this.appendToLog("<DD/> : Uses the Day value from the Start Date of Recording field",
+//                         "instruction");
+//        this.appendToLog("========================================================================================\n",
+//                         "instruction");
+//        this.appendToLog("Caution: Any fields that exceed 80 characters in length will automatically be truncated.",
+//                         "instruction");
+//    }
 
 
     /**
-     * TODO
-     * @param eiaHeader
-     * @return
+     * Creates the preview table corresponding to the EIA template
+     * @param eiaHeader the EIA header of this template
+     * @return the preview table
      */
     public EIATemplateTable createPreviewTable(EIAHeader eiaHeader) {
-        String pid, rid, startDate, startTime;
+        @SuppressWarnings("unused")
+		String pid, rid, startDate, startTime;
         if (eiaHeader == null) {
             pid = " ";
             rid = " ";
             startDate = " ";
             startTime = " ";
         } else {
-            HashMap header = eiaHeader.getEIAHeader();
+            HashMap<String,Object> header = eiaHeader.getEIAHeader();
             pid = (String)header.get(EIA.LOCAL_PATIENT_ID);
             rid = (String)header.get(EIA.LOCAL_RECORDING_ID);
             startDate = (String)header.get(EIA.START_DATE_RECORDING);
             startTime = (String)header.get(EIA.START_TIME_RECORDING);
         }
 
-        String[][] firstRow = { { pid, rid, startDate } }; //, startTime}};
-
-        EIATemplateTable pTable = new EIATemplateTable(); //(firstRow, columnNames);
+        @SuppressWarnings("unused")
+		String[][] firstRow = { { pid, rid, startDate } }; //, startTime}};
+        @SuppressWarnings("unused")
+		EIATemplateTable pTable = new EIATemplateTable(); //(firstRow, columnNames);
         
-        previewTable.getTableHeader().setFont(new Font("Dialog", Font.PLAIN,
-                                                       14));
+        previewTable.getTableHeader().setFont(new Font("Dialog", Font.PLAIN, 14));
         previewTable.getTableHeader().setForeground(Color.black);
         previewTable.setRowHeight((int)(previewTable.getRowHeight() * 1.5));
         previewTable.setCellSelectionEnabled(true);
@@ -229,26 +234,24 @@ public class EIATemplatePane extends BasicEDFPane {
 
         previewTable.getTableHeader().setReorderingAllowed(false);
         previewTable.setEnabled(false);
-
         previewTable.addMouseMotionListener(new CellMouseListener());
         
         return previewTable;
     }
     
     /**
-     * TODO
-     * @return
+     * Create preview label
+     * @return the preview label of specific title and font
      */
     private JLabel createPreviewLabel() {
         JLabel previewLabel = new JLabel("Attributes Preview");
-        previewLabel.setFont(font);
-        
+        previewLabel.setFont(font);        
         return previewLabel;
     }
 
     /**
-     * TODO
-     * @param value
+     * Create customized look of patient ID area
+     * @param value the value of pid
      */
     private void makePidRowLook(String value) {
         if (value == null)
@@ -277,16 +280,15 @@ public class EIATemplatePane extends BasicEDFPane {
         } else {
             pidRadio.setSelected(true);
             pidField.setEditable(true);
-            //pidField.setText("yes "); // value replaced
-
+            // pidField.setText("yes "); // value replaced
             pidTagRadio.setSelected(false);
             pidTagBox.setEnabled(false);
         }
     }
 
     /**
-     * TODO
-     * @param value
+     * Create customized look of Recording ID area
+     * @param value the value of recording ID
      */
     private void makeRidRowLook(String value) {
         if (value == null)
@@ -326,8 +328,8 @@ public class EIATemplatePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
-     * @param value
+     * Create customized look of start date of recording area
+     * @param value the start date
      */
     private void makeDateRowLook(String value) {
         if (value == null)
@@ -368,17 +370,18 @@ public class EIATemplatePane extends BasicEDFPane {
 
        
    /**
-    * TODO
- 	* @return
+    * Create the working area for editing EIA template file
+ 	* @return a JPanel of EIA template
  	*/
     private JPanel createFormPane() {
         String headerValues[] = new String[4];
-        for (int i = EIA.index_patient_id; i <=EIA.index_start_date; i++)
-            headerValues[i - EIA.index_patient_id] =(String)previewTable.getModel().getValueAt(0, i);
+        for (int i = EIA.index_patient_id; i <= EIA.index_start_date; i++)
+            headerValues[i - EIA.index_patient_id] = (String)previewTable.getModel().getValueAt(0, i);
         
         previewLabel = createPreviewLabel();
         String colSpec = "r:80dlu:n, 4dlu:n, 12dlu:n, 2dlu:n, f:150dlu:n, 4dlu:n, r:120dlu:n, f:p:g";
-        String rowSpec = "4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:35dlu:n, 4dlu:n";
+        String rowSpec = 
+        		"4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:p:n, 4dlu:n, c:p:n, 2dlu:n, c:35dlu:n, 4dlu:n";
         FormLayout layout = new FormLayout(colSpec, rowSpec);
         JPanel form = new JPanel(layout);
         form.setBorder(BorderFactory.createTitledBorder("Configure Mutable Identity Attributes"));
@@ -416,21 +419,20 @@ public class EIATemplatePane extends BasicEDFPane {
         
         form.add(previewLabel, cc.xyw(1, 14, 2));
         form.add(new JScrollPane(previewTable), cc.xyw(1, 16, 7));
-
         return form;
     } 
     
     
 
     /**
-     * TODO
-     * @param eiaHeader
-     * @return
+     * Get the values associated with the mutableKeys {@link #mutableKeys}
+     * @param eiaHeader the EIA header to be used for returning associated values
+     * @return the mutable attribute values from mutableKeys in the EIA header 
      */
     @SuppressWarnings("unused")
 	private String[] getMutableAttributeValues(EIAHeader eiaHeader) {
         String values[] = new String[4];
-        HashMap header = eiaHeader.getEIAHeader();
+        HashMap<String,Object> header = eiaHeader.getEIAHeader();
 
         for (int i = 0; i < 4; i++) {
             values[i] = (String)header.get(mutableKeys[i]);
@@ -440,121 +442,111 @@ public class EIATemplatePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
-     * @param value
-     * @return
+     * Tests for attribute tag
+     * @param value the value to be tested on
+     * @return true if the value provided is an attribute tag
      */
     private boolean isAttributeTag(String value) {
         for (int i = 0; i < prtags.length; i++) {
             if (value.equalsIgnoreCase(prtags[i]))
                 return true;
         }
-
         return false;
     }
 
     /**
-     * TODO
+     * Sets the layout for editing EIA template
      */
     public void setupLayout() {
-        FormLayout layout =
-            new FormLayout("6dlu, f:max(400dlu;p):n, f:p:g, 10dlu:n", "c:p:n, 6dlu:n, c:min(35dlu;p):n, 6dlu:n, c:min(35dlu;p):n");
+        FormLayout layout = new FormLayout(
+        	"6dlu, f:max(400dlu;p):n, f:p:g, 10dlu:n", "c:p:n, 6dlu:n, c:min(35dlu;p):n, 6dlu:n, c:min(35dlu;p):n"
+        );
         this.setLayout(layout);
         CellConstraints cc = new CellConstraints();
-
         //JScrollPane tableScroller = new JScrollPane(previewTable);
-
         //this.add(topPane, cc.xywh(2, 1, 3, 1));
         this.add(formPane, cc.xywh(2, 1, 2, 1));
         //this.add(tableScroller, cc.xy(2, 3));
 
-        this.setBorder(BorderFactory.createEtchedBorder());
-        
-
+        this.setBorder(BorderFactory.createEtchedBorder());        
     }
 
     /**
-     * TODO
-     * @param previewTable
+     * Sets the preview table
+     * @param previewTable the preview table to view current editing EIA template
      */
     public void setPreviewTable(EIATemplateTable previewTable) {
         this.previewTable = previewTable;
     }
 
     /**
-     * TODO
-     * @return
+     * Returns the preview table of this EIA template
+     * @return the EIATemplateTable being currently edited
      */
     public EIATemplateTable getPreviewTable() {
         return previewTable;
     }
 
     /**
-     * TODO
-     * @return
+     * Returns the current time of string format e.g. "12:08 PM"
+     * @return the current time in string format
      */
     public String currentTimeToString() {
         Date time = new Date();
-        DateFormat df = new SimpleDateFormat("h:mm a");
+        DateFormat df = new SimpleDateFormat("h:mm a"); // eg: 12:08 PM
         return df.format(time);
     }
 
     /**
-     * TODO
-     * @param myPid
+     * Set the universal id
+     * @param myPid the pid to be set
      */
-    public void setUid(long myPid) {
+    public void setUid(long myPid) {  // setUid using pid?
         pid = myPid;
     }
 
     /**
-     * TODO
-     * @return
+     * Returns the personal id
+     * @return the pid
      */
     public long getPid() {
         return pid;
     }
 
     /**
-     * TODO
+     * Increases uid by one
      */
     public static void incrementUid() {
         uid++;
     }
 
     /**
-     * this can be used for both template applying and saving
+     * This can be used for both template applying and saving
      * @return the header in current table
      */
     public EIAHeader eiaHeaderFromPreviewTable() {
         return new EIAHeader(previewTable);
-/*         EIAHeader header = new EIAHeader();
-
-        TableModel model = previewTable.getModel();
-
-        String localPid = (String)model.getValueAt(0, EIA.index_patient_id);
-        header.setValueAt(EIA.LOCAL_PATIENT_ID, localPid);
-
-        String localRid = (String)model.getValueAt(0, EIA.index_recording_id);
-        header.setValueAt(EIA.LOCAL_RECORDING_ID, localRid);
-
-        String startDate = (String)model.getValueAt(0, EIA.index_start_date);
-        header.setValueAt(EIA.START_DATE_RECORDING, startDate);
-
-        //String startTime = (String) model.getValueAt(0, EIA.index_start_time);
-        //header.setValueAt(EIA.START_TIME_RECORDING, startTime);
-
-        return header; */
+//        EIAHeader header = new EIAHeader();
+//        TableModel model = previewTable.getModel();
+//        String localPid = (String)model.getValueAt(0, EIA.index_patient_id);
+//        header.setValueAt(EIA.LOCAL_PATIENT_ID, localPid);
+//        String localRid = (String)model.getValueAt(0, EIA.index_recording_id);
+//        header.setValueAt(EIA.LOCAL_RECORDING_ID, localRid);
+//        String startDate = (String)model.getValueAt(0, EIA.index_start_date);
+//        header.setValueAt(EIA.START_DATE_RECORDING, startDate);
+//        //String startTime = (String) model.getValueAt(0, EIA.index_start_time);
+//        //header.setValueAt(EIA.START_TIME_RECORDING, startTime);
+//        return header;
     }
 
     /**
-     * TODO
+     * Radio button listener for customizing the EIA template for edit
      */
     private class RadioListener implements ActionListener {
 
         /**
-         * TODO
-         * @param radio
+         * Different radio button for disabling and enabling different personal id area for editing
+         * @param radio the radio button activated
          */
         private void switchPidRows(JRadioButton radio) {
             if (radio == pidRadio) {
@@ -573,8 +565,8 @@ public class EIATemplatePane extends BasicEDFPane {
         }
 
         /**
-         * TODO
-         * @param radio
+         * Different radio button for disabling and enabling different recording id area for editing
+         * @param radio the radio button activated
          */
         private void switchRidRows(JRadioButton radio) {
             if (radio == ridRadio) {
@@ -592,8 +584,8 @@ public class EIATemplatePane extends BasicEDFPane {
         }
 
         /**
-         * TODO
-         * @param radio
+         * Different radio button for disabling and enabling different "start date or recording" area for editing
+         * @param radio the radio button activated
          */
         private void switchStartDateRows(JRadioButton radio) {
             if (radio == dateRadio) {
@@ -609,7 +601,7 @@ public class EIATemplatePane extends BasicEDFPane {
             }
         }
 
-        /* (non-Javadoc)
+        /**
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         public void actionPerformed(ActionEvent e) {
@@ -619,14 +611,10 @@ public class EIATemplatePane extends BasicEDFPane {
             if (srcRadio == pidRadio || srcRadio == pidTagRadio) {
                 switchPidRows(srcRadio);
                 return;
-            }
-
-            if (srcRadio == ridRadio || srcRadio == ridTagRadio) {
+            } else if (srcRadio == ridRadio || srcRadio == ridTagRadio) {
                 switchRidRows(srcRadio);
                 return;
-            }
-
-            if (srcRadio == dateRadio || srcRadio == dateTagRadio) {
+            } else if (srcRadio == dateRadio || srcRadio == dateTagRadio) {
                 switchStartDateRows(srcRadio);
                 return;
             }
@@ -634,25 +622,25 @@ public class EIATemplatePane extends BasicEDFPane {
     }
 
     /**
-     * @author wei
-     * TODO
+     * When selecting different items in the combo box, the preview table value is updated accordingly
      */
     private class BoxListener implements ActionListener {
 
         /**
-         * TODO
-         * @param colIndex
-         * @param value
+         * Updates the value of the preview table at specific cell
+         * @param colIndex the column index
+         * @param value the new value to be set
          */
         private void updatePreviewTableValueAt(int colIndex, String value) {
             previewTable.getModel().setValueAt(value, 0, colIndex);
         }
 
-        /* (non-Javadoc)
+        /**
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         public void actionPerformed(ActionEvent e) {
-            JComboBox box = (JComboBox)e.getSource();
+            @SuppressWarnings("unchecked")
+			JComboBox<String> box = (JComboBox<String>)e.getSource();
 
             int colIndex = -1;
             String value = (String)box.getSelectedItem();
@@ -665,37 +653,36 @@ public class EIATemplatePane extends BasicEDFPane {
                 colIndex = EIA.index_start_date;
             else
                 colIndex = EIA.index_start_time;
-
             updatePreviewTableValueAt(colIndex, value);
         }
     }
 
     /**
-     * @author wei
-     * TODO
+     * A listener react to text field event
+     * Used to change the priew table value at some location
      */
     private class TextFieldListener implements DocumentListener {
         private int colIndex;
         private String value;
 
         /**
-         * TODO
-         * @param colIndex
-         * @param value
+         * Updates the value of the preview table at specific cell
+         * @param colIndex the column index
+         * @param value the new value to be set
          */
         private void updatePreviewTableValueAt(int colIndex, String value) {
             previewTable.getModel().setValueAt(value, 0, colIndex);
         }
 
         /**
-         * TODO
-         * @param colIndex
+         * Creates a TextFieldListener using specific column index
+         * @param colIndex the column index
          */
         public TextFieldListener(int colIndex) {
             this.colIndex = colIndex;
         }
 
-        /* (non-Javadoc)
+        /**
          * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
          */
         public void insertUpdate(DocumentEvent e) {
@@ -708,7 +695,7 @@ public class EIATemplatePane extends BasicEDFPane {
             updatePreviewTableValueAt(colIndex, value);
         }
 
-        /* (non-Javadoc)
+        /**
          * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
          */
         public void removeUpdate(DocumentEvent e) {
@@ -721,7 +708,7 @@ public class EIATemplatePane extends BasicEDFPane {
             updatePreviewTableValueAt(colIndex, value);
         }
 
-        /* (non-Javadoc)
+        /**
          * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
          */
         public void changedUpdate(DocumentEvent e) {
@@ -730,14 +717,14 @@ public class EIATemplatePane extends BasicEDFPane {
     }
 
     /**
-     * TODO
+     * This input verifier used to generate error tags when input bad input
      */
     private class FieldInputVerifier extends InputVerifier {
         private String errMsg[] = new String[10];
         private int errno;
 
         /**
-         * TODO
+         * Initializes this input verifier with different error message
          */
         public FieldInputVerifier() {
             errMsg[0] = "input more than 80 characters";
@@ -753,9 +740,9 @@ public class EIATemplatePane extends BasicEDFPane {
         }
 
         /**
-         * TODO
-         * @param value
-         * @return
+         * Converts the date string to string array
+         * @param value the date string
+         * @return an array representation of the specified date string
          */
         @SuppressWarnings("unused")
 		public String[] parseDateTime(String value) {
@@ -763,11 +750,10 @@ public class EIATemplatePane extends BasicEDFPane {
             for (int i = 0; i < 3; i++) {
                 hd[i] = value.substring(3 * i, 3 * i + 2);
             }
-
             return hd;
         }
 
-        /* (non-Javadoc)
+        /**
          * @see javax.swing.InputVerifier#verify(javax.swing.JComponent)
          */
         public boolean verify(JComponent input) {
@@ -840,7 +826,6 @@ public class EIATemplatePane extends BasicEDFPane {
                 }
                 return true;
             } */
-
             return true;
         }
 
