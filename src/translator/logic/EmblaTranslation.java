@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -37,6 +35,16 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 public class EmblaTranslation {
+	// Available events:
+	// *APNEA;
+	// *APNEA-OBSTRUCTIVE;
+	// APNEA-MIXED; (no occurrence)
+	// *APNEA-CENTRAL;
+	// DESAT;
+	// *HYPOPNEA;
+	// LIGHTS-OFF; (no occurrence)
+	// LIGHTS-ON; (no occurrence)
+	
 	// algorithm:
 	// 1. read mapping file
 	// 2. create xml header: PSGAnnotation, SoftwareVersion, Embla, EpochLength...
@@ -48,11 +56,11 @@ public class EmblaTranslation {
 	private String xmlAnnotation; // annotation file path
 	private String edfFile;  // EDF file path
 	private String output; // output file path
-	private String mapFile; // map file path
+//	private String mapFile; // map file path
 	
 	public Document document;	// document is the result of resolving BOM	
 	private ArrayList<String> events;
-	private HashMap<String,Object>[] map;
+	public HashMap<String,Object>[] map;
 	private Document xmlRoot = new DocumentImpl();; // xml root
 	private Element scoredEvents; // parent element of <Event>
 	private String[] timeStart;
@@ -72,7 +80,7 @@ public class EmblaTranslation {
 	 * @param output output file path
 	 */
 	public EmblaTranslation(String mapFile, String xmlAnnotation, String edfFile, String output) {
-		this.mapFile = mapFile;
+//		this.mapFile = mapFile;
 		this.xmlAnnotation = xmlAnnotation;
 		this.edfFile = edfFile;
 		this.output = output;
@@ -95,7 +103,7 @@ public class EmblaTranslation {
 	 * @param output output file path
 	 */
 	public EmblaTranslation(String mapFile, String format, String xmlAnnotation, String edfFile, String output) {
-		this.mapFile = mapFile;
+//		this.mapFile = mapFile;
 		this.edfFile = edfFile;
 		this.output = output;
 		this.xmlAnnotation = xmlAnnotation;
@@ -125,7 +133,6 @@ public class EmblaTranslation {
 			return result;
 		}
 		
-//		xmlRoot = new DocumentImpl();
 		Element root = xmlRoot.createElement("PSGAnnotation");
 		Element software = xmlRoot.createElement("SoftwareVersion");
 		software.appendChild(xmlRoot.createTextNode("Embla xml"));
@@ -157,7 +164,8 @@ public class EmblaTranslation {
 			Element elem = (Element)node;
 			parsedElement = parseEmblaXmlEvent(elem);
 			if(parsedElement == null) {
-				log("Can't parse event: " + index + " " + getElementByChildTag(elem, "Type"));
+//				log("Can't parse event: " + index + " " + getElementByChildTag(elem, "Type")); // actual use
+				System.out.println("Can't parse event: " + index + " " + getElementByChildTag(elem, "Type")); // for testing
 			}
 			scoredEvents.appendChild(parsedElement);
 		}
@@ -165,102 +173,92 @@ public class EmblaTranslation {
 		root.appendChild(scoredEvents);
 		xmlRoot.appendChild(root);
 		saveXML(xmlRoot, output);
+		System.out.println("DONE!");  // test
 		return result;
 	}
 
 	/**
-	 * TODO
 	 * Parses event element and returns an parsed element
-	 * @param scoredEvent the event name in String
+	 * @param scoredEventElement the event name in String
 	 * @return the parsed element
 	 */
-	private Element parseEmblaXmlEvent(Element scoredEvent) {
+	private Element parseEmblaXmlEvent(Element scoredEventElement) {
 		
 		// only DESAT type has more values to be processed, others are the same
-		Element elem = null;
-		String eventType = getElementByChildTag(scoredEvent, "Type");
-		
+		Element scoredEvent = null;
+		boolean result = false;
+		String eventType = getElementByChildTag(scoredEventElement, "Type");
 		// map[1] contains keySet with event name
 		if(map[1].keySet().contains(eventType)) {
-			
-			// creates and appends ScoredEvent>EventConcept element
-			elem = xmlRoot.createElementNS(null, "ScoredEvent");
-			Element name = xmlRoot.createElement("EventConcept");
-			@SuppressWarnings("unchecked")
-			String eventName = ((ArrayList<String>)map[1].get(eventType)).get(1);
-			Node nameNode = xmlRoot.createTextNode(eventName);
-			name.appendChild(nameNode);
-			elem.appendChild(name);
-
-			Element subEvent = null;
+			result = true;
 			// use enum for improvement
-			if(eventName.equals("APNEA")) {
-				subEvent = parseApnea(scoredEvent);
-			} else if(eventName.equals("APNEA-CENTRAL")) {
-				subEvent = parseApneaCentral(scoredEvent);
-			} else if(eventName.equals("APNEA-MIXED")) {
-				subEvent = parseApneaMixed(scoredEvent);
-			} else if(eventName.equals("APNEA-OBSTRUCTIVE")) {
-				subEvent = parseApneaObstructive(scoredEvent);
-			} else if(eventName.equals("DESAT")) {
-				subEvent = parseDesaturationEvent(scoredEvent);
-			} else if(eventName.equals("HYPOPNEA")) {
-				subEvent = parseHypopnea(scoredEvent);
-			} else if(eventName.equals("LIGHTS-OFF")) {
-				subEvent = parseLightsOff(scoredEvent);
-			} else if(eventName.equals("LIGHTS-ON")) {
-				subEvent = parseLightsOn(scoredEvent);
+			if(eventType.equals("APNEA")) {
+				scoredEvent = parseApnea(scoredEventElement);
+			} else if(eventType.equals("APNEA-CENTRAL")) {
+				scoredEvent = parseApneaCentral(scoredEventElement);
+			} else if(eventType.equals("APNEA-MIXED")) {
+				scoredEvent = parseApneaMixed(scoredEventElement);
+			} else if(eventType.equals("APNEA-OBSTRUCTIVE")) {
+				scoredEvent = parseApneaObstructive(scoredEventElement);
+			} else if(eventType.equals("DESAT")) {
+				scoredEvent = parseDesaturationEvent(scoredEventElement);
+			} else if(eventType.equals("HYPOPNEA")) {
+				scoredEvent = parseHypopnea(scoredEventElement);
+			} else if(eventType.equals("LIGHTS-OFF")) {
+				scoredEvent = parseLightsOff(scoredEventElement);
+			} else if(eventType.equals("LIGHTS-ON")) {
+				scoredEvent = parseLightsOn(scoredEventElement);
 			} else {
-				subEvent = null;
-			}				
-			return subEvent;
-		} else {
+				scoredEvent = null; // create default scored event element
+			}
+		} else {						
 			// no mapping event name found
-			Element eventNode = xmlRoot.createElement("ScoredEvent");
-			Element nameNode = xmlRoot.createElement("EventConcept");
-			Element startNode = xmlRoot.createElement("Starttime");
-			Element durationNode = xmlRoot.createElement("Duration");
-			Element notesNode = xmlRoot.createElement("Notes");
+			result = false;
+			scoredEvent = xmlRoot.createElement("ScoredEvent");
+			Element eventConcept = xmlRoot.createElement("EventConcept");
+			Element startElement = xmlRoot.createElement("Starttime");
+			Element durationElement = xmlRoot.createElement("Duration");
+			Element notesElement = xmlRoot.createElement("Notes");
 				
-			nameNode.appendChild(xmlRoot.createTextNode("Technician Notes"));
-			notesNode.appendChild(xmlRoot.createTextNode(eventType));
-			NodeList durationList = scoredEvent.getElementsByTagName("Duration"); // TODO compute duration
-			Element lstNmElmnt = (Element) durationList.item(0);
-			NodeList lstNm = lstNmElmnt.getChildNodes();
-
-			@SuppressWarnings("unused")
-			Element duration = xmlRoot.createElement("Duration");
-			Node durationN = xmlRoot.createTextNode((String) ((Node) lstNm.item(0)).getNodeValue());
-			durationNode.appendChild(durationN);
-			//e.appendChild(duration);
-			//System.out.println("\t<Duration>" + ((Node) lstNm.item(0)).getNodeValue() + "</Duration>" );
-			NodeList startTimeList = scoredEvent.getElementsByTagName("StartTime");
-			Element startElmnt = (Element) startTimeList.item(0);
-			NodeList start = startElmnt.getChildNodes();
-			double starttime= Double.parseDouble(((Node) start.item(0)).getNodeValue()); // TODO should alter
-			//Element startEt = xml.createElement("Start");
-			Node startN = xmlRoot.createTextNode(Double.toString(starttime));
-			startNode.appendChild(startN);
+			eventConcept.appendChild(xmlRoot.createTextNode("Technician Notes"));
+			notesElement.appendChild(xmlRoot.createTextNode(eventType));
+			
+			String startTime = getElementByChildTag(scoredEventElement, "StartTime");
+			String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
+			String durationTime = getDurationInSeconds(startTime, stopTime);
+			durationElement.appendChild(xmlRoot.createTextNode(durationTime));
+			
+//			NodeList durationList = scoredEventElement.getElementsByTagName("Duration");
+//			Element firstDurationElement = (Element) durationList.item(0);
+//			NodeList durationChildrenList = firstDurationElement.getChildNodes();			
+//			Node durationNode = xmlRoot.createTextNode((String) ((Node) durationChildrenList.item(0)).getNodeValue());
+//			durationElement.appendChild(durationNode);
+//			//e.appendChild(duration);
+//			//System.out.println("\t<Duration>" + ((Node) lstNm.item(0)).getNodeValue() + "</Duration>" );
+//			NodeList startTimeNodeList = scoredEventElement.getElementsByTagName("StartTime");
+//			Element startTimeElement = (Element) startTimeNodeList.item(0);
+//			NodeList start = startTimeElement.getChildNodes();
+////			double starttime= Double.parseDouble(((Node) start.item(0)).getNodeValue()); // original
+//			String startTime = ((Node)start.item(0)).getNodeValue(); 
+//			Node startNode = xmlRoot.createTextNode(startTime);
+//			startElement.appendChild(startNode);
 					
-			eventNode.appendChild(nameNode);
-			eventNode.appendChild(startNode);
-			eventNode.appendChild(durationNode);
-			eventNode.appendChild(notesNode);
-					
-			scoredEvents.appendChild(eventNode);
-			String info = xmlAnnotation + "," + eventType + "," + Double.toString(starttime) ;
+			scoredEvent.appendChild(eventConcept);
+			scoredEvent.appendChild(startElement);
+			scoredEvent.appendChild(durationElement);
+			scoredEvent.appendChild(notesElement);
+			String info = xmlAnnotation + "," + eventType + "," + startTime ;
 			this.log(info);
-		}
-		
-		Element eventElement = null;
-		System.out.println(">>> inside parseEmblaXmlEvent()");
-		boolean result = false;
-
+		}		
+//		System.out.println(">>> inside parseEmblaXmlEvent()");  // for testing
 		if(result) {
-			System.out.println("Adds the event element to the tree...");
+//			System.out.println("Has mapping element");
+			// true silence
+		} else {
+			System.out.println("Does not have mapping element");
 		}
 
-		return eventElement;
+		return scoredEvent;
 	}
 
 	/**
@@ -278,16 +276,17 @@ public class EmblaTranslation {
 	////////////////////////////////////////////////////
 	
 	/**
-	 * TODO
+	 * Parses APNEA event
 	 * @param scoredEventElement the scored event element to be tranlated
 	 * @return the translated scored event element
 	 */
 	public Element parseApnea(Element scoredEventElement) {
+//		String eventType = "APNEA";
 		return null;
 	}
 	
 	/**
-	 * TODO
+	 * Parses APNEA-CENTRAL event
 	 * @param scoredEventElement the scored event element to be tranlated
 	 * @return the translated scored event element
 	 */
@@ -298,14 +297,12 @@ public class EmblaTranslation {
 		Element duration = null;
 		Element start = null;
 		Node nameNode = null;
-		@SuppressWarnings("unchecked")
-		String eventName = ((ArrayList<String>)map[1].get(eventType)).get(1); // can be modified
 		if(xmlRoot != null) {
 			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
 			eventConcept = xmlRoot.createElement("EventConcept");		
 			duration = xmlRoot.createElement("Duration");
 			start = xmlRoot.createElement("Start");
-			nameNode = xmlRoot.createTextNode(eventName);	
+			nameNode = xmlRoot.createTextNode(eventType);	
 		} else {
 			System.out.println("TEST: xmlRoot is null"); // test
 		}
@@ -327,60 +324,188 @@ public class EmblaTranslation {
 	}
 	
 	/**
-	 * TODO
+	 * Parses APNEA-MIXED event
 	 * @param scoredEventElement the scored event element to be tranlated
 	 * @return the translated scored event element
 	 */
 	public Element parseApneaMixed(Element scoredEventElement) {
+//		String eventType = "APNEA-MIXED";
 		return null;
 	}
 	
 	/**
-	 * TODO
+	 * Parses APNEA-OBSTRUCTIVE event
 	 * @param scoredEventElement the scored event element to be tranlated
 	 * @return the translated scored event element
 	 */
 	public Element parseApneaObstructive(Element scoredEventElement) {
-		Element apnea_obstrusive = null;
-		System.out.println("--- >>> Inside parrseAPNEA_O()");
-		return apnea_obstrusive;
+		String eventType = "APNEA-OBSTRUCTIVE";
+		Element scoredEvent = null;
+		Element eventConcept = null;		
+		Element duration = null;
+		Element start = null;
+		Node nameNode = null;
+		if(xmlRoot != null) {
+			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
+			eventConcept = xmlRoot.createElement("EventConcept");		
+			duration = xmlRoot.createElement("Duration");
+			start = xmlRoot.createElement("Start");
+			nameNode = xmlRoot.createTextNode(eventType);	
+		} else {
+			System.out.println("TEST: xmlRoot is null"); // test
+		}
+		// creates and appends ScoredEvent>EventConcept element			
+		eventConcept.appendChild(nameNode);
+		scoredEvent.appendChild(eventConcept);
+		
+		// create ScoredEvent>Duration
+		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
+		String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
+		String durationTime = getDurationInSeconds(startTime, stopTime);
+		duration.appendChild(xmlRoot.createTextNode(durationTime));
+		scoredEvent.appendChild(duration);
+		// create ScoredEvent>Start
+		start.appendChild(xmlRoot.createTextNode(startTime));
+		scoredEvent.appendChild(start);
+		
+		return scoredEvent;
 	}
 
 	/**
-	 * TODO
+	 * Parses DESAT event
 	 * @param scoredEventElement the scored event element to be tranlated
 	 * @return the translated scored event element
 	 */
 	public Element parseDesaturationEvent(Element scoredEventElement) {
-		Element desatElement = null;
-		System.out.println("--- >>>Inside parseDesaturation()");
-		return desatElement;
+		String eventType = "DESAT";
+		Element spO2Nadir = null;
+		Element spO2Baseline = null;
+		Element scoredEvent = null;
+		Element eventConcept = null;		
+		Element duration = null;
+		Element start = null;
+		Node nameNode = null;
+		if(xmlRoot != null) {
+			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
+			eventConcept = xmlRoot.createElement("EventConcept");		
+			duration = xmlRoot.createElement("Duration");
+			start = xmlRoot.createElement("Start");
+			nameNode = xmlRoot.createTextNode(eventType);
+			spO2Nadir = xmlRoot.createElement("SpO2Nadir");
+			spO2Baseline = xmlRoot.createElement("SpO2Baseline");
+		} else {
+			System.out.println("TEST: xmlRoot is null"); // test
+		}
+		eventConcept.appendChild(nameNode);
+		scoredEvent.appendChild(eventConcept);
+		
+		// create ScoredEvent>Duration
+		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
+		String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
+		String durationTime = getDurationInSeconds(startTime, stopTime);
+		duration.appendChild(xmlRoot.createTextNode(durationTime));
+		scoredEvent.appendChild(duration);
+		// create ScoredEvent>Start
+		start.appendChild(xmlRoot.createTextNode(startTime));
+		scoredEvent.appendChild(start);
+		
+		// Get the parameter that contains SpO2Baseline and SpO2Nadir
+		
+		NodeList desatParamsList = document.getElementsByTagName("Parameters");
+		Element desatParams = (Element)desatParamsList.item(0);		
+		NodeList desatParamList = desatParams.getElementsByTagName("Parameter");
+		Element userVarElement = null;
+		for(int i = 0; i < desatParamList.getLength(); i++) {
+			Element userValElement = (Element)desatParamList.item(i);
+			NodeList keys = userValElement.getElementsByTagName("Key");
+			Element firstKeyElement = (Element)keys.item(0);
+			String keyvalue = getText(firstKeyElement);
+			if("UserVariables".equals(keyvalue)) {
+				userVarElement = userValElement;
+			}
+		}
+		NodeList values = userVarElement.getElementsByTagName("Value");
+		Element value = (Element)values.item(0);
+		NodeList paramsList = value.getElementsByTagName("Parameters");
+		Element parameters = (Element)paramsList.item(0);
+		NodeList finalParam = parameters.getElementsByTagName("Parameter");
+		
+		String desatStart = "Begin of desat";
+		String desatEnd = "End of desat";
+		String desatStartVal = "";
+		String desatEndVal = "";
+		for(int index = 0; index < finalParam.getLength(); index++) {
+			Element parent = (Element)finalParam.item(index);
+			String keyVal = getElementByChildTag(parent, "Key");
+			if(keyVal.equals(desatStart)) {
+				desatEndVal = getElementByChildTag(parent, "Value");
+			} else if(keyVal.equals(desatEnd)) {
+				desatStartVal = getElementByChildTag(parent, "Value");
+			}
+		}
+		spO2Nadir.appendChild(xmlRoot.createTextNode(desatStartVal));
+		spO2Baseline.appendChild(xmlRoot.createTextNode(desatEndVal));
+		scoredEvent.appendChild(spO2Nadir);
+		scoredEvent.appendChild(spO2Baseline);
+		
+		return scoredEvent;
 	}
 	
 	/**
-	 * TODO
+	 * Parses HYPOPNEA event
 	 * @param scoredEventElement the scored event element to be tranlated
 	 * @return the translated scored event element
 	 */
 	public Element parseHypopnea(Element scoredEventElement) {
-		return null;
+		String eventType = "HYPOPNEA";
+		Element scoredEvent = null;
+		Element eventConcept = null;		
+		Element duration = null;
+		Element start = null;
+		Node nameNode = null;
+		if(xmlRoot != null) {
+			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
+			eventConcept = xmlRoot.createElement("EventConcept");		
+			duration = xmlRoot.createElement("Duration");
+			start = xmlRoot.createElement("Start");
+			nameNode = xmlRoot.createTextNode(eventType);	
+		} else {
+			System.out.println("TEST: xmlRoot is null"); // test
+		}
+		// creates and appends ScoredEvent>EventConcept element			
+		eventConcept.appendChild(nameNode);
+		scoredEvent.appendChild(eventConcept);
+		
+		// create ScoredEvent>Duration
+		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
+		String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
+		String durationTime = getDurationInSeconds(startTime, stopTime);
+		duration.appendChild(xmlRoot.createTextNode(durationTime));
+		scoredEvent.appendChild(duration);
+		// create ScoredEvent>Start
+		start.appendChild(xmlRoot.createTextNode(startTime));
+		scoredEvent.appendChild(start);
+		
+		return scoredEvent;
 	}
 	
 	/**
-	 * TODO
+	 * Parses LIGHTS-OFF event
 	 * @param scoredEventElement the scored event element to be tranlated
 	 * @return the translated scored event element
 	 */
 	public Element parseLightsOff(Element scoredEventElement) {
+//		String eventType = "LIGHTS-OFF";
 		return null;
 	}
 	
 	/**
-	 * TODO
+	 * Parses LIGHTS-ON event
 	 * @param scoredEventElement the scored event element to be tranlated
 	 * @return the translated scored event element
 	 */
 	public Element parseLightsOn(Element scoredEventElement) {
+//		String eventType = "LIGHTS-ON";
 		return null;
 	}
 	// more...
@@ -417,7 +542,7 @@ public class EmblaTranslation {
 	 * @param element the element to extract from
 	 * @return the text content of this element
 	 */
-	public static String getText(Element element) {
+	private static String getText(Element element) {
 		StringBuffer buf = new StringBuffer();
 	    NodeList list = element.getChildNodes();
 	    boolean found = false;
@@ -438,7 +563,7 @@ public class EmblaTranslation {
 	 * @return  the mapping in form of HashMap
 	 */
 	public HashMap<String,Object>[] readMapFile(String mapFile) {
-		System.out.println("Read map file...");  // for test TODO
+		System.out.println("Read map file...");  // for test
 		@SuppressWarnings("unchecked")
 		// HashMap[] map = new HashMap[3]; // original
 		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 3);
