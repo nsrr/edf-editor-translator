@@ -1,4 +1,4 @@
-package translator.logic;
+package translator.test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,24 +8,28 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import translator.logic.EmblaTranslation;
+
 /**
  * To test the functionality of the EmblaTranslation class
  * @author wei wang, 2014-8-6
  */
-public class EmblaTranslationTest {
+public class TestEmblaTranslation {
 	
 	public static String mapFile = "/Users/wei/git/edf-editor-translator/resource-wei/eventmapping_embla_test.csv";
 	public static String annotation = "/Users/wei/git/edf-editor-translator/resource-wei/10005_01202010.xml" ;
 	public static String edf = "/Users/wei/git/edf-editor-translator/resource-wei/100022.EDF";
-	public static String output = "/Users/wei/git/edf-editor-translator/output-wei/100022_Embla_2014-08-10-1.xml";	
+	public static String output = "/Users/wei/git/edf-editor-translator/output-wei/100022_Embla_2014-08-10-2.xml";	
 
 	public static void main(String[] args) {
 		System.out.println("=================================================================");
 //		testRecordingEvents();
 //		testDuration("2010-01-20T23:01:30.711129", "2010-01-20T23:02:14.711129");
 //		testApneaCentral();
-		testEmblaTranslation();
+//		testEmblaTranslation();
 //		testReadingMap();
+		testUserVariable("Begin of desat");
+//		testUserVariable("End of desat");
 	}
 	
 	public static void testEmblaTranslation() {
@@ -65,11 +69,12 @@ public class EmblaTranslationTest {
 		NodeList nodeList = doc.getElementsByTagName("Event");
 		Node node = null;
 		String apneaCentral = "APNEA-CENTRAL";
+		System.out.println("APNEA-CENTRAL:");
 		for(int index = 0; index < nodeList.getLength(); index++) {
 			node = nodeList.item(index);
 			Element elem = (Element)node;
 			if(apneaCentral.equals(et.getElementByChildTag(elem, "Type"))) {
-				result = et.parseApneaCentral(elem);				
+				result = et.parseEmblaXmlEvent(elem);				
 			}
 		}
 		if(result != null) {
@@ -90,6 +95,32 @@ public class EmblaTranslationTest {
 		events = testMap[1];
 		for(String key : events.keySet()) {
 			System.out.print(key + "; ");
+		}
+	}
+	
+	public static void testUserVariable(String key) {
+		EmblaTranslation et = new EmblaTranslation(mapFile, annotation, edf, output);
+		Document doc = et.document;
+		NodeList nodeList = doc.getElementsByTagName("Event");
+		Node node = null;
+		String desat = "DESAT";
+		Element resultElem = null;
+		System.out.println("DESAT:");		
+		for(int index = 0; index < nodeList.getLength(); index++) {
+			node = nodeList.item(index);
+			Element elem = (Element)node;
+			String type = et.getElementByChildTag(elem, "Type");			
+			if(desat.equals(type)) {
+//				System.out.println("================================================");							
+				resultElem = et.parseEmblaXmlEvent(elem);				
+				if(resultElem != null) {
+					String finalValue = et.getUserVariableValue(elem, key);
+					System.out.println("Key = " + key + ": Value = " + finalValue);
+				} else {
+					System.out.println("Test failed");
+				}
+//				break;
+			}
 		}
 	}
 }
