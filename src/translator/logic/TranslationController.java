@@ -72,6 +72,8 @@ public class TranslationController {
 					annotation_file = validate_file(annotation_dir, basename, ".txt");
 					if ((new File(annotation_file)).exists()) {
 						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name);	
+//						EmblaTranslation et = new EmblaTranslation(annotation_file, mapping_file, out_file_name);
+//						bTranslation = et.translate();
 					}
 				} else if (vendor.equals(Vendor.Compumedics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
@@ -88,8 +90,9 @@ public class TranslationController {
 					annotation_file = validate_file(annotation_dir, basename, ".txt");
 					if ((new File(annotation_file)).exists()) {
 						bTranslation = converter.convertSandman(annotation_file, edf_file, mapping_file, out_file_name);
-					}
+					}					
 				}
+				
 
 				if (bTranslation) {
 					successfulOutAL.add(out_file_name);

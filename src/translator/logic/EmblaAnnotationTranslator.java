@@ -3,7 +3,6 @@ package translator.logic;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,50 +17,41 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.xerces.dom.DocumentImpl;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-public class EmblaTranslation {
-	// Old-version
-	// Available events:
-	// *APNEA;
-	// *APNEA-OBSTRUCTIVE;
-	// APNEA-MIXED; (no occurrence)
-	// *APNEA-CENTRAL;
-	// *DESAT;
-	// *HYPOPNEA;
-	// LIGHTS-OFF; (no occurrence)
-	// LIGHTS-ON; (no occurrence)
-	
-	// algorithm:
-	// 1. read mapping file
-	// 2. create xml header: PSGAnnotation, SoftwareVersion, Embla, EpochLength...
-	// 3. Resolve BOM
-	// 4. loop through and process events
+// Caller class:
+// EmblaAnnotationTranslator_demo et = new EmblaAnnotationTranslator_demo();
+// et.read();
+// et.translate();
+// et.write();
 
-	private String format = "xml"; // "txt" or "xml", in lower case
-	
+public class EmblaAnnotationTranslator implements AnnotationTranslator {
+
+	private String softwareVersion = "Embla Xml";
 	private String xmlAnnotation; // annotation file path
 	private String edfFile;  // EDF file path
-	private String output; // output file path
-//	private String mapFile; // map file path
-	
-	public Document document;	// document is the result of resolving BOM	
+	private String output; // output file path: initialized in write() method
+	private Document document;	// document is the result of resolving BOM	
 	private ArrayList<String> events;
-	public HashMap<String,Object>[] map;
+	private HashMap<String,Object>[] map;
 	private Document xmlRoot = new DocumentImpl();; // xml root
 	private Element scoredEvents; // parent element of <Event>
 	private String[] timeStart;
@@ -69,183 +59,100 @@ public class EmblaTranslation {
 	/**
 	 * Default constructor
 	 */
-	public EmblaTranslation() {
+	public EmblaAnnotationTranslator() {
 		super();
 	}
-
-	/**
-	 * Standardizes the xml annotation and stores as a Document, then records event types(Mostly used)
-	 * @param mapFile mapping file path
-	 * @param xmlAnnotation the Embla xml annotation file
-	 * @param edfFile EDF file path
-	 * @param output output file path
-	 */
-	public EmblaTranslation(String mapFile, String xmlAnnotation, String edfFile, String output) {
-//		this.mapFile = mapFile;
-		this.xmlAnnotation = xmlAnnotation;
-		this.edfFile = edfFile;
-		this.output = output;
-		boolean result = false;
-		document = resolveBOM(xmlAnnotation);
-		result = recordEvents(document);
-		map = readMapFile(mapFile);
-		if(!result) {
-			log("Cannot parse the events in the annotation file");
-		}
-	}
 	
-	/**
-	 * Standardizes the annotation and stores as a Document, then records event types.
-	 * Used for later support
-	 * @param mapFile mapping file path
-	 * @param format .txt file or .xml file 
-	 * @param xmlAnnotation the Embla xml annotation file
-	 * @param edfFile EDF file path
-	 * @param output output file path
-	 */
-	public EmblaTranslation(String mapFile, String format, String xmlAnnotation, String edfFile, String output) {
-//		this.mapFile = mapFile;
+	public boolean read(String edfFile, String annotationFile, String mappingFile) {
+		boolean result = false;		
 		this.edfFile = edfFile;
-		this.output = output;
-		this.xmlAnnotation = xmlAnnotation;
-		boolean result = false;
-		this.format = format;
+		this.xmlAnnotation = annotationFile;
+		map = readMapFile(mappingFile);		
 		document = resolveBOM(xmlAnnotation);
-		result = recordEvents(document);
-		map = readMapFile(mapFile);
+		result = recordEvents(document);		
 		if(!result) {
 			log("Cannot parse the events in the annotation file");
-		}
+		}		
+		return result;
 	}
 
 	/**
 	 * Translates Embla annotation file using the mapping file and the corresponding EDF file
-	 * @return true if the process is successful
+	 * @return The translated Document
 	 */
-	public boolean translate() {
-		// Algorithm:
-		//  (a) Creates meta data
-		//  (b) Creates first ScoredEvent: Recording start time from EDF file
-		//  (c) Creates the rest ScoredEvents
-		//  (d) Save xml to output file
-		boolean result = true;
-		if(!format.equals("xml")) {
-			result = false;
-			return result;
-		}
+	public Document translate() {
+		Element root = createEmptyDocument(softwareVersion);
 		
-		Element root = xmlRoot.createElement("PSGAnnotation");
-		Element software = xmlRoot.createElement("SoftwareVersion");
-		software.appendChild(xmlRoot.createTextNode("Embla xml"));
-		Element epoch = xmlRoot.createElement("EpochLength");
-		epoch.appendChild(xmlRoot.createTextNode((String) map[0].get("EpochLength")) );
-		root.appendChild(software);
-		root.appendChild(epoch);															// (a) end
-		
-		scoredEvents = xmlRoot.createElement("ScoredEvents");
-		
-		// stores 'String[2]' into 'String[] timeStart'
-		recordStartDate(edfFile);
-		String[] elmts = new String[3];
-		elmts[0] = "Recording Start Time";
-		elmts[1] = "0";
-		elmts[2] = timeStart[1];
-		Element timeElement = addElements(xmlRoot, elmts);
-		Element clock = xmlRoot.createElement("ClockTime");
-		clock.appendChild(xmlRoot.createTextNode(timeStart[0]));
-		timeElement.appendChild(clock);
-		scoredEvents.appendChild(timeElement);												// (b) end
-		
-		Document doc = document;
-		NodeList nodeList = doc.getElementsByTagName("Event");
-			
+		NodeList nodeList = document.getElementsByTagName("Event");
 		for(int index = 0; index < nodeList.getLength(); index++) {
 			Element parsedElement = null;
 			Node node = nodeList.item(index);  // for each <event> node
 			Element elem = (Element)node;
-			// heart:
 			parsedElement = parseEmblaXmlEvent(elem);
 			if(parsedElement == null) {
 				log("Can't parse event: " + index + " " + getElementByChildTag(elem, "Type"));
-				// for test
-				System.out.println("Can't parse event: " + index + " " + getElementByChildTag(elem, "Type"));
 			}
 			scoredEvents.appendChild(parsedElement);
 		}
 		
 		root.appendChild(scoredEvents);
-		xmlRoot.appendChild(root);															// (c) end
-		saveXML(xmlRoot, output);															// (d) end
-		System.out.println("DONE!");  // test
-		return result;
+		xmlRoot.appendChild(root);
+		System.out.println("DONE!");  // test: should be moved out of this method
+		return xmlRoot;
 	}
-
-//	/**
-//	 * Parses event element and returns an parsed element
-//	 * @param scoredEventElement the event name in String
-//	 * @return the parsed element
-//	 */
-//	private Element parseEmblaXmlEvent(Element scoredEventElement) {
-//		
-//		// only DESAT type has more values to be processed, others are the same
-//		Element scoredEvent = null;
-//		boolean result = false;
-//		String eventType = getElementByChildTag(scoredEventElement, "Type");
-//		// map[1] contains keySet with event name
-//		if(map[1].keySet().contains(eventType)) {
-//			result = true;
-//			// use enum for improvement
-//			if(eventType.equals("APNEA")) {
-//				scoredEvent = parseApnea(scoredEventElement);
-//			} else if(eventType.equals("APNEA-CENTRAL")) {
-//				scoredEvent = parseApneaCentral(scoredEventElement);
-//			} else if(eventType.equals("APNEA-MIXED")) {
-//				scoredEvent = parseApneaMixed(scoredEventElement);
-//			} else if(eventType.equals("APNEA-OBSTRUCTIVE")) {
-//				scoredEvent = parseApneaObstructive(scoredEventElement);
-//			} else if(eventType.equals("DESAT")) {
-//				scoredEvent = parseDesaturationEvent(scoredEventElement);
-//			} else if(eventType.equals("HYPOPNEA")) {
-//				scoredEvent = parseHypopnea(scoredEventElement);
-//			} else if(eventType.equals("LIGHTS-OFF")) {
-//				scoredEvent = parseLightsOff(scoredEventElement);
-//			} else if(eventType.equals("LIGHTS-ON")) {
-//				scoredEvent = parseLightsOn(scoredEventElement);
-//			} else {
-//				scoredEvent = null; // create default scored event element
+	
+	/**
+	 * Serializes XML to output file
+	 * @param output the xml output file
+	 * @return true if the process succeed
+	 */
+	public boolean write(String outputFile) {
+		output = outputFile;
+        try {
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes"); 
+            DOMSource source = new DOMSource(xmlRoot);
+            StreamResult file = new StreamResult(new File(output));
+            transformer.transform(source, file);
+            System.out.println("\nXML DOM Created Successfully..");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+	}
+	
+//	public boolean write(String outputFile) {
+//		output = outputFile;
+//		try {
+//			String targetDirectory = output.substring(0, output.lastIndexOf(File.separator));
+//			File f1 = new File(targetDirectory);
+//			if (!f1.exists()){
+//				f1.mkdirs();
 //			}
-//		} else {						
-//			// no mapping event name found
-//			result = false;
-//			scoredEvent = xmlRoot.createElement("ScoredEvent");
-//			Element eventConcept = xmlRoot.createElement("EventConcept");
-//			Element startElement = xmlRoot.createElement("Starttime");
-//			Element durationElement = xmlRoot.createElement("Duration");
-//			Element notesElement = xmlRoot.createElement("Notes");
-//				
-//			eventConcept.appendChild(xmlRoot.createTextNode("Technician Notes"));
-//			notesElement.appendChild(xmlRoot.createTextNode(eventType));
 //			
-//			String startTime = getElementByChildTag(scoredEventElement, "StartTime");
-//			String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
-//			String durationTime = getDurationInSeconds(startTime, stopTime);
-//			durationElement.appendChild(xmlRoot.createTextNode(durationTime));
-//					
-//			scoredEvent.appendChild(eventConcept);
-//			scoredEvent.appendChild(startElement);
-//			scoredEvent.appendChild(durationElement);
-//			scoredEvent.appendChild(notesElement);
-//			String info = xmlAnnotation + "," + eventType + "," + startTime ;
-//			this.log(info);
-//		}		
-//		if(result) {
-////			System.out.println("Has mapping element");
-//			// if true silence
-//		} else {
-//			System.out.println("Does not have mapping element");
+//			File f2 = new File(output);
+//			FileOutputStream fos = new FileOutputStream(output, f2.exists());
+//			// XERCES 1 or 2 additionnal classes.
+//			OutputFormat of = new OutputFormat("XML","ISO-8859-1", true);
+//			of.setIndent(1);
+//			of.setIndenting(true);
+//			//of.setDoctype(null,"users.dtd");
+//			XMLSerializer serializer = new XMLSerializer(fos, of);
+//			// As a DOM Serializer
+//			serializer.asDOMSerializer();
+//			serializer.serialize( xmlRoot.getDocumentElement() );
+//			//System.out.println(outfile);
+//			fos.close();
+//			return true;
+//		} catch(IOException e) {
+//			e.printStackTrace();			
+//			StringWriter errors = new StringWriter();
+//			e.printStackTrace(new PrintWriter(errors));
+//			log(errors.toString());
+//			return false;
+//			// System.out.println(errors.toString());
 //		}
-//
-//		return scoredEvent;
 //	}
 	
 	/**
@@ -253,7 +160,7 @@ public class EmblaTranslation {
 	 * @param scoredEventElement the event name in String
 	 * @return the parsed element
 	 */
-	public Element parseEmblaXmlEvent(Element scoredEventElement) {
+	private Element parseEmblaXmlEvent(Element scoredEventElement) {
 		
 		// only DESAT type has more values to be processed, others are the same
 		Element scoredEvent = null;
@@ -287,197 +194,94 @@ public class EmblaTranslation {
 			String info = xmlAnnotation + "," + eventType + "," + startTime ;
 			this.log(info);
 		}		
-		if(result) {
-//			System.out.println("Has mapping element");
-			// if true silence
-		} else {
-			System.out.println("Does not have mapping element");
+		if(!result) {
+			log("Does not have mapping element");
+//			System.out.println("Does not have mapping element");
 		}
 
 		return scoredEvent;
 	}
 
-	/**
-	 * For later implementation
-	 * @param event the txt event to be parsed
-	 * @return true if parsing is successful
-	 */
-	@SuppressWarnings("unused")
-	private boolean parseEmblaTxtEvent(String event) {
-		return true;
-	}
-
 	////////////////////////////////////////////////////
-	////// Parses each event of this vendor START //////
+	////// Private utility methods start          //////
 	////////////////////////////////////////////////////
 	
-	private Element parseEventElement(Element scoredEventElement) {
-		String eventType = getElementByChildTag(scoredEventElement, "Type");
-		Element scoredEvent = null;
-		Element eventConcept = null;		
-		Element duration = null;
-		Element start = null;
-		Node nameNode = null;
-		if(xmlRoot != null) {
-			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
-			eventConcept = xmlRoot.createElement("EventConcept");		
-			duration = xmlRoot.createElement("Duration");
-			start = xmlRoot.createElement("Start");
-			nameNode = xmlRoot.createTextNode(eventType);	
-		} else {
-			System.out.println("TEST: xmlRoot is null"); // test
-		}
-		// creates and appends ScoredEvent>EventConcept element			
-		eventConcept.appendChild(nameNode);
-		scoredEvent.appendChild(eventConcept);
+	private Element createEmptyDocument(String softwareVersion) {
+		Element root = xmlRoot.createElement("PSGAnnotation");
+		Element software = xmlRoot.createElement("SoftwareVersion");
+		software.appendChild(xmlRoot.createTextNode(softwareVersion));
+		Element epoch = xmlRoot.createElement("EpochLength");
+		epoch.appendChild(xmlRoot.createTextNode((String) map[0].get("EpochLength")) );
+		root.appendChild(software);
+		root.appendChild(epoch);
 		
-		// create ScoredEvent>Duration
+		scoredEvents = xmlRoot.createElement("ScoredEvents");
+		recordStartDate(edfFile);
+		String[] elmts = new String[3];
+		elmts[0] = "Recording Start Time";
+		elmts[1] = "0";
+		elmts[2] = timeStart[1];
+		Element timeElement = addElements(xmlRoot, elmts);
+		Element clock = xmlRoot.createElement("ClockTime");
+		clock.appendChild(xmlRoot.createTextNode(timeStart[0]));
+		timeElement.appendChild(clock);
+		scoredEvents.appendChild(timeElement);		
+		return root;
+	}
+	
+	private List<Element> getLocation(Element scoredEventElement) {
+		List<Element> list = new ArrayList<Element>();
+		String eventType = getElementByChildTag(scoredEventElement, "Type");
+		Element eventConcept = xmlRoot.createElement("EventConcept");		
+		Element duration = xmlRoot.createElement("Duration");
+		Element start = xmlRoot.createElement("Start");
+		Node nameNode = xmlRoot.createTextNode(eventType);
+		eventConcept.appendChild(nameNode);
 		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
 		String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
 		String durationTime = getDurationInSeconds(startTime, stopTime);
-		duration.appendChild(xmlRoot.createTextNode(durationTime));
-		scoredEvent.appendChild(duration);
-		// create ScoredEvent>Start
 		start.appendChild(xmlRoot.createTextNode(startTime));
-		scoredEvent.appendChild(start);
-
+		duration.appendChild(xmlRoot.createTextNode(durationTime));
+		
+		list.add(eventConcept);
+		list.add(duration);
+		list.add(start);
+		
+		return list;
+	}
+	
+	private List<Element> getUserVariables(Element scoredEventElement) {
+		List<Element> list = new ArrayList<Element>();
+		String eventType = getElementByChildTag(scoredEventElement, "Type");
 		if(eventType.equals("DESAT")) {
 			Element spO2Nadir = xmlRoot.createElement("SpO2Nadir");
 			Element spO2Baseline = xmlRoot.createElement("SpO2Baseline");
 			String desatStartVal = getUserVariableValue(scoredEventElement, "Begin of desat");
 			String desatEndVal = getUserVariableValue(scoredEventElement, "End of desat");
-//			System.out.println("========"); // test
-//			System.out.println(desatStartVal + ": " + desatEndVal); // test
 			spO2Nadir.appendChild(xmlRoot.createTextNode(desatStartVal));
 			spO2Baseline.appendChild(xmlRoot.createTextNode(desatEndVal));
-			scoredEvent.appendChild(spO2Nadir);
-			scoredEvent.appendChild(spO2Baseline);
+			list.add(spO2Nadir);
+			list.add(spO2Baseline);			
 		}
-		
-		return scoredEvent;
+		return list;
 	}
 	
-//	/**
-//	 * Parses APNEA-CENTRAL event
-//	 * @param scoredEventElement the scored event element to be tranlated
-//	 * @return the translated scored event element
-//	 */
-//	public Element parseApneaCentral(Element scoredEventElement) {
-//		String eventType = "APNEA-CENTRAL";
-//		Element scoredEvent = null;
-//		Element eventConcept = null;		
-//		Element duration = null;
-//		Element start = null;
-//		Node nameNode = null;
-//		if(xmlRoot != null) {
-//			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
-//			eventConcept = xmlRoot.createElement("EventConcept");		
-//			duration = xmlRoot.createElement("Duration");
-//			start = xmlRoot.createElement("Start");
-//			nameNode = xmlRoot.createTextNode(eventType);	
-//		} else {
-//			System.out.println("TEST: xmlRoot is null"); // test
-//		}
-//		// creates and appends ScoredEvent>EventConcept element			
-//		eventConcept.appendChild(nameNode);
-//		scoredEvent.appendChild(eventConcept);
-//		
-//		// create ScoredEvent>Duration
-//		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
-//		String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
-//		String durationTime = getDurationInSeconds(startTime, stopTime);
-//		duration.appendChild(xmlRoot.createTextNode(durationTime));
-//		scoredEvent.appendChild(duration);
-//		// create ScoredEvent>Start
-//		start.appendChild(xmlRoot.createTextNode(startTime));
-//		scoredEvent.appendChild(start);
-//		
-//		return scoredEvent;
-//	}
-
-//	/**
-//	 * Parses DESAT event
-//	 * @param scoredEventElement the scored event element to be tranlated
-//	 * @return the translated scored event element
-//	 */
-//	public Element parseDesaturationEvent(Element scoredEventElement) {
-//		String eventType = "DESAT";
-//		Element spO2Nadir = null;
-//		Element spO2Baseline = null;
-//		Element scoredEvent = null;
-//		Element eventConcept = null;		
-//		Element duration = null;
-//		Element start = null;
-//		Node nameNode = null;
-//		if(xmlRoot != null) {
-//			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
-//			eventConcept = xmlRoot.createElement("EventConcept");		
-//			duration = xmlRoot.createElement("Duration");
-//			start = xmlRoot.createElement("Start");
-//			nameNode = xmlRoot.createTextNode(eventType);
-//			spO2Nadir = xmlRoot.createElement("SpO2Nadir");
-//			spO2Baseline = xmlRoot.createElement("SpO2Baseline");
-//		} else {
-//			System.out.println("TEST: xmlRoot is null"); // test
-//		}
-//		eventConcept.appendChild(nameNode);
-//		scoredEvent.appendChild(eventConcept);
-//		
-//		// create ScoredEvent>Duration
-//		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
-//		String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
-//		String durationTime = getDurationInSeconds(startTime, stopTime);
-//		duration.appendChild(xmlRoot.createTextNode(durationTime));
-//		scoredEvent.appendChild(duration);
-//		// create ScoredEvent>Start
-//		start.appendChild(xmlRoot.createTextNode(startTime));
-//		scoredEvent.appendChild(start);
-//		
-//		// Get the parameter that contains SpO2Baseline and SpO2Nadir
-//		
-//		NodeList desatParamsList = document.getElementsByTagName("Parameters");
-//		Element desatParams = (Element)desatParamsList.item(0);		
-//		NodeList desatParamList = desatParams.getElementsByTagName("Parameter");
-//		Element userVarElement = null;
-//		for(int i = 0; i < desatParamList.getLength(); i++) {
-//			Element userValElement = (Element)desatParamList.item(i);
-//			NodeList keys = userValElement.getElementsByTagName("Key");
-//			Element firstKeyElement = (Element)keys.item(0);
-//			String keyvalue = getText(firstKeyElement);
-//			if("UserVariables".equals(keyvalue)) {
-//				userVarElement = userValElement;
-//			}
-//		}
-//		NodeList values = userVarElement.getElementsByTagName("Value");
-//		Element value = (Element)values.item(0);
-//		NodeList paramsList = value.getElementsByTagName("Parameters");
-//		Element parameters = (Element)paramsList.item(0);
-//		NodeList finalParam = parameters.getElementsByTagName("Parameter");
-//		
-//		String desatStart = "Begin of desat";
-//		String desatEnd = "End of desat";
-//		String desatStartVal = "";
-//		String desatEndVal = "";
-//		for(int index = 0; index < finalParam.getLength(); index++) {
-//			Element parent = (Element)finalParam.item(index);
-//			String keyVal = getElementByChildTag(parent, "Key");
-//			if(keyVal.equals(desatStart)) {
-//				desatEndVal = getElementByChildTag(parent, "Value");
-//			} else if(keyVal.equals(desatEnd)) {
-//				desatStartVal = getElementByChildTag(parent, "Value");
-//			}
-//		}
-//		spO2Nadir.appendChild(xmlRoot.createTextNode(desatStartVal));
-//		spO2Baseline.appendChild(xmlRoot.createTextNode(desatEndVal));
-//		scoredEvent.appendChild(spO2Nadir);
-//		scoredEvent.appendChild(spO2Baseline);
-//		
-//		return scoredEvent;
-//	}	
-	
-	///////////////////////////////////////////////////
-	////// Parses each event of this vendor END ///////
-	///////////////////////////////////////////////////
+	private Element parseEventElement(Element scoredEventElement) {
+		List<Element> locationList = getLocation(scoredEventElement);
+		List<Element> userVariableList = getUserVariables(scoredEventElement);
+		Element scoredEvent = null;
+		if(xmlRoot != null) {
+			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
+		} else {
+			System.out.println("TEST: xmlRoot is null"); // test
+			return null;
+		}
+		for(Element element : locationList)
+			scoredEvent.appendChild(element);
+		for(Element element : userVariableList)
+			scoredEvent.appendChild(element);
+		return scoredEvent;
+	}
 	
 	/**
 	 * Gets the value of the specified key from UserVariable parameter of this event
@@ -485,7 +289,7 @@ public class EmblaTranslation {
 	 * @param paramKey the key corresponding to the value needed
 	 * @return the value corresponding to the key
 	 */
-	public String getUserVariableValue(Element scoredEventElement, String paramKey) {
+	private String getUserVariableValue(Element scoredEventElement, String paramKey) {
 		NodeList rootParamsList = scoredEventElement.getElementsByTagName("Parameters");
 		Element rootParams = (Element)rootParamsList.item(0);		
 		NodeList rootParamList = rootParams.getElementsByTagName("Parameter");
@@ -522,7 +326,7 @@ public class EmblaTranslation {
 	 * @param childName the child name
 	 * @return the text content in the child node
 	 */
-	public String getElementByChildTag(Element parent, String childName) {		
+	private String getElementByChildTag(Element parent, String childName) {		
 		NodeList list = parent.getElementsByTagName(childName);
 	    if (list.getLength() > 1) {
 	      throw new IllegalStateException("Multiple child elements with name " + childName);
@@ -558,7 +362,7 @@ public class EmblaTranslation {
 	 * @param mapFile the mapping file name
 	 * @return  the mapping in form of HashMap
 	 */
-	public HashMap<String,Object>[] readMapFile(String mapFile) {
+	private HashMap<String,Object>[] readMapFile(String mapFile) {
 //		System.out.println("Read map file...");  // for test
 		@SuppressWarnings("unchecked")
 		// HashMap[] map = new HashMap[3]; // original
@@ -615,7 +419,7 @@ public class EmblaTranslation {
 	 * @param edfFile the EDF file name
 	 * @return the start date and duration, first string is start date and the second is duration
 	 */
-	public String[] recordStartDate(String edfFile) {
+	private String[] recordStartDate(String edfFile) {
 		String[] startDate = new String[2];
 		@SuppressWarnings("unused")
 		SimpleDateFormat df = new SimpleDateFormat("mm.dd.yyyy hh.mm.ss");
@@ -643,7 +447,8 @@ public class EmblaTranslation {
 			for (int i = 0; i < 8; i++) {
 				durRec[i] = (char)edfFileRead.readByte();
 				//System.out.println(dur[i]);
-			}			
+			}
+			
 			// long numRec = edf.readLong();
 			// long durRec = edf.readLong();
 			long duration = Long.parseLong(String.valueOf(durRec).trim()) * 
@@ -658,6 +463,7 @@ public class EmblaTranslation {
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			log(errors.toString());
+			// System.out.println(errors.toString());
 		}
 		timeStart = startDate;
 		return startDate;
@@ -669,7 +475,7 @@ public class EmblaTranslation {
 	 * @param end the end time
 	 * @return duration
 	 */
-	public String getDurationInSeconds(String start, String end) {
+	private String getDurationInSeconds(String start, String end) {
 		// SimpleDataFormat did not handle microseconds well, so I wrote the code to handle it
 		// by wei wang, 2014-8-9
 		String format = "yyyy-MM-dd'T'HH:mm:ss";
@@ -708,7 +514,7 @@ public class EmblaTranslation {
 	 * @param emblaXmlFile the Embla annotation file
 	 * @return true if the process is successful
 	 */
-	public boolean recordEvents(Document doc) {
+	private boolean recordEvents(Document doc) {
 		String eventName;
 		ArrayList<String> eventNames = new ArrayList<String>();
 		NodeList nodeList = doc.getElementsByTagName("EventType");
@@ -729,48 +535,12 @@ public class EmblaTranslation {
 	}
 	
 	/**
-	 * Serializes xml file from a Document
-	 * @param xml source xml Document file
-	 * @param filename output xml file name
-	 */
-	@SuppressWarnings("deprecation")
-	public void saveXML(Document xml, String filename) {
-		try {
-			String tarfileDir = filename.substring(0, filename.lastIndexOf(File.separator));
-			File f1 = new File(tarfileDir);
-			if (!f1.exists()){
-				f1.mkdirs();
-			}
-			
-			File f2 = new File(filename);
-			FileOutputStream fos = new FileOutputStream(filename, f2.exists());
-			// XERCES 1 or 2 additionnal classes.
-			OutputFormat of = new OutputFormat("XML","ISO-8859-1",true);
-			of.setIndent(1);
-			of.setIndenting(true);
-			//of.setDoctype(null,"users.dtd");
-			XMLSerializer serializer = new XMLSerializer(fos, of);
-			// As a DOM Serializer
-			serializer.asDOMSerializer();
-			serializer.serialize( xml.getDocumentElement() );
-			//System.out.println(outfile);
-			fos.close();
-		} catch(IOException e) {
-			e.printStackTrace();			
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			log(errors.toString());
-			// System.out.println(errors.toString());
-		}
-	}
-	
-	/**
 	 * Appends elements of string format to the ScoredEvent element
 	 * @param doc the Document to which the elements to be added
 	 * @param elements elements to be added to the ScoredEvent element
 	 * @return the ScoredEvent element
 	 */
-	public Element addElements(Document doc, String[] elements) {
+	private Element addElements(Document doc, String[] elements) {
 		Element eventElement = doc.createElement("ScoredEvent");
 		Element nameElement = doc.createElement("EventConcept");
 		nameElement.appendChild(doc.createTextNode(elements[0]));
@@ -789,7 +559,7 @@ public class EmblaTranslation {
 	 * @param xmlAnnotationFile the xml annotation file
 	 * @return true if this operation successful
 	 */
-	public Document resolveBOM(String xmlAnnotationFile) {
+	private Document resolveBOM(String xmlAnnotationFile) {
 		Document doc = null;
 		InputStream inputStream = null;
 		try {
@@ -837,16 +607,9 @@ public class EmblaTranslation {
 	}
 
 	///////////////////////////////////
-	//// Getters and Setters START ////
+	//// Private utility methods end //
+	//// Getters and Setters START   //
 	///////////////////////////////////
-
-	public String getFormat() {
-		return format;
-	}
-
-	public void setFormat(String format) {
-		this.format = format;
-	}
 
 	public Document getDocument() {
 		return document;
