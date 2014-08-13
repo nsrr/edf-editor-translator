@@ -43,6 +43,10 @@ import org.xml.sax.InputSource;
 // et.translate();
 // et.write();
 
+/**
+ * The Vendor Embla class that is used for translation process
+ * @author wei wang
+ */
 public class EmblaAnnotationTranslator implements AnnotationTranslator {
 
 	private String softwareVersion = "Embla Xml";
@@ -78,9 +82,10 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 
 	/**
 	 * Translates Embla annotation file using the mapping file and the corresponding EDF file
-	 * @return The translated Document
+	 * @return true if successful
 	 */
-	public Document translate() {
+	public boolean translate() {
+		boolean result = false;
 		Element root = createEmptyDocument(softwareVersion);
 		
 		NodeList nodeList = document.getElementsByTagName("Event");
@@ -97,8 +102,9 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 		
 		root.appendChild(scoredEvents);
 		xmlRoot.appendChild(root);
+		result = true;
 		System.out.println("DONE!");  // test: should be moved out of this method
-		return xmlRoot;
+		return result;
 	}
 	
 	/**
@@ -114,7 +120,8 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
             DOMSource source = new DOMSource(xmlRoot);
             StreamResult file = new StreamResult(new File(output));
             transformer.transform(source, file);
-            System.out.println("\nXML DOM Created Successfully..");
+            // System.out.println("\nXML DOM Created Successfully..");
+            log("XML DOM Created Successfully..");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -363,7 +370,7 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 	 * @return  the mapping in form of HashMap
 	 */
 	private HashMap<String,Object>[] readMapFile(String mapFile) {
-//		System.out.println("Read map file...");  // for test
+		// System.out.println("Read map file...");  // for test
 		@SuppressWarnings("unchecked")
 		// HashMap[] map = new HashMap[3]; // original
 		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 3);
@@ -610,6 +617,58 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 	//// Private utility methods end //
 	//// Getters and Setters START   //
 	///////////////////////////////////
+	
+	public String getSoftwareVersion() {
+		return softwareVersion;
+	}
+
+	public void setSoftwareVersion(String softwareVersion) {
+		this.softwareVersion = softwareVersion;
+	}
+
+	public String getXmlAnnotation() {
+		return xmlAnnotation;
+	}
+
+	public void setXmlAnnotation(String xmlAnnotation) {
+		this.xmlAnnotation = xmlAnnotation;
+	}
+
+	public String getEdfFile() {
+		return edfFile;
+	}
+
+	public void setEdfFile(String edfFile) {
+		this.edfFile = edfFile;
+	}
+
+	public String getOutput() {
+		return output;
+	}
+
+	public void setOutput(String output) {
+		this.output = output;
+	}
+
+	public HashMap<String, Object>[] getMap() {
+		return map;
+	}
+
+	public void setMap(HashMap<String, Object>[] map) {
+		this.map = map;
+	}
+
+	public Document getXmlRoot() {
+		return xmlRoot;
+	}
+
+	public Element getScoredEvents() {
+		return scoredEvents;
+	}
+
+	public String[] getTimeStart() {
+		return timeStart;
+	}
 
 	public Document getDocument() {
 		return document;

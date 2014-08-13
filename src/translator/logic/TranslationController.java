@@ -69,11 +69,15 @@ public class TranslationController {
 			try {
 				new File(out_file_name).getParentFile().mkdirs();
 				if (vendor.equals(Vendor.Embla.toString())) {
-					annotation_file = validate_file(annotation_dir, basename, ".txt");
+//					annotation_file = validate_file(annotation_dir, basename, ".txt"); // original version
+					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name);	
-//						EmblaTranslation et = new EmblaTranslation(annotation_file, mapping_file, out_file_name);
-//						bTranslation = et.translate();
+//						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name); // original version
+						// next four lines created by wei wang, 2014-8-13
+						AnnotationTranslator translator = new EmblaAnnotationTranslator();
+						translator.read(edf_file, annotation_file, mapping_file);
+						bTranslation = translator.translate();
+						translator.write(out_file_name);
 					}
 				} else if (vendor.equals(Vendor.Compumedics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
