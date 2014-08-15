@@ -58,7 +58,7 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 	private HashMap<String,Object>[] map;
 	private Document xmlRoot = new DocumentImpl();; // xml root
 	private Element scoredEvents; // parent element of <Event>
-	private String[] timeStart;
+	public String[] timeStart;
 	
 	/**
 	 * Default constructor
@@ -223,11 +223,11 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 		root.appendChild(epoch);
 		
 		scoredEvents = xmlRoot.createElement("ScoredEvents");
-		recordStartDate(edfFile);
-		String[] elmts = new String[3];
-		elmts[0] = "Recording Start Time";
-		elmts[1] = "0";
-		elmts[2] = timeStart[1];
+		recordStartDate(edfFile); // 
+		String[] elmts = new String[3];//
+		elmts[0] = "Recording Start Time";//
+		elmts[1] = "0";//
+		elmts[2] = timeStart[1];//
 		Element timeElement = addElements(xmlRoot, elmts);
 		Element clock = xmlRoot.createElement("ClockTime");
 		clock.appendChild(xmlRoot.createTextNode(timeStart[0]));
@@ -245,9 +245,10 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 		Node nameNode = xmlRoot.createTextNode(eventType);
 		eventConcept.appendChild(nameNode);
 		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
+		String relativeStart = getEventStartTime(timeStart[0], startTime); // TODO
 		String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
 		String durationTime = getDurationInSeconds(startTime, stopTime);
-		start.appendChild(xmlRoot.createTextNode(startTime));
+		start.appendChild(xmlRoot.createTextNode(relativeStart));
 		duration.appendChild(xmlRoot.createTextNode(durationTime));
 		
 		list.add(eventConcept);
@@ -429,7 +430,7 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 	private String[] recordStartDate(String edfFile) {
 		String[] startDate = new String[2];
 		@SuppressWarnings("unused")
-		SimpleDateFormat df = new SimpleDateFormat("mm.dd.yyyy hh.mm.ss");
+		SimpleDateFormat df = new SimpleDateFormat("mm.dd.yyyy hh.mm.ss"); // TODO
 		try {
 			RandomAccessFile edfFileRead = new RandomAccessFile(new File(edfFile), "r");
 			edfFileRead.seek(168);
@@ -474,6 +475,37 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 		}
 		timeStart = startDate;
 		return startDate;
+	}
+	
+	/**
+	 * TODO
+	 * Get the start time of an event
+	 * @param edfClockStart the start time recorded in the EDF file
+	 * @param eventStart the start time of an event
+	 * @return start time of format "xxxxx.x"
+	 */
+	public String getEventStartTime(String edfClockStart, String eventStart) {
+		String format1 = "dd.mm.yy hh.mm.ss";
+		String format2 = "yyyy-MM-dd'T'HH:mm:ss";
+		String time;
+		SimpleDateFormat sdf1 = new SimpleDateFormat(format1, Locale.US);
+		SimpleDateFormat sdf2 = new SimpleDateFormat(format2, Locale.US);
+		try {
+			Date date1 = sdf1.parse(edfClockStart);
+			Date date2 = sdf2.parse(eventStart);
+			System.out.println("Date 1: " + date1 + "\nDate 2 : " + date2); // test
+			long diff = date2.getTime() - date1.getTime();  // milliseconds
+			long timeStart = diff / 1000;
+			
+			String start_suf = eventStart.substring(20, 21);
+			time = String.valueOf(timeStart);
+			time += "." + start_suf;
+			return time;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			log("Cannot parse duration");
+			return "";
+		}		
 	}
 	
 	/**

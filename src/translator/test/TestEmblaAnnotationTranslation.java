@@ -19,9 +19,9 @@ import translator.logic.EmblaTranslation;
 public class TestEmblaAnnotationTranslation {
 	
 	public static String mappingFile = "/Users/wei/git/edf-editor-translator/resource-wei/eventmapping_embla_test.csv";
-	public static String annotation = "/Users/wei/git/edf-editor-translator/resource-wei/10005_01202010.xml" ;
-	public static String edf = "/Users/wei/git/edf-editor-translator/resource-wei/100022.EDF";
-	public static String output = "/Users/wei/git/edf-editor-translator/output-wei/100022_Embla_2014-08-10-4.xml";	
+	public static String annotation = "/Users/wei/git/edf-editor-translator/resource-wei/10007_01262010s1.xml" ;
+	public static String edf = "/Users/wei/git/edf-editor-translator/resource-wei/10007_01262010s1.edf";
+	public static String output = "/Users/wei/git/edf-editor-translator/output-wei/100022_Embla_2014-08-15_01.xml";	
 
 	public static void main(String[] args) {
 		System.out.println("=================================================================");
@@ -32,7 +32,8 @@ public class TestEmblaAnnotationTranslation {
 //		testReadingMap();
 //		testUserVariable("Begin of desat");
 //		testUserVariable("End of desat");
-		test();
+//		test();
+		testEventTime();
 	}
 	
 	public static void test() {
@@ -132,5 +133,17 @@ public class TestEmblaAnnotationTranslation {
 //				break;
 			}
 		}
+	}
+	
+	public static void testEventTime() {
+		EmblaAnnotationTranslator et = new EmblaAnnotationTranslator();
+//		et.read(edf, mappingFile, annotation);
+//		et.translate();
+//		et.write(output);
+		String x = "26.01.10 21.29.59";
+		String y = "2010-01-26T22:42:30.000000";
+//		String edfTime = et.timeStart[0];
+		String result = et.getEventStartTime(x, y);
+		System.out.println(result);
 	}
 }

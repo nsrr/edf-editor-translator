@@ -1,6 +1,5 @@
 package translator.logic;
 
-import org.w3c.dom.Document;
 
 /**
  * This interface is used by each of the vendors that will implements the translation process
