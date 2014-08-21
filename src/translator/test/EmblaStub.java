@@ -1,78 +1,59 @@
-package translator.logic;
+package translator.test;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.RandomAccessFile;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.commons.io.ByteOrderMark;
-import org.apache.commons.io.input.BOMInputStream;
 import org.apache.xerces.dom.DocumentImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-// Caller class:
-// EmblaAnnotationTranslator_demo et = new EmblaAnnotationTranslator_demo();
-// et.read();
-// et.translate();
-// et.write();
 
 /**
- * The Vendor Embla class that is used for translation process
- * @author wei wang
+ * Uses for testing BasicTranslation
+ * @author wei wang, 2014-8-21
  */
-public class EmblaAnnotationTranslator implements AnnotationTranslator {
+public class EmblaStub extends translator.logic.BasicTranslation implements translator.logic.AnnotationTranslator {
 
-	private String softwareVersion = "Embla Xml";
-	private String xmlAnnotation; // annotation file path
-	private String edfFile;  // EDF file path
-	private String output; // output file path: initialized in write() method
-	private Document document;	// document is the result of resolving BOM	
-	private ArrayList<String> events;
-	private HashMap<String,Object>[] map;
-	private Document xmlRoot = new DocumentImpl();; // xml root
+	private Document xmlRoot; // = new DocumentImpl(); // xml root
 	private Element scoredEvents; // parent element of <Event>
-	public String[] timeStart;
 	
 	/**
 	 * Default constructor
 	 */
-	public EmblaAnnotationTranslator() {
+	public EmblaStub() {
 		super();
+		softwareVersion = "EmblaStub XML";
+		xmlRoot = new DocumentImpl(); // xml root
 	}
 	
 	public boolean read(String edfFile, String annotationFile, String mappingFile) {
+		System.out.println("Inside EmblaStub read");
 		boolean result = false;		
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
 		map = readMapFile(mappingFile);		
 		document = resolveBOM(xmlAnnotation);
+		// test
+		if(document == null) {
+			System.out.println("document is null");
+		} else {
+			System.out.println("document is not null");
+		}
 		result = recordEvents(document);		
 		if(!result) {
 			log("Cannot parse the events in the annotation file");
@@ -89,6 +70,7 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 		Element root = createEmptyDocument(softwareVersion);
 		
 		NodeList nodeList = document.getElementsByTagName("Event");
+		System.out.println("Event size: " + nodeList.getLength()); // test
 		for(int index = 0; index < nodeList.getLength(); index++) {
 			Element parsedElement = null;
 			Node node = nodeList.item(index);  // for each <event> node
@@ -129,39 +111,6 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
         }
 	}
 	
-//	public boolean write(String outputFile) {
-//		output = outputFile;
-//		try {
-//			String targetDirectory = output.substring(0, output.lastIndexOf(File.separator));
-//			File f1 = new File(targetDirectory);
-//			if (!f1.exists()){
-//				f1.mkdirs();
-//			}
-//			
-//			File f2 = new File(output);
-//			FileOutputStream fos = new FileOutputStream(output, f2.exists());
-//			// XERCES 1 or 2 additionnal classes.
-//			OutputFormat of = new OutputFormat("XML","ISO-8859-1", true);
-//			of.setIndent(1);
-//			of.setIndenting(true);
-//			//of.setDoctype(null,"users.dtd");
-//			XMLSerializer serializer = new XMLSerializer(fos, of);
-//			// As a DOM Serializer
-//			serializer.asDOMSerializer();
-//			serializer.serialize( xmlRoot.getDocumentElement() );
-//			//System.out.println(outfile);
-//			fos.close();
-//			return true;
-//		} catch(IOException e) {
-//			e.printStackTrace();			
-//			StringWriter errors = new StringWriter();
-//			e.printStackTrace(new PrintWriter(errors));
-//			log(errors.toString());
-//			return false;
-//			// System.out.println(errors.toString());
-//		}
-//	}
-	
 	/**
 	 * Parses event element and returns an parsed element
 	 * @param scoredEventElement the event name in String
@@ -171,15 +120,12 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 		
 		// only DESAT type has more values to be processed, others are the same
 		Element scoredEvent = null;
-		boolean result = false;
 		String eventType = getElementByChildTag(scoredEventElement, "Type");
 		// map[1] contains keySet with event name
 		if(map[1].keySet().contains(eventType)) {
 			scoredEvent = parseEventElement(scoredEventElement);
-			result = true;
 		} else {						
 			// no mapping event name found
-			result = false;
 			scoredEvent = xmlRoot.createElement("ScoredEvent");
 			Element eventConcept = xmlRoot.createElement("EventConcept");
 			Element startElement = xmlRoot.createElement("Starttime");
@@ -199,12 +145,8 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 			scoredEvent.appendChild(durationElement);
 			scoredEvent.appendChild(notesElement);
 			String info = xmlAnnotation + "," + eventType + "," + startTime ;
-			this.log(info);
+			log(info);
 		}		
-		if(!result) {
-			log("Does not have mapping element");
-//			System.out.println("Does not have mapping element");
-		}
 
 		return scoredEvent;
 	}
@@ -237,6 +179,7 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 	}
 	
 	private List<Element> getLocation(Element scoredEventElement) {
+		// {eventConcept, duration, start}
 		List<Element> list = new ArrayList<Element>();
 		String eventType = getElementByChildTag(scoredEventElement, "Type");
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
@@ -266,8 +209,8 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 			Element spO2Baseline = xmlRoot.createElement("SpO2Baseline");
 			String desatStartVal = getUserVariableValue(scoredEventElement, "Begin of desat");
 			String desatEndVal = getUserVariableValue(scoredEventElement, "End of desat");
-			spO2Nadir.appendChild(xmlRoot.createTextNode(desatStartVal));
-			spO2Baseline.appendChild(xmlRoot.createTextNode(desatEndVal));
+			spO2Nadir.appendChild(xmlRoot.createTextNode(desatEndVal));
+			spO2Baseline.appendChild(xmlRoot.createTextNode(desatStartVal));
 			list.add(spO2Nadir);
 			list.add(spO2Baseline);			
 		}
@@ -365,117 +308,6 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 	}
 	
 	/**
-	 * Reads mapping file and saves as an array of HashMap
-	 * Can be put in a higher hierarchy
-	 * @param mapFile the mapping file name
-	 * @return  the mapping in form of HashMap
-	 */
-	private HashMap<String,Object>[] readMapFile(String mapFile) {
-		// System.out.println("Read map file...");  // for test
-		@SuppressWarnings("unchecked")
-		// HashMap[] map = new HashMap[3]; // original
-		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 3);
-		// HashMap map = new HashMap();
-		try {
-			BufferedReader input =  new BufferedReader(new FileReader(mapFile));
-			try {
-				String line = input.readLine();
-				HashMap<String,Object> epoch = new HashMap<String,Object>();
-				HashMap<String,Object> events = new HashMap<String,Object>();
-				HashMap<String,Object> stages = new HashMap<String,Object>();
-				while ((line = input.readLine()) != null) {
-					String[] data = line.split(",");
-					// process events
-					if (data[0].compareTo("EpochLength") != 0 && data[0].compareTo("Sleep Staging") != 0) {
-						// values: {EventType, EventConcept, Note}
-						ArrayList<String> values = new ArrayList<String>(3);
-						values.add(data[0]);
-						values.add(data[2]);
-						if (data.length >= 4) {
-							values.add(data[3]);
-						}
-						// events {event, event_type && event_concept}
-						events.put(data[1], values);
-					} else if (data[0].compareTo("EpochLength") == 0) {
-						// System.out.println(data[0]);
-						epoch.put(data[0], data[2]);
-					} else {
-						// stages {event, event_concept}
-						stages.put(data[1], data[2]);
-					}
-				}	
-				// System.out.println(map[2].values().size());
-				map[0] = epoch;
-				map[1] = events;
-				map[2] = stages;
-			} finally {
-				input.close();
-			}
-		} catch(IOException e) {
-			e.printStackTrace();			
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			log(errors.toString());
-			// System.out.println(errors.toString());
-		}
-		return map;
-	}
-
-	/**
-	 * Records the start date from the EDF file
-	 * Can be put in a higher hierarchy
-	 * @param edfFile the EDF file name
-	 * @return the start date and duration, first string is start date and the second is duration
-	 */
-	private String[] recordStartDate(String edfFile) {
-		String[] startDate = new String[2];
-		try {
-			RandomAccessFile edfFileRead = new RandomAccessFile(new File(edfFile), "r");
-			edfFileRead.seek(168);
-			char[] date = new char[8];
-			for (int i = 0; i < 8; i++) {
-				date[i] = (char)edfFileRead.readByte();
-			}
-			
-			// edf.read(date);
-			char[] time = new char[8];
-			for (int i = 0; i < 8; i++) {
-				time[i] = (char)edfFileRead.readByte();
-			}
-			edfFileRead.seek(236);
-		
-			char[] numRec = new char[8];
-			for (int i = 0; i < 8; i++) {
-				numRec[i] = (char)edfFileRead.readByte();
-				//System.out.println(dur[i]);
-			}
-			char[] durRec = new char[8];
-			for (int i = 0; i < 8; i++) {
-				durRec[i] = (char)edfFileRead.readByte();
-				//System.out.println(dur[i]);
-			}
-			
-			// long numRec = edf.readLong();
-			// long durRec = edf.readLong();
-			long duration = Long.parseLong(String.valueOf(durRec).trim()) * 
-					Long.parseLong(String.valueOf(numRec).trim());
-			// long duration = 0;
-			// edf.read(time);
-			startDate[0] = String.valueOf(date) + " " + String.valueOf(time);
-			startDate[1] = String.valueOf(duration);
-			edfFileRead.close();
-		} catch (Exception e) {
-			e.printStackTrace();			
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			log(errors.toString());
-			// System.out.println(errors.toString());
-		}
-		timeStart = startDate;
-		return startDate;
-	}
-	
-	/**
 	 * Gets the start time of an event, relative to the EDF recording time
 	 * @param edfClockStart the start time recorded in the EDF file
 	 * @param eventStart the start time of an event
@@ -490,7 +322,7 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 		try {
 			Date date1 = sdf1.parse(edfClockStart);
 			Date date2 = sdf2.parse(eventStart);
-			System.out.println("Date 1: " + date1 + "\nDate 2 : " + date2); // test
+//			System.out.println("Date 1: " + date1 + "\nDate 2 : " + date2); // test
 			long diff = date2.getTime() - date1.getTime();  // milliseconds
 			long timeStart = diff / 1000;
 			
@@ -552,7 +384,7 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 	 */
 	private boolean recordEvents(Document doc) {
 		String eventName;
-		ArrayList<String> eventNames = new ArrayList<String>();
+		Set<String> eventNames = new HashSet<String>();
 		NodeList nodeList = doc.getElementsByTagName("EventType");
 		if(nodeList == null) {
 			log("Cannot find EventType");
@@ -588,58 +420,6 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 		durationElement.appendChild(doc.createTextNode(elements[2]));
 		eventElement.appendChild(durationElement);
 		return eventElement;
-	}
-	
-	/**
-	 * Resolves BOM and stores the result document
-	 * @param xmlAnnotationFile the xml annotation file
-	 * @return true if this operation successful
-	 */
-	private Document resolveBOM(String xmlAnnotationFile) {
-		Document doc = null;
-		InputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(new File(xmlAnnotationFile));
-			@SuppressWarnings("resource")
-			BOMInputStream bomInputStream = new BOMInputStream(inputStream);
-			ByteOrderMark bom = bomInputStream.getBOM();
-			String charsetName = bom == null ? "UTF-8" : bom.getCharsetName();
-			inputStream.close();
-		
-			inputStream = new FileInputStream(new File(xmlAnnotationFile));
-			Reader reader = new InputStreamReader(inputStream, charsetName);
-			InputSource is = new InputSource(reader);
-			is.setEncoding(charsetName);
-		
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-			doc = docBuilder.parse(is);
-			doc.getDocumentElement().normalize();
-		} catch(Exception e) {
-			e.printStackTrace();
-			StringWriter errors = new StringWriter();
-			e.printStackTrace(new PrintWriter(errors));
-			log(errors.toString());
-			// System.out.println(errors.toString());
-		} finally {
-			try {
-				if(inputStream != null) {
-					inputStream.close();
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return doc;
-	}
-
-	/**
-	 * Logs messages
-	 * Can be put in a higher hierarchy
-	 * @param message the message to be logged
-	 */
-	public void log(String message) {
-		TranslationController.translationErrors += message;
 	}
 
 	///////////////////////////////////
@@ -707,15 +487,16 @@ public class EmblaAnnotationTranslator implements AnnotationTranslator {
 		this.document = document;
 	}
 
-	public ArrayList<String> getEvents() {
+	public Set<String> getEvents() {
 		return events;
 	}
 
-	public void setEvents(ArrayList<String> events) {
+	public void setEvents(Set<String> events) {
 		this.events = events;
 	}
 	
 	//////////////////////////////////
 	//// Getters and Setters END /////
 	//////////////////////////////////
+
 }

@@ -34,6 +34,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+/**
+ * Older version of EmblaAnnotationTranslator
+ * should be removed later
+ * @author wei wang, 2014-8-21
+ */
 public class EmblaTranslation {
 	// Old-version
 	// Available events:

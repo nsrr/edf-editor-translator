@@ -52,6 +52,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 /**
+ * original class, should be replaced later
  * A Annotation converter. Translate different annotation file to standard xml file
  */
 @SuppressWarnings("deprecation")

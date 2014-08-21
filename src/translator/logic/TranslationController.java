@@ -75,6 +75,8 @@ public class TranslationController {
 //						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name); // original version
 						// next four lines created by wei wang, 2014-8-13
 						AnnotationTranslator translator = new EmblaAnnotationTranslator();
+//						AnnotationTranslator translator = new EmblaStub(); // newest and working well
+						// next three lines can be moved out of if statement
 						translator.read(edf_file, annotation_file, mapping_file);
 						bTranslation = translator.translate();
 						translator.write(out_file_name);
@@ -82,7 +84,13 @@ public class TranslationController {
 				} else if (vendor.equals(Vendor.Compumedics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name);
+//						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name); // original
+						// next four lines created by wei wang, 2014-8-21
+						AnnotationTranslator translator = new CompumedicsAnnotationTranslator();
+						// next three lines can be moved out of if statement
+						translator.read(edf_file, annotation_file, mapping_file);
+						bTranslation = translator.translate();
+						translator.write(out_file_name);
 					}
 				} else if (vendor.equals(Vendor.Respironics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".events.csv");
