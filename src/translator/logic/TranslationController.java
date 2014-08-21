@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -80,6 +81,8 @@ public class TranslationController {
 						translator.read(edf_file, annotation_file, mapping_file);
 						bTranslation = translator.translate();
 						translator.write(out_file_name);
+//						String jsonOut = separatorReplacer(out_file_prefix + File.separator + out_file_postfix + ".json"); 
+//						translator.write2JSON(jsonOut); // can output as json file
 					}
 				} else if (vendor.equals(Vendor.Compumedics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
@@ -91,6 +94,9 @@ public class TranslationController {
 						translator.read(edf_file, annotation_file, mapping_file);
 						bTranslation = translator.translate();
 						translator.write(out_file_name);
+						// test: output json worked
+//						String jsonOut = separatorReplacer(out_file_prefix + File.separator + out_file_postfix + ".json"); 						
+//						translator.write2JSON(jsonOut);
 					}
 				} else if (vendor.equals(Vendor.Respironics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".events.csv");

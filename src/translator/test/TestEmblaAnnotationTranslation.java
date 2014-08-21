@@ -8,8 +8,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import translator.logic.EmblaAnnotationTranslator;
-import translator.logic.EmblaAnnotationTranslator;
+import translator.logic.EmblaAnnotationTranslatorOld;
+import translator.logic.EmblaAnnotationTranslatorOld;
 import translator.logic.EmblaTranslation;
 
 /**
@@ -37,7 +37,7 @@ public class TestEmblaAnnotationTranslation {
 	}
 	
 	public static void test() {
-		EmblaAnnotationTranslator et = new EmblaAnnotationTranslator();
+		EmblaAnnotationTranslatorOld et = new EmblaAnnotationTranslatorOld();
 		et.read(edf, annotation, mappingFile);
 		et.translate();
 		et.write(output);
@@ -136,7 +136,7 @@ public class TestEmblaAnnotationTranslation {
 	}
 	
 	public static void testEventTime() {
-		EmblaAnnotationTranslator et = new EmblaAnnotationTranslator();
+		EmblaAnnotationTranslatorOld et = new EmblaAnnotationTranslatorOld();
 //		et.read(edf, mappingFile, annotation);
 //		et.translate();
 //		et.write(output);

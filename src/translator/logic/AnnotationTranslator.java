@@ -27,4 +27,11 @@ public interface AnnotationTranslator {
 	 * @return true if this process is done successful
 	 */
 	boolean write(String outputFile);
+	
+	/**
+	 * Writes the result to JSON file
+	 * @param outputFile the output file path
+	 * @return true if this process is done successful
+	 */
+	boolean write2JSON(String outputFile);
 }

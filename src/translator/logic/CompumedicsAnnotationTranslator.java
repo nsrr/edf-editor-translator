@@ -1,6 +1,8 @@
 package translator.logic;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -327,6 +329,20 @@ public class CompumedicsAnnotationTranslator extends BasicTranslation implements
 		durationElement.appendChild(doc.createTextNode(elements[2]));
 		eventElement.appendChild(durationElement);
 		return eventElement;
+	}
+
+	@Override
+	public boolean write2JSON(String outputFile) {
+		boolean result = false;
+//		String resultFinal = ExportFile.xmlStr2jsonStr(ExportFile.xml2string(xmlRoot));
+		String resultFinal = ExportFile.xml2json(xmlRoot);
+		try (PrintStream out = new PrintStream(new FileOutputStream(outputFile))) {
+		    out.print(resultFinal);
+		    result = true;
+		} catch(Exception e) {
+			// log result
+		}
+		return result;
 	}
 
 }
