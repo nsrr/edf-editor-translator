@@ -164,7 +164,14 @@ public class EmblaAnnotationTranslator extends BasicTranslation implements Annot
 		Element software = xmlRoot.createElement("SoftwareVersion");
 		software.appendChild(xmlRoot.createTextNode(softwareVersion));
 		Element epoch = xmlRoot.createElement("EpochLength");
-		epoch.appendChild(xmlRoot.createTextNode((String) map[0].get("EpochLength")) );
+		// bug fixes for empty xml output file caused by EpochLength empty
+		// wei wang, 2014-8-22
+		String epochLength = (String) map[0].get("EpochLength");
+		if(epochLength != null) {
+			epoch.appendChild(xmlRoot.createTextNode((String) map[0].get("EpochLength")) );	
+		} else {
+			epoch.appendChild(xmlRoot.createTextNode(""));
+		}
 		root.appendChild(software);
 		root.appendChild(epoch);
 		
