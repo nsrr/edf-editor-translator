@@ -92,7 +92,6 @@ public class BasicTranslation {
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			log(errors.toString());
-			// System.out.println(errors.toString());
 		}
 		return map;
 	}
@@ -127,7 +126,6 @@ public class BasicTranslation {
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			log(errors.toString());
-			// System.out.println(errors.toString());
 		} finally {
 			try {
 				if(inputStream != null) {
@@ -196,11 +194,8 @@ public class BasicTranslation {
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			log(errors.toString());
-			// System.out.println(errors.toString());
 		}
 		timeStart = startDate;
 		return startDate;
 	}
-	
-	
 }

@@ -59,9 +59,6 @@ public class CompumedicsAnnotationTranslator extends BasicTranslation implements
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see translator.logic.AnnotationTranslator#translate()
-	 */
 	@Override
 	public boolean translate() {
 		boolean result = false;
@@ -88,11 +85,6 @@ public class CompumedicsAnnotationTranslator extends BasicTranslation implements
 		return result;
 	}
 
-	/**
-	 * TODO
-	 * @param elem
-	 * @return
-	 */
 	private Element parseCompumedicsXmlEvent(Element scoredEventElement) {
 		// only DESAT type has more values to be processed, others are the same
 		Element scoredEvent = null;
@@ -127,12 +119,7 @@ public class CompumedicsAnnotationTranslator extends BasicTranslation implements
 
 		return scoredEvent;
 	}
-	
-	/**
-	 * TODO
-	 * @param scoredEventElement
-	 * @return
-	 */
+
 	private Element parseEventElement(Element scoredEventElement) {
 		List<Element> locationList = getLocation(scoredEventElement);
 		if(locationList == null) {
@@ -180,7 +167,9 @@ public class CompumedicsAnnotationTranslator extends BasicTranslation implements
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
-		Node nameNode = xmlRoot.createTextNode(eventType);
+//		Node nameNode = xmlRoot.createTextNode(eventType); // bug-fixed: wei wang, 2014-8-26
+		@SuppressWarnings("unchecked")
+		Node nameNode = xmlRoot.createTextNode((String)((ArrayList<String>) map[1].get(eventType)).get(1));
 		eventConcept.appendChild(nameNode);
 		
 		String startTime = getElementByChildTag(scoredEventElement, "Start");
@@ -206,9 +195,6 @@ public class CompumedicsAnnotationTranslator extends BasicTranslation implements
 		}		
 	}
 
-	/* (non-Javadoc)
-	 * @see translator.logic.AnnotationTranslator#write(java.lang.String)
-	 */
 	@Override
 	public boolean write(String outputFile) {
 		output = outputFile;

@@ -46,8 +46,7 @@ public class TranslationController {
 		stage_dir = separatorReplacer(stage_dir);
 		output_dir = separatorReplacer(output_dir);
 
-		ArrayList<String> successfulOutAL = new ArrayList<String>();
-		
+		ArrayList<String> successfulOutAL = new ArrayList<String>();		
 		String annotation_file = null, stage_file = null, out_file_name = null;
 		
 		for (String edf_file : selected_Edf_files) {
@@ -109,8 +108,7 @@ public class TranslationController {
 					if ((new File(annotation_file)).exists()) {
 						bTranslation = converter.convertSandman(annotation_file, edf_file, mapping_file, out_file_name);
 					}					
-				}
-				
+				}				
 
 				if (bTranslation) {
 					successfulOutAL.add(out_file_name);
@@ -132,7 +130,7 @@ public class TranslationController {
 				addElementIntoLog("   * Mapping:\t" + mapping_file + "(" + ((new File(mapping_file)).exists() ? "Existed" : "Not exist!") + ")", false);
 				addElementIntoLog("   * EDF file:\t" + edf_file + "(" + ((new File(edf_file)).exists() ? "Existed" : "Not exist!") + ")", true);
 				addElementIntoLog("   * Annotation:\t" + annotation_file + "(" + ((new File(annotation_file)).exists() ? "Existed" : "Not exist!") + ")", true);
-				if (vendor.equals(Vendor.Respironics.toString()))
+				if(vendor.equals(Vendor.Respironics.toString()))
 				addElementIntoLog("   * Stage file:\t" + stage_file + "(" + ((new File(stage_file)).exists() ? "Existed" : "Not exist!") + ")", false);
 				addElementIntoLog("   * Output file:\t" + out_file_name, true);
 				addElementIntoLog("   * Translation:\t" + (bTranslation ? "Successful!" : "Failed!"), true);
@@ -148,7 +146,8 @@ public class TranslationController {
 		
 		addElementIntoLog(" .....................", true);
 		addElementIntoLog("  => The task finished!", true);
-		addElementIntoLog("   * " + successfulOutAL.size() + " out of " + selected_Edf_files.size() + " EDF files have been successfully translated.", true);
+		addElementIntoLog("   * " + successfulOutAL.size() + " out of " + selected_Edf_files.size() + 
+				" EDF files have been successfully translated.", true);
 		
 		return successfulOutAL;
 	}

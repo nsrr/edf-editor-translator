@@ -18,6 +18,11 @@ import org.w3c.dom.Document;
 public class ExportFile {
 	public static int PRETTY_PRINT_INDENT_FACTOR = 4;
     
+    /**
+     * Translates the XML format to json file format
+     * @param doc translates the Document to json file format
+     * @return the json output
+     */
     public static String xml2json(Document doc) {
     	TransformerFactory tf = TransformerFactory.newInstance();
     	Transformer transformer;
@@ -43,5 +48,14 @@ public class ExportFile {
             System.out.println(je.toString());
             return "";
         }
+    }
+    
+    /**
+     * TODO: to be implemented
+     * @param doc
+     * @return
+     */
+    public static String xml2xml(Document doc) {
+    	return "";
     }
 }

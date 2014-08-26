@@ -45,6 +45,7 @@ public class EmblaAnnotationTranslator extends BasicTranslation implements Annot
 		xmlRoot = new DocumentImpl(); // xml root
 	}
 	
+	@Override
 	public boolean read(String edfFile, String annotationFile, String mappingFile) {
 		System.out.println("Inside EmblaStub read");
 		boolean result = false;		
@@ -69,6 +70,7 @@ public class EmblaAnnotationTranslator extends BasicTranslation implements Annot
 	 * Translates Embla annotation file using the mapping file and the corresponding EDF file
 	 * @return true if successful
 	 */
+	@Override
 	public boolean translate() {
 		boolean result = false;
 		Element root = createEmptyDocument(softwareVersion);
@@ -98,6 +100,7 @@ public class EmblaAnnotationTranslator extends BasicTranslation implements Annot
 	 * @param output the xml output file
 	 * @return true if the process succeed
 	 */
+	@Override
 	public boolean write(String outputFile) {
 		output = outputFile;
         try {
@@ -111,6 +114,7 @@ public class EmblaAnnotationTranslator extends BasicTranslation implements Annot
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            log("Error in writing out file");
             return false;
         }
 	}
@@ -196,7 +200,9 @@ public class EmblaAnnotationTranslator extends BasicTranslation implements Annot
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
-		Node nameNode = xmlRoot.createTextNode(eventType);
+//		Node nameNode = xmlRoot.createTextNode(eventType); // bug fixed: wei wang, 2014-8-26
+		@SuppressWarnings("unchecked")
+		Node nameNode = xmlRoot.createTextNode((String) ((ArrayList<String>) map[1].get(eventType)).get(1));
 		eventConcept.appendChild(nameNode);
 		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
 		String relativeStart = getEventStartTime(timeStart[0], startTime);
