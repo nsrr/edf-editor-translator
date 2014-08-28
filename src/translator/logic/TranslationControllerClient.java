@@ -18,7 +18,7 @@ import translator.utils.Vendor;
 /**
  * A controller that manages the annotation translation process
  */
-public class TranslationController {
+public class TranslationControllerClient {
 
 	public static String translationErrors = "";
 	public static JList<String> JList_Messages = null; // wei wang, change JList to generic JList<String>
@@ -65,7 +65,7 @@ public class TranslationController {
 			out_file_name = separatorReplacer(out_file_prefix + File.separator + out_file_postfix);
 			
 			boolean bTranslation = false;
-			AnnotationConverter converter = new AnnotationConverter();
+			AllVendorAnnotationTranslator converter = new AllVendorAnnotationTranslator();
 			try {
 				new File(out_file_name).getParentFile().mkdirs();
 				if (vendor.equals(Vendor.Embla.toString())) {
@@ -74,12 +74,13 @@ public class TranslationController {
 					if ((new File(annotation_file)).exists()) {
 //						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name); // original version
 						// next four lines created by wei wang, 2014-8-13
-						AnnotationTranslator translator = new EmblaAnnotationTranslator();
+//						AnnotationTranslator translator = new EmblaAnnotationTranslator(); // 1.
+						AbstractTranslator translator = new EmblaAnnotationTranslator(); // 1.
 //						AnnotationTranslator translator = new EmblaStub(); // newest and working well
 						// next three lines can be moved out of if statement
-						translator.read(edf_file, annotation_file, mapping_file);
-						bTranslation = translator.translate();
-						translator.write(out_file_name);
+						translator.read(edf_file, annotation_file, mapping_file); // 2.
+						bTranslation = translator.translate(); // 3.
+						translator.write(out_file_name); // 4.
 //						String jsonOut = separatorReplacer(out_file_prefix + File.separator + out_file_postfix + ".json"); 
 //						translator.write2JSON(jsonOut); // can output as json file
 					}
@@ -88,7 +89,7 @@ public class TranslationController {
 					if ((new File(annotation_file)).exists()) {
 //						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name); // original
 						// next four lines created by wei wang, 2014-8-21
-						AnnotationTranslator translator = new CompumedicsAnnotationTranslator();
+						AbstractTranslator translator = new CompumedicsAnnotationTranslator();
 						// next three lines can be moved out of if statement
 						translator.read(edf_file, annotation_file, mapping_file);
 						bTranslation = translator.translate();

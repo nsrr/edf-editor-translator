@@ -6,7 +6,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FileUtils;
 
-import translator.logic.TranslationController;
+import translator.logic.TranslationControllerClient;
 import translator.utils.Keywords;
 import translator.utils.MyDate;
 import translator.utils.Vendor;
@@ -102,7 +102,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
                     enableComponents(enable);
 
                     String pattern = JTextField_OutputPattern.getText();
-                    String example = TranslationController.customize_out_file(pattern, null, vendor_Selected);
+                    String example = TranslationControllerClient.customize_out_file(pattern, null, vendor_Selected);
                     JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
                 }
             }
@@ -157,15 +157,15 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		Checkbox_Date = new Checkbox("Date", null, false);
 		Checkbox_Time = new Checkbox("Time", null, false);
 		Checkbox_Vendor.addItemListener(new ItemListener() {public void itemStateChanged(ItemEvent e) {
-			String pattern = TranslationController.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_vendor, e);
+			String pattern = TranslationControllerClient.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_vendor, e);
 			JTextField_OutputPattern.setText(pattern);	
 		}});
 		Checkbox_Date.addItemListener(new ItemListener() {public void itemStateChanged(ItemEvent e) {
-			String pattern = TranslationController.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_date, e);
+			String pattern = TranslationControllerClient.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_date, e);
 			JTextField_OutputPattern.setText(pattern);	
 		}});
 		Checkbox_Time.addItemListener(new ItemListener() {public void itemStateChanged(ItemEvent e) {
-			String pattern = TranslationController.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_time, e);
+			String pattern = TranslationControllerClient.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_time, e);
 			JTextField_OutputPattern.setText(pattern);	
 		}});
 		
@@ -177,7 +177,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				public void insertUpdate(DocumentEvent e) {update();}
 				private void update() {
                 	String pattern = JTextField_OutputPattern.getText();
-                	String example = TranslationController.customize_out_file(pattern, null, vendor_Selected);
+                	String example = TranslationControllerClient.customize_out_file(pattern, null, vendor_Selected);
                 	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
 				}
 		});
@@ -198,7 +198,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		//(8.2) Review of Example Filename
 		JLabel_OutputExample = new JLabel("");
     	String pattern = JTextField_OutputPattern.getText();
-    	String example = TranslationController.customize_out_file(pattern, null, vendor_Selected);
+    	String example = TranslationControllerClient.customize_out_file(pattern, null, vendor_Selected);
     	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
 		
 		JPanel jPanel2 = new JPanel();
@@ -301,8 +301,8 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		JList_Messages.setBackground(Keywords.status);
 		LayoutManager.addItemList(JSroll_Messages, JPanel_Status);
 		
-		TranslationController.ListModel_Messages = ListModel_Messages;
-		TranslationController.JList_Messages = JList_Messages;
+		TranslationControllerClient.ListModel_Messages = ListModel_Messages;
+		TranslationControllerClient.JList_Messages = JList_Messages;
 		
 		/* (15) Disable all fields before having vendor selected */
 		enableComponents(false);
@@ -319,7 +319,11 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		if (e.getSource() == JButton_MappingFile) {
 			select.setDialogTitle("Select a mapping file");
 			select.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("Mapping file (*.csv)", new String[] {"CSV", "csv", "Csv"});
+			FileNameExtensionFilter filter = 
+					new FileNameExtensionFilter(
+							"Mapping file (*.csv)", 
+							new String[] {"CSV", "csv", "Csv"}
+					);
 			select.setFileFilter(filter);
 			if (select.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 				String file = select.getSelectedFile().getAbsolutePath();
@@ -382,17 +386,17 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 			}
 		} else if (e.getSource() == JButton_Translate) {
 			
-			TranslationController.addElementIntoLog("", true);
-			TranslationController.addElementIntoLog("=====================================================================", true);
-			TranslationController.addElementIntoLog(" + User started a new task at " + MyDate.currentDateTime(), true);
+			TranslationControllerClient.addElementIntoLog("", true);
+			TranslationControllerClient.addElementIntoLog("=====================================================================", true);
+			TranslationControllerClient.addElementIntoLog(" + User started a new task at " + MyDate.currentDateTime(), true);
 			
 			ArrayList<String> errorMessages = validatePrerequisites();
 
 			if (errorMessages.size() > 0) {
 				for (String message : errorMessages) {
-					TranslationController.addElementIntoLog("    * " + message, false);
+					TranslationControllerClient.addElementIntoLog("    * " + message, false);
 				}
-				TranslationController.addElementIntoLog(" + The task failed. Please check the above error messages!", false);
+				TranslationControllerClient.addElementIntoLog(" + The task failed. Please check the above error messages!", false);
 			} else {
 				String vendor = vendor_Selected;
 				String mapping_file = JTextField_MappingFile.getText();
@@ -402,8 +406,18 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				String output_dir = JTextField_OutputDirectory.getText();
 				String outname = JTextField_OutputPattern.getText();
 				
-				ArrayList<String> successfulOutAL = TranslationController.conductTranslation(vendor, mapping_file, edf_dir, selected_Edf_files, annotation_dir, stage_dir, output_dir, outname);
-				
+				ArrayList<String> successfulOutAL = 
+						TranslationControllerClient.conductTranslation(
+								vendor, 
+								mapping_file, 
+								edf_dir, 
+								selected_Edf_files, 
+								annotation_dir, 
+								stage_dir, 
+								output_dir, 
+								outname
+						);
+
 				String[] outputFiles = successfulOutAL.toArray(new String[successfulOutAL.size()]);
 				JList_Out_files.setListData(outputFiles);
 			}
@@ -417,7 +431,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 	 */
 	public void itemStateChanged(ItemEvent e) {
 		String pattern = JTextField_OutputPattern.getText();
-    	String example = TranslationController.customize_out_file(pattern, null, vendor_Selected);
+    	String example = TranslationControllerClient.customize_out_file(pattern, null, vendor_Selected);
     	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
 	}
 	

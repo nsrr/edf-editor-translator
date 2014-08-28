@@ -23,7 +23,8 @@ import org.w3c.dom.NodeList;
 /**
  * @author wei wang, 2014-8-21
  */
-public class CompumedicsAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
+//public class CompumedicsAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
+public class CompumedicsAnnotationTranslator extends AbstractTranslator { 	
 	
 	private Document xmlRoot; // = new DocumentImpl(); // xml root
 	private Element scoredEvents; // parent element of <Event>
@@ -76,13 +77,70 @@ public class CompumedicsAnnotationTranslator extends BasicTranslation implements
 			}
 			scoredEvents.appendChild(parsedElement);
 		}
-		System.out.println("Parse ScoredEvent Success!");  // test
+		// Parse staging:
+		for(Element elem: parseStaging())
+			scoredEvents.appendChild(elem);
 		
 		root.appendChild(scoredEvents);
-		xmlRoot.appendChild(root);
+		xmlRoot.appendChild(root);		
+		System.out.println("Parse ScoredEvent Success!");  // test				
 		result = true;
-		System.out.println("DONE!");  // test: should be moved out of this method
 		return result;
+	}
+
+	/**
+	 * Parses staging element and appends them to scoredEvents element
+	 * @return a list containing parsed staging event
+	 */
+	private List<Element> parseStaging() {
+		List<Element> list = new ArrayList<Element>();
+		// for each sleep stages
+		NodeList stageList = document.getElementsByTagName("SleepStage");		
+		Element scoredEvent = xmlRoot.createElement("ScoredEvent");
+		Element eventConcept = xmlRoot.createElement("EventConcept");
+		Element startElement = xmlRoot.createElement("Start");
+		Element durationElement = xmlRoot.createElement("Duration");
+					
+		String firstStageKey = ((Element) stageList.item(0)).getTextContent();
+		String firstStageValue = "";
+		// map[2] <- {key(Event), value(Value)}
+		// example: "Sleep Staging,1,SDO:NonRapidEyeMovementSleep-N1," map[2] = {"1", "SDO:NonRapidEyeMovementSleep-N1"};
+		if (map[2].keySet().contains(firstStageKey)) {
+			firstStageValue = (String) map[2].get(firstStageKey);
+		}
+		double start = 0;
+		eventConcept.appendChild(xmlRoot.createTextNode(firstStageValue));
+		startElement.appendChild(xmlRoot.createTextNode(Double.toString(start)));
+		scoredEvent.appendChild(eventConcept);
+		scoredEvent.appendChild(startElement);
+		int count = 0;
+		for (int i = 1; i < stageList.getLength(); i++) {
+			String iStageValue = ((Element) stageList.item(i)).getTextContent();
+			if (iStageValue.compareTo(firstStageKey) == 0) {
+				count++; // count = count + 1;
+			} else {
+				durationElement.appendChild(xmlRoot.createTextNode(Double.toString(count * 30)));
+			    scoredEvent.appendChild(durationElement);
+			    list.add(scoredEvent);			    
+				scoredEvent = xmlRoot.createElement("ScoredEvent");
+				eventConcept = xmlRoot.createElement("EventConcept");
+				firstStageKey = iStageValue;
+				if (map[2].keySet().contains(firstStageKey)) {
+					firstStageValue = (String) map[2].get(firstStageKey);
+				}
+				eventConcept.appendChild(xmlRoot.createTextNode(firstStageValue));
+				startElement = xmlRoot.createElement("Start");
+				start += count * 30; // start = start + count * 30;
+				startElement.appendChild(xmlRoot.createTextNode(Double.toString(start)));
+				durationElement = xmlRoot.createElement("Duration");
+				scoredEvent.appendChild(eventConcept);
+				scoredEvent.appendChild(startElement);
+				count = 1;
+			}
+		}
+		durationElement.appendChild(xmlRoot.createTextNode(Double.toString(count * 30)));
+		scoredEvent.appendChild(durationElement);
+		return list;
 	}
 
 	private Element parseCompumedicsXmlEvent(Element scoredEventElement) {
@@ -321,7 +379,7 @@ public class CompumedicsAnnotationTranslator extends BasicTranslation implements
 	public boolean write2JSON(String outputFile) {
 		boolean result = false;
 //		String resultFinal = ExportFile.xmlStr2jsonStr(ExportFile.xml2string(xmlRoot));
-		String resultFinal = ExportFile.xml2json(xmlRoot);
+		String resultFinal = FormatedWriter.xml2json(xmlRoot);
 		try (PrintStream out = new PrintStream(new FileOutputStream(outputFile))) {
 		    out.print(resultFinal);
 		    result = true;

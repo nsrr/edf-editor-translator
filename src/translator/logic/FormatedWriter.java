@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import org.json.XML;
 import org.w3c.dom.Document;
 
-public class ExportFile {
+public class FormatedWriter {
 	public static int PRETTY_PRINT_INDENT_FACTOR = 4;
     
     /**

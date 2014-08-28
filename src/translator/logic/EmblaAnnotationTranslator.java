@@ -25,13 +25,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import translator.logic.ExportFile;
+import translator.logic.FormatedWriter;
 
 /**
  * Uses for testing BasicTranslation
  * @author wei wang, 2014-8-21
  */
-public class EmblaAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
+//public class EmblaAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
+public class EmblaAnnotationTranslator extends AbstractTranslator {
 
 	private Document xmlRoot; // = new DocumentImpl(); // xml root
 	private Element scoredEvents; // parent element of <Event>
@@ -515,7 +516,7 @@ public class EmblaAnnotationTranslator extends BasicTranslation implements Annot
 	@Override
 	public boolean write2JSON(String outputFile) {
 		boolean result = false;
-		String resultFinal = ExportFile.xml2json(xmlRoot);
+		String resultFinal = FormatedWriter.xml2json(xmlRoot);
 		try (PrintStream out = new PrintStream(new FileOutputStream(outputFile))) {
 		    out.print(resultFinal);
 		    result = true;

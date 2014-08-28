@@ -2,10 +2,11 @@ package translator.logic;
 
 
 /**
- * This interface is used by each of the vendors that will implements the translation process
+ * This interface is used by each of the vendors who will be implementing the translation process
+ * @deprecated
  * @author wei wang
  */
-public interface AnnotationTranslator {
+public interface AnnotationTranslatorOld {
 	/**
 	 * Reads the path of the EDF file, the annotation file and the mapping file
 	 * @param edfFile the path of the EDF file

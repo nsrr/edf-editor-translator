@@ -27,9 +27,10 @@ import org.xml.sax.InputSource;
 /**
  * Base class for all annotation translation, which provides basic attributes and 
  * functionalities of an translation procedure
+ * @deprecated
  * @author wei wang, 2014-8-21
  */
-public class BasicTranslation {
+public class BasicTranslationOld {
 	
 	protected String softwareVersion;
 	protected String xmlAnnotation; // annotation file path
@@ -143,7 +144,7 @@ public class BasicTranslation {
 	 * @param message the message to be logged
 	 */
 	public static void log(String message) {
-		TranslationController.translationErrors += message;
+		TranslationControllerClient.translationErrors += message;
 	}
 	
 	/**

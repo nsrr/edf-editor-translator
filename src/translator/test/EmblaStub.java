@@ -25,13 +25,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import translator.logic.ExportFile;
+import translator.logic.FormatedWriter;
 
 /**
  * Uses for testing BasicTranslation
  * @author wei wang, 2014-8-21
  */
-public class EmblaStub extends translator.logic.BasicTranslation implements translator.logic.AnnotationTranslator {
+public class EmblaStub extends translator.logic.BasicTranslationOld implements translator.logic.AnnotationTranslatorOld {
 
 	private Document xmlRoot; // = new DocumentImpl(); // xml root
 	private Element scoredEvents; // parent element of <Event>
@@ -502,7 +502,7 @@ public class EmblaStub extends translator.logic.BasicTranslation implements tran
 	@Override
 	public boolean write2JSON(String outputFile) {
 		boolean result = false;
-		String resultFinal = ExportFile.xml2json(xmlRoot);
+		String resultFinal = FormatedWriter.xml2json(xmlRoot);
 		try (PrintStream out = new PrintStream(new FileOutputStream(outputFile))) {
 		    out.print(resultFinal);
 		    result = true;
