@@ -7,7 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import translator.logic.EmblaAnnotationTranslator;
+import translator.logic.EmblaTranslatorFactory;
 
 /**
  * To test the functionality of the EmblaTranslation class
@@ -71,7 +71,7 @@ public class TestEmblaAnnotationTranslation {
 	
 	public static void testApneaCentral() {
 		Element result = null;
-		EmblaAnnotationTranslator et = new EmblaAnnotationTranslator();
+		EmblaTranslatorFactory et = new EmblaTranslatorFactory();
 		et.read(edf, annotation, mappingFile);
 //		Document doc = et.document;
 //		NodeList nodeList = doc.getElementsByTagName("Event");

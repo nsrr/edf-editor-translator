@@ -6,7 +6,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FileUtils;
 
-import translator.logic.TranslationControllerClient;
+import translator.logic.AnnotationTranslatorClient;
 import translator.utils.Keywords;
 import translator.utils.MyDate;
 import translator.utils.Vendor;
@@ -102,7 +102,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
                     enableComponents(enable);
 
                     String pattern = JTextField_OutputPattern.getText();
-                    String example = TranslationControllerClient.customize_out_file(pattern, null, vendor_Selected);
+                    String example = AnnotationTranslatorClient.customize_out_file(pattern, null, vendor_Selected);
                     JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
                 }
             }
@@ -157,15 +157,15 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		Checkbox_Date = new Checkbox("Date", null, false);
 		Checkbox_Time = new Checkbox("Time", null, false);
 		Checkbox_Vendor.addItemListener(new ItemListener() {public void itemStateChanged(ItemEvent e) {
-			String pattern = TranslationControllerClient.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_vendor, e);
+			String pattern = AnnotationTranslatorClient.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_vendor, e);
 			JTextField_OutputPattern.setText(pattern);	
 		}});
 		Checkbox_Date.addItemListener(new ItemListener() {public void itemStateChanged(ItemEvent e) {
-			String pattern = TranslationControllerClient.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_date, e);
+			String pattern = AnnotationTranslatorClient.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_date, e);
 			JTextField_OutputPattern.setText(pattern);	
 		}});
 		Checkbox_Time.addItemListener(new ItemListener() {public void itemStateChanged(ItemEvent e) {
-			String pattern = TranslationControllerClient.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_time, e);
+			String pattern = AnnotationTranslatorClient.updateOutputPattern(JTextField_OutputPattern.getText(), Keywords.key_time, e);
 			JTextField_OutputPattern.setText(pattern);	
 		}});
 		
@@ -177,7 +177,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				public void insertUpdate(DocumentEvent e) {update();}
 				private void update() {
                 	String pattern = JTextField_OutputPattern.getText();
-                	String example = TranslationControllerClient.customize_out_file(pattern, null, vendor_Selected);
+                	String example = AnnotationTranslatorClient.customize_out_file(pattern, null, vendor_Selected);
                 	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
 				}
 		});
@@ -198,7 +198,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		//(8.2) Review of Example Filename
 		JLabel_OutputExample = new JLabel("");
     	String pattern = JTextField_OutputPattern.getText();
-    	String example = TranslationControllerClient.customize_out_file(pattern, null, vendor_Selected);
+    	String example = AnnotationTranslatorClient.customize_out_file(pattern, null, vendor_Selected);
     	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
 		
 		JPanel jPanel2 = new JPanel();
@@ -301,8 +301,8 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		JList_Messages.setBackground(Keywords.status);
 		LayoutManager.addItemList(JSroll_Messages, JPanel_Status);
 		
-		TranslationControllerClient.ListModel_Messages = ListModel_Messages;
-		TranslationControllerClient.JList_Messages = JList_Messages;
+		AnnotationTranslatorClient.ListModel_Messages = ListModel_Messages;
+		AnnotationTranslatorClient.JList_Messages = JList_Messages;
 		
 		/* (15) Disable all fields before having vendor selected */
 		enableComponents(false);
@@ -386,17 +386,17 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 			}
 		} else if (e.getSource() == JButton_Translate) {
 			
-			TranslationControllerClient.addElementIntoLog("", true);
-			TranslationControllerClient.addElementIntoLog("=====================================================================", true);
-			TranslationControllerClient.addElementIntoLog(" + User started a new task at " + MyDate.currentDateTime(), true);
+			AnnotationTranslatorClient.addElementIntoLog("", true);
+			AnnotationTranslatorClient.addElementIntoLog("=====================================================================", true);
+			AnnotationTranslatorClient.addElementIntoLog(" + User started a new task at " + MyDate.currentDateTime(), true);
 			
 			ArrayList<String> errorMessages = validatePrerequisites();
 
 			if (errorMessages.size() > 0) {
 				for (String message : errorMessages) {
-					TranslationControllerClient.addElementIntoLog("    * " + message, false);
+					AnnotationTranslatorClient.addElementIntoLog("    * " + message, false);
 				}
-				TranslationControllerClient.addElementIntoLog(" + The task failed. Please check the above error messages!", false);
+				AnnotationTranslatorClient.addElementIntoLog(" + The task failed. Please check the above error messages!", false);
 			} else {
 				String vendor = vendor_Selected;
 				String mapping_file = JTextField_MappingFile.getText();
@@ -407,7 +407,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				String outname = JTextField_OutputPattern.getText();
 				
 				ArrayList<String> successfulOutAL = 
-						TranslationControllerClient.conductTranslation(
+						AnnotationTranslatorClient.conductTranslation(
 								vendor, 
 								mapping_file, 
 								edf_dir, 
@@ -431,7 +431,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 	 */
 	public void itemStateChanged(ItemEvent e) {
 		String pattern = JTextField_OutputPattern.getText();
-    	String example = TranslationControllerClient.customize_out_file(pattern, null, vendor_Selected);
+    	String example = AnnotationTranslatorClient.customize_out_file(pattern, null, vendor_Selected);
     	JLabel_OutputExample.setText("<html><font color='blue'>" + example + "</font></html>");
 	}
 	

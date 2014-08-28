@@ -21,10 +21,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
+ * A translator factory that translates Compumedics annotation file and generate specified output
  * @author wei wang, 2014-8-21
  */
 //public class CompumedicsAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
-public class CompumedicsAnnotationTranslator extends AbstractTranslator { 	
+public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory { 	
 	
 	private Document xmlRoot; // = new DocumentImpl(); // xml root
 	private Element scoredEvents; // parent element of <Event>
@@ -32,24 +33,25 @@ public class CompumedicsAnnotationTranslator extends AbstractTranslator {
 	/**
 	 * Default constructor
 	 */
-	public CompumedicsAnnotationTranslator() {
+	public CompumedicsTranslatorFactory() {
 		super();
-		softwareVersion = "Compumedics XML";
+		softwareVersion = "Compumedics";
 		xmlRoot = new DocumentImpl(); // xml root
 	}
 
 	@Override
 	public boolean read(String edfFile, String annotationFile, String mappingFile) {
-		System.out.println("Inside CompumedicsAnnotationTranslator read"); // test
+//		System.out.println("Inside CompumedicsAnnotationTranslator read"); // test
 		boolean result = false;		
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
 		map = readMapFile(mappingFile);		
-		System.out.println("map: " + map);
+//		System.out.println("map: " + map); // test
 		document = resolveBOM(xmlAnnotation);
 		// test
 		if(document == null) {
-			System.out.println("document is null");
+//			System.out.println("document is null"); // test
+			log("document is null");
 		} else {
 			System.out.println("document is not null");
 		}
@@ -66,7 +68,7 @@ public class CompumedicsAnnotationTranslator extends AbstractTranslator {
 		Element root = createEmptyDocument(softwareVersion);
 		
 		NodeList nodeList = document.getElementsByTagName("ScoredEvent");
-		System.out.println("Event size: " + nodeList.getLength()); // test
+//		System.out.println("Event size: " + nodeList.getLength()); // test
 		for(int index = 0; index < nodeList.getLength(); index++) {
 			Element parsedElement = null;
 			Node node = nodeList.item(index);  // for each <event> node
@@ -95,18 +97,22 @@ public class CompumedicsAnnotationTranslator extends AbstractTranslator {
 	private List<Element> parseStaging() {
 		List<Element> list = new ArrayList<Element>();
 		// for each sleep stages
-		NodeList stageList = document.getElementsByTagName("SleepStage");		
+		NodeList stageList = document.getElementsByTagName("SleepStage");	
 		Element scoredEvent = xmlRoot.createElement("ScoredEvent");
 		Element eventConcept = xmlRoot.createElement("EventConcept");
 		Element startElement = xmlRoot.createElement("Start");
 		Element durationElement = xmlRoot.createElement("Duration");
 					
 		String firstStageKey = ((Element) stageList.item(0)).getTextContent();
-		String firstStageValue = "";
-		// map[2] <- {key(Event), value(Value)}
+		System.out.println("First key in map[2]: " + firstStageKey); // test
+		String firstStageValue;
+		// map[2] <- {key(Event), value(EventConcept)}
 		// example: "Sleep Staging,1,SDO:NonRapidEyeMovementSleep-N1," map[2] = {"1", "SDO:NonRapidEyeMovementSleep-N1"};
 		if (map[2].keySet().contains(firstStageKey)) {
 			firstStageValue = (String) map[2].get(firstStageKey);
+			System.out.println("First key value in map[2]: " + firstStageValue);
+		} else {
+			firstStageValue = "";
 		}
 		double start = 0;
 		eventConcept.appendChild(xmlRoot.createTextNode(firstStageValue));
@@ -125,9 +131,14 @@ public class CompumedicsAnnotationTranslator extends AbstractTranslator {
 				scoredEvent = xmlRoot.createElement("ScoredEvent");
 				eventConcept = xmlRoot.createElement("EventConcept");
 				firstStageKey = iStageValue;
+				System.out.print("key: " + firstStageKey); // test
 				if (map[2].keySet().contains(firstStageKey)) {
 					firstStageValue = (String) map[2].get(firstStageKey);
+					System.out.println(" value: " + firstStageValue); // test
+				} else {
+					firstStageValue = "";
 				}
+				System.out.println(); // test
 				eventConcept.appendChild(xmlRoot.createTextNode(firstStageValue));
 				startElement = xmlRoot.createElement("Start");
 				start += count * 30; // start = start + count * 30;
@@ -147,7 +158,7 @@ public class CompumedicsAnnotationTranslator extends AbstractTranslator {
 		// only DESAT type has more values to be processed, others are the same
 		Element scoredEvent = null;
 		String eventType = getElementByChildTag(scoredEventElement, "Name");
-		System.out.println("map event size: " + map[1].keySet().size()); // test
+//		System.out.println("map event size: " + map[1].keySet().size()); // test
 		// map[1] contains keySet with event name
 		if(map[1].keySet().contains(eventType)) {
 			scoredEvent = parseEventElement(scoredEventElement);
@@ -181,17 +192,20 @@ public class CompumedicsAnnotationTranslator extends AbstractTranslator {
 	private Element parseEventElement(Element scoredEventElement) {
 		List<Element> locationList = getLocation(scoredEventElement);
 		if(locationList == null) {
-			System.out.println("ERROR 1"); // test
+//			System.out.println("ERROR 1"); // test
+			log("ERROR: location error");
 		}
 		List<Element> userVariableList = getUserVariables(scoredEventElement);
 		if(userVariableList == null) {
-			System.out.println("ERROR 2"); // test
+//			System.out.println("ERROR 2"); // test
+			log("ERROR: user variable error");
 		}
 		Element scoredEvent = null;
 		if(xmlRoot != null) {
 			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
 		} else {
-			System.out.println("TEST: xmlRoot is null"); // test
+//			System.out.println("TEST: xmlRoot is null"); // test
+			log("TEST: xmlRoot is null");
 			return null;
 		}
 		for(Element element : locationList)
@@ -276,7 +290,13 @@ public class CompumedicsAnnotationTranslator extends AbstractTranslator {
 		Element software = xmlRoot.createElement("SoftwareVersion");
 		software.appendChild(xmlRoot.createTextNode(softwareVersion));
 		Element epoch = xmlRoot.createElement("EpochLength");
-		epoch.appendChild(xmlRoot.createTextNode((String) map[0].get("EpochLength")) );
+		String epochLength = (String) map[0].get("EpochLength");
+//		System.out.println("EpochLength: " + epochLength); // test
+		if(epochLength != null) {
+			epoch.appendChild(xmlRoot.createTextNode(epochLength));	
+		} else {
+			epoch.appendChild(xmlRoot.createTextNode(""));
+		}
 		root.appendChild(software);
 		root.appendChild(epoch);
 		

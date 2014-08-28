@@ -47,7 +47,7 @@ public class CommandLineController {
 				}
 				
 				//(3) Perform translation
-				TranslationControllerClient.conductTranslation(vendor, mapping_file, edf_dir, selected_Edf_files, annotation_dir, stage_dir, output_dir, outname);
+				AnnotationTranslatorClient.conductTranslation(vendor, mapping_file, edf_dir, selected_Edf_files, annotation_dir, stage_dir, output_dir, outname);
 			}
 		} catch (ParseException e) {
 			System.out.println("-------------------------------");

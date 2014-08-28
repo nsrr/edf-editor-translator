@@ -231,10 +231,10 @@ public class AllVendorAnnotationTranslator {
 	 * Logs string into TanslationController's error message string.
 	 * Should consider a logger instead
 	 * @param info information to be logged
-	 * @see translator.logic.TranslationControllerClient#translationErrors
+	 * @see translator.logic.AnnotationTranslatorClient#translationErrors
 	 */
 	public void log(String info) {
-		TranslationControllerClient.translationErrors += info;
+		AnnotationTranslatorClient.translationErrors += info;
 	}
 	
 	/**

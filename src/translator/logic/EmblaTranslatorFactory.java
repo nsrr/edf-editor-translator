@@ -32,7 +32,7 @@ import translator.logic.FormatedWriter;
  * @author wei wang, 2014-8-21
  */
 //public class EmblaAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
-public class EmblaAnnotationTranslator extends AbstractTranslator {
+public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 
 	private Document xmlRoot; // = new DocumentImpl(); // xml root
 	private Element scoredEvents; // parent element of <Event>
@@ -40,9 +40,9 @@ public class EmblaAnnotationTranslator extends AbstractTranslator {
 	/**
 	 * Default constructor
 	 */
-	public EmblaAnnotationTranslator() {
+	public EmblaTranslatorFactory() {
 		super();
-		softwareVersion = "EmblaStub XML";
+		softwareVersion = "Embla";
 		xmlRoot = new DocumentImpl(); // xml root
 	}
 	

@@ -18,7 +18,7 @@ import translator.utils.Vendor;
 /**
  * A controller that manages the annotation translation process
  */
-public class TranslationControllerClient {
+public class AnnotationTranslatorClient {
 
 	public static String translationErrors = "";
 	public static JList<String> JList_Messages = null; // wei wang, change JList to generic JList<String>
@@ -75,7 +75,7 @@ public class TranslationControllerClient {
 //						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name); // original version
 						// next four lines created by wei wang, 2014-8-13
 //						AnnotationTranslator translator = new EmblaAnnotationTranslator(); // 1.
-						AbstractTranslator translator = new EmblaAnnotationTranslator(); // 1.
+						AbstractTranslatorFactory translator = new EmblaTranslatorFactory(); // 1.
 //						AnnotationTranslator translator = new EmblaStub(); // newest and working well
 						// next three lines can be moved out of if statement
 						translator.read(edf_file, annotation_file, mapping_file); // 2.
@@ -89,7 +89,7 @@ public class TranslationControllerClient {
 					if ((new File(annotation_file)).exists()) {
 //						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name); // original
 						// next four lines created by wei wang, 2014-8-21
-						AbstractTranslator translator = new CompumedicsAnnotationTranslator();
+						AbstractTranslatorFactory translator = new CompumedicsTranslatorFactory();
 						// next three lines can be moved out of if statement
 						translator.read(edf_file, annotation_file, mapping_file);
 						bTranslation = translator.translate();

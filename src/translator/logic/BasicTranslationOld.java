@@ -144,7 +144,7 @@ public class BasicTranslationOld {
 	 * @param message the message to be logged
 	 */
 	public static void log(String message) {
-		TranslationControllerClient.translationErrors += message;
+		AnnotationTranslatorClient.translationErrors += message;
 	}
 	
 	/**
