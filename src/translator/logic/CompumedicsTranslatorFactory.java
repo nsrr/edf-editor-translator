@@ -111,6 +111,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		Element durationElement = xmlRoot.createElement("Duration");
 					
 		String firstStageKey = ((Element) stageList.item(0)).getTextContent();
+		
 		System.out.println("First key in map[2]: " + firstStageKey); // test
 		String firstStageValue;
 		// map[2] <- {key(Event), value(EventConcept)}
@@ -199,20 +200,17 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 	private Element parseEventElement(Element scoredEventElement) {
 		List<Element> locationList = getLocation(scoredEventElement);
 		if(locationList == null) {
-//			System.out.println("ERROR 1"); // test
 			log("ERROR: location error");
 		}
 		List<Element> userVariableList = getUserVariables(scoredEventElement);
 		if(userVariableList == null) {
-//			System.out.println("ERROR 2"); // test
 			log("ERROR: user variable error");
 		}
 		Element scoredEvent = null;
 		if(xmlRoot != null) {
 			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
 		} else {
-//			System.out.println("TEST: xmlRoot is null"); // test
-			log("TEST: xmlRoot is null");
+			log("ERROR: root element is null");
 			return null;
 		}
 		for(Element element : locationList)
@@ -256,9 +254,9 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		duration.appendChild(xmlRoot.createTextNode(durationTime));
 		start.appendChild(xmlRoot.createTextNode(startTime));
 			
-		list.add(eventConcept);
-		list.add(duration);
+		list.add(eventConcept);		
 		list.add(start);
+		list.add(duration);
 			
 		return list;
 	}

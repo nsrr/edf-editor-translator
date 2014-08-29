@@ -78,11 +78,11 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	@Override
 	public boolean translate() {
-		System.out.println("======================================");
-		for(String str : map[1].keySet()) {
-			System.out.println(str + " ");
-		}
-		System.out.println("======================================");
+//		System.out.println("======================================");
+//		for(String str : map[1].keySet()) {
+//			System.out.println(str + " ");
+//		}
+//		System.out.println("======================================");
 		 // test
 					
 		boolean result = false;
@@ -271,9 +271,9 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		start.appendChild(xmlRoot.createTextNode(relativeStart));
 		duration.appendChild(xmlRoot.createTextNode(durationTime));
 		
-		list.add(eventConcept);
-		list.add(duration);
+		list.add(eventConcept);		
 		list.add(start);
+		list.add(duration);
 		
 		return list;
 	}
@@ -301,7 +301,8 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		if(xmlRoot != null) {
 			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
 		} else {
-			System.out.println("TEST: xmlRoot is null"); // test
+//			System.out.println("TEST: xmlRoot is null"); // test
+			log("ERROR: root document is null");
 			return null;
 		}
 		for(Element element : locationList)
@@ -450,7 +451,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			return time;
 		} catch (ParseException e) {
 			e.printStackTrace();
-			System.out.println("Cannot parse duration\n");
+			log("Cannot parse start time\n");
 			return "";
 		}
 	}
