@@ -1,11 +1,18 @@
 package translator.logic;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,8 +31,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import translator.logic.FormatedWriter;
 
 /**
  * Uses for testing BasicTranslation
@@ -52,7 +57,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		boolean result = false;		
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
-		map = readMapFile(mappingFile);		
+		map = readMapFile(mappingFile);	
 		document = resolveBOM(xmlAnnotation);
 		// test
 		if(document == null) {
@@ -73,6 +78,13 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	@Override
 	public boolean translate() {
+		System.out.println("======================================");
+		for(String str : map[1].keySet()) {
+			System.out.println(str + " ");
+		}
+		System.out.println("======================================");
+		 // test
+					
 		boolean result = false;
 		Element root = createEmptyDocument(softwareVersion);
 		
@@ -89,6 +101,9 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			scoredEvents.appendChild(parsedElement);
 		}
 		
+//		for(Element elem: parseStaging())
+//			scoredEvents.appendChild(elem);
+		
 		root.appendChild(scoredEvents);
 		xmlRoot.appendChild(root);
 		result = true;
@@ -96,6 +111,47 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		return result;
 	}
 	
+//	private List<Element> parseStaging(Document doc) {
+////		// TODO Auto-generated method stub
+//		List<Element> list = new ArrayList<Element>();
+//		
+//		// only DESAT type has more values to be processed, others are the same
+//				Element scoredEvent = null;
+//				String eventType = getElementByChildTag(scoredEventElement, "Type");
+//				// map[1] contains keySet with event name
+//				if(map[1].keySet().contains(eventType)) {
+//					scoredEvent = parseEventElement(scoredEventElement);
+//				} else {						
+//					// no mapping event name found
+//					scoredEvent = xmlRoot.createElement("ScoredEvent");
+//					Element eventConcept = xmlRoot.createElement("EventConcept");
+//					Element startElement = xmlRoot.createElement("Starttime");
+//					Element durationElement = xmlRoot.createElement("Duration");
+//					Element notesElement = xmlRoot.createElement("Notes");
+//						
+//					eventConcept.appendChild(xmlRoot.createTextNode("Technician Notes"));
+//					notesElement.appendChild(xmlRoot.createTextNode(eventType));
+//					
+//					String startTime = getElementByChildTag(scoredEventElement, "StartTime");
+//					String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
+//					String durationTime = getDurationInSeconds(startTime, stopTime);
+//					startElement.appendChild(xmlRoot.createTextNode(startTime)); // newly added 2-14-8-28
+//					durationElement.appendChild(xmlRoot.createTextNode(durationTime));
+//							
+//					scoredEvent.appendChild(eventConcept);
+//					scoredEvent.appendChild(startElement);
+//					scoredEvent.appendChild(durationElement);
+//					scoredEvent.appendChild(notesElement);
+//					String info = xmlAnnotation + "," + eventType + "," + startTime ;
+//					log(info); // needed  
+//					// TODO
+//				}		
+//
+//				return scoredEvent;
+//		
+//		return list;
+//	}
+
 	/**
 	 * Serializes XML to output file
 	 * @param output the xml output file
@@ -121,6 +177,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	}
 	
 	/**
+	 * TODO
 	 * Parses event element and returns an parsed element
 	 * @param scoredEventElement the event name in String
 	 * @return the parsed element
@@ -147,6 +204,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			String startTime = getElementByChildTag(scoredEventElement, "StartTime");
 			String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
 			String durationTime = getDurationInSeconds(startTime, stopTime);
+			startElement.appendChild(xmlRoot.createTextNode(startTime)); // newly added 2-14-8-28
 			durationElement.appendChild(xmlRoot.createTextNode(durationTime));
 					
 			scoredEvent.appendChild(eventConcept);
@@ -154,7 +212,8 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			scoredEvent.appendChild(durationElement);
 			scoredEvent.appendChild(notesElement);
 			String info = xmlAnnotation + "," + eventType + "," + startTime ;
-			log(info);
+//			log(info); // needed  
+			// TODO
 		}		
 
 		return scoredEvent;
@@ -202,8 +261,8 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
 //		Node nameNode = xmlRoot.createTextNode(eventType); // bug fixed: wei wang, 2014-8-26
-		@SuppressWarnings("unchecked")
-		Node nameNode = xmlRoot.createTextNode((String) ((ArrayList<String>) map[1].get(eventType)).get(1));
+		//		Node nameNode = xmlRoot.createTextNode((String) ((ArrayList<String>) map[1].get(eventType)).get(1));
+		Node nameNode = xmlRoot.createTextNode((String) (map[1].get(eventType)));
 		eventConcept.appendChild(nameNode);
 		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
 		String relativeStart = getEventStartTime(timeStart[0], startTime);
@@ -332,27 +391,68 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 * @return start time of format "xxxxx.x"
 	 */
 	public String getEventStartTime(String edfClockStart, String eventStart) {
-		String format1 = "dd.mm.yy hh.mm.ss";
+//		System.out.println("EDF:" + edfClockStart + "|" + "EVENT:" + eventStart);
+		String edftime = edfClockStart.substring(9, 17);
+//		System.out.println("EDF time: " + edftime);
+		String eventTime = eventStart.substring(11, 19);
+//		System.out.println("EventTime: " + eventTime);
+		String edfDate = edfClockStart.substring(0, 8);
+//		System.out.println("EDF Date: " + edfDate);
+		String eventDate = eventStart.substring(0, 10);
+//		System.out.println("Event Date: " + eventDate);
+
+			
+		SimpleDateFormat edfTF = new SimpleDateFormat("hh.mm.ss");
+		SimpleDateFormat eventFormat = new SimpleDateFormat("HH:mm:ss");
+			
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatEdfDate = new SimpleDateFormat("dd.mm.yy");
+		Calendar c = Calendar.getInstance();
+		String finalDate = "";
+		try {
+			Date edf1 = edfTF.parse(edftime);
+			Date event1 = eventFormat.parse(eventTime);
+//			System.out.println("!!!!!!!!!!!" + edf1.after(event1));
+			if(edf1.after(event1)) {
+				// edf date = event date - 1;
+				c.setTime(formatDate.parse(eventDate));
+				c.add(Calendar.DATE, -1);  // number of days to add
+				String fdate = formatDate.format(c.getTime());
+				finalDate = fdate.substring(8, 10) + "." + fdate.substring(5, 7) + "." + fdate.substring(2, 4);
+			} else {
+				finalDate = eventDate.substring(8, 10) + "." + eventDate.substring(5, 7) + "." + eventDate.substring(2, 4);
+//				System.out.println("EDF Date: " + finalDate);
+			}
+		} catch (ParseException e) {
+			log("Cannot parse start date.");
+		}		
+		edfClockStart = finalDate + " " + edfClockStart.substring(9);
+//		System.out.println("edf final start: " + edfClockStart);
+//		System.out.println("event start:     " + eventStart);
+		String format1 = "dd.MM.yy hh.mm.ss";
 		String format2 = "yyyy-MM-dd'T'HH:mm:ss";
 		String time;
 		SimpleDateFormat sdf1 = new SimpleDateFormat(format1, Locale.US);
 		SimpleDateFormat sdf2 = new SimpleDateFormat(format2, Locale.US);
 		try {
-			Date date1 = sdf1.parse(edfClockStart);
-			Date date2 = sdf2.parse(eventStart);
-//			System.out.println("Date 1: " + date1 + "\nDate 2 : " + date2); // test
-			long diff = date2.getTime() - date1.getTime();  // milliseconds
-			long timeStart = diff / 1000;
-			
+			Date edfd = sdf1.parse(edfClockStart);
+			Date eventd = sdf2.parse(eventStart);
+//			System.out.println("EDF/EVENT:\n" + edfd.toString() + "\n" + eventd);
+//			System.out.println("!!!!!!!!!" + edfd.before(eventd));
+			long diff = eventd.getTime() - edfd.getTime();  // milliseconds
+//			System.out.println("edfd: " + edfd.getTime());
+//			System.out.println("eventd: " + eventd.getTime());
+//			System.out.println("diff: " + diff);
+			long timeStart = diff / 1000;			
 			String start_suf = eventStart.substring(20, 21);
 			time = String.valueOf(timeStart);
 			time += "." + start_suf;
 			return time;
 		} catch (ParseException e) {
 			e.printStackTrace();
-			log("Cannot parse duration");
+			System.out.println("Cannot parse duration\n");
 			return "";
-		}		
+		}
 	}
 	
 	/**
@@ -524,6 +624,65 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			// log result
 		}
 		return result;
+	}
+	
+	/**
+	 * Reads mapping file and saves as an array of HashMap
+	 * Can be put in a higher hierarchy
+	 * @param mapFile the mapping file name
+	 * @return  the mapping in form of HashMap
+	 */
+	public HashMap<String,Object>[] readMapFile(String mapFile) {
+		// System.out.println("Read map file...");  // for test
+		@SuppressWarnings("unchecked")
+		// HashMap[] map = new HashMap[3]; // original
+		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 2);
+		// HashMap map = new HashMap();
+		try {
+			BufferedReader input =  new BufferedReader(new FileReader(mapFile));
+			try {
+				String line = input.readLine();
+				HashMap<String,Object> epoch = new HashMap<String,Object>();
+				HashMap<String,Object> events = new HashMap<String,Object>();
+//				HashMap<String,Object> stages = new HashMap<String,Object>();
+				while ((line = input.readLine()) != null) {
+					String[] data = line.split(",");
+//					String eventTypeLowerCase = data[0].toLowerCase();
+					// process events
+//					if (!eventTypeLowerCase.contains("epochlength")
+//							&& !eventTypeLowerCase.contains("staging")) {
+//						// values: {EventType, EventConcept, Note}
+//						ArrayList<String> values = new ArrayList<String>(3);
+//						values.add(data[0]);
+//						values.add(data[2]);
+//						if (data.length >= 4) {
+//							values.add(data[3]);
+//						}
+//						// events {event, event_type && event_concept}
+//						events.put(data[1], values);
+//					} else 
+					if (data[0].compareTo("EpochLength") == 0) {
+						// System.out.println(data[0]);
+						epoch.put(data[0], data[2]);
+					} else {
+						// stages {event, event_concept}
+						events.put(data[1], data[2]);
+					}
+				}	
+				// System.out.println(map[2].values().size());
+				map[0] = epoch;
+				map[1] = events;
+//				map[2] = stages;
+			} finally {
+				input.close();
+			}
+		} catch(IOException e) {
+			e.printStackTrace();			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log(errors.toString());
+		}
+		return map;
 	}
 	
 	//////////////////////////////////

@@ -68,13 +68,12 @@ public class AnnotationTranslatorClient {
 			AllVendorAnnotationTranslator converter = new AllVendorAnnotationTranslator();
 			try {
 				new File(out_file_name).getParentFile().mkdirs();
-				if (vendor.equals(Vendor.Embla.toString())) {
+				if (vendor.equals(Vendor.Embla.toString())) {					
 //					annotation_file = validate_file(annotation_dir, basename, ".txt"); // original version
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
 //						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name); // original version
 						// next four lines created by wei wang, 2014-8-13
-//						AnnotationTranslator translator = new EmblaAnnotationTranslator(); // 1.
 						AbstractTranslatorFactory translator = new EmblaTranslatorFactory(); // 1.
 //						AnnotationTranslator translator = new EmblaStub(); // newest and working well
 						// next three lines can be moved out of if statement

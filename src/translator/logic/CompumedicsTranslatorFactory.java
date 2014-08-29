@@ -1,9 +1,16 @@
 package translator.logic;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -407,6 +414,64 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 			// log result
 		}
 		return result;
+	}
+	
+	/**
+	 * Reads mapping file and saves as an array of HashMap
+	 * Can be put in a higher hierarchy
+	 * @param mapFile the mapping file name
+	 * @return  the mapping in form of HashMap
+	 */
+	public HashMap<String,Object>[] readMapFile(String mapFile) {
+		// System.out.println("Read map file...");  // for test
+		@SuppressWarnings("unchecked")
+		// HashMap[] map = new HashMap[3]; // original
+		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 3);
+		// HashMap map = new HashMap();
+		try {
+			BufferedReader input =  new BufferedReader(new FileReader(mapFile));
+			try {
+				String line = input.readLine();
+				HashMap<String,Object> epoch = new HashMap<String,Object>();
+				HashMap<String,Object> events = new HashMap<String,Object>();
+				HashMap<String,Object> stages = new HashMap<String,Object>();
+				while ((line = input.readLine()) != null) {
+					String[] data = line.split(",");
+					String eventTypeLowerCase = data[0].toLowerCase();
+					// process events
+					if (!eventTypeLowerCase.contains("epochlength")
+							&& !eventTypeLowerCase.contains("staging")) {
+						// values: {EventType, EventConcept, Note}
+						ArrayList<String> values = new ArrayList<String>(3);
+						values.add(data[0]);
+						values.add(data[2]);
+						if (data.length >= 4) {
+							values.add(data[3]);
+						}
+						// events {event, event_type && event_concept}
+						events.put(data[1], values);
+					} else if (data[0].compareTo("EpochLength") == 0) {
+						// System.out.println(data[0]);
+						epoch.put(data[0], data[2]);
+					} else {
+						// stages {event, event_concept}
+						stages.put(data[1], data[2]);
+					}
+				}	
+				// System.out.println(map[2].values().size());
+				map[0] = epoch;
+				map[1] = events;
+				map[2] = stages;
+			} finally {
+				input.close();
+			}
+		} catch(IOException e) {
+			e.printStackTrace();			
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			log(errors.toString());
+		}
+		return map;
 	}
 
 }
