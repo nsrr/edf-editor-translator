@@ -52,10 +52,12 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 /**
+ * original class, should be replaced later
  * A Annotation converter. Translate different annotation file to standard xml file
  */
 @SuppressWarnings("deprecation")
-public class AnnotationConverter {
+public class AllVendorAnnotationTranslator {
+	// cannot be removed, used for two vendors
 	// Read: http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
 	// Fixed HashMap to HashMap<String,Object>, wei wang, 2014-7-11
 	// new Embla xml: http://msdn.microsoft.com/en-us/library/ms764635%28v=vs.85%29.aspx
@@ -229,10 +231,10 @@ public class AnnotationConverter {
 	 * Logs string into TanslationController's error message string.
 	 * Should consider a logger instead
 	 * @param info information to be logged
-	 * @see translator.logic.TranslationController#translationErrors
+	 * @see translator.logic.AnnotationTranslatorClient#translationErrors
 	 */
 	public void log(String info) {
-		TranslationController.translationErrors += info;
+		AnnotationTranslatorClient.translationErrors += info;
 	}
 	
 	/**
@@ -415,13 +417,11 @@ public class AnnotationConverter {
 					scoredEvents.appendChild(eventNode);
 					String info = annotation_file + "," + eventname + "," + Double.toString(starttime) ;
 					this.log(info);
-				}
-				
+				}				
 			}
 			
 			// for each sleep stages
-			NodeList allStages = doc.getElementsByTagName("SleepStage");
-			
+			NodeList allStages = doc.getElementsByTagName("SleepStage");			
 			Element eventNode = xmlRoot.createElement("ScoredEvent");
 			Element nameNode = xmlRoot.createElement("EventConcept");
 			Element startNode = xmlRoot.createElement("Start");
@@ -474,13 +474,11 @@ public class AnnotationConverter {
 			durationNode.appendChild(xmlRoot.createTextNode(Double.toString(count * 30)));
 			eventNode.appendChild(durationNode);
 			scoredEvents.appendChild(eventNode);
-
 			//root.appendChild(eventsElmt);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			bTranslation = false;
-			
+			bTranslation = false;			
 			StringWriter errors = new StringWriter();
 			e.printStackTrace(new PrintWriter(errors));
 			log(errors.toString());

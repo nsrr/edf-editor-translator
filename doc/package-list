@@ -1,0 +1,16 @@
+abstractoperation
+configure
+editor
+editor.test
+header
+listener
+org.json
+table
+translator.gui
+translator.logic
+translator.test
+translator.utils
+validator.fix
+validator.logic
+validator.test
+viewer

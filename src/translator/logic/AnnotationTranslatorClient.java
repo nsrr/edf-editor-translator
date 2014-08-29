@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
@@ -17,7 +18,7 @@ import translator.utils.Vendor;
 /**
  * A controller that manages the annotation translation process
  */
-public class TranslationController {
+public class AnnotationTranslatorClient {
 
 	public static String translationErrors = "";
 	public static JList<String> JList_Messages = null; // wei wang, change JList to generic JList<String>
@@ -45,8 +46,7 @@ public class TranslationController {
 		stage_dir = separatorReplacer(stage_dir);
 		output_dir = separatorReplacer(output_dir);
 
-		ArrayList<String> successfulOutAL = new ArrayList<String>();
-		
+		ArrayList<String> successfulOutAL = new ArrayList<String>();		
 		String annotation_file = null, stage_file = null, out_file_name = null;
 		
 		for (String edf_file : selected_Edf_files) {
@@ -65,18 +65,37 @@ public class TranslationController {
 			out_file_name = separatorReplacer(out_file_prefix + File.separator + out_file_postfix);
 			
 			boolean bTranslation = false;
-			AnnotationConverter converter = new AnnotationConverter();
+			AllVendorAnnotationTranslator converter = new AllVendorAnnotationTranslator();
 			try {
 				new File(out_file_name).getParentFile().mkdirs();
-				if (vendor.equals(Vendor.Embla.toString())) {
-					annotation_file = validate_file(annotation_dir, basename, ".txt");
+				if (vendor.equals(Vendor.Embla.toString())) {					
+//					annotation_file = validate_file(annotation_dir, basename, ".txt"); // original version
+					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name);	
+//						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name); // original version
+						// next four lines created by wei wang, 2014-8-13
+						AbstractTranslatorFactory translator = new EmblaTranslatorFactory(); // 1.
+//						AnnotationTranslator translator = new EmblaStub(); // newest and working well
+						// next three lines can be moved out of if statement
+						translator.read(edf_file, annotation_file, mapping_file); // 2.
+						bTranslation = translator.translate(); // 3.
+						translator.write(out_file_name); // 4.
+//						String jsonOut = separatorReplacer(out_file_prefix + File.separator + out_file_postfix + ".json"); 
+//						translator.write2JSON(jsonOut); // can output as json file
 					}
 				} else if (vendor.equals(Vendor.Compumedics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name);
+//						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name); // original
+						// next four lines created by wei wang, 2014-8-21
+						AbstractTranslatorFactory translator = new CompumedicsTranslatorFactory();
+						// next three lines can be moved out of if statement
+						translator.read(edf_file, annotation_file, mapping_file);
+						bTranslation = translator.translate();
+						translator.write(out_file_name);
+						// test: output json worked
+//						String jsonOut = separatorReplacer(out_file_prefix + File.separator + out_file_postfix + ".json"); 						
+//						translator.write2JSON(jsonOut);
 					}
 				} else if (vendor.equals(Vendor.Respironics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".events.csv");
@@ -88,8 +107,8 @@ public class TranslationController {
 					annotation_file = validate_file(annotation_dir, basename, ".txt");
 					if ((new File(annotation_file)).exists()) {
 						bTranslation = converter.convertSandman(annotation_file, edf_file, mapping_file, out_file_name);
-					}
-				}
+					}					
+				}				
 
 				if (bTranslation) {
 					successfulOutAL.add(out_file_name);
@@ -111,7 +130,7 @@ public class TranslationController {
 				addElementIntoLog("   * Mapping:\t" + mapping_file + "(" + ((new File(mapping_file)).exists() ? "Existed" : "Not exist!") + ")", false);
 				addElementIntoLog("   * EDF file:\t" + edf_file + "(" + ((new File(edf_file)).exists() ? "Existed" : "Not exist!") + ")", true);
 				addElementIntoLog("   * Annotation:\t" + annotation_file + "(" + ((new File(annotation_file)).exists() ? "Existed" : "Not exist!") + ")", true);
-				if (vendor.equals(Vendor.Respironics.toString()))
+				if(vendor.equals(Vendor.Respironics.toString()))
 				addElementIntoLog("   * Stage file:\t" + stage_file + "(" + ((new File(stage_file)).exists() ? "Existed" : "Not exist!") + ")", false);
 				addElementIntoLog("   * Output file:\t" + out_file_name, true);
 				addElementIntoLog("   * Translation:\t" + (bTranslation ? "Successful!" : "Failed!"), true);
@@ -127,7 +146,8 @@ public class TranslationController {
 		
 		addElementIntoLog(" .....................", true);
 		addElementIntoLog("  => The task finished!", true);
-		addElementIntoLog("   * " + successfulOutAL.size() + " out of " + selected_Edf_files.size() + " EDF files have been successfully translated.", true);
+		addElementIntoLog("   * " + successfulOutAL.size() + " out of " + selected_Edf_files.size() + 
+				" EDF files have been successfully translated.", true);
 		
 		return successfulOutAL;
 	}
