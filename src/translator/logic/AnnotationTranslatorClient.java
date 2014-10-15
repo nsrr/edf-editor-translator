@@ -22,7 +22,8 @@ public class AnnotationTranslatorClient {
 
 	public static String translationErrors = "";
 	public static JList<String> JList_Messages = null; // wei wang, change JList to generic JList<String>
-	public static DefaultListModel<String> ListModel_Messages = null;  // wei wang, change DefaultListModel to DefaultListModel<String>
+	// wei wang, change DefaultListModel to DefaultListModel<String>
+	public static DefaultListModel<String> ListModel_Messages = null;  
 	
 	/**
 	 * Conducts translation from different vendor and log the result
@@ -72,7 +73,8 @@ public class AnnotationTranslatorClient {
 //					annotation_file = validate_file(annotation_dir, basename, ".txt"); // original version
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-//						bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name); // original version
+						// original version
+//						// bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name); 
 						// next four lines created by wei wang, 2014-8-13
 						AbstractTranslatorFactory translator = new EmblaTranslatorFactory(); // 1.
 //						AnnotationTranslator translator = new EmblaStub(); // newest and working well
@@ -86,7 +88,8 @@ public class AnnotationTranslatorClient {
 				} else if (vendor.equals(Vendor.Compumedics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-//						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name); // original
+						// original
+//						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name); 
 						// next four lines created by wei wang, 2014-8-21
 						AbstractTranslatorFactory translator = new CompumedicsTranslatorFactory();
 						// next three lines can be moved out of if statement
@@ -101,7 +104,8 @@ public class AnnotationTranslatorClient {
 					annotation_file = validate_file(annotation_dir, basename, ".events.csv");
 					stage_file = validate_file(stage_dir, basename, ".events.csv");
 					if ((new File(annotation_file)).exists() && (new File(stage_file)).exists()) {
-						bTranslation = converter.convertCSV(annotation_file, stage_file, edf_file, mapping_file, out_file_name);
+						bTranslation = converter.convertCSV(
+								annotation_file, stage_file, edf_file, mapping_file, out_file_name);
 					}
 				} else if (vendor.equals(Vendor.Sandman.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".txt");
@@ -127,11 +131,15 @@ public class AnnotationTranslatorClient {
 				addElementIntoLog(" .....................", true);
 				addElementIntoLog("  => Translating.. at " + MyDate.currentDateTime(), true);
 				addElementIntoLog("   * Vendor:\t" + vendor, false);
-				addElementIntoLog("   * Mapping:\t" + mapping_file + "(" + ((new File(mapping_file)).exists() ? "Existed" : "Not exist!") + ")", false);
-				addElementIntoLog("   * EDF file:\t" + edf_file + "(" + ((new File(edf_file)).exists() ? "Existed" : "Not exist!") + ")", true);
-				addElementIntoLog("   * Annotation:\t" + annotation_file + "(" + ((new File(annotation_file)).exists() ? "Existed" : "Not exist!") + ")", true);
+				addElementIntoLog("   * Mapping:\t" + mapping_file + 
+						"(" + ((new File(mapping_file)).exists() ? "Existed" : "Not exist!") + ")", false);
+				addElementIntoLog("   * EDF file:\t" + edf_file + 
+						"(" + ((new File(edf_file)).exists() ? "Existed" : "Not exist!") + ")", true);
+				addElementIntoLog("   * Annotation:\t" + annotation_file + 
+						"(" + ((new File(annotation_file)).exists() ? "Existed" : "Not exist!") + ")", true);
 				if(vendor.equals(Vendor.Respironics.toString()))
-				addElementIntoLog("   * Stage file:\t" + stage_file + "(" + ((new File(stage_file)).exists() ? "Existed" : "Not exist!") + ")", false);
+				addElementIntoLog("   * Stage file:\t" + stage_file + "(" + 
+				((new File(stage_file)).exists() ? "Existed" : "Not exist!") + ")", false);
 				addElementIntoLog("   * Output file:\t" + out_file_name, true);
 				addElementIntoLog("   * Translation:\t" + (bTranslation ? "Successful!" : "Failed!"), true);
 				

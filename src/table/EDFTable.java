@@ -323,9 +323,9 @@ public class EDFTable extends JTable {
 		
 		String wrkFileName = this.getMasterFile().getAbsolutePath();
 		String srcFileName = "";
-		for (int i = 0; i < MainWindow.getWkEdfFiles().size(); i++){
+		for (int i = 0; i < MainWindow.getWkEdfFiles().size(); i++) {
 			File f = MainWindow.getWkEdfFiles().get(i);
-			if (f.getAbsolutePath().equals(wrkFileName)){
+			if (f.getAbsolutePath().equals(wrkFileName)) {
 				srcFileName = MainWindow.getSrcEdfFiles().get(i).getAbsolutePath();
 				break;
 			}

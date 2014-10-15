@@ -207,17 +207,18 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 	 * @param edf_dir source edf file directory
 	 * @param output output file name
 	 */
-	public NewTask_for_ValidityCommandLine(String edf_dir, String output) {
+	public NewTask_for_ValidityCommandLine(String edf_dir, String output) { // TODO
 		
 		super(new JFrame(), false);
 		
 		MainWindow.log = output;
 		
-		File f = new File(edf_dir);
-		if (f.exists()) {
+		File afile = new File(edf_dir);
+		if (afile.exists()) {
 			// (1) search for the edf files contained in chosen folder.
 			sourceFiles = new ArrayList<File>();
-			Collection<File> fileCollection = FileUtils.listFiles(f, new String[]{"edf", "Edf", "eDf", "edF", "EDf", "EdF", "eDF", "EDF"}, true);
+			Collection<File> fileCollection = 
+					FileUtils.listFiles(afile, new String[]{"edf", "Edf", "eDf", "edF", "EDf", "EdF", "eDF", "EDF"}, true);
 			if (fileCollection != null) {
 				int i = 0;
 				for (File file : fileCollection) {
@@ -235,8 +236,10 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 			setVisible(false);
 			ValidateFinishButtonListener validateFinishButtonListener = new ValidateFinishButtonListener();
 			validateFinishButtonListener.createWorkingDirectory();
+			// Using current loaded EDF file array to generate EDF file header arrays
 			yieldNewEDFHeaders();
 			validateFinishButtonListener.yieldEiaTable();
+			// Generate ESATable using global defined sourceFiles(of type EDF)
 			validateFinishButtonListener.yieldEsaTables();
 
 			// (3) validate the chosen EDF files.
@@ -245,7 +248,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
 			generateInvalidReport(aggregateIncompliances);
 		}		
 	}
-	
+
 	/**
 	 * Generates error summary for EDF Header 
 	 * @param aggregateIncompliances a list of Incompliances
@@ -905,30 +908,27 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
      */
     private void yieldNewEDFHeaders() {
         int numberOfOpenedFiles = sourceFiles.size();
-        ArrayList<EDFFileHeader> headers = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
-        ArrayList<EDFFileHeader> dupHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
+        ArrayList<EDFFileHeader> edfHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
+        ArrayList<EDFFileHeader> edfHeaderCopies = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
         MainWindow.srcEdfFileHeaders = new ArrayList<EDFFileHeader>(numberOfOpenedFiles);
         
-        //read each file to build headers     
-        File currentFile;
-        /**
-         * to do Wei Wang. add progress bar here
-         */ 
+        // read each file to build headers     
+        File currentEDF;
         for (int i = 0; i < numberOfOpenedFiles; i++) {
-             currentFile = sourceFiles.get(i);
-             if((i + 1) % (scale * 2) == 0) {                	
-             	task.increaseProgress();
-             	System.out.println("Task progress increased to " + task.progress);  // test         
-             } else {}
+            // Loop through each of the EDF files read in
+            currentEDF = sourceFiles.get(i);
+            // For progress bar
+            if((i + 1) % (scale * 2) == 0) {                	
+            	task.increaseProgress();
+            }
+            
             try {
-                RandomAccessFile raf =
-                    new RandomAccessFile(currentFile, "r");
-//                Dead code:
-//                if (raf == null)
-//                    return;
-                headers.add(i, new EDFFileHeader(raf, currentFile, false));
-                raf = new RandomAccessFile(currentFile, "r");
-                dupHeaders.add(i, new EDFFileHeader(raf, currentFile, false));
+                RandomAccessFile raf = new RandomAccessFile(currentEDF, "r");
+                // EDF headers array:
+                edfHeaders.add(i, new EDFFileHeader(raf, currentEDF, false));
+                // raf was closed in the 'new EDFFileHeader(raf, currentFile, false)' method
+                raf = new RandomAccessFile(currentEDF, "r");
+                edfHeaderCopies.add(i, new EDFFileHeader(raf, currentEDF, false));
             } catch (IOException f) {
                 JOptionPane.showMessageDialog(null,
                                               "File invalid: wrong format or empty. ",
@@ -936,8 +936,8 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
                                               JOptionPane.ERROR_MESSAGE);
             }
         }
-        MainWindow.setSrcEdfFileHeaders(headers);
-        MainWindow.setDupEdfFileHeaders(dupHeaders);
+        MainWindow.setSrcEdfFileHeaders(edfHeaders);
+        MainWindow.setDupEdfFileHeaders(edfHeaderCopies);
     }
     /////////////////////////////////////////////////////////////////////
     //////////////////////    END by Wei Wang        ////////////////////
@@ -1091,10 +1091,10 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
         @SuppressWarnings("deprecation")
 		private void yieldEiaTable() {
             int numberOfOpenedFiles = sourceFiles.size();
-            MainWindow.iniEiaTable =
-                    new EIATable(MainWindow.getSrcEdfFileHeaders(),
-                                 numberOfOpenedFiles);
-            MainWindow.iniEiaTable.setUpdateSinceLastSave(true); //the initial update status should be true
+            // iniEiaTable of type EIATable
+            MainWindow.iniEiaTable = new EIATable(MainWindow.getSrcEdfFileHeaders(), numberOfOpenedFiles);
+            // the initial update status should be true
+            MainWindow.iniEiaTable.setUpdateSinceLastSave(true); 
             MainWindow.iniEiaTable.setSavedOnce(false);
 
             MainWindow.iniEiaTable.setMasterHeaderCategory(EDFTable.MasterHeaderCategory.EIA_WORKSET); //obsolete line
@@ -1114,18 +1114,20 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
             ArrayList<ESATable> esaTables = new ArrayList<ESATable>(numberOfOpenedFiles);
             
             ESAHeader esaHeader;
-            ESATable table;
+            ESATable esaTable;
             for (int i = 0; i < numberOfOpenedFiles; i++) {
+            	// Get ESAHeader from each EDF file header
                 esaHeader = MainWindow.srcEdfFileHeaders.get(i).getEsaHeader(); //1.
-                table = new ESATable(esaHeader, true); 
-                esaTables.add(i, table); //2.
+                // Create ESATable using ESAHeader
+                esaTable = new ESATable(esaHeader, true); 
+                esaTables.add(i, esaTable); //2.
                 // configure the status
                 Boolean savedOnce = false; // start of 3.
                 Boolean updateSinceLastSave = true;
                 File workingFile = MainWindow.getWkEdfFiles().get(i);
                 int cat = EDFTable.MasterHeaderCategory.ESA_WORKSET;
-                table.setStatesAllInOne(savedOnce, updateSinceLastSave, workingFile, cat, i); // end of 4.
-                table.setSourceMasterFile(sourceFiles.get(i)); // set source file
+                esaTable.setStatesAllInOne(savedOnce, updateSinceLastSave, workingFile, cat, i); // end of 4.
+                esaTable.setSourceMasterFile(sourceFiles.get(i)); // set source file
                 // by wei wang
 //                if(readingFileCount < numberOfOpenedFiles) {
 //                	increaseReadingFileCount();	

@@ -1,11 +1,6 @@
 package translator.test;
 
-import java.util.HashMap;
-
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import translator.logic.EmblaTranslatorFactory;
 
@@ -15,34 +10,28 @@ import translator.logic.EmblaTranslatorFactory;
  */
 public class TestEmblaAnnotationTranslation {
 	
-	public static String mappingFile = "/Users/wei/git/edf-editor-translator/resource-wei/eventmapping_embla_test.csv";
-	public static String annotation = "/Users/wei/git/edf-editor-translator/resource-wei/10007_01262010s1.xml" ;
-	public static String edf = "/Users/wei/git/edf-editor-translator/resource-wei/10007_01262010s1.edf";
-	public static String output = "/Users/wei/git/edf-editor-translator/output-wei/100022_Embla_2014-08-15_01.xml";	
+	public static String mapping = "/Users/wei/git/edf-editor-translator/resource-wei/EmblaNew/eventmapping_embla_test.csv";
+	public static String annotation = "/Users/wei/git/edf-editor-translator/resource-wei/EmblaNew/10007_01262010s1.xml" ;
+	public static String edf = "/Users/wei/git/edf-editor-translator/resource-wei/EmblaNew/10007_01262010s1.edf";
+	public static String output = "/Users/wei/git/edf-editor-translator/output-wei/100022_Embla_2014-10-14.xml";	
 
 	public static void main(String[] args) {
 		System.out.println("=================================================================");
 //		testRecordingEvents();
 //		testDuration("2010-01-20T23:01:30.711129", "2010-01-20T23:02:14.711129");
 //		testApneaCentral();
-//		testEmblaTranslation();
+		testEmblaTranslation();
 //		testReadingMap();
 //		testUserVariable("Begin of desat");
 //		testUserVariable("End of desat");
-//		test();
-		testEventTime();
-	}
-	
-	public static void test() {
-//		EmblaAnnotationTranslatorOld et = new EmblaAnnotationTranslatorOld();
-//		et.read(edf, annotation, mappingFile);
-//		et.translate();
-//		et.write(output);
+//		testEventTime();
 	}
 	
 	public static void testEmblaTranslation() {
-//		EmblaTranslation et = new EmblaTranslation(mappingFile, annotation, edf, output);
-//		et.translate();
+		EmblaTranslatorFactory et = new EmblaTranslatorFactory();
+		et.read(edf, annotation, mapping);
+		et.translate();
+		et.write(output);
 	}
 	
 	/**
@@ -72,7 +61,7 @@ public class TestEmblaAnnotationTranslation {
 	public static void testApneaCentral() {
 		Element result = null;
 		EmblaTranslatorFactory et = new EmblaTranslatorFactory();
-		et.read(edf, annotation, mappingFile);
+		et.read(edf, annotation, mapping);
 //		Document doc = et.document;
 //		NodeList nodeList = doc.getElementsByTagName("Event");
 //		Node node = null;

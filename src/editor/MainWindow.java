@@ -3864,7 +3864,7 @@ public class MainWindow extends JFrame implements WindowListener {
          * Verifies EIA, ESA, EIA template, ESA template tables and gether related incompliances
          * @return an array of incompliances after verification
          */
-        public ArrayList<Incompliance> verifyHeaders() {
+        public ArrayList<Incompliance> verifyHeaders() { // TODO
         	/**
         	 * [Validation] Validation of EDF Header
         	 */
@@ -3895,12 +3895,12 @@ public class MainWindow extends JFrame implements WindowListener {
             if (tabPane == null)
                 return;
             ArrayList<Incompliance> temps = new ArrayList<Incompliance>();
-            for (int i = 0; i < tabPane.getTabCount(); i++){
-                if (tabPane.getComponentAt(i) instanceof EIATemplatePane){
+            for (int i = 0; i < tabPane.getTabCount(); i++) {
+                if (tabPane.getComponentAt(i) instanceof EIATemplatePane) {
                     EIATemplatePane tpane = (EIATemplatePane) tabPane.getComponentAt(i);
                     EIATemplateTable ttable = tpane.getPreviewTable();
                     temps = ttable.parseEIATemplateTable();
-                    for (Incompliance incomp: temps)
+                    for (Incompliance incomp : temps)
                         MainWindow.getEiaTemplateIncompliances().add(incomp);
                 }
             }
@@ -3924,9 +3924,9 @@ public class MainWindow extends JFrame implements WindowListener {
                 return;
             
             ArrayList<Incompliance> temps = new ArrayList<Incompliance>();
-            for (int i = 0; i < iniEsaTables.size(); i++){
+            for (int i = 0; i < iniEsaTables.size(); i++) {
                 temps = iniEsaTables.get(i).parseESATable();
-                for (Incompliance incomp: temps)
+                for (Incompliance incomp : temps)
                     MainWindow.getEiaIncompliances().add(incomp); // why is getEiaIncompliances() not getEsaIncompliances()?
             }
         }

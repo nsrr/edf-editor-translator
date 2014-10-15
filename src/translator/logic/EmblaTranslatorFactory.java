@@ -53,18 +53,18 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	
 	@Override
 	public boolean read(String edfFile, String annotationFile, String mappingFile) {
-		System.out.println("Inside EmblaStub read");
+		System.out.println("Inside EmblaTranslatorFactory read"); // test
 		boolean result = false;		
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
 		map = readMapFile(mappingFile);	
 		document = resolveBOM(xmlAnnotation);
 		// test
-		if(document == null) {
-			System.out.println("document is null");
-		} else {
-			System.out.println("document is not null");
-		}
+//		if(document == null) {
+//			System.out.println("document is null");
+//		} else {
+//			System.out.println("document is not null");
+//		}
 		result = recordEvents(document);		
 		if(!result) {
 			log("Cannot parse the events in the annotation file");
@@ -78,6 +78,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	@Override
 	public boolean translate() {
+		System.out.println("Inside EmblaTranslatorFactory translate"); // test
 //		System.out.println("======================================");
 //		for(String str : map[1].keySet()) {
 //			System.out.println(str + " ");
@@ -159,6 +160,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	@Override
 	public boolean write(String outputFile) {
+		System.out.println("Inside EmblaTranslatorFactory write"); // test
 		output = outputFile;
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
