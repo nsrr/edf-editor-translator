@@ -42,13 +42,15 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	public CompumedicsTranslatorFactory() {
 		super();
+		System.out.println("=================================================================");
+		System.out.println("Compumedics Factory:"); // test
 		softwareVersion = "Compumedics";
 		xmlRoot = new DocumentImpl(); // xml root
 	}
 
 	@Override
 	public boolean read(String edfFile, String annotationFile, String mappingFile) {
-//		System.out.println("Inside CompumedicsAnnotationTranslator read"); // test
+		System.out.println("   >>> Inside CompumedicsAnnotationTranslator read"); // test
 		boolean result = false;		
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
@@ -56,12 +58,12 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 //		System.out.println("map: " + map); // test
 		document = resolveBOM(xmlAnnotation);
 		// test
-		if(document == null) {
+//		if(document == null) {
 //			System.out.println("document is null"); // test
-			log("document is null");
-		} else {
-			System.out.println("document is not null");
-		}
+//			log("document is null");
+//		} else {
+//			System.out.println("document is not null");
+//		}
 		result = recordEvents(document);		
 		if(!result) {
 			log("Cannot parse the events in the annotation file");
@@ -71,10 +73,12 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 
 	@Override
 	public boolean translate() {
+		System.out.println("   >>> Inside CompumedicsAnnotationTranslator translate"); // test
 		boolean result = false;
 		Element root = createEmptyDocument(softwareVersion);
 		
 		NodeList nodeList = document.getElementsByTagName("ScoredEvent");
+		System.out.println("   [Event size: " + nodeList.getLength() + "]"); // test
 //		System.out.println("Event size: " + nodeList.getLength()); // test
 		for(int index = 0; index < nodeList.getLength(); index++) {
 			Element parsedElement = null;
@@ -91,10 +95,10 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 			scoredEvents.appendChild(elem);
 		
 		root.appendChild(scoredEvents);
-		xmlRoot.appendChild(root);		
-		System.out.println("Parse ScoredEvent Success!");  // test				
+		xmlRoot.appendChild(root);			
 		result = true;
-		return result;
+		System.out.println("   [Translation done]"); // test
+		return result;		
 	}
 
 	/**
@@ -112,13 +116,13 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 					
 		String firstStageKey = ((Element) stageList.item(0)).getTextContent();
 		
-		System.out.println("First key in map[2]: " + firstStageKey); // test
+//		System.out.println("First key in map[2]: " + firstStageKey); // test
 		String firstStageValue;
 		// map[2] <- {key(Event), value(EventConcept)}
 		// example: "Sleep Staging,1,SDO:NonRapidEyeMovementSleep-N1," map[2] = {"1", "SDO:NonRapidEyeMovementSleep-N1"};
 		if (map[2].keySet().contains(firstStageKey)) {
 			firstStageValue = (String) map[2].get(firstStageKey);
-			System.out.println("First key value in map[2]: " + firstStageValue);
+//			System.out.println("First key value in map[2]: " + firstStageValue);
 		} else {
 			firstStageValue = "";
 		}
@@ -139,14 +143,14 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 				scoredEvent = xmlRoot.createElement("ScoredEvent");
 				eventConcept = xmlRoot.createElement("EventConcept");
 				firstStageKey = iStageValue;
-				System.out.print("key: " + firstStageKey); // test
+//				System.out.print("key: " + firstStageKey); // test
 				if (map[2].keySet().contains(firstStageKey)) {
 					firstStageValue = (String) map[2].get(firstStageKey);
-					System.out.println(" value: " + firstStageValue); // test
+//					System.out.println(" value: " + firstStageValue); // test
 				} else {
 					firstStageValue = "";
 				}
-				System.out.println(); // test
+//				System.out.println(); // test
 				eventConcept.appendChild(xmlRoot.createTextNode(firstStageValue));
 				startElement = xmlRoot.createElement("Start");
 				start += count * 30; // start = start + count * 30;
@@ -274,6 +278,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 
 	@Override
 	public boolean write(String outputFile) {
+		System.out.println("   >>> Inside CompumedicsAnnotationTranslator write"); // test
 		output = outputFile;
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -283,6 +288,8 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
             transformer.transform(source, file);
             // System.out.println("\nXML DOM Created Successfully..");
             log("XML DOM Created Successfully..");
+    		System.out.println("   [Write done]");
+    		System.out.println("=================================================================");
             return true;
         } catch (Exception e) {
             e.printStackTrace();

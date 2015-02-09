@@ -406,8 +406,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				String output_dir = JTextField_OutputDirectory.getText();
 				String outname = JTextField_OutputPattern.getText();
 				
-				ArrayList<String> successfulOutAL = 
-						AnnotationTranslatorClient.conductTranslation(
+				ArrayList<String> successfulOutAL = AnnotationTranslatorClient.conductTranslation(
 								vendor, 
 								mapping_file, 
 								edf_dir, 
@@ -416,7 +415,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 								stage_dir, 
 								output_dir, 
 								outname
-						);
+				);
 
 				String[] outputFiles = successfulOutAL.toArray(new String[successfulOutAL.size()]);
 				JList_Out_files.setListData(outputFiles);

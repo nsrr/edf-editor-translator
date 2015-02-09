@@ -25,6 +25,11 @@ public class AnnotationTranslatorClient {
 	// wei wang, change DefaultListModel to DefaultListModel<String>
 	public static DefaultListModel<String> ListModel_Messages = null;  
 	
+	public AbstractTranslatorFactory getVendor(String vendor) {
+		// TODO
+		return null;
+	}
+	
 	/**
 	 * Conducts translation from different vendor and log the result
 	 * @param vendor vender name
@@ -73,12 +78,7 @@ public class AnnotationTranslatorClient {
 //					annotation_file = validate_file(annotation_dir, basename, ".txt"); // original version
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-						// original version
-//						// bTranslation = converter.convertTXT(annotation_file, mapping_file, out_file_name); 
-						// next four lines created by wei wang, 2014-8-13
 						AbstractTranslatorFactory translator = new EmblaTranslatorFactory(); // 1.
-//						AnnotationTranslator translator = new EmblaStub(); // newest and working well
-						// next three lines can be moved out of if statement
 						translator.read(edf_file, annotation_file, mapping_file); // 2.
 						bTranslation = translator.translate(); // 3.
 						translator.write(out_file_name); // 4.

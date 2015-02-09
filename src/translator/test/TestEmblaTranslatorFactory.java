@@ -8,7 +8,7 @@ import translator.logic.EmblaTranslatorFactory;
  * To test the functionality of the EmblaTranslation class
  * @author wei wang, 2014-8-6
  */
-public class TestEmblaAnnotationTranslation {
+public class TestEmblaTranslatorFactory {
 	
 	public static String mapping = "/Users/wei/git/edf-editor-translator/resource-wei/EmblaNew/eventmapping_embla_test.csv";
 	public static String annotation = "/Users/wei/git/edf-editor-translator/resource-wei/EmblaNew/10007_01262010s1.xml" ;
@@ -16,15 +16,7 @@ public class TestEmblaAnnotationTranslation {
 	public static String output = "/Users/wei/git/edf-editor-translator/output-wei/100022_Embla_2014-10-14.xml";	
 
 	public static void main(String[] args) {
-		System.out.println("=================================================================");
-//		testRecordingEvents();
-//		testDuration("2010-01-20T23:01:30.711129", "2010-01-20T23:02:14.711129");
-//		testApneaCentral();
 		testEmblaTranslation();
-//		testReadingMap();
-//		testUserVariable("Begin of desat");
-//		testUserVariable("End of desat");
-//		testEventTime();
 	}
 	
 	public static void testEmblaTranslation() {

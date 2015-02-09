@@ -297,12 +297,12 @@ public class MatlabEdfViewer {
 			stdin.println("set PATH=" + mcrDir);
 			stdin.println("chdir " + viewerDir);
 			stdin.print(viewerApp + " ");
-//			stdin.print(EdfFilePath + " ");			
+			stdin.print(EdfFilePath + " "); // wei wang, 2/04/2015	
 			stdin.print(EdfFileName + " ");
-			stdin.print(EdfFilePath + " "); // wei wang, 6/10/2014
-//			stdin.print(XmlFilePath + " ");
+//			stdin.print(EdfFilePath + " "); // wei wang, 6/10/2014
+			stdin.print(XmlFilePath + " "); // wei wang, 2/04/2015
 			stdin.print(XmlFileName + " ");
-			stdin.print(XmlFilePath + " "); // wei wang, 6/10/2014
+//			stdin.print(XmlFilePath + " "); // wei wang, 6/10/2014 TODO
 			stdin.println();
 		} catch (Exception e) {
 			e.printStackTrace();

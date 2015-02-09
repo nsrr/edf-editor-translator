@@ -47,13 +47,15 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	public EmblaTranslatorFactory() {
 		super();
+		System.out.println("=================================================================");
+		System.out.println("Embla Factory:"); // test
 		softwareVersion = "Embla";
 		xmlRoot = new DocumentImpl(); // xml root
 	}
 	
 	@Override
 	public boolean read(String edfFile, String annotationFile, String mappingFile) {
-		System.out.println("Inside EmblaTranslatorFactory read"); // test
+		System.out.println("   >>> Inside EmblaTranslatorFactory read"); // test
 		boolean result = false;		
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
@@ -78,7 +80,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	@Override
 	public boolean translate() {
-		System.out.println("Inside EmblaTranslatorFactory translate"); // test
+		System.out.println("   >>> Inside EmblaTranslatorFactory translate"); // test
 //		System.out.println("======================================");
 //		for(String str : map[1].keySet()) {
 //			System.out.println(str + " ");
@@ -90,7 +92,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		Element root = createEmptyDocument(softwareVersion);
 		
 		NodeList nodeList = document.getElementsByTagName("Event");
-		System.out.println("Event size: " + nodeList.getLength()); // test
+		System.out.println("   [Event size: " + nodeList.getLength() + "]"); // test
 		for(int index = 0; index < nodeList.getLength(); index++) {
 			Element parsedElement = null;
 			Node node = nodeList.item(index);  // for each <event> node
@@ -108,7 +110,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		root.appendChild(scoredEvents);
 		xmlRoot.appendChild(root);
 		result = true;
-		System.out.println("DONE!");  // test: should be moved out of this method
+		System.out.println("   [Translation done]");  // test: should be moved out of this method
 		return result;
 	}
 	
@@ -160,7 +162,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	@Override
 	public boolean write(String outputFile) {
-		System.out.println("Inside EmblaTranslatorFactory write"); // test
+		System.out.println("   >>> Inside EmblaTranslatorFactory write"); // test
 		output = outputFile;
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -170,12 +172,14 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
             transformer.transform(source, file);
             // System.out.println("\nXML DOM Created Successfully..");
             log("XML DOM Created Successfully..");
+            System.out.println("   [Write done]"); // test
+            System.out.println("=================================================================");// test
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             log("Error in writing out file");
             return false;
-        }
+        }        
 	}
 	
 	/**
@@ -415,7 +419,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		try {
 			Date edf1 = edfTF.parse(edftime);
 			Date event1 = eventFormat.parse(eventTime);
-//			System.out.println("!!!!!!!!!!!" + edf1.after(event1));
 			if(edf1.after(event1)) {
 				// edf date = event date - 1;
 				c.setTime(formatDate.parse(eventDate));
@@ -424,14 +427,11 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 				finalDate = fdate.substring(8, 10) + "." + fdate.substring(5, 7) + "." + fdate.substring(2, 4);
 			} else {
 				finalDate = eventDate.substring(8, 10) + "." + eventDate.substring(5, 7) + "." + eventDate.substring(2, 4);
-//				System.out.println("EDF Date: " + finalDate);
 			}
 		} catch (ParseException e) {
 			log("Cannot parse start date.");
 		}		
 		edfClockStart = finalDate + " " + edfClockStart.substring(9);
-//		System.out.println("edf final start: " + edfClockStart);
-//		System.out.println("event start:     " + eventStart);
 		String format1 = "dd.MM.yy hh.mm.ss";
 		String format2 = "yyyy-MM-dd'T'HH:mm:ss";
 		String time;
@@ -476,7 +476,8 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			long diff = endDate.getTime() - startDate.getTime(); // in milliseconds
 			long duration = diff / 1000;			
 			
-			String start_suf = start.substring(20);
+//			2010-01-26T22:43:30.123000 sample			
+			String start_suf = start.substring(20); // 123000 in 2010-01-26T22:43:30.123000, suffix  
 			String end_suf = end.substring(20);
 			int s = Integer.valueOf(start_suf);
 			int e = Integer.valueOf(end_suf);
