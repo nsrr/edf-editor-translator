@@ -1,0 +1,50 @@
+EventType,Event,EventConcept,Notes
+Staging,0,SRO:Wake,Epoch scored as Wake
+Staging,1,SRO:Stage1Sleep,Epoch scored as Stage 1 Sleep
+Staging,2,SRO:Stage2Sleep,Epoch scored as Stage 2 Sleep
+Staging,3,SRO:Stage3Sleep,Epoch scored as Stage 3 Sleep
+Staging,4,SRO:Stage4Sleep,Epoch scored as Stage 4 Sleep
+Staging,5,SRO:RapidEyeMovement,Epoch scored as REM Sleep
+Staging,6,SRO:MovementTime,Epoch scored as ppt time spent in movement
+Staging,9,SRO:UnscoredEpoch,Unscored epoch
+Staging,10,SRO:ArtifactEpoch,Epoch scored as artifact
+Respiratory,SpO2 desaturation,SRO:SpO2Desaturation,SpO2 desaturation
+Respiratory,SpO2 artifact,SRO:SpO2Artifact,> 4% decrease in SpO2 with > 30% decrease in flow lasting > 10 seconds (AASM definition)
+Respiratory,Hypopnea,SRO:Hypopnea,> 4% decrease in SpO2 with > 30% decrease in flow and partially occluded airway lasting > 10 seconds
+Respiratory,Obstructive Hypopnea,SRO:ObstructiveHypopnea,> 4% decrease in SpO2 with > 30% decrease in flow and no respiratory effort lasting > 10 seconds
+Respiratory,Central Hypopnea,SRO:CentralHypopnea,"> 4% decrease in SpO2 with both central, then obstructive components lasting > 10 seconds"
+Respiratory,Mixed Hypopnea,SRO:MixedHypopnea,>90% reduction in thermistor flow lasting > 10 seconds
+Respiratory,Obstructive Apnea,SRO:ObstructiveApnea,>90% reduction in thermistor flow with no respiratory effort lasting > 10 seconds
+Respiratory,Central Apnea,SRO:CentralApnea,>10 second period containing both obstructive and central components
+Respiratory,Mixed Apnea,SRO:MixedApnea,>90% reduction in thermistor flow lasting > 10 seconds
+Respiratory,Unsure,SRO:MixedApnea,Mixed Apnea (CHAT STUDY ONLY)
+Respiratory,RERA,SRO:RespiratoryEventRelatedArousal,Period of >10 seconds of increasing respiratory effort leading to arousal
+Respiratory,Snore,SRO:Snore,Snoring
+Respiratory,Respiratory Paradox,SRO:ParadoxicalBreathing,Out of phase thoracic and abdominal effort.
+Respiratory,Periodic Breathing,SRO:CheyneStokesBreathing,>3 cycles of increasing then decreasing breathing amplitude resulting in apnea
+Respiratory,Respiratory artifact,SRO:RespiratoryArtifact,Respiratory artifact
+Arousal,Arousal (),SRO:Arousal,Arousal (with blank label)
+Arousal,Arousal (Apnea),SRO:ArousalApnea,Arousal resulting from apnea
+Arousal,Arousal (Desat),SRO:ArousalDesaturation,Arousal resulting from SpO2 desaturation
+Arousal,Arousal (Limb),SRO:ArousalLM,Arousal resutling from limb movement
+Arousal,Arousal (Respiratory),SRO:ArousalRespiratory,Arousal resulting from respiratory effort
+Arousal,Arousal (Spontaneous),SRO:ArousalSpontaneous,Spontanoues arousal
+Cardiac,Bradycardia,SRO:Bradycardia,Heart rate < 40 BPM
+Cardiac,Tachycardia,SRO:Tachycardia,Heart rate > 90 BPM
+Cardiac,Asystole,SRO:Asystole,No heart beat for >3 seconds
+Cardiac,Narrow Complex Tachycardia,SRO:NarrowComplexTachycardia,> 3 consecutive beats at >100 BPM with a QRS interval > 120 ms
+Cardiac,Narrow Complex Tachycardia,SRO:WideComplexTachycardia,> 3 consecutive beats at >100 BPM with a QRS interval < 120 ms
+Cardiac,Atrial Fibrillation,SRO:AtrialFibrillation,Irregularly regular rhythm with no P waves and no consistent waveform
+Limb Movement,PLM (Left),SRO:PeriodicLimbMovementSeriesLeft,Series of > 4 left leg LMs at 5-90 second intervals
+Limb Movement,PLM (Right),SRO:PeriodicLimbMovementSeriesRight,Series of > 4 right leg LMs at 5-90 second intervals
+Limb Movement,Limb Movement (Left),SRO:LimbMovementLeft,Left leg EMG activity lasting 0.5-10 seconds
+Limb Movement,Limb Movement (Right),SRO:LimbMovementRight,Right leg EMG activity lasting 0.5-10 seconds
+Other,Distal pH,SRO:DistalpH,Esophageal pH measured near the bottom of the esophagus 
+Other,Distal pH artifact,SRO:DistalpHArtifact,Unreliable distal pH signal
+Other,Proximal pH artifact,SRO:ProximalpH,Esophageal pH measured near the top of the esophagus 
+Other,Proximal pH artifact,SRO:ProximalpHArtifact,Unreliable proximal pH signal
+Other,EtCO2 artifact,SRO:EtCO2Artifact,Unreliable EtCO2 signal (CO2 measured during expired air)
+Other,TcC02 artifact,SRO:TcCO2Artifact,Unreliable TcCO2 pressure signal (CO2 saturation measured at the skin surface)
+Other,Blood pressure artifact,SRO:BloodPressureArtifact,Unreliable blood pressure signal
+Other,Body temperature artifact,SRO:BodyTemperatureArtifact,Unreliable body temperature signal
+EpochLength,,30,
