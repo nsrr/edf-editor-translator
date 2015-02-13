@@ -146,16 +146,18 @@ public class MatlabEdfViewer {
 			// Utilities.OS_WINDOWS_MASK is deprecated, use Utilities.isWindows() instead
 			if (os != Utilities.OS_WINDOWS_MASK){
 				if (is64bit) {
-					viewerApp = "SleepPortalViewerR2013bWin64.exe";
+					viewerApp = "SleepPortalViewerR2014bWin64.exe";
+//					viewerApp = "SleepPortalViewerR2014bMac64.app";
 //					viewerApp = "StartMe_cmdPars.exe"; // wei wang, 6/10/2014
 					operatingSystem = "Win_64bit";
 				} else {
 					viewerApp = "SleepPortalViewerR2013bWin32.exe";
 					operatingSystem = "Win_32bit";
 				}
-			} else if (os == Utilities.OS_MAC){
+			} else if (os == Utilities.OS_MAC){ // package: org.openide.util.BaseUtilities
 				if (is64bit) {
 					operatingSystem = "Mac_64bit";
+					viewerApp = "SleepPortalViewerR2014bMac64.app";
 				} else {
 					operatingSystem = "Mac_32bit";
 				}
@@ -196,7 +198,7 @@ public class MatlabEdfViewer {
 	 */
 	private static void callEdfViewer(String mcrDir, String viewerDir, String viewerApp, 
 			String EdfFilePath, String EdfFileName, String XmlFilePath, String XmlFileName) {
-
+		System.out.println("Viewer App: " + viewerApp);
 		/**
 		 * (1) Examine existence of paths and files
 		 */
