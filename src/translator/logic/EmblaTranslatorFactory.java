@@ -36,8 +36,8 @@ import org.w3c.dom.NodeList;
  * Uses for testing BasicTranslation
  * @author wei wang, 2014-8-21
  */
-//public class EmblaAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
 public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
+//public class EmblaAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
 
 	private Document xmlRoot; // = new DocumentImpl(); // xml root
 	private Element scoredEvents; // parent element of <Event>
@@ -218,8 +218,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			scoredEvent.appendChild(durationElement);
 			scoredEvent.appendChild(notesElement);
 			String info = xmlAnnotation + "," + eventType + "," + startTime ;
-//			log(info); // needed  
-			// TODO
+//			log(info); // needed TODO 
 		}		
 
 		return scoredEvent;

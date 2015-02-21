@@ -178,7 +178,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 			// no mapping event name found
 			scoredEvent = xmlRoot.createElement("ScoredEvent");
 			Element eventConcept = xmlRoot.createElement("EventConcept");
-			Element startElement = xmlRoot.createElement("Starttime");
+			Element startElement = xmlRoot.createElement("Start"); // Starttime to Start. TODO
 			Element durationElement = xmlRoot.createElement("Duration");
 			Element notesElement = xmlRoot.createElement("Notes");
 				
