@@ -2740,3 +2740,177 @@ XML DOM Created Successfully..
  .....................
   => The task finished!
    * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 15:14:40
+ .....................
+  => Translating.. at 2015-02-21 15:14:40
+   * Vendor:	Embla
+   * Mapping:	/Users/wei/Desktop/NSRR_Current_Working/MappingFiles/EmblaMappingFile2014-8-14.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/123.xml(Not exist!)
+   * Output file:	/Users/wei/Desktop/NSRR_Current_Working/NSRR_Embla/New_Embla_Annotation/output_withcategory/123_2015-02-21_Embla.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 15:15:33
+ .....................
+  => Translating.. at 2015-02-21 15:15:34
+   * Vendor:	Embla
+   * Mapping:	/Users/wei/Desktop/NSRR_Current_Working/MappingFiles/EmblaMappingFile2014-8-14.csv(Existed)
+   * EDF file:	/Users/wei/Desktop/NSRR_Current_Working/NSRR_Embla/New_Embla_Annotation/123.edf(Existed)
+   * Annotation:	/Users/wei/Desktop/NSRR_Current_Working/NSRR_Embla/New_Embla_Annotation/123.XML(Existed)
+   * Output file:	/Users/wei/Desktop/NSRR_Current_Working/NSRR_Embla/New_Embla_Annotation/output_withcategory/123_2015-02-21_Embla.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 15:29:25
+ .....................
+  => Translating.. at 2015-02-21 15:29:26
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/newest CHAT mapping file 081414.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 15:48:45
+ .....................
+  => Translating.. at 2015-02-21 15:48:46
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/newest CHAT mapping file 081414.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123_Compumedics.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 15:51:37
+ .....................
+  => Translating.. at 2015-02-21 15:51:38
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123_Compumedics.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 16:12:15
+ .....................
+  => Translating.. at 2015-02-21 16:12:16
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123_Compumedics.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 16:14:12
+ .....................
+  => Translating.. at 2015-02-21 16:14:13
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123_Compumedics_2015-02-21.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 16:16:00
+ .....................
+  => Translating.. at 2015-02-21 16:16:01
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123_Compumedics_2015-02-21_16-16-00.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 16:17:14
+ .....................
+  => Translating.. at 2015-02-21 16:17:15
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 16:20:40
+ .....................
+  => Translating.. at 2015-02-21 16:20:41
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/ATestFiles/TestCategoryFeature/Compumedics/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/TestCategoryFeature/Compumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/TestCategoryFeature/Compumedics/out/123.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-21 16:23:06
+ .....................
+  => Translating.. at 2015-02-21 16:23:06
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/ATestFiles/TestCategoryFeature/Compumedics/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/TestCategoryFeature/Compumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/TestCategoryFeature/Compumedics/out/123_Compumedics.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.

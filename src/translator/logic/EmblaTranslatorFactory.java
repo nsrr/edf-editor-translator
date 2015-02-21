@@ -61,12 +61,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		this.xmlAnnotation = annotationFile;
 		map = readMapFile(mappingFile);	
 		document = resolveBOM(xmlAnnotation);
-		// test
-//		if(document == null) {
-//			System.out.println("document is null");
-//		} else {
-//			System.out.println("document is not null");
-//		}
 		result = recordEvents(document);		
 		if(!result) {
 			log("Cannot parse the events in the annotation file");
@@ -81,12 +75,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	@Override
 	public boolean translate() {
 		System.out.println("   >>> Inside EmblaTranslatorFactory translate"); // test
-//		System.out.println("======================================");
-//		for(String str : map[1].keySet()) {
-//			System.out.println(str + " ");
-//		}
-//		System.out.println("======================================");
-		 // test
 					
 		boolean result = false;
 		Element root = createEmptyDocument(softwareVersion);
@@ -114,47 +102,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		return result;
 	}
 	
-//	private List<Element> parseStaging(Document doc) {
-////		// TODO Auto-generated method stub
-//		List<Element> list = new ArrayList<Element>();
-//		
-//		// only DESAT type has more values to be processed, others are the same
-//				Element scoredEvent = null;
-//				String eventType = getElementByChildTag(scoredEventElement, "Type");
-//				// map[1] contains keySet with event name
-//				if(map[1].keySet().contains(eventType)) {
-//					scoredEvent = parseEventElement(scoredEventElement);
-//				} else {						
-//					// no mapping event name found
-//					scoredEvent = xmlRoot.createElement("ScoredEvent");
-//					Element eventConcept = xmlRoot.createElement("EventConcept");
-//					Element startElement = xmlRoot.createElement("Starttime");
-//					Element durationElement = xmlRoot.createElement("Duration");
-//					Element notesElement = xmlRoot.createElement("Notes");
-//						
-//					eventConcept.appendChild(xmlRoot.createTextNode("Technician Notes"));
-//					notesElement.appendChild(xmlRoot.createTextNode(eventType));
-//					
-//					String startTime = getElementByChildTag(scoredEventElement, "StartTime");
-//					String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
-//					String durationTime = getDurationInSeconds(startTime, stopTime);
-//					startElement.appendChild(xmlRoot.createTextNode(startTime)); // newly added 2-14-8-28
-//					durationElement.appendChild(xmlRoot.createTextNode(durationTime));
-//							
-//					scoredEvent.appendChild(eventConcept);
-//					scoredEvent.appendChild(startElement);
-//					scoredEvent.appendChild(durationElement);
-//					scoredEvent.appendChild(notesElement);
-//					String info = xmlAnnotation + "," + eventType + "," + startTime ;
-//					log(info); // needed  
-//					// TODO
-//				}		
-//
-//				return scoredEvent;
-//		
-//		return list;
-//	}
-
 	/**
 	 * Serializes XML to output file
 	 * @param output the xml output file
@@ -258,16 +205,25 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		return root;
 	}
 	
+	/**
+	 * Get Event with tag of eventConcept, start and duration
+	 * @param scoredEventElement
+	 * @return
+	 */
 	private List<Element> getLocation(Element scoredEventElement) {
 		// {eventConcept, duration, start}
 		List<Element> list = new ArrayList<Element>();
 		String eventType = getElementByChildTag(scoredEventElement, "Type");
+		Element eventCategory = xmlRoot.createElement("Category");
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
 //		Node nameNode = xmlRoot.createTextNode(eventType); // bug fixed: wei wang, 2014-8-26
 		//		Node nameNode = xmlRoot.createTextNode((String) ((ArrayList<String>) map[1].get(eventType)).get(1));
 		Node nameNode = xmlRoot.createTextNode((String) (map[1].get(eventType)));
+		String category = map[2].get(eventType) == null ? "" : (String) map[2].get(eventType);
+		Node categoryNode = xmlRoot.createTextNode(category);
+		eventCategory.appendChild(categoryNode);
 		eventConcept.appendChild(nameNode);
 		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
 		String relativeStart = getEventStartTime(timeStart[0], startTime);
@@ -276,6 +232,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		start.appendChild(xmlRoot.createTextNode(relativeStart));
 		duration.appendChild(xmlRoot.createTextNode(durationTime));
 		
+		list.add(eventCategory);
 		list.add(eventConcept);		
 		list.add(start);
 		list.add(duration);
@@ -630,7 +587,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	}
 	
 	/**
-	 * Reads mapping file and saves as an array of HashMap
+	 * Reads mapping file and saves as an array of HashMap of info (epoch, length), (eventName, translatedName), (eventName, category)
 	 * Can be put in a higher hierarchy
 	 * @param mapFile the mapping file name
 	 * @return  the mapping in form of HashMap
@@ -639,43 +596,32 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		// System.out.println("Read map file...");  // for test
 		@SuppressWarnings("unchecked")
 		// HashMap[] map = new HashMap[3]; // original
-		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 2);
+		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 3);
 		// HashMap map = new HashMap();
 		try {
 			BufferedReader input =  new BufferedReader(new FileReader(mapFile));
 			try {
 				String line = input.readLine();
+				// <EpochLength, #num>
 				HashMap<String,Object> epoch = new HashMap<String,Object>();
+				// <Event, EventConcept>
 				HashMap<String,Object> events = new HashMap<String,Object>();
-//				HashMap<String,Object> stages = new HashMap<String,Object>();
+				// <Event, EventType>
+				HashMap<String,Object> types = new HashMap<String,Object>();
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
 //					String eventTypeLowerCase = data[0].toLowerCase();
-					// process events
-//					if (!eventTypeLowerCase.contains("epochlength")
-//							&& !eventTypeLowerCase.contains("staging")) {
-//						// values: {EventType, EventConcept, Note}
-//						ArrayList<String> values = new ArrayList<String>(3);
-//						values.add(data[0]);
-//						values.add(data[2]);
-//						if (data.length >= 4) {
-//							values.add(data[3]);
-//						}
-//						// events {event, event_type && event_concept}
-//						events.put(data[1], values);
-//					} else 
 					if (data[0].compareTo("EpochLength") == 0) {
-						// System.out.println(data[0]);
 						epoch.put(data[0], data[2]);
 					} else {
-						// stages {event, event_concept}
 						events.put(data[1], data[2]);
+						types.put(data[1], data[0]);
 					}
 				}	
 				// System.out.println(map[2].values().size());
 				map[0] = epoch;
 				map[1] = events;
-//				map[2] = stages;
+				map[2] = types;
 			} finally {
 				input.close();
 			}

@@ -55,15 +55,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
 		map = readMapFile(mappingFile);		
-//		System.out.println("map: " + map); // test
 		document = resolveBOM(xmlAnnotation);
-		// test
-//		if(document == null) {
-//			System.out.println("document is null"); // test
-//			log("document is null");
-//		} else {
-//			System.out.println("document is not null");
-//		}
 		result = recordEvents(document);		
 		if(!result) {
 			log("Cannot parse the events in the annotation file");
@@ -79,7 +71,6 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		
 		NodeList nodeList = document.getElementsByTagName("ScoredEvent");
 		System.out.println("   [Event size: " + nodeList.getLength() + "]"); // test
-//		System.out.println("Event size: " + nodeList.getLength()); // test
 		for(int index = 0; index < nodeList.getLength(); index++) {
 			Element parsedElement = null;
 			Node node = nodeList.item(index);  // for each <event> node
@@ -109,6 +100,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		List<Element> list = new ArrayList<Element>();
 		// for each sleep stages
 		NodeList stageList = document.getElementsByTagName("SleepStage");	
+		Element eventCategory = xmlRoot.createElement("Category");
 		Element scoredEvent = xmlRoot.createElement("ScoredEvent");
 		Element eventConcept = xmlRoot.createElement("EventConcept");
 		Element startElement = xmlRoot.createElement("Start");
@@ -118,17 +110,22 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		
 //		System.out.println("First key in map[2]: " + firstStageKey); // test
 		String firstStageValue;
+		String firstStageCategory;
 		// map[2] <- {key(Event), value(EventConcept)}
 		// example: "Sleep Staging,1,SDO:NonRapidEyeMovementSleep-N1," map[2] = {"1", "SDO:NonRapidEyeMovementSleep-N1"};
 		if (map[2].keySet().contains(firstStageKey)) {
 			firstStageValue = (String) map[2].get(firstStageKey);
+			firstStageCategory = (String) map[3].get(firstStageKey);
 //			System.out.println("First key value in map[2]: " + firstStageValue);
 		} else {
 			firstStageValue = "";
+			firstStageCategory = ""; 
 		}
 		double start = 0;
+		eventCategory.appendChild(xmlRoot.createTextNode(firstStageCategory));
 		eventConcept.appendChild(xmlRoot.createTextNode(firstStageValue));
 		startElement.appendChild(xmlRoot.createTextNode(Double.toString(start)));
+		scoredEvent.appendChild(eventCategory);
 		scoredEvent.appendChild(eventConcept);
 		scoredEvent.appendChild(startElement);
 		int count = 0;
@@ -142,20 +139,25 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 			    list.add(scoredEvent);			    
 				scoredEvent = xmlRoot.createElement("ScoredEvent");
 				eventConcept = xmlRoot.createElement("EventConcept");
+				eventCategory = xmlRoot.createElement("Category");
 				firstStageKey = iStageValue;
 //				System.out.print("key: " + firstStageKey); // test
 				if (map[2].keySet().contains(firstStageKey)) {
 					firstStageValue = (String) map[2].get(firstStageKey);
+					firstStageCategory = (String) map[3].get(firstStageKey);
 //					System.out.println(" value: " + firstStageValue); // test
 				} else {
 					firstStageValue = "";
+					firstStageCategory = "";
 				}
 //				System.out.println(); // test
+				eventCategory.appendChild(xmlRoot.createTextNode(firstStageCategory));
 				eventConcept.appendChild(xmlRoot.createTextNode(firstStageValue));
 				startElement = xmlRoot.createElement("Start");
 				start += count * 30; // start = start + count * 30;
 				startElement.appendChild(xmlRoot.createTextNode(Double.toString(start)));
 				durationElement = xmlRoot.createElement("Duration");
+				scoredEvent.appendChild(eventCategory);
 				scoredEvent.appendChild(eventConcept);
 				scoredEvent.appendChild(startElement);
 				count = 1;
@@ -245,12 +247,16 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		// {eventConcept, duration, start}
 		List<Element> list = new ArrayList<Element>();
 		String eventType = getElementByChildTag(scoredEventElement, "Name");
+		Element eventCategory = xmlRoot.createElement("Category");
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
 //		Node nameNode = xmlRoot.createTextNode(eventType); // bug-fixed: wei wang, 2014-8-26
 		@SuppressWarnings("unchecked")
 		Node nameNode = xmlRoot.createTextNode((String)((ArrayList<String>) map[1].get(eventType)).get(1));
+		String categoryStr = map[3].get(eventType) == null ? "" : (String) map[3].get(eventType); 
+		Node categoryNode = xmlRoot.createTextNode(categoryStr);
+		eventCategory.appendChild(categoryNode);
 		eventConcept.appendChild(nameNode);
 		
 		String startTime = getElementByChildTag(scoredEventElement, "Start");
@@ -258,6 +264,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		duration.appendChild(xmlRoot.createTextNode(durationTime));
 		start.appendChild(xmlRoot.createTextNode(startTime));
 			
+		list.add(eventCategory);
 		list.add(eventConcept);		
 		list.add(start);
 		list.add(duration);
@@ -431,7 +438,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		// System.out.println("Read map file...");  // for test
 		@SuppressWarnings("unchecked")
 		// HashMap[] map = new HashMap[3]; // original
-		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 3);
+		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 4);
 		// HashMap map = new HashMap();
 		try {
 			BufferedReader input =  new BufferedReader(new FileReader(mapFile));
@@ -440,6 +447,8 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 				HashMap<String,Object> epoch = new HashMap<String,Object>();
 				HashMap<String,Object> events = new HashMap<String,Object>();
 				HashMap<String,Object> stages = new HashMap<String,Object>();
+				HashMap<String,Object> categories = new HashMap<String,Object>();
+
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
 					String eventTypeLowerCase = data[0].toLowerCase();
@@ -455,18 +464,21 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 						}
 						// events {event, event_type && event_concept}
 						events.put(data[1], values);
+						categories.put(data[1], data[0]);
 					} else if (data[0].compareTo("EpochLength") == 0) {
 						// System.out.println(data[0]);
 						epoch.put(data[0], data[2]);
 					} else {
 						// stages {event, event_concept}
 						stages.put(data[1], data[2]);
+						categories.put(data[1], data[0]);
 					}
 				}	
 				// System.out.println(map[2].values().size());
 				map[0] = epoch;
 				map[1] = events;
 				map[2] = stages;
+				map[3] = categories;
 			} finally {
 				input.close();
 			}
