@@ -214,7 +214,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		// {eventConcept, duration, start}
 		List<Element> list = new ArrayList<Element>();
 		String eventType = getElementByChildTag(scoredEventElement, "Type");
-		Element eventCategory = xmlRoot.createElement("Category");
+		Element eventCategory = xmlRoot.createElement("EventType");
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
@@ -263,7 +263,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		if(xmlRoot != null) {
 			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
 		} else {
-//			System.out.println("TEST: xmlRoot is null"); // test
 			log("ERROR: root document is null");
 			return null;
 		}

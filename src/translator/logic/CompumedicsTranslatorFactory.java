@@ -100,7 +100,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		List<Element> list = new ArrayList<Element>();
 		// for each sleep stages
 		NodeList stageList = document.getElementsByTagName("SleepStage");	
-		Element eventCategory = xmlRoot.createElement("Category");
+		Element eventCategory = xmlRoot.createElement("EventType");
 		Element scoredEvent = xmlRoot.createElement("ScoredEvent");
 		Element eventConcept = xmlRoot.createElement("EventConcept");
 		Element startElement = xmlRoot.createElement("Start");
@@ -139,7 +139,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 			    list.add(scoredEvent);			    
 				scoredEvent = xmlRoot.createElement("ScoredEvent");
 				eventConcept = xmlRoot.createElement("EventConcept");
-				eventCategory = xmlRoot.createElement("Category");
+				eventCategory = xmlRoot.createElement("EventType");
 				firstStageKey = iStageValue;
 //				System.out.print("key: " + firstStageKey); // test
 				if (map[2].keySet().contains(firstStageKey)) {
@@ -247,17 +247,21 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		// {eventConcept, duration, start}
 		List<Element> list = new ArrayList<Element>();
 		String eventType = getElementByChildTag(scoredEventElement, "Name");
-		Element eventCategory = xmlRoot.createElement("Category");
+		Element eventCategory = xmlRoot.createElement("EventType");
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
+		Element input = xmlRoot.createElement("Input");
 //		Node nameNode = xmlRoot.createTextNode(eventType); // bug-fixed: wei wang, 2014-8-26
 		@SuppressWarnings("unchecked")
 		Node nameNode = xmlRoot.createTextNode((String)((ArrayList<String>) map[1].get(eventType)).get(1));
 		String categoryStr = map[3].get(eventType) == null ? "" : (String) map[3].get(eventType); 
 		Node categoryNode = xmlRoot.createTextNode(categoryStr);
+		String inputString = getElementByChildTag(scoredEventElement, "Input");
+		Node inputNode = xmlRoot.createTextNode(inputString);
 		eventCategory.appendChild(categoryNode);
 		eventConcept.appendChild(nameNode);
+		input.appendChild(inputNode);
 		
 		String startTime = getElementByChildTag(scoredEventElement, "Start");
 		String durationTime = getElementByChildTag(scoredEventElement, "Duration");
@@ -268,6 +272,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		list.add(eventConcept);		
 		list.add(start);
 		list.add(duration);
+//		list.add(input);
 			
 		return list;
 	}

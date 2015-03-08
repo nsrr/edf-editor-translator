@@ -2914,3 +2914,83 @@ XML DOM Created Successfully..
  .....................
   => The task finished!
    * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-23 15:38:44
+ .....................
+  => Translating.. at 2015-02-23 15:38:45
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123_Compumedics_2015-02-23.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-23 15:49:25
+ .....................
+  => Translating.. at 2015-02-23 15:49:25
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-23 15:50:02
+ .....................
+  => Translating.. at 2015-02-23 15:50:03
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/MappingFiles/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/123.edf(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/XMLTests/UntranslatedCompumedics/123.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/test-category-out/123.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-25 11:35:14
+ .....................
+  => Translating.. at 2015-02-25 11:35:14
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wei/Documents/MATLAB/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/SHHS mapping file 09122015.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/100469.EDF(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/100469.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/Translated/100469_Compumedics_2015-02-25_11-35-14.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-02-25 11:43:29
+ .....................
+  => Translating.. at 2015-02-25 11:43:30
+   * Vendor:	Embla
+   * Mapping:	/Users/wei/Documents/MATLAB/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/HeartBEAT mapping file 02122015.csv(Existed)
+   * EDF file:	/Users/wei/Documents/MATLAB/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wei/Documents/MATLAB/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wei/Documents/MATLAB/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/30516_01102011s2_Embla_2015-02-25_11-43-29.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
