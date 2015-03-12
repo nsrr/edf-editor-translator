@@ -2994,3 +2994,51 @@ XML DOM Created Successfully..
  .....................
   => The task finished!
    * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-03-08 17:41:19
+ .....................
+  => Translating.. at 2015-03-08 17:41:20
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/NSRR-Proj/MappingFile/mapping-Embla.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/30516_01102011s2.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-03-11 21:58:22
+ .....................
+  => Translating.. at 2015-03-11 21:58:22
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/MappingFiles/mapping-Compumedics.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/MappingFiles/SHHS/100469.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/MappingFiles/SHHS/100469.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/MappingFiles/SHHS/out/100469.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-03-11 22:26:13
+ .....................
+  => Translating.. at 2015-03-11 22:26:14
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/MappingFiles/mapping-Embla.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/30516_01102011s2_Embla_2015-03-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.

@@ -178,6 +178,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	private Element createEmptyDocument(String softwareVersion) {
 		Element root = xmlRoot.createElement("PSGAnnotation");
 		Element software = xmlRoot.createElement("SoftwareVersion");
+		Element emptyType = xmlRoot.createElement("EventType");
 		software.appendChild(xmlRoot.createTextNode(softwareVersion));
 		Element epoch = xmlRoot.createElement("EpochLength");
 		// bug fixes for empty xml output file caused by EpochLength empty
@@ -487,8 +488,11 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	private Element addElements(Document doc, String[] elements) {
 		Element eventElement = doc.createElement("ScoredEvent");
+		Element typeElement = doc.createElement("EventType");
+		typeElement.appendChild(doc.createTextNode(""));
 		Element nameElement = doc.createElement("EventConcept");
 		nameElement.appendChild(doc.createTextNode(elements[0]));
+		eventElement.appendChild(typeElement);
 		eventElement.appendChild(nameElement);
 		Element startElement = doc.createElement("Start");
 		startElement.appendChild(doc.createTextNode(elements[1]));
