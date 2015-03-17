@@ -409,7 +409,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		Element eventElement = doc.createElement("ScoredEvent");
 		Element nameElement = doc.createElement("EventConcept");
 		Element typeElement = doc.createElement("EventType");
-    typeElement.appendChild(doc.createTextNode(""));
+        typeElement.appendChild(doc.createTextNode(""));
 		nameElement.appendChild(doc.createTextNode(elements[0]));
 		eventElement.appendChild(typeElement);
 		eventElement.appendChild(nameElement);
