@@ -62,6 +62,9 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		map = readMapFile(mappingFile);	
 		document = resolveBOM(xmlAnnotation);
 		result = recordEvents(document);		
+		NodeList nodeList = document.getElementsByTagName("Input");
+    hasinput = nodeList.getLength() != 0;
+    System.out.println("Has input ? " + hasinput); // test
 		if(!result) {
 			log("Cannot parse the events in the annotation file");
 		}		
@@ -164,7 +167,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			scoredEvent.appendChild(startElement);
 			scoredEvent.appendChild(durationElement);
 			scoredEvent.appendChild(notesElement);
-			String info = xmlAnnotation + "," + eventType + "," + startTime ;
+//			String info = xmlAnnotation + "," + eventType + "," + startTime ;
 //			log(info); // needed TODO 
 		}		
 
@@ -178,7 +181,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	private Element createEmptyDocument(String softwareVersion) {
 		Element root = xmlRoot.createElement("PSGAnnotation");
 		Element software = xmlRoot.createElement("SoftwareVersion");
-		Element emptyType = xmlRoot.createElement("EventType");
 		software.appendChild(xmlRoot.createTextNode(softwareVersion));
 		Element epoch = xmlRoot.createElement("EpochLength");
 		// bug fixes for empty xml output file caused by EpochLength empty
@@ -219,6 +221,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
+		Element input = xmlRoot.createElement("Input");
 //		Node nameNode = xmlRoot.createTextNode(eventType); // bug fixed: wei wang, 2014-8-26
 		//		Node nameNode = xmlRoot.createTextNode((String) ((ArrayList<String>) map[1].get(eventType)).get(1));
 		Node nameNode = xmlRoot.createTextNode((String) (map[1].get(eventType)));
@@ -226,6 +229,16 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		Node categoryNode = xmlRoot.createTextNode(category);
 		eventCategory.appendChild(categoryNode);
 		eventConcept.appendChild(nameNode);
+		
+		String inputString; 
+    if (hasinput) {
+      inputString = getElementByChildTag(scoredEventElement, "Input");
+    } else {
+      inputString = (String)map[3].get(eventType);
+    }
+    Node inputNode = xmlRoot.createTextNode(inputString);
+    input.appendChild(inputNode);	
+		
 		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
 		String relativeStart = getEventStartTime(timeStart[0], startTime);
 		String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
@@ -237,6 +250,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		list.add(eventConcept);		
 		list.add(start);
 		list.add(duration);
+		list.add(input);
 		
 		return list;
 	}
@@ -359,7 +373,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 //		System.out.println("EDF time: " + edftime);
 		String eventTime = eventStart.substring(11, 19);
 //		System.out.println("EventTime: " + eventTime);
-		String edfDate = edfClockStart.substring(0, 8);
+//		String edfDate = edfClockStart.substring(0, 8);
 //		System.out.println("EDF Date: " + edfDate);
 		String eventDate = eventStart.substring(0, 10);
 //		System.out.println("Event Date: " + eventDate);
@@ -369,7 +383,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		SimpleDateFormat eventFormat = new SimpleDateFormat("HH:mm:ss");
 			
 		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat formatEdfDate = new SimpleDateFormat("dd.mm.yy");
+//		SimpleDateFormat formatEdfDate = new SimpleDateFormat("dd.mm.yy");
 		Calendar c = Calendar.getInstance();
 		String finalDate = "";
 		try {
@@ -396,12 +410,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		try {
 			Date edfd = sdf1.parse(edfClockStart);
 			Date eventd = sdf2.parse(eventStart);
-//			System.out.println("EDF/EVENT:\n" + edfd.toString() + "\n" + eventd);
-//			System.out.println("!!!!!!!!!" + edfd.before(eventd));
 			long diff = eventd.getTime() - edfd.getTime();  // milliseconds
-//			System.out.println("edfd: " + edfd.getTime());
-//			System.out.println("eventd: " + eventd.getTime());
-//			System.out.println("diff: " + diff);
 			long timeStart = diff / 1000;			
 			String start_suf = eventStart.substring(20, 21);
 			time = String.valueOf(timeStart);
@@ -599,7 +608,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		// System.out.println("Read map file...");  // for test
 		@SuppressWarnings("unchecked")
 		// HashMap[] map = new HashMap[3]; // original
-		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 3);
+		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 4);
 		// HashMap map = new HashMap();
 		try {
 			BufferedReader input =  new BufferedReader(new FileReader(mapFile));
@@ -610,7 +619,9 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 				// <Event, EventConcept>
 				HashMap<String,Object> events = new HashMap<String,Object>();
 				// <Event, EventType>
-				HashMap<String,Object> types = new HashMap<String,Object>();
+				HashMap<String,Object> categories = new HashMap<String,Object>();
+				// <Event, Input>
+				HashMap<String,Object> inputs = new HashMap<String,Object>();
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
 //					String eventTypeLowerCase = data[0].toLowerCase();
@@ -618,13 +629,15 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 						epoch.put(data[0], data[2]);
 					} else {
 						events.put(data[1], data[2]);
-						types.put(data[1], data[0]);
+						categories.put(data[1], data[0]);
+						inputs.put(data[1], data[3]);
 					}
 				}	
 				// System.out.println(map[2].values().size());
 				map[0] = epoch;
 				map[1] = events;
-				map[2] = types;
+				map[2] = categories;
+				map[3] = inputs;
 			} finally {
 				input.close();
 			}

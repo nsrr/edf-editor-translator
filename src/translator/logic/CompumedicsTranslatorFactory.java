@@ -57,6 +57,9 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		map = readMapFile(mappingFile);		
 		document = resolveBOM(xmlAnnotation);
 		result = recordEvents(document);		
+		NodeList nodeList = document.getElementsByTagName("Input");
+		hasinput = nodeList.getLength() != 0;
+		System.out.println("Has input ? " + hasinput); // test
 		if(!result) {
 			log("Cannot parse the events in the annotation file");
 		}		
@@ -257,10 +260,15 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		Node nameNode = xmlRoot.createTextNode((String)((ArrayList<String>) map[1].get(eventType)).get(1));
 		String categoryStr = map[3].get(eventType) == null ? "" : (String) map[3].get(eventType); 
 		Node categoryNode = xmlRoot.createTextNode(categoryStr);
-		String inputString = getElementByChildTag(scoredEventElement, "Input");
-		Node inputNode = xmlRoot.createTextNode(inputString);
 		eventCategory.appendChild(categoryNode);
 		eventConcept.appendChild(nameNode);
+		String inputString; 
+    if (hasinput) {
+      inputString = getElementByChildTag(scoredEventElement, "Input");
+    } else {
+      inputString = (String)map[4].get(eventType);
+    }
+		Node inputNode = xmlRoot.createTextNode(inputString);
 		input.appendChild(inputNode);
 		
 		String startTime = getElementByChildTag(scoredEventElement, "Start");
@@ -272,7 +280,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		list.add(eventConcept);		
 		list.add(start);
 		list.add(duration);
-//		list.add(input);
+		list.add(input);
 			
 		return list;
 	}
@@ -446,7 +454,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		// System.out.println("Read map file...");  // for test
 		@SuppressWarnings("unchecked")
 		// HashMap[] map = new HashMap[3]; // original
-		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 4);
+		HashMap<String,Object>[] map = (HashMap<String,Object>[]) Array.newInstance(HashMap.class, 5);
 		// HashMap map = new HashMap();
 		try {
 			BufferedReader input =  new BufferedReader(new FileReader(mapFile));
@@ -456,9 +464,11 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 				HashMap<String,Object> events = new HashMap<String,Object>();
 				HashMap<String,Object> stages = new HashMap<String,Object>();
 				HashMap<String,Object> categories = new HashMap<String,Object>();
+				HashMap<String,Object> inputs = new HashMap<String,Object>();
 
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
+					System.out.println("Mapping line, data length: " + data.length);
 					String eventTypeLowerCase = data[0].toLowerCase();
 					// process events
 					if (!eventTypeLowerCase.contains("epochlength")
@@ -473,6 +483,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 						// events {event, event_type && event_concept}
 						events.put(data[1], values);
 						categories.put(data[1], data[0]);
+						inputs.put(data[1], data[3]);
 					} else if (data[0].compareTo("EpochLength") == 0) {
 						// System.out.println(data[0]);
 						epoch.put(data[0], data[2]);
@@ -487,6 +498,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 				map[1] = events;
 				map[2] = stages;
 				map[3] = categories;
+				map[4] = inputs;
 			} finally {
 				input.close();
 			}
