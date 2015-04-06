@@ -33,7 +33,6 @@ public abstract class AbstractTranslatorFactory {
 	protected Set<String> events;
 	protected HashMap<String,Object>[] map;
 	protected String[] timeStart;
-	protected boolean hasinput; // has Input tag or not
 	
 	/**
 	 * Reads the path of the EDF file, the annotation file and the mapping file
@@ -63,14 +62,6 @@ public abstract class AbstractTranslatorFactory {
 	 * @return true if this process is done successful
 	 */
 	public abstract boolean write2JSON(String outputFile);	
-	
-	/**
-	 * Check if this vendor annotation has Input tag or not
-	 * @return true if the annotation file has input tag
-	 */
-	public boolean hasInput() {
-	  return hasinput;
-	}
 	
 	/**
 	 * Reads mapping file and saves as an array of HashMap

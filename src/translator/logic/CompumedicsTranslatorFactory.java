@@ -57,9 +57,6 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		map = readMapFile(mappingFile);		
 		document = resolveBOM(xmlAnnotation);
 		result = recordEvents(document);		
-		NodeList nodeList = document.getElementsByTagName("Input");
-		hasinput = nodeList.getLength() != 0;
-		System.out.println("Has input ? " + hasinput); // test
 		if(!result) {
 			log("Cannot parse the events in the annotation file");
 		}		
@@ -254,21 +251,17 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
-		Element input = xmlRoot.createElement("Input");
+		Element input = xmlRoot.createElement("SignalLocation");
 //		Node nameNode = xmlRoot.createTextNode(eventType); // bug-fixed: wei wang, 2014-8-26
 		@SuppressWarnings("unchecked")
 		Node nameNode = xmlRoot.createTextNode((String)((ArrayList<String>) map[1].get(eventType)).get(1));
 		String categoryStr = map[3].get(eventType) == null ? "" : (String) map[3].get(eventType); 
 		Node categoryNode = xmlRoot.createTextNode(categoryStr);
+//		String inputString = getElementByChildTag(scoredEventElement, "Input");
+		String signalLocation = (String)map[4].get(eventType);
+		Node inputNode = xmlRoot.createTextNode(signalLocation);
 		eventCategory.appendChild(categoryNode);
 		eventConcept.appendChild(nameNode);
-		String inputString; 
-    if (hasinput) {
-      inputString = getElementByChildTag(scoredEventElement, "Input");
-    } else {
-      inputString = (String)map[4].get(eventType);
-    }
-		Node inputNode = xmlRoot.createTextNode(inputString);
 		input.appendChild(inputNode);
 		
 		String startTime = getElementByChildTag(scoredEventElement, "Start");
@@ -417,7 +410,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		Element eventElement = doc.createElement("ScoredEvent");
 		Element nameElement = doc.createElement("EventConcept");
 		Element typeElement = doc.createElement("EventType");
-        typeElement.appendChild(doc.createTextNode(""));
+    typeElement.appendChild(doc.createTextNode(""));
 		nameElement.appendChild(doc.createTextNode(elements[0]));
 		eventElement.appendChild(typeElement);
 		eventElement.appendChild(nameElement);
@@ -464,26 +457,29 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 				HashMap<String,Object> events = new HashMap<String,Object>();
 				HashMap<String,Object> stages = new HashMap<String,Object>();
 				HashMap<String,Object> categories = new HashMap<String,Object>();
-				HashMap<String,Object> inputs = new HashMap<String,Object>();
+				HashMap<String,Object> signalLocation = new HashMap<String,Object>(); ///
 
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
-					System.out.println("Mapping line, data length: " + data.length);
 					String eventTypeLowerCase = data[0].toLowerCase();
+					String mainLocation = "";
 					// process events
 					if (!eventTypeLowerCase.contains("epochlength")
 							&& !eventTypeLowerCase.contains("staging")) {
+					  if (data[3].length() != 0) {
+					    mainLocation = data[3].split("#")[0];
+					  }
 						// values: {EventType, EventConcept, Note}
 						ArrayList<String> values = new ArrayList<String>(3);
 						values.add(data[0]);
 						values.add(data[2]);
-						if (data.length >= 4) {
-							values.add(data[3]);
+						if (data.length > 4) {
+							values.add(data[4]); // add Notes
 						}
 						// events {event, event_type && event_concept}
 						events.put(data[1], values);
 						categories.put(data[1], data[0]);
-						inputs.put(data[1], data[3]);
+						signalLocation.put(data[1], mainLocation);
 					} else if (data[0].compareTo("EpochLength") == 0) {
 						// System.out.println(data[0]);
 						epoch.put(data[0], data[2]);
@@ -498,7 +494,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 				map[1] = events;
 				map[2] = stages;
 				map[3] = categories;
-				map[4] = inputs;
+				map[4] = signalLocation;
 			} finally {
 				input.close();
 			}
