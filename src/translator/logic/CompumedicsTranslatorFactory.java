@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -55,6 +56,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
 		map = readMapFile(mappingFile);		
+		initLocalVariables(edfFile); // initialize local variables
 		document = resolveBOM(xmlAnnotation);
 		result = recordEvents(document);		
 		if(!result) {
@@ -247,6 +249,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		// {eventConcept, duration, start}
 		List<Element> list = new ArrayList<Element>();
 		String eventType = getElementByChildTag(scoredEventElement, "Name");
+		String annLocation = getElementByChildTag(scoredEventElement, "Input");
 		Element eventCategory = xmlRoot.createElement("EventType");
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
@@ -258,7 +261,8 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		String categoryStr = map[3].get(eventType) == null ? "" : (String) map[3].get(eventType); 
 		Node categoryNode = xmlRoot.createTextNode(categoryStr);
 //		String inputString = getElementByChildTag(scoredEventElement, "Input");
-		String signalLocation = (String)map[4].get(eventType);
+
+		String signalLocation = getSignalLocationFromEvent(scoredEventElement, annLocation);
 		Node inputNode = xmlRoot.createTextNode(signalLocation);
 		eventCategory.appendChild(categoryNode);
 		eventConcept.appendChild(nameNode);
@@ -276,6 +280,31 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		list.add(input);
 			
 		return list;
+	}
+
+	/* (non-Javadoc)
+	 * @see translator.logic.AbstractTranslatorFactory#getSignalLocationFromEvent(org.w3c.dom.Element, java.lang.String)
+	 */
+	public String getSignalLocationFromEvent(Element scoredEvent, String annLocation) {
+
+	  String result = signalLabels[0]; // initialize to the first EDF signal
+
+	  String eventName = getElementByChildTag(scoredEvent, "Name");
+	  @SuppressWarnings("unchecked")
+    List<String> defaultSignals = (List<String>)map[4].get(eventName);
+	  List<String> edfSignals = Arrays.asList(signalLabels);
+	  
+	  if (edfSignals.contains(annLocation)) { 
+	    result = annLocation;
+	  } else {
+	    for (String signal : defaultSignals) {
+	      if (edfSignals.contains(signal)) {
+	        result = signal;
+	      }
+	    }
+	  }
+
+	  return result;
 	}
 
 	private String getDuration(Element scoredEvent) {
@@ -326,7 +355,6 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		root.appendChild(epoch);
 		
 		scoredEvents = xmlRoot.createElement("ScoredEvents");
-		recordStartDate(edfFile); // 
 		String[] elmts = new String[3];//
 		elmts[0] = "Recording Start Time";//
 		elmts[1] = "0";//
@@ -337,42 +365,6 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		timeElement.appendChild(clock);
 		scoredEvents.appendChild(timeElement);		
 		return root;
-	}
-	
-	/**
-	 * Gets the text content of the <code>childName</code> node from a parent element
-	 * @param parent an scored event element
-	 * @param childName the child name
-	 * @return the text content in the child node
-	 */
-	private String getElementByChildTag(Element parent, String childName) {		
-		NodeList list = parent.getElementsByTagName(childName);
-	    if (list.getLength() > 1) {
-	      throw new IllegalStateException("Multiple child elements with name " + childName);
-	    } else if (list.getLength() == 0) {
-	      return null;
-	    }
-	    Element child = (Element) list.item(0);
-	    return getText(child);
-	}
-	
-	/**
-	 * Gets the text content of an element
-	 * @param element the element to extract from
-	 * @return the text content of this element
-	 */
-	private static String getText(Element element) {
-		StringBuffer buf = new StringBuffer();
-	    NodeList list = element.getChildNodes();
-	    boolean found = false;
-	    for (int i = 0; i < list.getLength(); i++) {
-	      Node node = list.item(i);
-	      if (node.getNodeType() == Node.TEXT_NODE) {
-	        buf.append(node.getNodeValue());
-	        found = true;
-	      }
-	    }
-	    return found ? buf.toString() : null;
 	}
 	
 	/**
@@ -462,12 +454,14 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
 					String eventTypeLowerCase = data[0].toLowerCase();
-					String mainLocation = "";
+					List<String> defaultSignals = new ArrayList<>();
 					// process events
 					if (!eventTypeLowerCase.contains("epochlength")
 							&& !eventTypeLowerCase.contains("staging")) {
 					  if (data[3].length() != 0) {
-					    mainLocation = data[3].split("#")[0];
+					    for (String sname : data[3].split("#")) {
+					      defaultSignals.add(sname);
+					    }
 					  }
 						// values: {EventType, EventConcept, Note}
 						ArrayList<String> values = new ArrayList<String>(3);
@@ -479,7 +473,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 						// events {event, event_type && event_concept}
 						events.put(data[1], values);
 						categories.put(data[1], data[0]);
-						signalLocation.put(data[1], mainLocation);
+						signalLocation.put(data[1], defaultSignals);
 					} else if (data[0].compareTo("EpochLength") == 0) {
 						// System.out.println(data[0]);
 						epoch.put(data[0], data[2]);

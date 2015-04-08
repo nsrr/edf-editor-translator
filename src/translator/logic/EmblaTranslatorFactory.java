@@ -60,6 +60,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
 		map = readMapFile(mappingFile);	
+		initLocalVariables(edfFile);
 		document = resolveBOM(xmlAnnotation);
 		result = recordEvents(document);		
 		if(!result) {
@@ -193,7 +194,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		root.appendChild(epoch);
 		
 		scoredEvents = xmlRoot.createElement("ScoredEvents");
-		recordStartDate(edfFile); // 
 		String[] elmts = new String[3];//
 		elmts[0] = "Recording Start Time";//
 		elmts[1] = "0";//
@@ -245,6 +245,11 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		
 		return list;
 	}
+	
+	public String getSignalLocationFromEvent(Element scoredEvent, String annLocation) {
+	  // TODO
+    return "";
+  }
 	
 	private List<Element> getUserVariables(Element scoredEventElement) {
 		List<Element> list = new ArrayList<Element>();
@@ -314,42 +319,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			}
 		}
 		return resultValue;
-	}
-
-	/**
-	 * Gets the text content of the <code>childName</code> node from a parent element
-	 * @param parent an scored event element
-	 * @param childName the child name
-	 * @return the text content in the child node
-	 */
-	private String getElementByChildTag(Element parent, String childName) {		
-		NodeList list = parent.getElementsByTagName(childName);
-	    if (list.getLength() > 1) {
-	      throw new IllegalStateException("Multiple child elements with name " + childName);
-	    } else if (list.getLength() == 0) {
-	      return null;
-	    }
-	    Element child = (Element) list.item(0);
-	    return getText(child);
-	}
-	
-	/**
-	 * Gets the text content of an element
-	 * @param element the element to extract from
-	 * @return the text content of this element
-	 */
-	private static String getText(Element element) {
-		StringBuffer buf = new StringBuffer();
-	    NodeList list = element.getChildNodes();
-	    boolean found = false;
-	    for (int i = 0; i < list.getLength(); i++) {
-	      Node node = list.item(i);
-	      if (node.getNodeType() == Node.TEXT_NODE) {
-	        buf.append(node.getNodeValue());
-	        found = true;
-	      }
-	    }
-	    return found ? buf.toString() : null;
 	}
 	
 	/**
