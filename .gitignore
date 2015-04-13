@@ -1,6 +1,4 @@
 *.class
-*.classpath
-*log.txt
 
 # Package Files #
 *.jar

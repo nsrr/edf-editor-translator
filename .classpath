@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="Assets/org-openide-util.jar"/>
 	<classpathentry kind="lib" path="Assets/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="Assets/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

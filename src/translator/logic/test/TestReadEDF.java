@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.RandomAccessFile;
 import java.io.IOException;
 
-public class TestTranslator {
-  private static String edf = "/Users/wxwcase/git/SHHS/100469.EDF";
+public class TestReadEDF {
+  private static String edf = "/Users/wxwcase/git/HeartBEAT/30516_01102011s2.EDF";
   
   public static void main(String[] args) {
     try {

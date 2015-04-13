@@ -12,6 +12,7 @@ import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -215,12 +216,15 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		// {eventConcept, duration, start}
 		List<Element> list = new ArrayList<Element>();
 		String eventType = getElementByChildTag(scoredEventElement, "Type");
+		String annLocation = getElementByChildTag(scoredEventElement, "Location");
 		Element eventCategory = xmlRoot.createElement("EventType");
 		Element eventConcept = xmlRoot.createElement("EventConcept");		
 		Element duration = xmlRoot.createElement("Duration");
 		Element start = xmlRoot.createElement("Start");
 		Element input = xmlRoot.createElement("SignalLocation");
-		String signalLocation = (String)map[3].get(eventType);
+//		List<String> signalLocation = (List<String>)map[3].get(eventType);
+		String signalLocation = getSignalLocationFromEvent(scoredEventElement, annLocation);
+		
 		Node inputNode = xmlRoot.createTextNode(signalLocation);
 		input.appendChild(inputNode);
 //		Node nameNode = xmlRoot.createTextNode(eventType); // bug fixed: wei wang, 2014-8-26
@@ -246,9 +250,36 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		return list;
 	}
 	
+	/* (non-Javadoc)
+	 * @see translator.logic.AbstractTranslatorFactory#getSignalLocationFromEvent(org.w3c.dom.Element, java.lang.String)
+	 */
 	public String getSignalLocationFromEvent(Element scoredEvent, String annLocation) {
-	  // TODO
-    return "";
+	  // e.g. annLocation = "SpO2.Averaged-Probe" or "Resp.Flow-Cannula.Nasal"
+	  // idea: split annLocation to String[] such as {"SpO2", "Averaged", "Probe"}
+	  //       check defaultEdfSignals with each one of String[]
+	  String result = signalLabels[0]; // initialize to the first EDF signal
+
+    String eventName = getElementByChildTag(scoredEvent, "Type");
+    String[] tokens = annLocation.split("[.-]");
+    @SuppressWarnings("unchecked")
+    List<String> defaultSignals = (List<String>)map[3].get(eventName);
+    List<String> edfSignals = Arrays.asList(signalLabels);
+    
+    for (String token : tokens) {
+      if (edfSignals.contains(token)) {
+        result = token;
+        return result;
+      }
+    }
+    
+    for (String signal : defaultSignals) {
+      if (edfSignals.contains(signal)) {
+        result = signal;
+        return result;
+      }
+    }
+
+    return result;
   }
 	
 	private List<Element> getUserVariables(Element scoredEventElement) {
@@ -587,20 +618,21 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 				HashMap<String,Object> types = new HashMap<String,Object>();
 				// <Event, SignalLocation>
 				HashMap<String,Object> signalLocation = new HashMap<String,Object>();
-				String mainLocation = "";
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
 //					String eventTypeLowerCase = data[0].toLowerCase();
+					List<String> defaultSignals = new ArrayList<>();
 					if (data[0].compareTo("EpochLength") == 0) {
 						epoch.put(data[0], data[2]);
 					} else {
 					  if (data[3].length() != 0) {
-					    mainLocation = data[3].split("#")[0];
-					    System.out.println(mainLocation);
+					    for (String sname : data[3].split("#")) {
+					      defaultSignals.add(sname);
+					    }
 					  }
 						events.put(data[1], data[2]);
 						types.put(data[1], data[0]);
-						signalLocation.put(data[1], mainLocation);
+						signalLocation.put(data[1], defaultSignals);
 					}
 				}	
 				// System.out.println(map[2].values().size());
