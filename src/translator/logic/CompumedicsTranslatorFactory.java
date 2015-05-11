@@ -319,7 +319,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 	}
 
 	@Override
-	public boolean write(String outputFile) {
+	public boolean write2xml(String outputFile) {
 		System.out.println("   >>> Inside CompumedicsAnnotationTranslator write"); // test
 		output = outputFile;
         try {
@@ -445,6 +445,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 			BufferedReader input =  new BufferedReader(new FileReader(mapFile));
 			try {
 				String line = input.readLine();
+				// No use of epoch map, in CDD mapping file, May 2015
 				HashMap<String,Object> epoch = new HashMap<String,Object>();
 				HashMap<String,Object> events = new HashMap<String,Object>();
 				HashMap<String,Object> stages = new HashMap<String,Object>();
@@ -454,33 +455,41 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
 					String eventTypeLowerCase = data[0].toLowerCase();
+					String eventCategoryInPipe = data[0] + "|" + data[0];
+					String eventNameInPipe = data[1] + "|" + data[3].trim();
 					List<String> defaultSignals = new ArrayList<>();
 					// process events
 					if (!eventTypeLowerCase.contains("epochlength")
-							&& !eventTypeLowerCase.contains("staging")) {
-					  if (data[3].length() != 0) {
-					    for (String sname : data[3].split("#")) {
+							&& !eventTypeLowerCase.contains("stages")) {
+
+					  // Process signal column in mapping file
+					  if (data[4].length() != 0) {
+					    for (String sname : data[4].split("#")) {
 					      defaultSignals.add(sname);
 					    }
 					  }
+
 						// values: {EventType, EventConcept, Note}
 						ArrayList<String> values = new ArrayList<String>(3);
 						values.add(data[0]);
-						values.add(data[2]);
-						if (data.length > 4) {
-							values.add(data[4]); // add Notes
+						values.add(eventNameInPipe);
+						if (data.length > 5) {
+							values.add(data[5]); // add Notes
 						}
 						// events {event, event_type && event_concept}
-						events.put(data[1], values);
-						categories.put(data[1], data[0]);
-						signalLocation.put(data[1], defaultSignals);
-					} else if (data[0].compareTo("EpochLength") == 0) {
+						events.put(data[3].trim(), values);
+            categories.put(data[3].trim(), eventCategoryInPipe);
+						signalLocation.put(data[3].trim(), defaultSignals);
+					} 
+					// Dated process for epoch
+					else if (data[0].compareTo("EpochLength") == 0) {
 						// System.out.println(data[0]);
 						epoch.put(data[0], data[2]);
-					} else {
+					}
+					else {
 						// stages {event, event_concept}
-						stages.put(data[1], data[2]);
-						categories.put(data[1], data[0]);
+						stages.put(data[3].trim(), eventNameInPipe);
+						categories.put(data[3].trim(), eventCategoryInPipe);
 					}
 				}	
 				// System.out.println(map[2].values().size());

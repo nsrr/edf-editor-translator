@@ -110,7 +110,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 * @return true if the process succeed
 	 */
 	@Override
-	public boolean write(String outputFile) {
+	public boolean write2xml(String outputFile) {
 		System.out.println("   >>> Inside EmblaTranslatorFactory write"); // test
 		output = outputFile;
         try {
@@ -620,19 +620,21 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 				HashMap<String,Object> signalLocation = new HashMap<String,Object>();
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
+					String eventCategoryInPipe = data[0] + "|" + data[0];
+					String eventNameInPipe = data[1].trim() + "|" + data[3].trim();
 //					String eventTypeLowerCase = data[0].toLowerCase();
 					List<String> defaultSignals = new ArrayList<>();
 					if (data[0].compareTo("EpochLength") == 0) {
 						epoch.put(data[0], data[2]);
 					} else {
-					  if (data[3].length() != 0) {
-					    for (String sname : data[3].split("#")) {
+					  if (data[4].length() != 0) {
+					    for (String sname : data[4].split("#")) {
 					      defaultSignals.add(sname);
 					    }
 					  }
-						events.put(data[1], data[2]);
-						types.put(data[1], data[0]);
-						signalLocation.put(data[1], defaultSignals);
+						events.put(data[3].trim(),eventNameInPipe);
+						types.put(data[3].trim(), eventCategoryInPipe);
+						signalLocation.put(data[3].trim(), defaultSignals);
 					}
 				}	
 				// System.out.println(map[2].values().size());

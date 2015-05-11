@@ -16,6 +16,6 @@ public class TestNewVendorTranslatorFactory {
 		NewVendorTranslatorFactory et = new NewVendorTranslatorFactory();
 		et.read(edf, annotation, mapping);
 		et.translate();
-		et.write(output);
+		et.write2xml(output);
 	}
 }

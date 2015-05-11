@@ -81,7 +81,7 @@ public class AnnotationTranslatorClient {
 						AbstractTranslatorFactory translator = new EmblaTranslatorFactory(); // 1.
 						translator.read(edf_file, annotation_file, mapping_file); // 2.
 						bTranslation = translator.translate(); // 3.
-						translator.write(out_file_name); // 4.
+						translator.write2xml(out_file_name); // 4.
 //						String jsonOut = separatorReplacer(out_file_prefix + File.separator + out_file_postfix + ".json"); 
 //						translator.write2JSON(jsonOut); // can output as json file
 					}
@@ -95,7 +95,7 @@ public class AnnotationTranslatorClient {
 						// next three lines can be moved out of if statement
 						translator.read(edf_file, annotation_file, mapping_file);
 						bTranslation = translator.translate();
-						translator.write(out_file_name);
+						translator.write2xml(out_file_name);
 						// test: output json worked
 //						String jsonOut = separatorReplacer(out_file_prefix + File.separator + out_file_postfix + ".json"); 						
 //						translator.write2JSON(jsonOut);

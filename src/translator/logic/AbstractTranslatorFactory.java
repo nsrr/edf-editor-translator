@@ -62,7 +62,7 @@ public abstract class AbstractTranslatorFactory {
 	 * @param outputFile the output path
 	 * @return true if this process is done successful
 	 */
-	public abstract boolean write(String outputFile);
+	public abstract boolean write2xml(String outputFile);
 	
 	/**
 	 * Writes the result to JSON file

@@ -16,6 +16,6 @@ public class TestCompumedicsTranslatorFactory {
 		CompumedicsTranslatorFactory et = new CompumedicsTranslatorFactory();
 		et.read(edf, annotation, mapping);
 		et.translate();
-		et.write(output);
+		et.write2xml(output);
 	}
 }

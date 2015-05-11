@@ -28,21 +28,21 @@ public class TranslationClinet {
 		AbstractTranslatorFactory ctranslator = getVendor("Compumedics");
 		ctranslator.read(edf, cannotation, cmapping);
 		ctranslator.translate();
-		ctranslator.write(coutput);
+		ctranslator.write2xml(coutput);
 		
 		System.out.println();
 		
 		AbstractTranslatorFactory etranslator = getVendor("Embla");
 		etranslator.read(edf, cannotation, cmapping);
 		etranslator.translate();
-		etranslator.write(coutput);
+		etranslator.write2xml(coutput);
 		
 		System.out.println();
 		
 		AbstractTranslatorFactory ntranslator = getVendor("NewVendor");
 		ntranslator.read(edf, cannotation, cmapping);
 		ntranslator.translate();
-		ntranslator.write(coutput);
+		ntranslator.write2xml(coutput);
 	}
 	
 	public static AbstractTranslatorFactory getVendor(String vendor) {

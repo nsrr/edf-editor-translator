@@ -23,7 +23,7 @@ public class TestEmblaTranslatorFactory {
 		EmblaTranslatorFactory et = new EmblaTranslatorFactory();
 		et.read(edf, annotation, mapping);
 		et.translate();
-		et.write(output);
+		et.write2xml(output);
 	}
 	
 	/**

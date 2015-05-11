@@ -30,7 +30,7 @@ public class NewVendorTranslatorFactory extends AbstractTranslatorFactory {
 	}
 
 	@Override
-	public boolean write(String outputFile) {
+	public boolean write2xml(String outputFile) {
 		System.out.println("   >>> Inside NewVendorTranslatorFactory write");
 		System.out.println("=================================================================");
 		return false;
