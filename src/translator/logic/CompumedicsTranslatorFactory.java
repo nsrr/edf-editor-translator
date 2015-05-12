@@ -456,7 +456,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 					String[] data = line.split(",");
 					String eventTypeLowerCase = data[0].toLowerCase();
 					String eventCategoryInPipe = data[0] + "|" + data[0];
-					String eventNameInPipe = data[1] + "|" + data[3].trim();
+					String eventNameInPipe = data[1].trim() + "|" + data[3].trim();
 					List<String> defaultSignals = new ArrayList<>();
 					// process events
 					if (!eventTypeLowerCase.contains("epochlength")
