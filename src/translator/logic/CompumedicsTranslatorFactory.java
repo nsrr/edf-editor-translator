@@ -182,18 +182,21 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 			// no mapping event name found
 			scoredEvent = xmlRoot.createElement("ScoredEvent");
 			Element eventConcept = xmlRoot.createElement("EventConcept");
+			Element eventCategory = xmlRoot.createElement("EventType");
 			Element startElement = xmlRoot.createElement("Start"); // Starttime to Start. TODO
 			Element durationElement = xmlRoot.createElement("Duration");
 			Element notesElement = xmlRoot.createElement("Notes");
 				
 			eventConcept.appendChild(xmlRoot.createTextNode("Technician Notes"));
 			notesElement.appendChild(xmlRoot.createTextNode(eventType));
+			eventCategory.appendChild(xmlRoot.createTextNode("Technician Notes"));
 			
 			String startTime = getElementByChildTag(scoredEventElement, "Start");
 			startElement.appendChild(xmlRoot.createTextNode(startTime));			
 			String durationTime = getDuration(scoredEventElement);
 			durationElement.appendChild(xmlRoot.createTextNode(durationTime));
 					
+			scoredEvent.appendChild(eventCategory);
 			scoredEvent.appendChild(eventConcept);
 			scoredEvent.appendChild(startElement);
 			scoredEvent.appendChild(durationElement);

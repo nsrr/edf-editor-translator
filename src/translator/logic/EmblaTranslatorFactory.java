@@ -149,12 +149,14 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			// no mapping event name found
 			scoredEvent = xmlRoot.createElement("ScoredEvent");
 			Element eventConcept = xmlRoot.createElement("EventConcept");
-			Element startElement = xmlRoot.createElement("Starttime");
+			Element startElement = xmlRoot.createElement("Start");
 			Element durationElement = xmlRoot.createElement("Duration");
 			Element notesElement = xmlRoot.createElement("Notes");
+			Element eventCategory = xmlRoot.createElement("EventType");
 				
 			eventConcept.appendChild(xmlRoot.createTextNode("Technician Notes"));
 			notesElement.appendChild(xmlRoot.createTextNode(eventType));
+			eventCategory.appendChild(xmlRoot.createTextNode("Technician Notes"));
 			
 			String startTime = getElementByChildTag(scoredEventElement, "StartTime");
 			String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
@@ -162,6 +164,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			startElement.appendChild(xmlRoot.createTextNode(startTime)); // newly added 2-14-8-28
 			durationElement.appendChild(xmlRoot.createTextNode(durationTime));
 					
+			scoredEvent.appendChild(eventCategory);
 			scoredEvent.appendChild(eventConcept);
 			scoredEvent.appendChild(startElement);
 			scoredEvent.appendChild(durationElement);
