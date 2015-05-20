@@ -977,7 +977,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
                 // generate new edf headers
                 MainWindow.getSaveProgressBar().setVisible(true);
             	
-            	renewFileRecords();
+                renewFileRecords();
                 NewTask_for_ValidityCommandLine.this.yieldNewEDFHeaders();
             	// Long running task begin. wei wang, 5/23/2014
 //            	WkEdfFiles = Utility.copyFilestoDirectory(sourceFiles, workingDirectory);
@@ -1027,7 +1027,7 @@ public class NewTask_for_ValidityCommandLine extends JDialog {
          */
         private void renewFileRecords() {
             @SuppressWarnings("unused")
-			File wkDirectory = workingDirectory;
+            File wkDirectory = workingDirectory;
             NewTask_for_ValidityCommandLine.this.setVisible(false); // test
             ArrayList<File> WkEdfFiles = new ArrayList<File>();
                        

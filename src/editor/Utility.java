@@ -53,6 +53,8 @@ import javax.swing.RootPaneContainer;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 
 import table.TableRowHeader;
 
@@ -1411,6 +1413,8 @@ public class Utility {
         // do nothing to a directory
         if (afile.isDirectory()) {
             System.out.println("invalid file. directory not allowed");
+//            JOptionPane.showMessageDialog(null, "Directory not allowed to appear in destination folder", "Warning", JOptionPane.WARNING_MESSAGE);
+//            MainWindow.middleStatusBar.setText("Directory not allowed to appear in destination folder!");
             return null;
         }
         
@@ -1490,6 +1494,7 @@ public class Utility {
     @SuppressWarnings("deprecation")
 	public static ArrayList<File> parseFileGroupNameCollision(ArrayList<File> filelist) {
         int sz = filelist.size();
+        boolean hasNullFile = false;
         
         // if there is no valid list of files
         if (sz == 0)
@@ -1497,10 +1502,10 @@ public class Utility {
         
         // file-wise analysis procedure
         File curfile;
-        int num = 0; // test, wei wang, 5/27/2014
+        int num = 0; // test, 5/27/2014
         for (int k = 1; k < sz; k++) {
         	/**
-        	 * Added by wei wang, to increase progress percentage along with yieldNewEDFHeaders() method. 5/27/2014
+        	 * increase progress percentage along with yieldNewEDFHeaders() method. 5/27/2014
         	 */
         	if((num + 1) % (NewTask_for_ValidityCommandLine.getScale() * 2) == 0) {                	
              	NewTask_for_ValidityCommandLine.getTask().increaseProgress();
@@ -1510,9 +1515,15 @@ public class Utility {
             curfile = filelist.get(k); 
             curfile = parseSingleFileNameCollision(curfile, sublist(filelist, 0, k-1)); 
             // curfile = parseSingleFileNameCollision(curfile, (ArrayList<File>)(filelist.subList(0, k-1)));
+            if (curfile == null) {
+              hasNullFile = true;
+              continue;
+            }
             filelist.set(k, curfile);
         }
-        
+        if (hasNullFile) {
+          JOptionPane.showMessageDialog(null, "Output directory not allowed.\nPlease try again!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
         return filelist;
     }
     
@@ -1524,6 +1535,9 @@ public class Utility {
      * @return an ArrayList of newly constructed sublist
      */
     public static ArrayList<File> sublist(ArrayList<File> files, int start, int end) {
+      if (files.isEmpty()) {
+        return null;
+      }
         ArrayList<File> output = new ArrayList<File>(end + 1 - start);
         for (int i = start; i <= end; i++)
             output.add(files.get(i));        

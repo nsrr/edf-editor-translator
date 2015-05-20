@@ -3320,3 +3320,1063 @@ XML DOM Created Successfully..
  .....................
   => The task finished!
    * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-04-12 21:56:49
+ .....................
+  => Translating.. at 2015-04-12 21:56:50
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/NSRR-Proj/NewMappingFiles/MappingWithDefaultInput/mapping-Embla updated 4-3-15.csv(Existed)
+   * EDF file:	/Users/wxwcase/git/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/git/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/git/HeartBEAT/Translated/30516_01102011s2_Embla_2015-04-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-04-13 14:35:23
+ .....................
+  => Translating.. at 2015-04-13 14:35:23
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/NSRR-Proj/NewMappingFiles/MappingWithDefaultInput/mapping-Embla updated 4-3-15.csv(Existed)
+   * EDF file:	/Users/wxwcase/git/HeartBEAT/40054_06232010s3.EDF(Existed)
+   * Annotation:	/Users/wxwcase/git/HeartBEAT/40054_06232010s3.XML(Existed)
+   * Output file:	/Users/wxwcase/git/HeartBEAT/Translated/40054_06232010s3_Embla_2015-04-13.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 14:17:24
+ .....................
+  => Translating.. at 2015-05-11 14:17:25
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping.csv(Existed)
+   * EDF file:	/Users/wxwcase/git/SHHS/100469.EDF(Existed)
+   * Annotation:	/Users/wxwcase/git/SHHS/100469.XML(Existed)
+   * Output file:	/Users/wxwcase/git/SHHS/Translated/100469_Compumedics_2015-05-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 14:30:54
+ .....................
+  => Translating.. at 2015-05-11 14:30:54
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping.csv(Existed)
+   * EDF file:	/Users/wxwcase/git/SHHS/100469.EDF(Existed)
+   * Annotation:	/Users/wxwcase/git/SHHS/100469.XML(Existed)
+   * Output file:	/Users/wxwcase/git/SHHS/Translated/100469_Compumedics_2015-05-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 14:39:51
+ .....................
+  => Translating.. at 2015-05-11 14:39:51
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/git/SHHS/100469.EDF(Existed)
+   * Annotation:	/Users/wxwcase/git/SHHS/100469.XML(Existed)
+   * Output file:	/Users/wxwcase/git/SHHS/Translated/100469_Compumedics_2015-05-11_14-39-51.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 14:43:30
+    * Please select the output-directory of resulting files;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-05-11 14:43:39
+ .....................
+  => Translating.. at 2015-05-11 14:43:39
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/git/SHHS/100469.EDF(Existed)
+   * Annotation:	/Users/wxwcase/git/SHHS/100469.XML(Existed)
+   * Output file:	/Users/wxwcase/git/SHHS/Translated/100469_Compumedics_2015-05-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 15:00:06
+ .....................
+  => Translating.. at 2015-05-11 15:00:06
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_101090.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_101090.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/Translated/CHAT_101090_Compumedics_2015-05-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 15:42:03
+ .....................
+  => Translating.. at 2015-05-11 15:42:03
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/30516_01102011s2_Embla_2015-05-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 15:43:57
+ .....................
+  => Translating.. at 2015-05-11 15:43:57
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/30516_01102011s2_Embla_2015-05-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 15:44:52
+ .....................
+  => Translating.. at 2015-05-11 15:44:53
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/30516_01102011s2_Embla_2015-05-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 15:58:20
+ .....................
+  => Translating.. at 2015-05-11 15:58:21
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/40054_06232010s3.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/40054_06232010s3.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/40054_06232010s3_Embla_2015-05-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 16:16:09
+ .....................
+  => Translating.. at 2015-05-11 16:16:09
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/30516_01102011s2.xml(Not exist!)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/HeartBEAT/30516_01102011s2_Embla_2015-05-11.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 16:17:15
+ .....................
+  => Translating.. at 2015-05-11 16:17:15
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/30516_01102011s2.xml(Not exist!)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/HeartBEAT/30516_01102011s2_Embla_2015-05-11.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 16:17:41
+ .....................
+  => Translating.. at 2015-05-11 16:17:41
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/30516_01102011s2.xml(Not exist!)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/HeartBEAT/30516_01102011s2_Embla_2015-05-11.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 16:19:28
+ .....................
+  => Translating.. at 2015-05-11 16:19:28
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/Translated/30516_01102011s2_Embla_2015-05-11.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:37:56
+    * Please select the output-directory of resulting files;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:38:10
+ .....................
+  => Translating.. at 2015-05-11 23:38:10
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_101090.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_101090.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CDD-out/CHAT_101090_2015-05-11_23-38-10.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:38:14
+ .....................
+  => Translating.. at 2015-05-11 23:38:14
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_301175.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_301175.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CDD-out/CHAT_301175_2015-05-11_23-38-14.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:38:32
+ .....................
+  => Translating.. at 2015-05-11 23:38:32
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/450100.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/450100.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/CDD-out/450100_2015-05-11_23-38-32.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:38:34
+ .....................
+  => Translating.. at 2015-05-11 23:38:34
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/450418.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/450418.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/CDD-out/450418_2015-05-11_23-38-34.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:38:54
+ .....................
+  => Translating.. at 2015-05-11 23:38:54
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/A04338J_12161999.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/A04338J_12161999.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/CDD-out/A04338J_12161999_2015-05-11_23-38-54.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:38:55
+ .....................
+  => Translating.. at 2015-05-11 23:38:55
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/A06439F_01132000.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/A06439F_01132000.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/CDD-out/A06439F_01132000_2015-05-11_23-38-55.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:39:12
+ .....................
+  => Translating.. at 2015-05-11 23:39:12
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/J149492_20130327.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/J149492_20130327.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/CDD-out/J149492_20130327_2015-05-11_23-39-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:39:14
+ .....................
+  => Translating.. at 2015-05-11 23:39:14
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/J546669_20131029.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/J546669_20131029.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/CDD-out/J546669_20131029_2015-05-11_23-39-14.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:39:35
+ .....................
+  => Translating.. at 2015-05-11 23:39:35
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/3021050_20110524.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/3021050_20110524.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/CDD-out/3021050_20110524_2015-05-11_23-39-35.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:39:37
+ .....................
+  => Translating.. at 2015-05-11 23:39:37
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/6010407_20120917.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/6010407_20120917.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/CDD-out/6010407_20120917_2015-05-11_23-39-37.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:39:54
+ .....................
+  => Translating.. at 2015-05-11 23:39:54
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/PA3680.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/PA3680.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/CDD-out/PA3680_2015-05-11_23-39-54.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:39:56
+ .....................
+  => Translating.. at 2015-05-11 23:39:56
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/PO7386_20110404.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/PO7386_20110404.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/CDD-out/PO7386_20110404_2015-05-11_23-39-56.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:40:19
+ .....................
+  => Translating.. at 2015-05-11 23:40:19
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/5100301H-1-06102011.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/5100301H-1-06102011.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/CDD-out/5100301H-1-06102011_2015-05-11_23-40-19.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:40:21
+ .....................
+  => Translating.. at 2015-05-11 23:40:21
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/7200462G-3-05082012.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/7200462G-3-05082012.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/CDD-out/7200462G-3-05082012_2015-05-11_23-40-21.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:40:36
+ .....................
+  => Translating.. at 2015-05-11 23:40:36
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/100469.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/100469.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/CDD-out/100469_2015-05-11_23-40-36.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:40:38
+ .....................
+  => Translating.. at 2015-05-11 23:40:38
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/203904.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/203904.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/CDD-out/203904_2015-05-11_23-40-38.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:40:59
+ .....................
+  => Translating.. at 2015-05-11 23:40:59
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/21340.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/21340.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/CDD-out/21340_2015-05-11_23-40-59.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:41:00
+ .....................
+  => Translating.. at 2015-05-11 23:41:00
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/31852MCYB.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/31852MCYB.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/CDD-out/31852MCYB_2015-05-11_23-41-00.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:41:17
+ .....................
+  => Translating.. at 2015-05-11 23:41:17
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/TR0507.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/TR0507.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/CDD-out/TR0507_2015-05-11_23-41-17.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:41:18
+ .....................
+  => Translating.. at 2015-05-11 23:41:18
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/TR2029.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/TR2029.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/CDD-out/TR2029_2015-05-11_23-41-18.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:43:14
+ .....................
+  => Translating.. at 2015-05-11 23:43:14
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/CDD-out/30516_01102011s2_2015-05-11_23-43-14.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-11 23:43:16
+ .....................
+  => Translating.. at 2015-05-11 23:43:16
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/40054_06232010s3.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/40054_06232010s3.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/CDD-out/40054_06232010s3_2015-05-11_23-43-16.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:08:06
+ .....................
+  => Translating.. at 2015-05-12 12:08:06
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_101090.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_101090.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CDD-out/CHAT_101090_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:08:08
+ .....................
+  => Translating.. at 2015-05-12 12:08:08
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_301175.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_301175.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CDD-out/CHAT_301175_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:08:44
+ .....................
+  => Translating.. at 2015-05-12 12:08:44
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/450100.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/450100.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/CDD-out/450100_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:08:46
+ .....................
+  => Translating.. at 2015-05-12 12:08:46
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/450418.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/450418.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Cleveland Family/CDD-out/450418_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:08:59
+ .....................
+  => Translating.. at 2015-05-12 12:08:59
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/A04338J_12161999.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/A04338J_12161999.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/CDD-out/A04338J_12161999_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:09:00
+ .....................
+  => Translating.. at 2015-05-12 12:09:00
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/A06439F_01132000.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/A06439F_01132000.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/HAASA (Honolulu)/CDD-out/A06439F_01132000_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:09:13
+ .....................
+  => Translating.. at 2015-05-12 12:09:13
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/J149492_20130327.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/J149492_20130327.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/CDD-out/J149492_20130327_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:09:14
+ .....................
+  => Translating.. at 2015-05-12 12:09:14
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/J546669_20131029.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/J546669_20131029.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/Jackson/CDD-out/J546669_20131029_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:09:25
+ .....................
+  => Translating.. at 2015-05-12 12:09:25
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/3021050_20110524.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/3021050_20110524.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/CDD-out/3021050_20110524_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:09:27
+ .....................
+  => Translating.. at 2015-05-12 12:09:27
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/6010407_20120917.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/6010407_20120917.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MESA/CDD-out/6010407_20120917_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:09:39
+ .....................
+  => Translating.. at 2015-05-12 12:09:39
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/PA3680.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/PA3680.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/CDD-out/PA3680_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:09:40
+ .....................
+  => Translating.. at 2015-05-12 12:09:40
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/PO7386_20110404.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/PO7386_20110404.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/MrOS/CDD-out/PO7386_20110404_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:09:53
+ .....................
+  => Translating.. at 2015-05-12 12:09:53
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/5100301H-1-06102011.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/5100301H-1-06102011.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/CDD-out/5100301H-1-06102011_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:09:54
+ .....................
+  => Translating.. at 2015-05-12 12:09:54
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/7200462G-3-05082012.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/7200462G-3-05082012.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/nuMOM2b/CDD-out/7200462G-3-05082012_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:10:04
+ .....................
+  => Translating.. at 2015-05-12 12:10:04
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/100469.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/100469.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/CDD-out/100469_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:10:05
+ .....................
+  => Translating.. at 2015-05-12 12:10:06
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/203904.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/203904.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/CDD-out/203904_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:10:48
+ .....................
+  => Translating.. at 2015-05-12 12:10:48
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/21340.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/21340.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/CDD-out/21340_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:10:49
+ .....................
+  => Translating.. at 2015-05-12 12:10:49
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/31852MCYB.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/31852MCYB.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SOF/CDD-out/31852MCYB_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:11:01
+ .....................
+  => Translating.. at 2015-05-12 12:11:01
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/TR0507.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/TR0507.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/CDD-out/TR0507_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:11:02
+ .....................
+  => Translating.. at 2015-05-12 12:11:02
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/TR2029.edf(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/TR2029.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/TREC/CDD-out/TR2029_Compumedics_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:11:37
+ .....................
+  => Translating.. at 2015-05-12 12:11:37
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/CDD-out/30516_01102011s2_Embla_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-12 12:11:39
+ .....................
+  => Translating.. at 2015-05-12 12:11:39
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/40054_06232010s3.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/40054_06232010s3.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/CDD-out/40054_06232010s3_Embla_2015-05-12.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-13 10:42:40
+ .....................
+  => Translating.. at 2015-05-13 10:42:41
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/CDD-out/30516_01102011s2_Embla_2015-05-13.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-13 10:55:02
+ .....................
+  => Translating.. at 2015-05-13 10:55:02
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-embla-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/40054_06232010s3.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/40054_06232010s3.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/CDD-out/40054_06232010s3_Embla_2015-05-13.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-13 10:55:36
+ .....................
+  => Translating.. at 2015-05-13 10:55:36
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_101090.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_101090.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CDD-out/CHAT_101090_Compumedics_2015-05-13.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-13 10:55:39
+ .....................
+  => Translating.. at 2015-05-13 10:55:39
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_301175.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CHAT_301175.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/CHAT/CDD-out/CHAT_301175_Compumedics_2015-05-13.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-13 10:55:55
+ .....................
+  => Translating.. at 2015-05-13 10:55:55
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/100469.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/100469.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/CDD-out/100469_Compumedics_2015-05-13.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-13 10:55:56
+ .....................
+  => Translating.. at 2015-05-13 10:55:56
+   * Vendor:	Compumedics
+   * Mapping:	/Users/wxwcase/Desktop/CDD/nsrr-psg-events-compumedics-mapping_051115.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/203904.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/203904.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Compumedics/SHHS/CDD-out/203904_Compumedics_2015-05-13.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-05-13 11:06:30
+ .....................
+  => Translating.. at 2015-05-13 11:06:31
+   * Vendor:	Embla
+   * Mapping:	/Users/wxwcase/Desktop/CDD/embla-mapping-cdd.csv(Existed)
+   * EDF file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.EDF(Existed)
+   * Annotation:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/30516_01102011s2.XML(Existed)
+   * Output file:	/Users/wxwcase/Desktop/NSRR-Proj/ATestFiles/SRC mapping files and untranslated EDFs/Embla/HeartBEAT/CDD-out/30516_01102011s2_Embla_2015-05-13.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
