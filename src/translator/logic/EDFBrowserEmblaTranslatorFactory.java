@@ -37,7 +37,7 @@ import org.w3c.dom.NodeList;
  * Uses for testing BasicTranslation
  * @author wei wang, 2014-8-21
  */
-public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
+public class EDFBrowserEmblaTranslatorFactory extends AbstractTranslatorFactory {
 //public class EmblaAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
 
 	private Document xmlRoot; // = new DocumentImpl(); // xml root
@@ -46,7 +46,7 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	/**
 	 * Default constructor
 	 */
-	public EmblaTranslatorFactory() {
+	public EDFBrowserEmblaTranslatorFactory() {
 		super();
 		System.out.println("=================================================================");
 		System.out.println("Embla Factory:"); // test
@@ -56,7 +56,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	
 	@Override
 	public boolean read(String edfFile, String annotationFile, String mappingFile) {
-		System.out.println("   >>> Inside EmblaTranslatorFactory read"); // test
 		boolean result = false;		
 		this.edfFile = edfFile;
 		this.xmlAnnotation = annotationFile;
@@ -76,10 +75,8 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 */
 	@Override
 	public boolean translate() {
-		System.out.println("   >>> Inside EmblaTranslatorFactory translate"); // test
-					
 		boolean result = false;
-		Element root = createEmptyDocument(softwareVersion);
+		Element root = xmlRoot.createElement("annotationlist");
 		
 		NodeList nodeList = document.getElementsByTagName("Event");
 		System.out.println("   [Event size: " + nodeList.getLength() + "]"); // test
@@ -91,13 +88,10 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			if(parsedElement == null) {
 				log("Can't parse event: " + index + " " + getElementByChildTag(elem, "Type"));
 			}
-			scoredEvents.appendChild(parsedElement);
+			root.appendChild(parsedElement);
 		}
 		
-//		for(Element elem: parseStaging())
-//			scoredEvents.appendChild(elem);
-		
-		root.appendChild(scoredEvents);
+//		root.appendChild(scoredEvents);
 		xmlRoot.appendChild(root);
 		result = true;
 		System.out.println("   [Translation done]");  // test: should be moved out of this method
@@ -138,7 +132,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 * @return the parsed element
 	 */
 	private Element parseEmblaXmlEvent(Element scoredEventElement) {
-		
 		// only DESAT type has more values to be processed, others are the same
 		Element scoredEvent = null;
 		String eventType = getElementByChildTag(scoredEventElement, "Type");
@@ -147,16 +140,14 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			scoredEvent = parseEventElement(scoredEventElement);
 		} else {						
 			// no mapping event name found
-			scoredEvent = xmlRoot.createElement("ScoredEvent");
-			Element eventConcept = xmlRoot.createElement("EventConcept");
-			Element startElement = xmlRoot.createElement("Start");
-			Element durationElement = xmlRoot.createElement("Duration");
+			scoredEvent = xmlRoot.createElement("annotation");
+			Element eventConcept = xmlRoot.createElement("description");
+			Element startElement = xmlRoot.createElement("onset");
+			Element durationElement = xmlRoot.createElement("duration");
 			Element notesElement = xmlRoot.createElement("Notes");
-			Element eventCategory = xmlRoot.createElement("EventType");
 				
 			eventConcept.appendChild(xmlRoot.createTextNode("Technician Notes"));
 			notesElement.appendChild(xmlRoot.createTextNode(eventType));
-			eventCategory.appendChild(xmlRoot.createTextNode("Technician Notes"));
 			
 			String startTime = getElementByChildTag(scoredEventElement, "StartTime");
 			String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
@@ -164,13 +155,10 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 			startElement.appendChild(xmlRoot.createTextNode(startTime)); // newly added 2-14-8-28
 			durationElement.appendChild(xmlRoot.createTextNode(durationTime));
 					
-			scoredEvent.appendChild(eventCategory);
-			scoredEvent.appendChild(eventConcept);
 			scoredEvent.appendChild(startElement);
 			scoredEvent.appendChild(durationElement);
+			scoredEvent.appendChild(eventConcept);
 			scoredEvent.appendChild(notesElement);
-			String info = xmlAnnotation + "," + eventType + "," + startTime;
-//			log(info); // needed TODO 
 		}		
 
 		return scoredEvent;
@@ -179,36 +167,6 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	////////////////////////////////////////////////////
 	////// Private utility methods start          //////
 	////////////////////////////////////////////////////
-	
-	private Element createEmptyDocument(String softwareVersion) {
-		Element root = xmlRoot.createElement("PSGAnnotation");
-		Element software = xmlRoot.createElement("SoftwareVersion");
-		Element emptyType = xmlRoot.createElement("EventType");
-		software.appendChild(xmlRoot.createTextNode(softwareVersion));
-		Element epoch = xmlRoot.createElement("EpochLength");
-		// bug fixes for empty xml output file caused by EpochLength empty
-		// wei wang, 2014-8-22
-		String epochLength = (String) map[0].get("EpochLength");
-		if(epochLength != null) {
-			epoch.appendChild(xmlRoot.createTextNode((String) map[0].get("EpochLength")) );	
-		} else {
-			epoch.appendChild(xmlRoot.createTextNode(""));
-		}
-		root.appendChild(software);
-		root.appendChild(epoch);
-		
-		scoredEvents = xmlRoot.createElement("ScoredEvents");
-		String[] elmts = new String[3];//
-		elmts[0] = "Recording Start Time";//
-		elmts[1] = "0";//
-		elmts[2] = timeStart[1];//
-		Element timeElement = addElements(xmlRoot, elmts);
-		Element clock = xmlRoot.createElement("ClockTime");
-		clock.appendChild(xmlRoot.createTextNode(timeStart[0]));
-		timeElement.appendChild(clock);
-		scoredEvents.appendChild(timeElement);		
-		return root;
-	}
 	
 	/**
 	 * Get Event with tag of eventConcept, start and duration
@@ -220,35 +178,35 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 		List<Element> list = new ArrayList<Element>();
 		String eventType = getElementByChildTag(scoredEventElement, "Type");
 		String annLocation = getElementByChildTag(scoredEventElement, "Location");
-		Element eventCategory = xmlRoot.createElement("EventType");
-		Element eventConcept = xmlRoot.createElement("EventConcept");		
-		Element duration = xmlRoot.createElement("Duration");
-		Element start = xmlRoot.createElement("Start");
-		Element input = xmlRoot.createElement("SignalLocation");
+//		Element eventCategory = xmlRoot.createElement("EventType");
+		Element eventConcept = xmlRoot.createElement("description");		
+		Element duration = xmlRoot.createElement("duration");
+		Element start = xmlRoot.createElement("onset");
+//		Element input = xmlRoot.createElement("SignalLocation");
 //		List<String> signalLocation = (List<String>)map[3].get(eventType);
-		String signalLocation = getSignalLocationFromEvent(scoredEventElement, annLocation);
+//		String signalLocation = getSignalLocationFromEvent(scoredEventElement, annLocation);
 		
-		Node inputNode = xmlRoot.createTextNode(signalLocation);
-		input.appendChild(inputNode);
+//		Node inputNode = xmlRoot.createTextNode(signalLocation);
+//		input.appendChild(inputNode);
 //		Node nameNode = xmlRoot.createTextNode(eventType); // bug fixed: wei wang, 2014-8-26
 		//		Node nameNode = xmlRoot.createTextNode((String) ((ArrayList<String>) map[1].get(eventType)).get(1));
 		Node nameNode = xmlRoot.createTextNode((String) (map[1].get(eventType)));
-		String category = map[2].get(eventType) == null ? "" : (String) map[2].get(eventType);
-		Node categoryNode = xmlRoot.createTextNode(category);
-		eventCategory.appendChild(categoryNode);
+//		String category = map[2].get(eventType) == null ? "" : (String) map[2].get(eventType);
+//		Node categoryNode = xmlRoot.createTextNode(category);
+//		eventCategory.appendChild(categoryNode);
 		eventConcept.appendChild(nameNode);
 		String startTime = getElementByChildTag(scoredEventElement, "StartTime");
 		String relativeStart = getEventStartTime(timeStart[0], startTime);
 		String stopTime = getElementByChildTag(scoredEventElement, "StopTime");
 		String durationTime = getDurationInSeconds(startTime, stopTime);
-		start.appendChild(xmlRoot.createTextNode(relativeStart));
+		start.appendChild(xmlRoot.createTextNode(startTime));
 		duration.appendChild(xmlRoot.createTextNode(durationTime));
 		
-		list.add(eventCategory);
-		list.add(eventConcept);		
+//		list.add(eventCategory);
 		list.add(start);
 		list.add(duration);
-		list.add(input);
+		list.add(eventConcept);		
+//		list.add(input);
 		
 		return list;
 	}
@@ -303,18 +261,18 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	
 	private Element parseEventElement(Element scoredEventElement) {
 		List<Element> locationList = getLocation(scoredEventElement);
-		List<Element> userVariableList = getUserVariables(scoredEventElement);
+//		List<Element> userVariableList = getUserVariables(scoredEventElement);
 		Element scoredEvent = null;
 		if(xmlRoot != null) {
-			scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
+			scoredEvent = xmlRoot.createElementNS(null, "annotation");
 		} else {
 			log("ERROR: root document is null");
 			return null;
 		}
 		for(Element element : locationList)
 			scoredEvent.appendChild(element);
-		for(Element element : userVariableList)
-			scoredEvent.appendChild(element);
+//		for(Element element : userVariableList)
+//			scoredEvent.appendChild(element);
 		return scoredEvent;
 	}
 	
@@ -495,18 +453,17 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 	 * @return the ScoredEvent element
 	 */
 	private Element addElements(Document doc, String[] elements) {
-		Element eventElement = doc.createElement("ScoredEvent");
-		Element typeElement = doc.createElement("EventType");
-		typeElement.appendChild(doc.createTextNode(""));
-		Element nameElement = doc.createElement("EventConcept");
-		nameElement.appendChild(doc.createTextNode(elements[0]));
-		eventElement.appendChild(typeElement);
-		eventElement.appendChild(nameElement);
-		Element startElement = doc.createElement("Start");
+		Element eventElement = doc.createElement("annotation");
+	
+		Element startElement = doc.createElement("onset");
 		startElement.appendChild(doc.createTextNode(elements[1]));
 		eventElement.appendChild(startElement);
-		Element durationElement = doc.createElement("Duration");
+		Element durationElement = doc.createElement("duration");
 		durationElement.appendChild(doc.createTextNode(elements[2]));
+		
+		Element nameElement = doc.createElement("description");
+    nameElement.appendChild(doc.createTextNode(elements[0]));
+    eventElement.appendChild(nameElement);
 		eventElement.appendChild(durationElement);
 		return eventElement;
 	}

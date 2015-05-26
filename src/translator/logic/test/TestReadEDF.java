@@ -17,7 +17,9 @@ public class TestReadEDF {
         RandomAccessFile raf = new RandomAccessFile(edfFile, "r");
         try {
           System.out.println("Signal Numbers: " + getSignalNumber(raf));
-          System.out.println("Patient Info: " + getStartDate(raf));
+          System.out.println("Patient Info(Start Date): " + getStartDate(raf));
+          System.out.println("Patient Info(Start Time): " + getStartTime(raf));
+
           System.out.println("-----------------------------");
           for (String label : getSignalLabels(raf, Integer.valueOf(getSignalNumber(raf)))) {
             System.out.println("<" + label + ">");
@@ -45,6 +47,13 @@ public class TestReadEDF {
     raf.seek(168);
     raf.readFully(startdate);
     return new String(startdate).trim();
+  }
+  
+  public static String getStartTime(RandomAccessFile raf) throws IOException {
+    byte[] starttime = new byte[8];
+    raf.seek(176);
+    raf.readFully(starttime);
+    return new String(starttime).trim();
   }
   
   public static String[] getSignalLabels(RandomAccessFile raf, int numOfSignals) throws IOException {

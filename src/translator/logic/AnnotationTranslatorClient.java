@@ -78,7 +78,9 @@ public class AnnotationTranslatorClient {
 //					annotation_file = validate_file(annotation_dir, basename, ".txt"); // original version
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-						AbstractTranslatorFactory translator = new EmblaTranslatorFactory(); // 1.
+//						AbstractTranslatorFactory translator = new EmblaTranslatorFactory(); // 1.
+						AbstractTranslatorFactory translator = new EDFBrowserEmblaTranslatorFactory(); // 1.
+
 						translator.read(edf_file, annotation_file, mapping_file); // 2.
 						bTranslation = translator.translate(); // 3.
 						translator.write2xml(out_file_name); // 4.
