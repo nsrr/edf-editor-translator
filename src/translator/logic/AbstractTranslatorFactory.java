@@ -17,6 +17,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.io.ByteOrderMark;
 import org.apache.commons.io.input.BOMInputStream;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -38,7 +41,9 @@ public abstract class AbstractTranslatorFactory {
 	protected HashMap<String,Object>[] map; // configuration structure from mapping file
 
 	// Local variables, initialized in method initLocalVariables();
-	protected String[] timeStart;
+	protected String[] timeStart; // (00.00.00 00.00.00) (date time)
+	protected DateTime edfDateTime;
+	protected DateTime eventDateTime;
 	protected int numberOfSignals;
 	protected String[] signalLabels;
 	
@@ -212,6 +217,19 @@ public abstract class AbstractTranslatorFactory {
     // edf.read(time);
     timeStart[0] = String.valueOf(date) + " " + String.valueOf(time);
     timeStart[1] = String.valueOf(duration);
+    
+    String dateStr = new String(date);
+    DateTimeFormatter fmt;
+    int month = Integer.valueOf(dateStr.substring(3, 5));
+    int day = Integer.valueOf(dateStr.substring(0, 2));
+    int year = Integer.valueOf(dateStr.substring(6, 8));
+    if (month >= 1 && month <= 12 && day >= 1 && day <= 31 && year > 0) {
+      fmt = DateTimeFormat.forPattern("dd.MM.yy HH.mm.ss");
+      edfDateTime = fmt.parseDateTime(new String(date) + " " + new String(time));
+    } else {
+      fmt = DateTimeFormat.forPattern("HH.mm.ss"); // TODO: default year 1970
+      edfDateTime = fmt.parseDateTime(new String(time));
+    }
   }
   
   /**

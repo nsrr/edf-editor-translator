@@ -6,6 +6,7 @@ package translator.utils;
 public enum Vendor {
 	// TODO: need add Embla new xml
 	Embla,
+	Embla_EDFBrowser, // NEW
 	Compumedics,
 	Respironics,
 	Sandman;

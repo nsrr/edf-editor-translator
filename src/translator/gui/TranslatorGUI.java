@@ -83,6 +83,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		String[] vendorList = new String[] { 
 				"----- Select a vender from the dropdown menu -----                                                                                       ", 
 				Vendor.Embla.toString(), Vendor.Compumedics.toString(),
+//				Vendor.Embla_EDFBrowser.toString(), // Add this line for translating annotation to EDFBrowser version; TODO
 				Vendor.Respironics.toString(), Vendor.Sandman.toString()
 		};
 		JComboBox<String> JComboBox_vendor = new JComboBox<String>(vendorList);  

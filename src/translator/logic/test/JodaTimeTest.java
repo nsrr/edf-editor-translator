@@ -16,13 +16,19 @@ public class JodaTimeTest {
     DateTime plusPeriod = dt.plus(Period.seconds(60));
     System.out.println("After:" + plusPeriod);
 
-    DateTimeFormatter fmt = DateTimeFormat.forPattern("YYYY-MM-dd'T'HH:mm:ss.SSSS");
+    DateTimeFormatter fmt = DateTimeFormat.forPattern("YYYY-MM-dd'T'HH:mm:ss");
     String str = fmt.print(dt);
     System.out.println(str);
     
-//    DateTimeFormatter fmt2 = ISODateTimeFormat.dateHourMinuteSecondFraction();
-//    String str2 = fmt2.print(dt);
-//    System.out.println(str2);
+    String date = "20.04.15";
+    DateTimeFormatter fmt3 = DateTimeFormat.forPattern("dd.MM.yy");
+    DateTime dateTime = fmt3.parseDateTime(date);
+    System.out.println("Date Time: " + dateTime);
+    
+    String time = "11:23:59";
+    DateTimeFormatter fmt4 = DateTimeFormat.forPattern("dd.MM.yy HH:mm:ss");
+    DateTime dateTime2 = fmt4.parseDateTime(date + " " + time);
+    System.out.println(dateTime2);
   }
 
 }
