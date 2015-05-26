@@ -8,6 +8,7 @@ public enum Vendor {
 	Embla,
 	Embla_EDFBrowser, // NEW
 	Compumedics,
+	Compumedics_EDFBrowser, // NEW
 	Respironics,
 	Sandman;
 }

@@ -103,8 +103,7 @@ public class AnnotationTranslatorClient {
 						// original
 //						bTranslation = converter.convertXML(annotation_file, edf_file, mapping_file, out_file_name); 
 						// next four lines created by wei wang, 2014-8-21
-//						AbstractTranslatorFactory translator = new CompumedicsTranslatorFactory();
-						AbstractTranslatorFactory translator = new EDFBrowserCompumedicsTranslatorFactory();
+						AbstractTranslatorFactory translator = new CompumedicsTranslatorFactory();
 						// next three lines can be moved out of if statement
 						translator.read(edf_file, annotation_file, mapping_file);
 						bTranslation = translator.translate();
@@ -113,7 +112,17 @@ public class AnnotationTranslatorClient {
 //						String jsonOut = separatorReplacer(out_file_prefix + File.separator + out_file_postfix + ".json"); 						
 //						translator.write2JSON(jsonOut);
 					}
-				} else if (vendor.equals(Vendor.Respironics.toString())) {
+				} 
+				else if (vendor.equals(Vendor.Compumedics_EDFBrowser.toString())) {
+				  annotation_file = validate_file(annotation_dir, basename, ".xml");
+          if ((new File(annotation_file)).exists()) {
+            AbstractTranslatorFactory translator = new EDFBrowserCompumedicsTranslatorFactory();
+            translator.read(edf_file, annotation_file, mapping_file);
+            bTranslation = translator.translate();
+            translator.write2xml(out_file_name);
+          } 
+				}
+				else if (vendor.equals(Vendor.Respironics.toString())) {
 					annotation_file = validate_file(annotation_dir, basename, ".events.csv");
 					stage_file = validate_file(stage_dir, basename, ".events.csv");
 					if ((new File(annotation_file)).exists() && (new File(stage_file)).exists()) {
