@@ -2,18 +2,19 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/commons-cli-1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/javahelp-2.0.05.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/jgoodies-animation-1.4.3.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/jgoodies-binding-2.10.0.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/jgoodies-common-1.8.0.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/jgoodies-forms-1.8.0.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/jgoodies-looks-2.6.0.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/jgoodies-validation-2.5.0.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/miglayout-4.0.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/org-openide-util.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="/Users/wei/Box Sync/MyProject/EDF_Signal/Resource/assets/ReferenceLibraries/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="lib" path="Assets/commons-cli-1.2.jar"/>
+	<classpathentry kind="lib" path="Assets/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="Assets/javahelp-2.0.05.jar"/>
+	<classpathentry kind="lib" path="Assets/jgoodies-animation-1.4.3.jar"/>
+	<classpathentry kind="lib" path="Assets/jgoodies-binding-2.10.0.jar"/>
+	<classpathentry kind="lib" path="Assets/jgoodies-common-1.8.0.jar"/>
+	<classpathentry kind="lib" path="Assets/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="Assets/jgoodies-looks-2.6.0.jar"/>
+	<classpathentry kind="lib" path="Assets/jgoodies-validation-2.5.0.jar"/>
+	<classpathentry kind="lib" path="Assets/miglayout-4.0.jar"/>
+	<classpathentry kind="lib" path="Assets/org-openide-util.jar"/>
+	<classpathentry kind="lib" path="Assets/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="Assets/xml-apis-1.4.01.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

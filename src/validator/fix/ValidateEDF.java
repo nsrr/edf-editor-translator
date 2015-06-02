@@ -9,57 +9,9 @@ import table.ESATemplateTable;
 import table.Incompliance;
 
 public class ValidateEDF {
-
-//	public static void main(String[] args){
-//		
-//		File folder = new File("D:/Workspace2/EDF_Editor/data/input_files/");
-//		
-//		File[] files = folder.listFiles();
-//		String[] fileList = new String[files.length];
-//		for (int i = 0; i < files.length; i++){
-//			fileList[i] = files[i].getAbsolutePath();
-//		}
-//		
-//		
-//		ArrayList<Incompliance> incompliances1 = new ArrayList<Incompliance>();
-//		for (File f : files){
-//			String filename = f.getAbsolutePath();
-//			if (filename.endsWith(".edf")){
-//				
-//				System.out.println(filename);
-//				
-//				ArrayList<Incompliance> incompliances2 = new ArrayList<Incompliance>();
-//				try {
-//					RandomAccessFile raf = new RandomAccessFile(filename, "rw");
-//					File edfFile = new File(filename);
-//					
-//					EDFFileHeader srcFile = new EDFFileHeader(raf, edfFile, false);
-//					EIATable eiaTable = new EIATable(srcFile);
-//					ESATable esaTable = new ESATable(srcFile, true);
-//					
-//					ArrayList<Incompliance> eiaIncompliances = parseEIATable(eiaTable, fileList);
-//					ArrayList<Incompliance> esaIncompliances = parseESATable(esaTable, filename);
-//					
-//					incompliances2.addAll(eiaIncompliances);
-//					incompliances2.addAll(esaIncompliances);
-//				} catch (FileNotFoundException e) {
-//					e.printStackTrace();
-//				}
-//				
-//				incompliances1.addAll(incompliances2);
-//			}
-//		}
-//		
-//		
-//		System.out.println(incompliances1.size());
-//		for (int i = 0; i < incompliances1.size(); i++){
-//			Incompliance incompliance = incompliances1.get(i);
-//			System.out.println((i + 1) + " - " +incompliance.getDescription());
-//		}
-//	}
 	
 	/**
-	 * Parse ESA table and report them as array of Incompliances
+	 * Parses ESA table and records Incompliances
 	 * @param esaTable the ESA table to be processed
 	 * @param edfFile the EDF file name
 	 * @return an array of Incompliances
@@ -200,8 +152,7 @@ public class ValidateEDF {
 						esaIncompliances.add(incomp);
 					}
 				}
-			}
-			
+			}			
 			
 			/************************************************************
 			 * ns * 80 ascii : ns * transducer type (e.g. AgAgCl electrode) 
@@ -560,7 +511,7 @@ public class ValidateEDF {
 			 ************************************************************/
         	col = COL_INDEX_VERSION + 1;
 			String version = (String)eiaTable.getModel().getValueAt(i, col);
-			if (version==null || version.equals("")){
+			if (version == null || version.equals("")) {
 				//[Version](A.3) cannot be empty field
 				description = Incompliance.error_eia_empty;
 				incomp = new Incompliance(incomplianceType, description,
@@ -598,7 +549,7 @@ public class ValidateEDF {
 			 ************************************************************/
 			col = COL_INDEX_LOCAL_PATIENT_ID + 1;
 			String partient_id = (String)eiaTable.getModel().getValueAt(i, col);
-			if (partient_id==null || partient_id.equals("")){
+			if (partient_id == null || partient_id.equals("")){
 				//[Partient_id](B.2) can be empty field
 			} else {
 				//[Partient_id](B.1) check for ascii
@@ -616,7 +567,7 @@ public class ValidateEDF {
 			 ************************************************************/
 			col = COL_INDEX_LOCAL_RECORDING_ID + 1;
 			String recording_id = (String)eiaTable.getModel().getValueAt(i, col);
-			if (recording_id==null || recording_id.equals("")){
+			if (recording_id == null || recording_id.equals("")) {
 				//[Recording_id](C.2) can be empty field
 			} else {
 				//[Recording_id](C.1) check for ascii
@@ -634,7 +585,7 @@ public class ValidateEDF {
 			 ************************************************************/
 			col = COL_INDEX_START_DATE + 1;
 			String startdate = (String)eiaTable.getModel().getValueAt(i, col);
-			if (startdate==null || startdate.equals("")) {
+			if (startdate == null || startdate.equals("")) {
 				//[Startdate](D.2) cannot be empty field
 				description = Incompliance.error_eia_empty;
 				incomp = new Incompliance(incomplianceType, description,
@@ -662,7 +613,7 @@ public class ValidateEDF {
 							int dd = Integer.parseInt(items[0]);
 							int mm = Integer.parseInt(items[1]);
 							int yy = Integer.parseInt(items[2]);
-							if (dd >=0 && dd <=31 && mm >= 0 && mm <= 12 && yy >= 00 && yy <= 99){
+							if (dd >=0 && dd <=31 && mm >= 0 && mm <= 12 && yy >= 00 && yy <= 99) {
 								//valid date format
 							} else {
 								description = Incompliance.error_eia_daterange;
@@ -713,7 +664,7 @@ public class ValidateEDF {
 							int hh = Integer.parseInt(items[0]);
 							int mm = Integer.parseInt(items[1]);
 							int ss = Integer.parseInt(items[2]);
-							if (hh >=0 && hh <=23 && mm >= 0 && mm <= 59 && ss >= 00 && ss <= 59){
+							if (hh >=0 && hh <= 23 && mm >= 0 && mm <= 59 && ss >= 00 && ss <= 59) {
 								//valid time format
 							} else {
 								description = Incompliance.error_eia_timerange;
@@ -736,7 +687,7 @@ public class ValidateEDF {
 			 ************************************************************/
 			col = COL_INDEX_NUMBER_OF_BYTES_IN_HEADER_RECORD + 1;
 			String nBytes = (String)eiaTable.getModel().getValueAt(i, col);
-			if (nBytes==null || nBytes.equals("")) {
+			if (nBytes == null || nBytes.equals("")) {
 				//[Number_of_bytes](F.2) should not be empty
 				description = Incompliance.error_eia_empty;
 				incomp = new Incompliance(incomplianceType, description,
@@ -774,7 +725,7 @@ public class ValidateEDF {
 			 ************************************************************/
 			col = COL_INDEX_RESERVED + 1;
 			String reserved = (String)eiaTable.getModel().getValueAt(i, col);
-			if (reserved==null || reserved.equals("")){
+			if (reserved == null || reserved.equals("")){
 				//[Reserved](G.2) can be empty field
 			} else {
 				//[Reserved](G.1) check for ascii
@@ -792,7 +743,7 @@ public class ValidateEDF {
 			 ************************************************************/
 			col = COL_INDEX_NUMBER_OF_DATA_RECORDS + 1;
 			String nDataRecords = (String)eiaTable.getModel().getValueAt(i, col);
-			if (nDataRecords==null || nDataRecords.equals("")){
+			if (nDataRecords == null || nDataRecords.equals("")){
 				//[Num_of_DataRecords](H.2) should not be empty
 				description = Incompliance.error_eia_empty;
 				incomp = new Incompliance(incomplianceType, description,
@@ -832,7 +783,7 @@ public class ValidateEDF {
 			 ************************************************************/
 			col = COL_INDEX_DURATION_OF_A_DATA_RECORD + 1;
 			String duration = (String)eiaTable.getModel().getValueAt(i, col);
-			if (duration==null || duration.equals("")) {
+			if (duration == null || duration.equals("")) {
 				//[Duration_of_a_data_record](I.2) should not be empty field
 				description = Incompliance.error_eia_empty;
 				incomp = new Incompliance(incomplianceType, description,
@@ -870,7 +821,7 @@ public class ValidateEDF {
 			 ************************************************************/
 			col = COL_INDEX_NUMBER_OF_SIGNALS_IN_DATA_RECORD + 1;
 			String nSignals = (String)eiaTable.getModel().getValueAt(i, col);
-			if (nSignals==null || nSignals.equals("")){
+			if (nSignals == null || nSignals.equals("")){
 				//[Number_of_signals](J.2) cannot be empty
 				description = Incompliance.error_eia_empty;
 				incomp = new Incompliance(incomplianceType, description,
@@ -956,7 +907,7 @@ public class ValidateEDF {
 		 ************************************************************/
 		col = 1;
 		String recording_id = ((String)eiaTemplate.getModel().getValueAt(row, COL_INDEX_LOCAL_RECORDING_ID));
-		if (recording_id==null || recording_id.equals("")) {
+		if (recording_id == null || recording_id.equals("")) {
 			//[Recording_id](C.2) can be empty field
 		} else{
 			//[Recording_id](C.1) check for ascii
@@ -974,7 +925,7 @@ public class ValidateEDF {
 		 ************************************************************/
 		col = 2;
 		String startdate = ((String)eiaTemplate.getModel().getValueAt(row, COL_INDEX_START_DATE)).trim();
-		if (startdate==null || startdate.equals("")) {
+		if (startdate == null || startdate.equals("")) {
 			//[Startdate](D.2) cannot be empty field
 			description = Incompliance.error_eia_empty;
 			incomp = new Incompliance(incomplianceType, description,
@@ -1028,10 +979,9 @@ public class ValidateEDF {
     }
 	
     private static boolean checkAsciiF(String text) {
-    	if (text==null){
+    	if (text == null) {
     		return false;
-    	}
-    	else{
+    	} else {
     		return text.matches("\\A\\p{ASCII}*\\z");
     	}
     }

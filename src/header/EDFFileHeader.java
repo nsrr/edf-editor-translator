@@ -38,7 +38,8 @@ public class EDFFileHeader {
             eiaHeader = new EIAHeader(raf, edfFile);
             
             if (edfFile.getAbsolutePath().indexOf(".eia") == -1) {
-                int numberOfChannels = Integer.parseInt(eiaHeader.getAttributeValueAt(EIA.NUMBER_OF_SIGNALS)); //2.
+                int numberOfChannels = 
+                		Integer.parseInt(eiaHeader.getAttributeValueAt(EIA.NUMBER_OF_SIGNALS)); //2.
                 esaHeader = new ESAHeader(raf, edfFile, numberOfChannels, istemplate); //3.
             }
             raf.close(); //4.
@@ -48,7 +49,8 @@ public class EDFFileHeader {
     }
 
     /**
-     * Saves both EIA and ESA header to disk. Assuming EIA, ESA header are not template and EIA header not existed before 
+     * Saves both EIA and ESA header to disk. Assuming EIA, ESA header are not 
+     * template and EIA header not existed before 
      * Used to save the EDFHeader, not including the signal data body.
      * @param raf the Random AccessFile for saving data in tables 
      * @param file the file to store the header. the file must conform to raf 

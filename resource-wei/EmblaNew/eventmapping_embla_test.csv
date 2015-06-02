@@ -1,0 +1,41 @@
+EventType,Event,EventConcept,Note
+Arousal,A,SDO:SleepArousalFinding,
+Arousal,APNEA,SDO:SleepArousalFinding,Associated with Apnea Event
+Arousal,DESAT,SDO:SleepArousalFinding,Associated with Desaturation Event
+Arousal,HYPNEA,SDO:SleepArousalFinding,Associated with Hypopnea Event
+Arousal,A:LM,SDO:SleepArousalFinding,Associated with Limb Movement Event
+Arousal,A:PLM,SDO:SleepArousalFinding,Associated with PLM Sequence Event
+Arousal,A:RPLM,SDO:SleepArousalFinding,Associated with Respiratory Related Limb Movement Event
+Arousal,A:SNORE,SDO:SleepArousalFinding,Associated with Snore Event
+Body Position,Up,SDO:BodyPosition-Sitting,
+Body Position,Back,SDO:BodyPosition-Supine,
+Body Position,Right,SDO:BodyPosition-RightLateral,
+Body Position,Left,SDO:BodyPosition-LeftLateral,
+Body Position,Abdomen,SDO:BodyPosition-Prone,
+EpochLength,,30,
+Respiratory,A,SDO:SleepApneaFinding,
+Respiratory,APNEA-OBSTRUCTIVE,SDO:ObstructiveApneaFinding
+Respiratory,APNEA-MIXED,SDO:MixedApneaFinding
+Respiratory,APNEA-CENTRAL,SDO:CentralApneaFinding
+Respiratory,HYPOPNEA,SDO:HypopneaFinding
+Respiratory,HYPOPNEA,SDO:HypopneaFinding
+Respiratory,HYPOPNEA,SDO:HypopneaFinding
+Respiratory,HYPOPNEA,SDO:HypopneaFinding
+Sleep Staging,0,SDO:WakeState
+Sleep Staging,1,SDO:NonRapidEyeMovementSleep-N1
+Sleep Staging,2,SDO:NonRapidEyeMovementSleep-N2
+Sleep Staging,3,SDO:NonRapidEyeMovementSleep-N3
+Sleep Staging,4,SDO:NonRapidEyeMovementSleep-N4
+Sleep Staging,5,SDO:RapidEyeMovementSleep
+Limb Movement,LM-L,SDO:LeftLowerLimbMovementDuringSleep
+Limb Movement,LM-R,SDO:RightLowerLimbMovementDuringSleep
+Limb Movement,LM-B,SDO:BilateralLowerLimbMovementDuringSleep
+Limb Movement,PLM-L,SDO:PeriodicLeftLowerLimbMovementDuringSleep,
+Limb Movement,PLM-R,SDO:PeriodicRightLowerLimbMovementDuringSleep,
+Limb Movement,PLM-B,SDO:PeriodicBilateralLowerLimbMovementDuringSleep,
+Limb Movement,RRLM-L,SDO:LeftLowerLimbMovementDuringSleep,Associated with Respiratory Event
+Limb Movement,RRLM-R,SDO:RightLowerLimbMovementDuringSleep,Associated with Respiratory Event
+Limb Movement,RRLM-B,SDO:BilateralLowerLimbMovementDuringSleep,Associated with Respiratory Event
+PLM Sequence,P,SDO:PeriodicLowerLimbMovementDuringSleep,
+Desaturation,DESAT,SDO:HemoglobinOxygenDesaturationFinding,
+Respiratory,APNEA-CENTRAL,SDO:CentralApneaFinding

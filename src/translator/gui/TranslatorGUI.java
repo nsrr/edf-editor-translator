@@ -83,6 +83,8 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 		String[] vendorList = new String[] { 
 				"----- Select a vender from the dropdown menu -----                                                                                       ", 
 				Vendor.Embla.toString(), Vendor.Compumedics.toString(),
+				Vendor.Embla_EDFBrowser.toString(), // Add this line for translating annotation to EDFBrowser version; TODO
+				Vendor.Compumedics_EDFBrowser.toString(), // Add this line for translating annotation to EDFBrowser version; TODO
 				Vendor.Respironics.toString(), Vendor.Sandman.toString()
 		};
 		JComboBox<String> JComboBox_vendor = new JComboBox<String>(vendorList);  
@@ -406,8 +408,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 				String output_dir = JTextField_OutputDirectory.getText();
 				String outname = JTextField_OutputPattern.getText();
 				
-				ArrayList<String> successfulOutAL = 
-						AnnotationTranslatorClient.conductTranslation(
+				ArrayList<String> successfulOutAL = AnnotationTranslatorClient.conductTranslation(
 								vendor, 
 								mapping_file, 
 								edf_dir, 
@@ -416,7 +417,7 @@ public class TranslatorGUI extends JPanel implements ActionListener, ItemListene
 								stage_dir, 
 								output_dir, 
 								outname
-						);
+				);
 
 				String[] outputFiles = successfulOutAL.toArray(new String[successfulOutAL.size()]);
 				JList_Out_files.setListData(outputFiles);
