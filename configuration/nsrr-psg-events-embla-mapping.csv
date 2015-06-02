@@ -1,0 +1,73 @@
+category,event,id,embla,signal,notes
+Stages,Wake,wake,SLEEP-S0,,Epoch scored as Wake
+Stages,Stage 1 sleep,stage1,SLEEP-S1,,Epoch scored as Stage 1 Sleep
+Stages,Stage 2 sleep,stage2,SLEEP-S2,,Epoch scored as Stage 2 Sleep
+Stages,Stage 3 sleep,stage3,SLEEP-S3,,Epoch scored as Stage 3 Sleep
+Stages,Stage 4 sleep,stage4,SLEEP-S4,,Epoch scored as Stage 4 Sleep
+Stages,REM sleep,rem,SLEEP-REM,,Epoch scored as REM Sleep
+Stages,Movement,movement,,,Epoch scored as ppt time spent in movement
+Stages,Unscored,unscored,SLEEP-UNSCORED,,Unscored epoch
+Stages,Artifact,artifact,,,Epoch scored as artifact
+Stages,Beginning of time in bed,begintimebed,LIGHTS-OFF,,Beginning of time in bed
+Stages,End of time in bed,endtimebed,LIGHTS-ON,,End of time in bed
+Stages,Beginning of analysis period,beginanalysis,ANALYSIS-START,,Beginning of analysis period
+Stages,End of analysis period ,endanalysis,ANALYSIS-STOP,,End of analysis period
+Respiratory,SpO2 desaturation ,spo2desat,DESAT,SaO2#SAO2#SpO2,SpO2 desaturation
+Respiratory,SpO2 artifact ,spo2artifact,,,SpO2 artifact
+Respiratory,Hypopnea,hypopnea,HYPOPNEA,AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pres#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD,> 4% decrease in SpO2 with > 30% decrease in flow lasting > 10 seconds (AASM definition)
+Respiratory,Obstructive hypopnea ,obsthypopnea,HYPOPNEA-OBSTRUCTIVE,AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pres#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD,> 4% decrease in SpO2 with > 30% decrease in flow and partially occluded airway lasting > 10 seconds
+Respiratory,Central hypopnea ,centhypopnea,HYPOPNEA-CENTRAL,AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pres#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD,> 4% decrease in SpO2 with > 30% decrease in flow and no respiratory effort lasting > 10 seconds
+Respiratory,Mixed hypopnea ,mixedhypopnea,HYPOPNEA-MIXED,AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pres#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD,> 4% decrease in SpO2 with both central then obstructive components lasting > 10 seconds
+Respiratory,Obstructive apnea ,obstapnea,APNEA,AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pres#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD,>90% reduction in thermistor flow lasting > 10 seconds
+Respiratory,Central apnea ,centapnea,APNEA,AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pres#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD,>90% reduction in thermistor flow with no respiratory effort lasting > 10 seconds
+Respiratory,Mixed apnea ,mixedapnea,APNEA,AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pres#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD,>10 second period containing both obstructive and central components
+Respiratory,Apnea,apnea,APNEA,AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pres#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD,>90% reduction in thermistor flow lasting > 10 seconds
+Respiratory,Unsure,unsure,,,> 3% decrease in SpO2 with > 50% decrease in flow (AASM alternative definition)
+Respiratory,Respiratory effort related arousal ,rera,RESP-RERA,Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD#AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pre,Period of >10 seconds of increasing respiratory effort leading to arousal
+Respiratory,Snoring,snoring,SNORE,Snore#SNORE,Snoring
+Respiratory,Respiratory paradox ,resppara,RESP-MOVEMENT-PARADOXICAL,Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD#AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pre,Out of phase thoracic and abdominal effort
+Respiratory,Periodic breathing ,periodbreath,RESP-BREATH-CHEYNESTOKES,Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pre,>3 cycles of increasing then decreasing breathing amplitude resulting in apnea
+Respiratory,Respiratory artifact ,respartifact,RESP-BREATH-PERIODICBREATHING,AIRFLOW#Airflow#NEW AIR#Thermistor#Therm#CannulaFlow#Cannula Flow#Nasal#NASAL PRES#Pres#Thorax#Thoracic#THOR RES#THOR EFFORT#Thor#Chest#Abdomen#Abdominal#ABDO RES#ABDO EFFORT#ABDO#ABD,Respiratory artifact
+Arousals,Arousal ,arous,AROUSAL,C4#EEG,Arousal (with blank label)
+Arousals,Arousal resulting from apnea ,arousapnea,AROUSAL-APNEA,C4#EEG,Arousal resulting from apnea
+Arousals,Arousal resulting from SpO2 desaturation ,aroussp02desat,AROUSAL-DESAT,C4#EEG,Arousal resulting from SpO2 desaturation
+Arousals,Arousal resulting from periodic leg movement ,arousplm,AROUSAL-PLM,C4#EEG,Arousal resulting from a PLM series
+Arousals,Arousal resulting from limb movement ,arouslm,AROUSAL-LM,C4#EEG,Arousal resulting from limb movement
+Arousals,Arousal resulting from respiratory effort ,arousrespeff,AROUSAL-RESP,C4#EEG,Arousal resulting from respiratory effort
+Arousals,Arousal resulting from snoring ,aroussnoring,AROUSAL-SNORE,C4#EEG,Arousal resulting from snoring
+Arousals,Respiratory effort related arousal ,reraarous,AROUSAL-RERA,C4#EEG,Arousal resulting from respiratory effort
+Arousals,Spontaneous arousal ,spontarous,AROUSAL-SPONT,C4#EEG,Spontaneous arousal
+Arousals,ASDA arousal ,asdaarous,,,ASDA Arousal
+Arousals,External arousal ,extarous,,,External Arousal
+Arousals,Internal arousal ,intarous,,,Internal Arousal
+Electrocardiogram,Bradycardia ,brady,EKG-BRADYCARDIA,ECG1#ECG#EKG#ECG L,Heart rate < 40 BPM
+Electrocardiogram,Tachycardia ,tachy,EKG-TACHYCARDIA,ECG1#ECG#EKG#ECG L,Heart rate > 90 BPM
+Electrocardiogram,Asystole ,asystole,EKG-ASYTOLE,ECG1#ECG#EKG#ECG L,No heart beat for >3 seconds
+Electrocardiogram,Wide complex tachycardia ,wctachy,EKG-WCTACHYCARDIA,ECG1#ECG#EKG#ECG L,> 3 consecutive beats at >100 BPM with a QRS interval > 120 ms
+Electrocardiogram,Narrow complex tachycardia ,nctachy,EKG-NCTACHYCARDIA,ECG1#ECG#EKG#ECG L,> 3 consecutive beats at >100 BPM with a QRS interval < 120 ms
+Electrocardiogram,Atrial fibrillation ,afib,EKG-AFIBRILLATION,ECG1#ECG#EKG#ECG L,Irregularly regular rhythm with no P waves and no consistent waveform
+Electrocardiogram,Sinus tachycardia ,stach,EKG-STACHYCARDIA,ECG1#ECG#EKG#ECG L,Rhythm > 100 BPM with normal waveforms
+Limb Movement,Leg movement ,lm,PLM-LM,RLEG#Leg R#LegR#Leg/R#Leg#LLEG#Leg L#LegL#Leg/L,EMG activity lasting 0.5-10 seconds
+Limb Movement,Respiratory related leg movement ,resplm,PLM-RRLM,RLEG#Leg R#LegR#Leg/R#Leg#LLEG#Leg L#LegL#Leg/L,Respiratory Related LM
+Limb Movement,Periodic leg movement ,plm,PLM,RLEG#Leg R#LegR#Leg/R#Leg#LLEG#Leg L#LegL#Leg/L,Series of > 4 LMs at 5-90 second intervals
+Limb Movement,Periodic leg movement - left ,plmleft,,,Series of > 4 left leg LMs at 5-90 second intervals
+Limb Movement,Periodic leg movement - right ,plmright,,,Series of > 4 right leg LMs at 5-90 second intervals
+Limb Movement,Limb movement - left ,lmleft,,,Left leg EMG activity lasting 0.5-10 seconds
+Limb Movement,Limb movement - right ,lmright,,,Right leg EMG activity lasting 0.5-10 seconds
+Body Position,Body position change to supine ,bodypossup,POSITION-SUPINE,Position#POSITION#Pos,Body position change to supine
+Body Position,Body position change to prone ,bodyposprone,POSITION-PRONE,Position#POSITION#Pos,Body position change to prone 
+Body Position,Body position change to left ,bodyposleft,POSITION-LEFT,Position#POSITION#Pos,Body position change to left 
+Body Position,Body position change to right ,bodyposright,POSITION-RIGHT,Position#POSITION#Pos,Body position change to right 
+Body Position,Body position change to upright ,bodyposupright,POSITION-UPRIGHT,Position#POSITION#Pos,Body position change to upright 
+Body Position,Body position change to unknown ,bodyposunknown,POSITION-UNKNOWN,Position#POSITION#Pos,Body position change to unknown 
+Measurements,Activity ,activity,ACTIVITY-MOVE,Activity,Ppt movement
+Measurements,Distal pH ,distph,,,Esophageal pH measured near the bottom of the esophagus 
+Measurements,Proximal pH ,proxph,,,Esophageal pH measured near the top of the esophagus 
+Artifacts,Distal pH artifact ,distphartifact,,,Unreliable distal pH signal
+Artifacts,Proximal pH artifact ,proxphartifact,,,Unreliable proximal pH signal
+Artifacts,EtCO2 artifact ,etco2artifact,,,Unreliable EtCO2 signal (CO2 measured during expired air)
+Artifacts,TcCO2 artifact ,tcco2artifact,,,Unreliable TcCO2 pressure signal (CO2 saturation measured at the skin surface)
+Artifacts,Blood pressure artifact ,bpartifact,,,Unreliable blood pressure signal
+Artifacts,Body temperature artifact ,bodtempartifact,,,Unreliable body temperature signal
+Artifacts,Reserved selection ,reservedselc,RESERVED-SELECTION,HR#H.R.#Pulse#PULSE#DHR,This is an unknown event generated by Embla
+Artifacts,Signal artifact ,signartifact,SIGNAL-ARTIFACT,HR#H.R.#Pulse#PULSE#DHR,Generic signal artifact
