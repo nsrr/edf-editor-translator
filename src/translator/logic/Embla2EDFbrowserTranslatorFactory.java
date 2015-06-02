@@ -37,7 +37,7 @@ import org.w3c.dom.NodeList;
  * Uses for testing BasicTranslation
  * @author wei wang, 2014-8-21
  */
-public class EDFBrowserEmblaTranslatorFactory extends AbstractTranslatorFactory {
+public class Embla2EDFbrowserTranslatorFactory extends AbstractTranslatorFactory {
 //public class EmblaAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
 
 	private Document xmlRoot; // = new DocumentImpl(); // xml root
@@ -46,7 +46,7 @@ public class EDFBrowserEmblaTranslatorFactory extends AbstractTranslatorFactory 
 	/**
 	 * Default constructor
 	 */
-	public EDFBrowserEmblaTranslatorFactory() {
+	public Embla2EDFbrowserTranslatorFactory() {
 		super();
 		System.out.println("=================================================================");
 		System.out.println("Embla Factory:"); // test

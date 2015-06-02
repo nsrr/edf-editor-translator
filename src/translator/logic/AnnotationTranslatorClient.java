@@ -91,7 +91,7 @@ public class AnnotationTranslatorClient {
 				else if (vendor.equals(Vendor.Embla_EDFBrowser.toString())) {// new TODO
 					annotation_file = validate_file(annotation_dir, basename, ".xml");
 					if ((new File(annotation_file)).exists()) {
-					  AbstractTranslatorFactory translator = new EDFBrowserEmblaTranslatorFactory();
+					  AbstractTranslatorFactory translator = new Embla2EDFbrowserTranslatorFactory();
 					  translator.read(edf_file, annotation_file, mapping_file);
             bTranslation = translator.translate();
             translator.write2xml(out_file_name);
@@ -116,7 +116,7 @@ public class AnnotationTranslatorClient {
 				else if (vendor.equals(Vendor.Compumedics_EDFBrowser.toString())) {
 				  annotation_file = validate_file(annotation_dir, basename, ".xml");
           if ((new File(annotation_file)).exists()) {
-            AbstractTranslatorFactory translator = new EDFBrowserCompumedicsTranslatorFactory();
+            AbstractTranslatorFactory translator = new Compumedics2EDFbrowserTranslatorFactory();
             translator.read(edf_file, annotation_file, mapping_file);
             bTranslation = translator.translate();
             translator.write2xml(out_file_name);

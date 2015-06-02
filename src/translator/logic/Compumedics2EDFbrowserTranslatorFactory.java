@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
  * @author wei wang, 2014-8-21
  */
 //public class CompumedicsAnnotationTranslator extends BasicTranslation implements AnnotationTranslator {
-public class EDFBrowserCompumedicsTranslatorFactory extends AbstractTranslatorFactory { 	
+public class Compumedics2EDFbrowserTranslatorFactory extends AbstractTranslatorFactory { 	
 	
 	private Document xmlRoot; // = new DocumentImpl(); // xml root
 	private Element scoredEvents; // parent element of <Event>
@@ -43,7 +43,7 @@ public class EDFBrowserCompumedicsTranslatorFactory extends AbstractTranslatorFa
 	/**
 	 * Default constructor
 	 */
-	public EDFBrowserCompumedicsTranslatorFactory() {
+	public Compumedics2EDFbrowserTranslatorFactory() {
 		super();
 		System.out.println("=================================================================");
 		System.out.println("Compumedics Factory:"); // test
