@@ -130,7 +130,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		scoredEvent.appendChild(eventCategory);
 		scoredEvent.appendChild(eventConcept);
 		scoredEvent.appendChild(startElement);
-		int count = 0;
+		int count = 1;
 		for (int i = 1; i < stageList.getLength(); i++) {
 			String iStageValue = ((Element) stageList.item(i)).getTextContent();
 			if (iStageValue.compareTo(firstStageKey) == 0) {
