@@ -167,6 +167,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 		}
 		durationElement.appendChild(xmlRoot.createTextNode(Double.toString(count * 30)));
 		scoredEvent.appendChild(durationElement);
+		list.add(scoredEvent);
 		return list;
 	}
 
