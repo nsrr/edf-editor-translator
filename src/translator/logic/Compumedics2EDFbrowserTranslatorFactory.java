@@ -162,8 +162,8 @@ public class Compumedics2EDFbrowserTranslatorFactory extends AbstractTranslatorF
 		Element duration = xmlRoot.createElement("duration");
 		Element start = xmlRoot.createElement("onset");
 		@SuppressWarnings("unchecked")
-		Node nameNode = xmlRoot.createTextNode((String)((ArrayList<String>) map[1].get(eventType)).get(1));
-
+//		Node nameNode = xmlRoot.createTextNode((String)((ArrayList<String>) map[1].get(eventType)).get(1));
+		Node nameNode = xmlRoot.createTextNode(eventType);
 		eventConcept.appendChild(nameNode);
 		
 		String startTime = getElementByChildTag(scoredEventElement, "Start");
@@ -302,8 +302,8 @@ public class Compumedics2EDFbrowserTranslatorFactory extends AbstractTranslatorF
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
 					String eventTypeLowerCase = data[0].toLowerCase();
-					String eventCategoryInPipe = data[0] + "|" + data[0];
-					String eventNameInPipe = data[1].trim() + "|" + data[3].trim();
+					String eventCategoryInPipe = data[0];
+					String eventNameInPipe = data[3].trim();
 					List<String> defaultSignals = new ArrayList<>();
 					// process events
 					if (!eventTypeLowerCase.contains("epochlength")

@@ -34,17 +34,17 @@ import org.w3c.dom.NodeList;
  * 
  * @author wei wang, 2014-8-21
  */
-public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
+public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 
   private Document xmlRoot; // = new DocumentImpl(); // xml root
   private Element scoredEvents; // parent element of <Event>
 
-  public CompumedicsTranslatorFactory() {
+  public ARESTranslatorFactory() {
     super();
     System.out
         .println("=================================================================");
-    System.out.println("Compumedics Factory:"); // test
-    softwareVersion = "Compumedics";
+    System.out.println("Ares Factory:"); // test
+    softwareVersion = "ARES";
     xmlRoot = new DocumentImpl(); // xml root
   }
 
@@ -65,15 +65,20 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 
   @Override
   public boolean translate() {
+    System.out.println("Signal Label in EDF: ");
+    for (String signal : signalLabels) {
+      System.out.print(" \"" + signal + "\"");
+    }
+    System.out.println();
     boolean result = false;
     Element root = createEmptyDocument(softwareVersion);
 
-    NodeList nodeList = document.getElementsByTagName("ScoredEvent");
+    NodeList nodeList = document.getElementsByTagName("stripe");
     for (int index = 0; index < nodeList.getLength(); index++) {
       Element parsedElement = null;
       Node node = nodeList.item(index); // for each <event> node
       Element elem = (Element) node;
-      parsedElement = parseCompumedicsXmlEvent(elem);
+      parsedElement = parseARESxmlEvent(elem);
       if (parsedElement == null) {
         log("Can't parse event: " + index + " "
             + getElementByChildTag(elem, "Type"));
@@ -81,8 +86,8 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
       scoredEvents.appendChild(parsedElement);
     }
     // Parse staging:
-    for (Element elem : parseStaging())
-      scoredEvents.appendChild(elem);
+    // for (Element elem : parseStaging())
+    // scoredEvents.appendChild(elem);
 
     root.appendChild(scoredEvents);
     xmlRoot.appendChild(root);
@@ -90,87 +95,17 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
     return result;
   }
 
-  /**
-   * Parses staging element and appends them to scoredEvents element
-   * 
-   * @return a list containing parsed staging event
-   */
-  private List<Element> parseStaging() {
-    List<Element> list = new ArrayList<Element>();
-    // for each sleep stages
-    NodeList stageList = document.getElementsByTagName("SleepStage");
-    Element eventCategory = xmlRoot.createElement("EventType");
-    Element scoredEvent = xmlRoot.createElement("ScoredEvent");
-    Element eventConcept = xmlRoot.createElement("EventConcept");
-    Element startElement = xmlRoot.createElement("Start");
-    Element durationElement = xmlRoot.createElement("Duration");
-
-    String firstStageKey = ((Element) stageList.item(0)).getTextContent();
-
-    String firstStageValue;
-    String firstStageCategory;
-    if (map[2].keySet().contains(firstStageKey)) {
-      firstStageValue = (String) map[2].get(firstStageKey);
-      firstStageCategory = (String) map[3].get(firstStageKey);
-    } else {
-      firstStageValue = "";
-      firstStageCategory = "";
-    }
-    double start = 0;
-    eventCategory.appendChild(xmlRoot.createTextNode(firstStageCategory));
-    eventConcept.appendChild(xmlRoot.createTextNode(firstStageValue));
-    startElement.appendChild(xmlRoot.createTextNode(Double.toString(start)));
-    scoredEvent.appendChild(eventCategory);
-    scoredEvent.appendChild(eventConcept);
-    scoredEvent.appendChild(startElement);
-    int count = 1; // original: count=0;
-    for (int i = 1; i < stageList.getLength(); i++) {
-      String iStageValue = ((Element) stageList.item(i)).getTextContent();
-      if (iStageValue.compareTo(firstStageKey) == 0) {
-        count++; 
-      } else {
-        // process last repeating stage event
-        durationElement.appendChild(xmlRoot.createTextNode(Double
-            .toString(count * 30)));
-        scoredEvent.appendChild(durationElement);
-        list.add(scoredEvent);
-        scoredEvent = xmlRoot.createElement("ScoredEvent");
-        eventConcept = xmlRoot.createElement("EventConcept");
-        eventCategory = xmlRoot.createElement("EventType");
-        firstStageKey = iStageValue;
-        if (map[2].keySet().contains(firstStageKey)) {
-          firstStageValue = (String) map[2].get(firstStageKey);
-          firstStageCategory = (String) map[3].get(firstStageKey);
-        } else {
-          firstStageValue = "";
-          firstStageCategory = "";
-        }
-        eventCategory.appendChild(xmlRoot.createTextNode(firstStageCategory));
-        eventConcept.appendChild(xmlRoot.createTextNode(firstStageValue));
-        startElement = xmlRoot.createElement("Start");
-        start += count * 30; // start = start + count * 30;
-        startElement
-            .appendChild(xmlRoot.createTextNode(Double.toString(start)));
-        durationElement = xmlRoot.createElement("Duration");
-        scoredEvent.appendChild(eventCategory);
-        scoredEvent.appendChild(eventConcept);
-        scoredEvent.appendChild(startElement);
-        count = 1;
-      }
-    }
-    durationElement.appendChild(xmlRoot.createTextNode(Double
-        .toString(count * 30)));
-    scoredEvent.appendChild(durationElement);
-    list.add(scoredEvent);
-    return list;
-  }
-
-  private Element parseCompumedicsXmlEvent(Element scoredEventElement) {
+  private Element parseARESxmlEvent(Element scoredEventElement) {
     // only DESAT type has more values to be processed, others are the same
     Element scoredEvent = null;
-    String eventType = getElementByChildTag(scoredEventElement, "Name");
+    // String eventType = getElementByChildTag(scoredEventElement, "Name");
+    String code = getElementByChildTag(scoredEventElement, "code");
+    String attribute = getElementByChildTag(scoredEventElement, "attribute");
+    String subattribute = getElementByChildTag(scoredEventElement,
+        "subattribute");
+    String eventKey = code + attribute + subattribute;
     // map[1] contains keySet with event name
-    if (map[1].keySet().contains(eventType)) {
+    if (attribute != null && map[1].keySet().contains(eventKey)) {
       scoredEvent = parseEventElement(scoredEventElement);
     } else {
       // no mapping event name found
@@ -181,13 +116,13 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
       Element durationElement = xmlRoot.createElement("Duration");
       Element notesElement = xmlRoot.createElement("Notes");
 
-      eventConcept.appendChild(xmlRoot.createTextNode("Technician Notes"));
-      notesElement.appendChild(xmlRoot.createTextNode(eventType));
-      eventCategory.appendChild(xmlRoot.createTextNode("Technician Notes"));
+      eventConcept.appendChild(xmlRoot.createTextNode("Technician Notes|Technician Notes"));
+      notesElement.appendChild(xmlRoot.createTextNode(code));
+      eventCategory.appendChild(xmlRoot.createTextNode("Technician Notes|Technician Notes"));
 
-      String startTime = getElementByChildTag(scoredEventElement, "Start");
+      String startTime = "0";
+      String durationTime = "0";
       startElement.appendChild(xmlRoot.createTextNode(startTime));
-      String durationTime = getDuration(scoredEventElement);
       durationElement.appendChild(xmlRoot.createTextNode(durationTime));
 
       scoredEvent.appendChild(eventCategory);
@@ -195,8 +130,10 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
       scoredEvent.appendChild(startElement);
       scoredEvent.appendChild(durationElement);
       scoredEvent.appendChild(notesElement);
-      String info = xmlAnnotation + "," + eventType + "," + startTime;
-      log(info);
+      
+      String info = xmlAnnotation + "," + code + "," + startTime;
+//      log(info);
+      addElementIntoLog(">>> Missing event code: " + code, true);
     }
 
     return scoredEvent;
@@ -207,10 +144,6 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
     if (locationList == null) {
       log("ERROR: location error");
     }
-    List<Element> userVariableList = getUserVariables(scoredEventElement);
-    if (userVariableList == null) {
-      log("ERROR: user variable error");
-    }
     Element scoredEvent = null;
     if (xmlRoot != null) {
       scoredEvent = xmlRoot.createElementNS(null, "ScoredEvent");
@@ -220,46 +153,41 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
     }
     for (Element element : locationList)
       scoredEvent.appendChild(element);
-    for (Element element : userVariableList)
-      scoredEvent.appendChild(element);
     return scoredEvent;
   }
 
-  private List<Element> getUserVariables(Element scoredEventElement) {
-    List<Element> list = new ArrayList<Element>();
-    String eventType = getElementByChildTag(scoredEventElement, "Name");
-    if (eventType.equals("SpO2 desaturation")) {
-      Element spO2Nadir = xmlRoot.createElement("SpO2Nadir");
-      Element spO2Baseline = xmlRoot.createElement("SpO2Baseline");
-      String desatStartVal = getElementByChildTag(scoredEventElement,
-          "LowestSpO2");
-      String desat = getElementByChildTag(scoredEventElement, "Desaturation");
-      String desatEndVal = String.valueOf(Double.parseDouble(desatStartVal)
-          + Double.parseDouble(desat));
-      spO2Nadir.appendChild(xmlRoot.createTextNode(desatStartVal));
-      spO2Baseline.appendChild(xmlRoot.createTextNode(desatEndVal));
-      list.add(spO2Nadir);
-      list.add(spO2Baseline);
-    }
-    return list;
-  }
-
+  /**
+   * TODO: Check the start/stop time format: seconds/milliseconds?
+   * @param scoredEventElement
+   * @return
+   */
   private List<Element> getLocation(Element scoredEventElement) {
     // {eventConcept, duration, start}
+    String code = getElementByChildTag(scoredEventElement, "code");
+    String attribute = getElementByChildTag(scoredEventElement, "attribute");
+    String subattribute = getElementByChildTag(scoredEventElement,
+        "subattribute");
+    String eventKey = code + attribute + subattribute;
+
+//    System.out.println("KEY: " + eventKey + "map contains key? " + map[1].containsKey(eventKey));
     List<Element> list = new ArrayList<Element>();
-    String eventType = getElementByChildTag(scoredEventElement, "Name");
-    String annLocation = getElementByChildTag(scoredEventElement, "Input");
+    @SuppressWarnings({ "unused", "unchecked" })
+    String eventType = ((ArrayList<String>) map[1].get(eventKey)).get(0);
+    String annLocation = (String) map[4].get(eventKey);
     Element eventCategory = xmlRoot.createElement("EventType");
     Element eventConcept = xmlRoot.createElement("EventConcept");
     Element duration = xmlRoot.createElement("Duration");
     Element start = xmlRoot.createElement("Start");
     Element input = xmlRoot.createElement("SignalLocation");
     @SuppressWarnings("unchecked")
-    Node nameNode = xmlRoot.createTextNode((String) ((ArrayList<String>) map[1]
-        .get(eventType)).get(1));
-    String categoryStr = map[3].get(eventType) == null ? "" : (String) map[3]
-        .get(eventType);
-    Node categoryNode = xmlRoot.createTextNode(categoryStr);
+    String cddname = (String) ((ArrayList<String>) map[1]
+        .get(eventKey)).get(1);
+    @SuppressWarnings("unchecked")
+    String aresname = (String) ((ArrayList<String>) map[1].get(eventKey)).get(0);
+    Node nameNode = xmlRoot.createTextNode(cddname + "|" + aresname);
+    String categoryStr = map[3].get(eventKey) == null ? "" : (String) map[3]
+        .get(eventKey);
+    Node categoryNode = xmlRoot.createTextNode(categoryStr + "|" + categoryStr);
 
     String signalLocation = getSignalLocationFromEvent(scoredEventElement,
         annLocation);
@@ -268,9 +196,11 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
     eventConcept.appendChild(nameNode);
     input.appendChild(inputNode);
 
-    String startTime = getElementByChildTag(scoredEventElement, "Start");
-    String durationTime = getElementByChildTag(scoredEventElement, "Duration");
-    duration.appendChild(xmlRoot.createTextNode(durationTime));
+    String startTime = getElementByChildTag(scoredEventElement, "starttime");
+//    String stopTime = getElementByChildTag(scoredEventElement, "stoptime"); //TODO
+//    String durationTime = String.valueOf(Integer.valueOf(startTime)
+//        - Integer.valueOf(stopTime));
+    duration.appendChild(xmlRoot.createTextNode(getDuration(scoredEventElement)));
     start.appendChild(xmlRoot.createTextNode(startTime));
 
     list.add(eventCategory);
@@ -291,32 +221,44 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
    */
   public String getSignalLocationFromEvent(Element scoredEvent,
       String annLocation) {
+    String attributeStr = getElementByChildTag(scoredEvent, "attribute");
+    String subattributeStr = getElementByChildTag(scoredEvent, "subattribute");
+    
+    if (attributeStr == null || subattributeStr == null) {
+      return "";
+    }
+    int code = Integer.valueOf(getElementByChildTag(scoredEvent, "code"));
+    int attribute = Integer.valueOf(attributeStr);
+    int subattribute = Integer.valueOf(subattributeStr);
+//    String eventKey = code + attribute + subattribute;
+    AresItemKey aresKey = new AresItemKey(code, attribute, subattribute);
 
     String result = signalLabels[0]; // initialize to the first EDF signal
 
-    String eventName = getElementByChildTag(scoredEvent, "Name");
-    @SuppressWarnings("unchecked")
-    List<String> defaultSignals = (List<String>) map[4].get(eventName);
+    String defaultSignal = (String) map[4].get(aresKey.toString());
     List<String> edfSignals = Arrays.asList(signalLabels);
 
-    if (edfSignals.contains(annLocation)) {
+    if (edfSignals.contains(defaultSignal)) {
       result = annLocation;
-    } else {
-      for (String signal : defaultSignals) {
-        if (edfSignals.contains(signal)) {
-          result = signal;
-        }
-      }
     }
 
     return result;
   }
 
   private String getDuration(Element scoredEvent) {
-    String duration;
-    duration = getElementByChildTag(scoredEvent, "Duration");
-    if (duration != null) {
-      return duration;
+    String startTime = getElementByChildTag(scoredEvent, "starttime");
+    String stopTime = getElementByChildTag(scoredEvent, "stoptime");
+    String durationTime = "Invalid Duration";
+    int duration = Integer.valueOf(stopTime) - Integer.valueOf(startTime);
+    duration /= 1000; // Assume duration is in millisecond format
+    if (duration > 0) {
+      durationTime = String.valueOf(duration);
+    }
+//    System.out.print("Start Time: " + startTime + ", Stop Time:" + stopTime + " ");
+//    System.out.println("Duration: " + durationTime);
+
+    if (durationTime != null) {
+      return durationTime;
     } else {
       log("Duration not found: " + getElementByChildTag(scoredEvent, "Name"));
       return "";
@@ -440,7 +382,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 
   /**
    * Reads mapping file and saves as an array of HashMap Can be put in a higher
-   * hierarchy
+   * hierarchy.
    * 
    * @param mapFile
    *          the mapping file name
@@ -448,6 +390,7 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
    */
   public HashMap<String, Object>[] readMapFile(String mapFile) {
     @SuppressWarnings("unchecked")
+    // [Item:
     HashMap<String, Object>[] map = (HashMap<String, Object>[]) Array
         .newInstance(HashMap.class, 5);
     try {
@@ -462,32 +405,41 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
 
         while ((line = input.readLine()) != null) {
           String[] data = line.split(",");
+          if (data == null || data[0] == "" || data[0].length() == 0 || data[0] == null) {
+            break;
+          }
+
           String eventTypeLowerCase = data[0].toLowerCase();
-          String eventCategoryInPipe = data[0] + "|" + data[0];
-          String eventNameInPipe = data[1].trim() + "|" + data[3].trim();
-          List<String> defaultSignals = new ArrayList<>();
+          String eventCategory = data[0];
+          String eventName = data[1].trim();
+          String defaultSignal = "";
+
+          // construct are item key
+          int code = Integer.valueOf(data[5]);
+          int attribute = Integer.valueOf(data[6]);
+          int subattribute = Integer.valueOf(data[7]);
+          AresItemKey aresKey = new AresItemKey(code, attribute, subattribute);
+
           // process events
           if (!eventTypeLowerCase.contains("epochlength")
               && !eventTypeLowerCase.contains("stages")) {
 
             // Process signal column in mapping file
-            if (data[4].length() != 0) {
-              for (String sname : data[4].split("#")) {
-                defaultSignals.add(sname);
-              }
+            if (data.length >= 5) {
+              defaultSignal = data[4].trim();
             }
 
-            // values: {EventType, EventConcept, Note}
+            // values = {aresName: String, cddName: String, note: String}
             ArrayList<String> values = new ArrayList<String>(3);
-            values.add(data[0]);
-            values.add(eventNameInPipe);
-            if (data.length > 5) {
-              values.add(data[5]); // add Notes
+            values.add(data[3]);
+            values.add(eventName);
+            if (data.length > 8) {
+              values.add(data[8]); // add Notes
             }
             // events {event, event_type && event_concept}
-            events.put(data[3].trim(), values);
-            categories.put(data[3].trim(), eventCategoryInPipe);
-            signalLocation.put(data[3].trim(), defaultSignals);
+            events.put(aresKey.toString(), values);
+            categories.put(aresKey.toString(), eventCategory);
+            signalLocation.put(aresKey.toString(), defaultSignal);
           }
           // Dated process for epoch
           else if (data[0].compareTo("EpochLength") == 0) {
@@ -495,8 +447,8 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
             epoch.put(data[0], data[2]);
           } else {
             // stages {event, event_concept}
-            stages.put(data[3].trim(), eventNameInPipe);
-            categories.put(data[3].trim(), eventCategoryInPipe);
+            stages.put(aresKey.toString(), eventName);
+            categories.put(aresKey.toString(), eventCategory);
           }
         }
         // System.out.println(map[2].values().size());
@@ -508,12 +460,87 @@ public class CompumedicsTranslatorFactory extends AbstractTranslatorFactory {
       } finally {
         input.close();
       }
-    } catch (IOException e) {
+    } 
+    catch (IOException e) {
       e.printStackTrace();
       StringWriter errors = new StringWriter();
       e.printStackTrace(new PrintWriter(errors));
       log(errors.toString());
     }
     return map;
+  }
+}
+
+class AresItemKey {
+
+  private int code;
+  private int attribute;
+  private int subattribute;
+
+  public AresItemKey(int code, int attribute, int subattribute) {
+    this.code = code;
+    this.attribute = attribute;
+    this.subattribute = subattribute;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    String result = String.valueOf(code);
+    result += String.valueOf(attribute);
+    result += String.valueOf(subattribute);
+    return Integer.valueOf(result);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(Object obj) {
+    try {
+      AresItemKey anotherItem = (AresItemKey) obj;
+      if (anotherItem.hashCode() == this.hashCode()) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(this.hashCode());
+  }
+
+  public void setCode(int code) {
+    this.code = code;
+  }
+
+  public int getCode() {
+    return code;
+  }
+
+  public void setAttribute(int attribute) {
+    this.attribute = attribute;
+  }
+
+  public int getAttribute() {
+    return attribute;
+  }
+
+  public void setSubattribute(int subattribute) {
+    this.subattribute = subattribute;
+  }
+
+  public int getSubattribute() {
+    return subattribute;
   }
 }

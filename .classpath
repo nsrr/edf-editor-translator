@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="Assets/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="Assets/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/Users/strongtsq/projects/edf-editor-translator/Assets/joda-time-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
