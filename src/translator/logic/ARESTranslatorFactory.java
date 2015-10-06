@@ -29,7 +29,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * A translator factory that translates Compumedics annotation file and generate
+ * A translator factory that translates ARES annotation file and generate
  * specified output
  * 
  * @author wei wang, 2014-8-21
@@ -103,6 +103,13 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
     String attribute = getElementByChildTag(scoredEventElement, "attribute");
     String subattribute = getElementByChildTag(scoredEventElement,
         "subattribute");
+    if(attribute == null || attribute == "" || attribute.length() == 0){
+      attribute = "99";
+    }
+    if(subattribute == null || subattribute == "" || subattribute.length() == 0){
+      subattribute = "99";
+    }
+
     String eventKey = code + attribute + subattribute;
     // map[1] contains keySet with event name
     if (attribute != null && map[1].keySet().contains(eventKey)) {
@@ -167,6 +174,12 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
     String attribute = getElementByChildTag(scoredEventElement, "attribute");
     String subattribute = getElementByChildTag(scoredEventElement,
         "subattribute");
+    if(attribute == null || attribute == "" || attribute.length() == 0){
+      attribute = "99";
+    }
+    if(subattribute == null || subattribute == "" || subattribute.length() == 0){
+      subattribute = "99";
+    }
     String eventKey = code + attribute + subattribute;
 
 //    System.out.println("KEY: " + eventKey + "map contains key? " + map[1].containsKey(eventKey));
@@ -219,6 +232,7 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
    * translator.logic.AbstractTranslatorFactory#getSignalLocationFromEvent(org
    * .w3c.dom.Element, java.lang.String)
    */
+  
   public String getSignalLocationFromEvent(Element scoredEvent,
       String annLocation) {
     String attributeStr = getElementByChildTag(scoredEvent, "attribute");
@@ -249,11 +263,16 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
     String startTime = getElementByChildTag(scoredEvent, "starttime");
     String stopTime = getElementByChildTag(scoredEvent, "stoptime");
     String durationTime = "Invalid Duration";
-    int duration = Integer.valueOf(stopTime) - Integer.valueOf(startTime);
-    duration /= 1000; // Assume duration is in millisecond format
-    if (duration > 0) {
-      durationTime = String.valueOf(duration);
+    try{
+    	int duration = Integer.valueOf(stopTime) - Integer.valueOf(startTime);
+    	duration /= 1000; // Assume duration is in millisecond format
+    	if (duration > 0) {
+    	    durationTime = String.valueOf(duration);
+    	}
+    }catch(Exception e){
+    	durationTime = null;
     }
+    
 //    System.out.print("Start Time: " + startTime + ", Stop Time:" + stopTime + " ");
 //    System.out.println("Duration: " + durationTime);
 
@@ -415,9 +434,21 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
           String defaultSignal = "";
 
           // construct are item key
-          int code = Integer.valueOf(data[5]);
-          int attribute = Integer.valueOf(data[6]);
-          int subattribute = Integer.valueOf(data[7]);
+          int code = Integer.valueOf(data[5]);;
+          
+          int attribute;
+          try{
+          	attribute = Integer.valueOf(data[6]);
+          }catch(NumberFormatException e){
+          	attribute = 99;  
+          }
+          
+          int subattribute;
+          try{
+        	  subattribute = Integer.valueOf(data[7]);
+          }catch(NumberFormatException e){
+        	  subattribute = 99;
+          }
           AresItemKey aresKey = new AresItemKey(code, attribute, subattribute);
 
           // process events

@@ -1,0 +1,121 @@
+category,event,id,ares,signal location,code,attribute,subattribute,notes
+Stages,Start TIB N1,begintimebed,Start TIB N1,IrNgn,5011,0,0,"Generally the first 15 minutes of the study, it is assumed that the participant is awake during this time.  This time can be altered if the participant appeared to take a longer or shorter amount of time to go to sleep"
+Stages,Stop TIB N1,endtimebed,Stop TIB N1,IrNgn,5012,0,0,Generally the last 3 minutes of the study.  This time can be altered if needed.
+Stages,Start N1,beginanalysis,Start N1,IrNgn,5216,0,0,"a point at which N1 is started, generally right at the beginning of a study"
+Stages,User Shutoff,usershutoff,User Shutoff,IrNgn,1001,0,0,user shut off
+Stages,7 hours completed,sevenhourshutoff,7 hours completed,IrNgn,1001,2,0,shut off after 7 hours of continuous recording
+Stages,Low Battery,lowbatteryshutoff,Low Battery,IrNgn,1001,1,0,shut off due to low battery
+Stages,NREM-2933-2-0,nremauto,NREM-2933-2-0,IrNgn,2933,2,0,computer annotated NREM sleep
+Stages,NREM-2934-2-0,nremman,NREM-2934-2-0,IrNgn,2934,2,0,manually annotated NREM sleep
+Stages,REM-2933-5-0,remauto,REM-2933-5-0,IrNgn,2933,5,0,computer annotated REM sleep
+Stages,REM-2934-5-0,remman,REM-2934-5-0,IrNgn,2934,5,0,manually annotated REM sleep
+Stages,Slow wave-2933-3-0,slowwaveauto ,Slow wave-2933-3-0,IrNgn,2933,3,0,computer annotated Slow wave sleep
+Stages,Slow wave-2934-3-0,slowwaveman,Slow wave-2934-3-0,IrNgn,2934,3,0,manually annotated Slow Wave sleep
+Stages,Awake-11003-0-0,awaketimebed,Awake-11003-0-0,IrNgn,11003,0,0,TIB channel Awake code 11003 att. 0 subatt. 0
+Stages,Awake-2933-0-0,awakeauto,Awake-2933-0-0,IrNgn,2933,0,0,computer annotated Awake code 2933 att. 0 subatt. 0
+Stages,Awake-2934-0-0,awakeman,Awake-2934-0-0,IrNgn,2934,0,0,manually annotated Awake code 2934 att. 0 subatt. 0
+Stages,ExTIB Awake-5156-0-0,excludeawake515600,ExTIB Awake-5156-0-0,IrNgn,5156,0,0,excluded area due to the participant being awake code 5156 att. 0 subatt. 0
+Stages,ExTIB Awake-5156-0-1,excludeawake515601,ExTIB Awake-5156-0-1,IrNgn,5156,0,1,excluded area due to the participant being awake code 5156 att. 0 subatt. 1
+Stages,ExTIB Awake-5156-0-2,excludeawake515602,ExTIB Awake-5156-0-2,IrNgn,5156,0,2,excluded area due to the participant being awake code 5156 att. 0 subatt. 2
+Stages,Upright,upright,Upright,IrNgn,5152,0,0,upright
+Artifact,ExTIB Tech,artifact,ExTIB Tech,IrNgn,5153,0,0,manually annotated excluded area
+Respiratory,AE Tech Hy4%,hypopnea,AE Tech Hy4%,AirFlw,1307,1,0,manually annotated > =4% decrease in SpO2 with >= 50% decrease from baseline in A-Flow channel lasting > =10 seconds may or may not be associated with an arousal
+Respiratory,AE Tech Hy3%,hypopnea3to4percent,AE Tech Hy3%,AirFlw,1307,2,0,manually annotated > =3%-3.9% decrease in SpO2 with >= 50% decrease from baseline in A-Flow channel lasting > =10 seconds may or may not be associated with an arousal
+Respiratory,AE Tech Hy1% ,hypopnea2to3percent,AE Tech Hy1%,AirFlw,1307,3,0,manually annotated > =2%-2.9% decrease in SpO2 with >= 50% decrease from baseline in A-Flow channel lasting > =10 seconds may or may not be associated with an arousal
+Respiratory,AE Tech Hy0%,hypopnealt2percent,AE Tech Hy0%,AirFlw,1307,4,0,manually annotated <=1.99% decrease in SpO2 with >= 50% decrease from baseline in A-Flow channel lasting > =10 seconds may or may not be associated with an arousal
+Respiratory,Hypopnea-55-2-0,hypopneaflow5520,Hypopnea-55-2-0,AirFlw,55,2,0,computer annotated A-Flow channel Hypopnea code 55 att. 2 subatt. 0
+Respiratory,Hypopnea-55-2-1,hypopneaflow5521,Hypopnea-55-2-1,AirFlw,55,2,1,computer annotated A-Flow channel Hypopnea code 55 att. 2 subatt. 1
+Respiratory,Hypopnea-56-2-0,hypopneaflow5620,Hypopnea-56-2-0,AirFlw,56,2,0,computer annotated A-Flow channel Hypopnea code 56 att. 2 subatt. 0
+Respiratory,Hypopnea-56-2-1,hypopneaflow5621,Hypopnea-56-2-1,AirFlw,56,2,1,computer annotated A-Flow channel Hypopnea code 56 att. 2 subatt. 1
+Respiratory,Hypopnea 4% A,hypopnea4percenta,Hypopnea 4% A,AirFlw,7124,0,0,computer annotated Hypopnea 4% A
+Respiratory,Hypopnea 4% ,hypopnea4percent,Hypopnea 4% ,AirFlw,7134,0,0,computer annotated Hypopnea 4% 
+Respiratory,Hypopnea 3% A,hypopnea3percenta,Hypopnea 3% A,AirFlw,7123,0,0,computer annotated Hypopnea 3% A
+Respiratory,Hypopnea 3% ,hypopnea3percent,Hypopnea 3% ,AirFlw,7133,0,0,computer annotated Hypopnea 3%  
+Respiratory,Hypopnea 1% A,hypopnea1percenta,Hypopnea 1% A,AirFlw,7121,0,0,computer annotated Hypopnea 1% A
+Respiratory,Hypopnea 0% A,hypopnea0percenta,Hypopnea 0% A,AirFlw,7120,0,0,computer annotated Hypopnea 0% A
+Respiratory,Deleted Hypopnea 4% A,deletehypopnea4percenta,Deleted Hypopnea 4% A,AirFlw,7224,0,0,computer annotated deletion of computer annotated Hypopnea 4% A
+Respiratory,Deleted Hypopnea 4% ,deletehypopnea4percent,Deleted Hypopnea 4% ,AirFlw,7234,0,0,computer annotated deletion of computer annotated Hypopnea 4% 
+Respiratory,Deleted Hypopnea 3% A,deletehypopnea3percenta,Deleted Hypopnea 3% A,AirFlw,7223,0,0,computer annotated deletion of computer annotated Hypopnea 3% A 
+Respiratory,Deleted Hypopnea 3% ,deletehypopnea3percent,Deleted Hypopnea 3% ,AirFlw,7233,0,0,computer annotated deletion of computer annotated Hypopnea 3% 
+Respiratory,Deleted Hypopnea 1% A,deletehypopnea1percenta,Deleted Hypopnea 1% A,AirFlw,7221,0,0,computer annotated deletion of computer annotated Hypopnea 1% A
+Respiratory,Deleted Hypopnea 0% A,deletehypopnea0percenta,Deleted Hypopnea 0% A,AirFlw,7220,0,0,computer annotated deletion of computer annotated Hypopnea 0% A
+Respiratory,AE Tech Apnea,apnea,AE Tech Apnea,AirFlw,1307,10,0,manually annotated apnea
+Respiratory,AE Central,centapnea,AE Central,AirFlw,6109,0,0,manually annotated central apnea
+Respiratory,Apnea-55-1-0,apneaflow5510,Apnea-55-1-0,AirFlw,55,1,0,computer annotated A-Flow channel Apnea code 55 att. 1 subatt. 0
+Respiratory,Apnea-55-1-1,apneaflow5511,Apnea-55-1-1,AirFlw,55,1,1,computer annotated A-Flow channel Apnea  code 55 att. 1 subatt. 1
+Respiratory,Apnea-56-1-0,apneaflow5610,Apnea-56-1-0,AirFlw,56,1,0,computer annotated A-Flow channel Apnea  code 56 att. 1 subatt. 0
+Respiratory,Apnea-56-1-1,apneaflow5611,Apnea-56-1-1,AirFlw,56,1,1,computer annotated A-Flow channel Apnea  code 56 att. 1 subatt. 1
+Respiratory,Apnea-7110-0-0,apneatimebed711000,Apnea-7110-0-0,AirFlw,7110,0,0,computer annotated TIB Apnea  code 7110 att. 0 subatt. 0
+Respiratory,Apnea-7111-0-0,apneatimebed711100,Apnea-7111-0-0,AirFlw,7111,0,0,computer annotated TIB Apnea  code 7111 att. 0 subatt. 0
+Respiratory,Apnea-7113-0-0,apneatimebed711300,Apnea-7113-0-0,AirFlw,7113,0,0,computer annotated TIB Apnea  code 7113 att. 0 subatt. 0
+Respiratory,Apnea-7114-0-0,apneatimebed711400,Apnea-7114-0-0,AirFlw,7114,0,0,computer annotated TIB Apnea  code 7114 att. 0 subatt. 0
+Respiratory,Apnea A-7100-0-0,apneatimebeda710000,Apnea A-7100-0-0,AirFlw,7100,0,0,computer annotated TIB Apnea A code 7100 att. 0 subatt. 0
+Respiratory,Apnea A-7101-0-0,apneatimebeda710100,Apnea A-7101-0-0,AirFlw,7101,0,0,computer annotated TIB Apnea A code 7101 att. 0 subatt. 0
+Respiratory,Apnea A-7103-0-0,apneatimebeda710300,Apnea A-7103-0-0,AirFlw,7103,0,0,computer annotated TIB Apnea A code 7103 att. 0 subatt. 0
+Respiratory,Apnea A-7104-0-0,apneatimebeda710400,Apnea A-7104-0-0,AirFlw,7104,0,0,computer annotated TIB Apnea A code 7104 att. 0 subatt. 0
+Respiratory,Deleted Apnea A-7200-0-0,deleteapneatimebeda720000,Deleted Apnea A-7200-0-0,AirFlw,7200,0,0,computer annotated deletion of computer annotated TIB Apnea A code 7200 att. 0 subatt. 0
+Respiratory,Deleted Apnea A-7201-0-0,deleteapneatimebeda720100,Deleted Apnea A-7201-0-0,AirFlw,7201,0,0,computer annotated deletion of computer annotated TIB Apnea A code 7201 att. 0 subatt. 0
+Respiratory,Deleted Apnea A-7203-0-0,deleteapneatimebeda720300,Deleted Apnea A-7203-0-0,AirFlw,7203,0,0,computer annotated deletion of computer annotated TIB Apnea A code 7203 att. 0 subatt. 0
+Respiratory,Deleted Apnea A-7204-0-0,deletelapneatimebeda720400,Deleted Apnea A-7204-0-0,AirFlw,7204,0,0,computer annotated deletion of computer annotated TIB Apnea A code 7204 att. 0 subatt. 0
+Respiratory,Deleted Apnea-7210-0-0,deleteapneatimebed721000,Deleted Apnea-7210-0-0,AirFlw,7210,0,0,computer annotated deletion of computer annotated TIB Apnea code 7210 att. 0 subatt. 0
+Respiratory,Deleted Apnea-7211-0-0,deleteapneatimebed721100,Deleted Apnea-7211-0-0,AirFlw,7211,0,0,computer annotated deletion of computer annotated TIB Apnea code 7211 att. 0 subatt. 0
+Respiratory,Deleted Apnea-7213-0-0,deleteapneatimebed721300,Deleted Apnea-7213-0-0,AirFlw,7213,0,0,computer annotated deletion of computer annotated TIB Apnea code 7213 att. 0 subatt. 0
+Respiratory,Deleted Apnea-7214-0-0,deleteapneatimebed721400,Deleted Apnea-7214-0-0,AirFlw,7214,0,0,computer annotated deletion of computer annotated TIB Apnea code 7214 att. 0 subatt. 0
+Respiratory,Quality-Bad,badairflow,Quality-Bad,AirFlw,3515,1,0,computer annotated Bad quality A-Flow.  The airflow signal is low pass filtered to significantly suppress high frequency components.  This filter is only applied to determine airflow quality.  The filtered signal is then integrated across 300 second windows with a 75% overlapping window.  The integrated power for each window is compared to thresholds to define marginal or poor airflow.  Bad airflow not only exceeds the threshold for bad airflow threshold but also includes a required minimum level of snoring in at least 50% of the window.
+Respiratory,Quality-Poor,poorairflow,Quality-Poor,AirFlw,3515,3,0,computer annotated Poor quality A-Flow.  The airflow signal is low pass filtered to significantly suppress high frequency components.  This filter is only applied to determine airflow quality.  The filtered signal is then integrated across 300 second windows with a 75% overlapping window.  The integrated power for each window is compared to thresholds to define marginal or poor airflow.  
+Respiratory,Quality-Marginal,marginalairflow,Quality-Marginal,AirFlw,3515,2,0,computer annotated Marginal quality A-Flow.  The airflow signal is low pass filtered to significantly suppress high frequency components.  This filter is only applied to determine airflow quality.  The filtered signal is then integrated across 300 second windows with a 75% overlapping window.  The integrated power for each window is compared to thresholds to define marginal or poor airflow.  
+Respiratory,ExTIB Airflow,airflowartifact,ExTIB Airflow,AirFlw,5158,0,0,computer annotated-when A-Flow quality is unacceptable for determining hypopneas
+Respiratory,Increase-55-0-0,increaseflow5500,Increase-55-0-0,AirFlw,55,0,0,computer annotated increase in A-Flow channel code 55 att. 0 subatt. 0
+Respiratory,Increase-55-0-1,increaseflow5501,Increase-55-0-1,AirFlw,55,0,1,computer annotated increase in A-Flow channel code 55 att. 0 subatt. 1
+Respiratory,Increase-55-3-0,increaseflow5530,Increase-55-3-0,AirFlw,55,3,0,computer annotated increase in A-Flow channel code 55 att. 3 subatt. 0
+Respiratory,Increase-55-3-1,increaseflow5531,Increase-55-3-1,AirFlw,55,3,1,computer annotated increase in A-Flow channel code 55 att. 1 subatt. 1
+Respiratory,Increase-56-0-0,increaseflow5600,Increase-56-0-0,AirFlw,56,0,0,computer annotated increase in A-Flow channel code 56 att. 0 subatt. 0
+Respiratory,Increase-56-0-1,increaseflow5601,Increase-56-0-1,AirFlw,56,0,1,computer annotated increase in A-Flow channel code 56 att. 0 subatt. 1
+Respiratory,Increase-56-3-0,increaseflow5630,Increase-56-3-0,AirFlw,56,3,0,computer annotated increase in A-Flow channel code 56 att. 3 subatt. 0
+Respiratory,Increase-56-3-1,increaseflow5631,Increase-56-3-1,AirFlw,56,3,1,computer annotated increase in A-Flow channel code 56 att. 3 subatt. 1
+Respiratory,Tech Hypo Ventilation,techhypovent,Tech Hypo Ventilation,AirFlw,5171,0,0,tech TIB Hypo Ventilation
+Respiratory,Cresc w/Arousal,crescarous,Cresc w/Arousal,Mic,3502,1,0,computer annotated A-snore channel cresc w/arousal
+Respiratory,3 snore + arousal,3snorearous,3 snore + arousal,Mic,3502,1,1,computer annotated A-snore channel 3 snore + arousal
+Respiratory,Apnea-3506-2-0,apneasnore350620,Apnea-3506-2-0,Mic,3506,2,0,computer annotated A-snore channel Apnea code 3506 att. 2 subatt. 0
+Respiratory,Apnea-3507-2-0,apneasnore350720,Apnea-3507-2-0,Mic,3507,2,0,computer annotated A-snore channel Apnea code 3507 att. 2 subatt. 0
+Respiratory,Hypopnea-3506-3-0,hypopneasnore350630,Hypopnea-3506-3-0,Mic,3506,3,0,computer annotated A-snore channel Hypopnea code 3506 att. 3 subatt. 0
+Respiratory,Hypopnea-3507-3-0,hypopneasnore350730,Hypopnea-3507-3-0,Mic,3507,3,0,computer annotated A-snore channel Hypopnea code 3507 att. 3 subatt. 0
+Respiratory,AEs No Snoring,nosnore,AEs No Snoring,Mic,3503,0,0,Aes No Snoring
+Respiratory,Gasp/Quiet-3506-0-0,gaspquietsnore350600,Gasp/Quiet-3506-0-0,Mic,3506,0,0,computer annotated A-snore channel gasp/quiet code 3506 att. 0 subatt. 0
+Respiratory,Gasp/Quiet-3506-1-0,gaspquietsnore350610,Gasp/Quiet-3506-1-0,Mic,3506,1,0,computer annotated A-snore channel gasp/quiet code 3506 att. 1 subatt. 0
+Respiratory,Gasp/Quiet-3507-0-0,gaspquietsnore350700,Gasp/Quiet-3507-0-0,Mic,3507,0,0,computer annotated A-snore channel gasp/quiet code 3507 att. 0 subatt. 0
+Respiratory,Gasp/Quiet-3507-1-0,gaspquietsnore350710,Gasp/Quiet-3507-1-0,Mic,3507,1,0,computer annotated A-snore channel gasp/quiet code 3507 att. 1 subatt. 0
+Respiratory,Alarm,alarm,Alarm,Mic,3501,0,0,computer annotated A-snore channel alarm
+Respiratory,Alarm Loud,alarmloud,Alarm Loud,Mic,3501,1,0,computer annotated A-snore channel Alarm Loud
+Respiratory,Alarm Moderate,alarmmoderate,Alarm Moderate,Mic,3501,2,0,computer annotated A-snore channel Alarm Moderate
+Respiratory,Alarm Light,alarmlight,Alarm Light,Mic,3501,3,0,computer annotated A-snore channel Alarm Light
+Respiratory,Auto Exclude Snoring,autoexcsnore,Auto Exclude Snoring,Mic,5176,0,0,computer annotated A-snore channel auto exclude snoring
+Respiratory,Tech Exclude Snoring,techexcsnore,Tech Exclude Snoring,Mic,5177,0,0,manually annotated A-snore channel exclude snoring 
+Respiratory,Baseline N1,baselinespo2,Baseline N1,SpO2,5010,0,0,Baseline N1
+Respiratory,Baseline Extra N1,baselinespo2extra,Baseline Extra N1,SpO2,5211,0,0,Baseline Extra N1
+Respiratory,DE4%,spo2desat4percent,DE 4%,SpO2,1111,0,0,computer annotated A-SpO2 channel DE 4%
+Respiratory,DE3%-1101-00,spo2desat3percent110100,DE3%-1101-00,SpO2,1101,0,0,computer annotated A-SpO2 channel DE 3% code 1101 att. 0 subatt. 0
+Respiratory,DE3%-1201-0-0,spo2desat3percent120100,DE3%-1201-0-0,SpO2,1201,0,0,computer annotated A-SpO2 channel DE 3% code 1201 att. 0 subatt. 0
+Respiratory,DE3%-1301-0-0,spo2desat3percent130100,DE3%-1301-0-0,SpO2,1301,0,0,computer annotated A-SpO2 channel DE 3% code 1301 att. 0 subatt. 0
+Respiratory,DE3%-1302-0-0,spo2desat3percent130200,DE3%-1302-0-0,SpO2,1302,0,0,computer annotated A-SpO2 channel DE 3% code 1302 att. 0 subatt. 0
+Respiratory,DE1%,spo2desat1percent,DE1%,SpO2,1305,0,0,computer annotated A-SpO2 channel DE 1% code 1305 att. 0 subatt. 0
+Respiratory,Quality-Bad,badspo2,Quality-Bad,SpO2,2110,1,0,"computer annotated bad quality A-SpO2 channel.  A cross correlation analysis is applied to every SpO2 sample to compare the red and infrared optical signals.  The first step is to create a sum of cross correlation results for each sample that includes a fixed number of previous, current and subsequent samples.  The summed values are then compared to cross correlation thresholds to determine if the sample is marginal, poor and bad SpO2.   If the sample is classified as poor or bad it is not used to calculate SpO2.  A region is classified with marginal, poor or bad SpO2 when contiguous samples are classified as marginal, poor or bad.  "
+Respiratory,Quality-Poor,poorspo2,Quality-Poor,SpO2,2110,3,0,"computer annotated poor quality A-SpO2 channel.  A cross correlation analysis is applied to every SpO2 sample to compare the red and infrared optical signals.  The first step is to create a sum of cross correlation results for each sample that includes a fixed number of previous, current and subsequent samples.  The summed values are then compared to cross correlation thresholds to determine if the sample is marginal, poor and bad SpO2.   If the sample is classified as poor or bad it is not used to calculate SpO2.  A region is classified with marginal, poor or bad SpO2 when contiguous samples are classified as marginal, poor or bad.  "
+Respiratory,Quality-Marginal,marginalspo2,Quality-Marginal,SpO2,2110,2,0,"computer annotated marginal quality A-SpO2 channel.  A cross correlation analysis is applied to every SpO2 sample to compare the red and infrared optical signals.  The first step is to create a sum of cross correlation results for each sample that includes a fixed number of previous, current and subsequent samples.  The summed values are then compared to cross correlation thresholds to determine if the sample is marginal, poor and bad SpO2.   If the sample is classified as poor or bad it is not used to calculate SpO2.  A region is classified with marginal, poor or bad SpO2 when contiguous samples are classified as marginal, poor or bad.  "
+Respiratory,Auto Low SpO2,steadylowspo2,Auto Low SpO2,SpO2,5175,0,0,auto low SpO2
+Respiratory,Auto Exclude SpO2,badpoorspo2,Auto Exclude SpO2,SpO2,5178,0,0,auto exclude SpO2
+Respiratory,ExTIB SpO2 quality,spo2artifact,ExTIB SpO2 quality,SpO2,51540,0,0,ExTIB SpO2 quality
+Respiratory,ExTIB SpO2 rejected,spo2rejected,ExTIB SpO2 rejected,SpO2,51541,0,0,ExTIB SpO2 rejected
+Respiratory,Tech Exc. SpO2,techexcspo2,Tech Exc. SpO2,SpO2,5173,0,0,manually annotated exclusion of SpO2
+Respiratory,A/H Tech Exc. SpO2,responslowspo2,A/H Tech Exc. SpO2,SpO2,5174,0,0,A/H Tech Exc. SpO2
+Pulse,Increase,increasepulse,Increase,Dcurr,51,0,0,computer annotated A-Pulse channel Increase
+Pulse,Decrease,decreasepulse,Decrease,Dcurr,52,0,0,computer annotated A-Pulse channel Decrease
+Pulse,HRMinMax,hrminmax,HRMinMax,Dcurr,59,0,0,A-Pulse channel HRMinMax
+Head Movement,Movement Arousal,movementarousal,Movement Arousal,IrNgn,5034,1,0,computer annotated Hmov channel Movement Arousal
+Head Movement,Position,positon,Position,IrNgn,5155,0,0,TIB Position
+Head Movement,Gross Movement,grossmovement,Gross Movement,Tilt1,5036,0,0,computer annotated Hmov channel Gross Movement
+Head Movement,Movement ,movement,Movement ,Tilt1,5151,0,0,TIB Movement
+Unknown,Unknown Event 1,unknown1,Unknown Event 1,IrNgn,3501,0,7,Unknown ARES Event 1
+Unknown,Unknown Event 2,unknown2,Unknown Event 2,IrNgn,3509,0,0,Unknown ARES Event 2
+Unknown,Unknown Event 3,unknown3,Unknown Event 3,IrNgn,3510,0,0,Unknown ARES Event 3
+Unknown,Unknown Event 4,unknown4,Unknown Event 4,IrNgn,3511,0,0,Unknown ARES Event 4

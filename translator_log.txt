@@ -4380,3 +4380,375 @@ XML DOM Created Successfully..
  .....................
   => The task finished!
    * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:09:39
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:12:19
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:14:50
+ .....................
+  => Translating.. at 2015-09-23 15:14:50
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/out/B5000207_B_105_0004402010067_ARES_2015-09-23_15-14-50.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:37:01
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:38:01
+ .....................
+  => Translating.. at 2015-09-23 15:38:01
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/2/B5001162_B_120_0004402010236.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5001162_B_120_0004402010236.xml(Not exist!)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/2/B5001162_B_120_0004402010236.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:38:53
+ .....................
+  => Translating.. at 2015-09-23 15:38:53
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.xml(Not exist!)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:38:56
+ .....................
+  => Translating.. at 2015-09-23 15:38:56
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.xml(Not exist!)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:46:10
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:46:36
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:46:39
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:46:42
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:46:43
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:48:30
+ .....................
+  => Translating.. at 2015-09-23 15:48:30
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/out/B5000207_B_105_0004402010067_ARES_2015-09-23_15-48-30.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 15:59:51
+ .....................
+  => Translating.. at 2015-09-23 15:59:51
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.xml(Not exist!)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 16:02:46
+ .....................
+  => Translating.. at 2015-09-23 16:02:46
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 16:18:45
+ .....................
+  => Translating.. at 2015-09-23 16:18:45
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.xml(Not exist!)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/out/B5000207_B_105_0004402010067_ARES_2015-09-23_16-18-45.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 16:18:57
+ .....................
+  => Translating.. at 2015-09-23 16:18:57
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/out/B5000207_B_105_0004402010067_ARES_2015-09-23_16-18-57.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 16:22:12
+    * Please select the output-directory of resulting files;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2015-09-23 16:22:23
+>>> Missing event code: 3501
+>>> Missing event code: 5216
+>>> Missing event code: 50101
+>>> Missing event code: 5211
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+>>> Missing event code: 2112
+>>> Missing event code: 100001
+>>> Missing event code: 100007
+>>> Missing event code: 100002
+>>> Missing event code: 100003
+>>> Missing event code: 100004
+>>> Missing event code: 100005
+>>> Missing event code: 100006
+ .....................
+  => Translating.. at 2015-09-23 16:22:24
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-09-23 16:23:33
+ .....................
+  => Translating.. at 2015-09-23 16:23:33
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/2/B5001162_B_120_0004402010236.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5001162_B_120_0004402010236.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/2/B5001162_B_120_0004402010236.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-10-05 11:19:12
+>>> Missing event code: 3501
+>>> Missing event code: 5216
+>>> Missing event code: 50101
+>>> Missing event code: 5211
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+>>> Missing event code: 2112
+>>> Missing event code: 100001
+>>> Missing event code: 100007
+>>> Missing event code: 100002
+>>> Missing event code: 100003
+>>> Missing event code: 100004
+>>> Missing event code: 100005
+>>> Missing event code: 100006
+ .....................
+  => Translating.. at 2015-10-05 11:24:57
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-10-05 11:26:17
+>>> Missing event code: 3501
+>>> Missing event code: 5216
+>>> Missing event code: 50101
+>>> Missing event code: 5211
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+>>> Missing event code: 2112
+ .....................
+  => Translating.. at 2015-10-05 11:26:17
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067_ARES_2015-10-05_11-26-17.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-10-05 11:36:48
+>>> Missing event code: 3501
+>>> Missing event code: 5216
+>>> Missing event code: 50101
+>>> Missing event code: 5211
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+>>> Missing event code: 2112
+ .....................
+  => Translating.. at 2015-10-05 11:36:48
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-10-05 11:41:56
+>>> Missing event code: 3501
+>>> Missing event code: 5216
+>>> Missing event code: 50101
+>>> Missing event code: 5211
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+>>> Missing event code: 2112
+ .....................
+  => Translating.. at 2015-10-05 11:41:57
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067_ARES.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: null
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-10-06 11:02:26
+>>> Missing event code: 3501
+>>> Missing event code: 5216
+>>> Missing event code: 50101
+>>> Missing event code: 5211
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+>>> Missing event code: 2112
+ .....................
+  => Translating.. at 2015-10-06 11:02:26
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067_ARES_2015-10-06_11-02-26.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: null
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-10-06 11:09:28
+>>> Missing event code: 3501
+>>> Missing event code: 5216
+>>> Missing event code: 50101
+>>> Missing event code: 5211
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+>>> Missing event code: 2112
+>>> Missing event code: 100001
+>>> Missing event code: 100007
+>>> Missing event code: 100002
+>>> Missing event code: 100003
+>>> Missing event code: 100004
+>>> Missing event code: 100005
+>>> Missing event code: 100006
+ .....................
+  => Translating.. at 2015-10-06 11:09:28
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/projects/edf-editor-translator/resource-wei/ARES/out/1/B5000207_B_105_0004402010067.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
