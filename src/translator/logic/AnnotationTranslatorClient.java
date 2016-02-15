@@ -291,20 +291,45 @@ public class AnnotationTranslatorClient {
   // wei wang: change 'validize_file' to 'validate_file'
   private static String validate_file(String dir, String basename,
       String extension) {
-
     if (dir == null || basename == null || extension == null)
       return null;
-
-    String file = separatorReplacer(dir + File.separator + basename
-        + extension.toUpperCase());
-
-    if (!(new File(file)).exists()) {
-      file = separatorReplacer(dir + File.separator + basename + extension);
-      // if (!(new File(file)).exists())
-      // file = null;
+    String fileName = basename.toUpperCase() + extension.toUpperCase();
+    // get all the files from given dir
+    ArrayList<File> fList = listf(dir, new ArrayList<File>());
+    for (File file : fList) {
+      String filePath = file.getAbsolutePath();
+      filePath = separatorReplacer(filePath);
+      System.out.println(filePath);
+      String currentFileName = filePath.substring(
+        filePath.lastIndexOf(File.separator) + 1, filePath.length()).toUpperCase();
+      System.out.println(currentFileName);
+      if (currentFileName.equals(fileName)) {
+        return file.getAbsolutePath();
+      }
     }
-    return file;
+    return null;
   }
+
+  public static ArrayList<File> listf(String directoryName, ArrayList<File> files) {
+    // .............list file
+    File directory = new File(directoryName);
+    if (directory.exists()){
+      // get all the files from a directory
+      File[] fList = directory.listFiles();
+
+      for (File file : fList) {
+          if (file.isFile()) {
+              files.add(file);
+          } else if (file.isDirectory()) {
+              listf(file.getAbsolutePath(),files);
+          }
+      }
+      // System.out.println(fList);
+      return files;
+    }else{
+      return null;
+    }
+  }        
 
   /**
    * Updates patterns corresponding to CheckBox event

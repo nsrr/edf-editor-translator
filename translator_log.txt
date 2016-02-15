@@ -4752,3 +4752,973 @@ XML DOM Created Successfully..
  .....................
   => The task finished!
    * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2015-10-06 11:43:22
+>>> Missing event code: 3501
+>>> Missing event code: 5216
+>>> Missing event code: 50101
+>>> Missing event code: 5211
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+>>> Missing event code: 2112
+ .....................
+  => Translating.. at 2015-10-06 11:43:22
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/test/B5000207_B_105_0004402010067.XML(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/out/1/B5000207_B_105_0004402010067_2015-10-06_11-43-22.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: null
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:12:45
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:13:34
+ .....................
+  => Translating.. at 2016-02-02 05:13:34
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00.xml(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_Compumedics_2016-02-02_05-13-34.xml
+   * Translation:	Failed!
+ .....................
+  => Translating.. at 2016-02-02 05:13:34
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09.xml(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_09/3001_09_Compumedics_2016-02-02_05-13-34.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 2 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:40:37
+    * Please select the output-directory of resulting files;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:41:24
+    * Please select the output-directory of resulting files;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:41:42
+ .....................
+  => Translating.. at 2016-02-02 05:41:42
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00.xml(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_2016-02-02_05-41-42_Compumedics.xml
+   * Translation:	Failed!
+ .....................
+  => Translating.. at 2016-02-02 05:41:42
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09.xml(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_09/3001_09_2016-02-02_05-41-42_Compumedics.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 2 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:44:07
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:44:12
+ .....................
+  => Translating.. at 2016-02-02 05:44:12
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00.xml(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_Compumedics_2016-02-02_05-44-12.xml
+   * Translation:	Failed!
+ .....................
+  => Translating.. at 2016-02-02 05:44:12
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09.xml(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_09/3001_09_Compumedics_2016-02-02_05-44-12.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 2 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:48:38
+ .....................
+  => Translating.. at 2016-02-02 05:48:38
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_Compumedics_2016-02-02_05-48-38.xml
+   * Translation:	Failed!
+ .....................
+  => Translating.. at 2016-02-02 05:48:38
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.edf(Existed)
+   * Annotation:	(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_09/3001_09_Compumedics_2016-02-02_05-48-38.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 2 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:56:05
+ .....................
+  => Translating.. at 2016-02-02 05:56:05
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_Compumedics_2016-02-02_05-56-05.xml
+   * Translation:	Failed!
+ .....................
+  => Translating.. at 2016-02-02 05:56:05
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.edf(Existed)
+   * Annotation:	(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_09/3001_09_Compumedics_2016-02-02_05-56-05.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 2 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-02 05:59:22
+ .....................
+  => Translating.. at 2016-02-02 05:59:22
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_2016-02-02_05-59-22_Compumedics.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-02 06:06:02
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2016-02-02 06:06:05
+ .....................
+  => Translating.. at 2016-02-02 06:06:05
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_Compumedics_2016-02-02_06-06-05.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-03 00:00:10
+ .....................
+  => Translating.. at 2016-02-03 00:00:10
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.XML(Existed)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_Compumedics_2016-02-03_00-00-10.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-03 00:01:49
+ .....................
+  => Translating.. at 2016-02-03 00:01:49
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.XML(Existed)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_Compumedics_2016-02-03_00-01-49.xml
+   * Translation:	Failed!
+ .....................
+  => Translating.. at 2016-02-03 00:01:49
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/newestCHATmappingfile081414.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.XML(Existed)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_09/3001_09_Compumedics_2016-02-03_00-01-49.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 2 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-03 00:05:39
+ .....................
+  => Translating.. at 2016-02-03 00:05:39
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/configuration/nsrr-psg-events-compumedics-mapping.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.XML(Existed)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_09/3001_09_Compumedics_2016-02-03_00-05-39.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-03 00:05:47
+ .....................
+  => Translating.. at 2016-02-03 00:05:47
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/configuration/nsrr-psg-events-compumedics-mapping.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.XML(Existed)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_Compumedics_2016-02-03_00-05-47.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-03 00:05:53
+ .....................
+  => Translating.. at 2016-02-03 00:05:53
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/configuration/nsrr-psg-events-compumedics-mapping.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_00/3001_00.XML(Existed)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_00/3001_00_Compumedics_2016-02-03_00-05-53.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => Translating.. at 2016-02-03 00:05:53
+   * Vendor:	Compumedics
+   * Mapping:	/Users/strongtsq/projects/edf-editor-translator/configuration/nsrr-psg-events-compumedics-mapping.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/data for Yan and Shiqiang-2/3001_09/3001_09.XML(Existed)
+   * Output file:	/Users/strongtsq/Desktop/test/3001_09/3001_09_Compumedics_2016-02-03_00-05-53.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 2 out of 2 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:01:12
+ .....................
+  => Translating.. at 2016-02-16 00:01:12
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026-2.edf(Existed)
+   * Annotation:	(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026-2_ARES_2016-02-16_00-01-12.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:02:58
+>>> Missing event code: 5216
+>>> Missing event code: 50101
+>>> Missing event code: 5211
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-16 00:02:59
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/ares mapping file 8-10-15.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_ARES_2016-02-16_00-02-58.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: null
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:21:57
+ .....................
+  => Translating.. at 2016-02-16 00:21:57
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/B5000207_B_105_0004402010067_ARES_2016-02-16_00-21-57.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:22:13
+ .....................
+  => Translating.. at 2016-02-16 00:22:13
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	(Not exist!)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/1/B5000207_B_105_0004402010067_ARES_2016-02-16_00-22-13.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:22:26
+ .....................
+  => Translating.. at 2016-02-16 00:22:26
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/out/1/B5000207_B_105_0004402010067.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/1/B5000207_B_105_0004402010067_ARES_2016-02-16_00-22-26.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:24:14
+>>> Missing event code: 3501
+>>> Missing event code: 2112
+ .....................
+  => Translating.. at 2016-02-16 00:24:14
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/test/B5000207_B_105_0004402010067.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/1/B5000207_B_105_0004402010067_ARES_2016-02-16_00-24-14.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: null
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:35:34
+ .....................
+  => Translating.. at 2016-02-16 00:35:34
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/test/1/B5000207_B_105_0004402010067.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/input/ARES/test/B5000207_B_105_0004402010067.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/1/B5000207_B_105_0004402010067_ARES_2016-02-16_00-35-34.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: nullDuration not found: null
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:37:50
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-16 00:37:51
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_ARES_2016-02-16_00-37-50.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:56:14
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-16 00:56:14
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:59:07
+ .....................
+  => Translating.. at 2016-02-16 00:59:07
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_ARES.xml
+   * Translation:	Failed!
+   * Errors:
+org.xml.sax.SAXParseException; lineNumber: 25683; columnNumber: 12; XML document structures must start and end within the same entity.
+	at org.apache.xerces.parsers.DOMParser.parse(Unknown Source)
+	at org.apache.xerces.jaxp.DocumentBuilderImpl.parse(Unknown Source)
+	at translator.logic.AbstractTranslatorFactory.resolveBOM(AbstractTranslatorFactory.java:286)
+	at translator.logic.ARESTranslatorFactory.read(ARESTranslatorFactory.java:59)
+	at translator.logic.AnnotationTranslatorClient.conductTranslation(AnnotationTranslatorClient.java:127)
+	at translator.gui.TranslatorGUI.actionPerformed(TranslatorGUI.java:464)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at java.awt.Component.processMouseEvent(Component.java:6535)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6300)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4891)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2750)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 00:59:39
+ .....................
+  => Translating.. at 2016-02-16 00:59:39
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_ARES.xml
+   * Translation:	Failed!
+   * Errors:
+org.xml.sax.SAXParseException; lineNumber: 25683; columnNumber: 12; XML document structures must start and end within the same entity.
+	at org.apache.xerces.parsers.DOMParser.parse(Unknown Source)
+	at org.apache.xerces.jaxp.DocumentBuilderImpl.parse(Unknown Source)
+	at translator.logic.AbstractTranslatorFactory.resolveBOM(AbstractTranslatorFactory.java:286)
+	at translator.logic.ARESTranslatorFactory.read(ARESTranslatorFactory.java:59)
+	at translator.logic.AnnotationTranslatorClient.conductTranslation(AnnotationTranslatorClient.java:127)
+	at translator.gui.TranslatorGUI.actionPerformed(TranslatorGUI.java:464)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at java.awt.Component.processMouseEvent(Component.java:6535)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6300)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4891)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2750)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:02:40
+ .....................
+  => Translating.. at 2016-02-16 01:02:40
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_ARES.xml
+   * Translation:	Failed!
+   * Errors:
+org.xml.sax.SAXParseException; lineNumber: 25683; columnNumber: 12; XML document structures must start and end within the same entity.
+	at org.apache.xerces.parsers.DOMParser.parse(Unknown Source)
+	at org.apache.xerces.jaxp.DocumentBuilderImpl.parse(Unknown Source)
+	at translator.logic.AbstractTranslatorFactory.resolveBOM(AbstractTranslatorFactory.java:286)
+	at translator.logic.ARESTranslatorFactory.read(ARESTranslatorFactory.java:59)
+	at translator.logic.AnnotationTranslatorClient.conductTranslation(AnnotationTranslatorClient.java:127)
+	at translator.gui.TranslatorGUI.actionPerformed(TranslatorGUI.java:464)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at java.awt.Component.processMouseEvent(Component.java:6535)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6300)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4891)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2750)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:03:03
+ .....................
+  => Translating.. at 2016-02-16 01:03:03
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_ARES.xml
+   * Translation:	Failed!
+   * Errors:
+org.xml.sax.SAXParseException; lineNumber: 25683; columnNumber: 12; XML document structures must start and end within the same entity.
+	at org.apache.xerces.parsers.DOMParser.parse(Unknown Source)
+	at org.apache.xerces.jaxp.DocumentBuilderImpl.parse(Unknown Source)
+	at translator.logic.AbstractTranslatorFactory.resolveBOM(AbstractTranslatorFactory.java:286)
+	at translator.logic.ARESTranslatorFactory.read(ARESTranslatorFactory.java:59)
+	at translator.logic.AnnotationTranslatorClient.conductTranslation(AnnotationTranslatorClient.java:127)
+	at translator.gui.TranslatorGUI.actionPerformed(TranslatorGUI.java:464)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at java.awt.Component.processMouseEvent(Component.java:6535)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6300)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4891)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2750)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:05:53
+ .....................
+  => Translating.. at 2016-02-16 01:05:53
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml
+   * Translation:	Failed!
+   * Errors:
+org.xml.sax.SAXParseException; lineNumber: 25683; columnNumber: 12; XML document structures must start and end within the same entity.
+	at org.apache.xerces.parsers.DOMParser.parse(Unknown Source)
+	at org.apache.xerces.jaxp.DocumentBuilderImpl.parse(Unknown Source)
+	at translator.logic.AbstractTranslatorFactory.resolveBOM(AbstractTranslatorFactory.java:286)
+	at translator.logic.ARESTranslatorFactory.read(ARESTranslatorFactory.java:59)
+	at translator.logic.AnnotationTranslatorClient.conductTranslation(AnnotationTranslatorClient.java:127)
+	at translator.gui.TranslatorGUI.actionPerformed(TranslatorGUI.java:464)
+	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2022)
+	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2348)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
+	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
+	at java.awt.Component.processMouseEvent(Component.java:6535)
+	at javax.swing.JComponent.processMouseEvent(JComponent.java:3324)
+	at java.awt.Component.processEvent(Component.java:6300)
+	at java.awt.Container.processEvent(Container.java:2236)
+	at java.awt.Component.dispatchEventImpl(Component.java:4891)
+	at java.awt.Container.dispatchEventImpl(Container.java:2294)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4888)
+	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4525)
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4466)
+	at java.awt.Container.dispatchEventImpl(Container.java:2280)
+	at java.awt.Window.dispatchEventImpl(Window.java:2750)
+	at java.awt.Component.dispatchEvent(Component.java:4713)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:758)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.awt.EventQueue$4.run(EventQueue.java:731)
+	at java.awt.EventQueue$4.run(EventQueue.java:729)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:728)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:07:02
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-16 01:07:03
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:08:09
+ .....................
+  => Translating.. at 2016-02-16 01:08:10
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml
+   * Translation:	Failed!
+ .....................
+  => The task finished!
+   * 0 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:09:45
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-16 01:09:45
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_ARES_2016-02-16_01-09-45.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:14:07
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-16 01:14:08
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_01-14-07.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:28:04
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:28:07
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-16 01:28:08
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:29:58
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:30:01
+ .....................
+  => Translating.. at 2016-02-16 01:30:01
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_ARES_2016-02-16_01-30-01.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:33:01
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-16 01:33:01
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026_ARES_2016-02-16_01-33-01.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:35:02
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-16 01:35:03
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:38:22
+ .....................
+  => Translating.. at 2016-02-16 01:38:22
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+>>> Missing event code: 3501
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+>>> Missing event code: 5168
+ .....................
+  => Translating.. at 2016-02-16 01:38:23
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000471_S_406_0004405020029.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000471_S_406_0004405020029.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000471_S_406_0004405020029.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+>>> Missing event code: 2111
+>>> Missing event code: 2112
+ .....................
+  => Translating.. at 2016-02-16 01:38:23
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000487_S_407_0004405020021.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000487_S_407_0004405020021.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000487_S_407_0004405020021.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 3 out of 3 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-16 01:38:46
+ .....................
+  => Translating.. at 2016-02-16 01:38:46
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000460_S_406_0004405020026.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000460_S_406_0004405020026.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => Translating.. at 2016-02-16 01:38:46
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000471_S_406_0004405020029.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000471_S_406_0004405020029.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000471_S_406_0004405020029.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => Translating.. at 2016-02-16 01:38:46
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/ares mapping file 8-10-15-testing 99 for att-subatt 9-25-15 with asi to edf signal location format.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000487_S_407_0004405020021.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/S8000487_S_407_0004405020021.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/EDF-EDITOR/Translation-Error-2-62016/output/S8000487_S_407_0004405020021.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 3 out of 3 EDF files have been successfully translated.
