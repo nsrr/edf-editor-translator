@@ -5722,3 +5722,402 @@ Duration not found: 100001Duration not found: 100007Duration not found: 100002Du
  .....................
   => The task finished!
    * 3 out of 3 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 11:42:58
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-24 11:42:59
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247_ARES_2016-02-24_11-42-58_NSRR.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:11:39
+    * Please select the output-directory of resulting files;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:11:46
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-24 12:11:47
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247_ARES_2016-02-24.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:15:12
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-24 12:15:12
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247_ARES.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:21:59
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:22:52
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-24 12:22:53
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:29:32
+ .....................
+  => Translating.. at 2016-02-24 12:29:32
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247_ARES_2016-02-24_12-29-32.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:30:01
+ .....................
+  => Translating.. at 2016-02-24 12:30:01
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247_ARES_2016-02-24_12-30-01.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:33:32
+ .....................
+  => Translating.. at 2016-02-24 12:33:32
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:34:32
+ .....................
+  => Translating.. at 2016-02-24 12:34:32
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:34:33
+ .....................
+  => Translating.. at 2016-02-24 12:34:33
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:34:34
+ .....................
+  => Translating.. at 2016-02-24 12:34:34
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:42:07
+ .....................
+  => Translating.. at 2016-02-24 12:42:08
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247_ARES_2016-02-24_12-42-07.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:45:02
+ .....................
+  => Translating.. at 2016-02-24 12:45:02
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/output/S8000_S_424_0004405020247_ARES_2016-02-24_12-45-02.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:46:41
+    * No EDF files were selected;
+ + The task failed. Please check the above error messages!
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:46:44
+ .....................
+  => Translating.. at 2016-02-24 12:46:45
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 12:48:44
+ .....................
+  => Translating.. at 2016-02-24 12:48:44
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 13:26:23
+ .....................
+  => Translating.. at 2016-02-24 13:26:23
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/Files/EDF-EDITOR/input/ARES/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 13:32:39
+>>> Missing event code: 5216
+>>> Missing event code: 5011
+>>> Missing event code: 5012
+>>> Missing event code: 1001
+ .....................
+  => Translating.. at 2016-02-24 13:32:40
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/translation errors 2-17-16/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/translation errors 2-17-16/output/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 13:53:17
+
+=====================================================================
+ + User started a new task at 2016-02-24 14:03:33
+>>> Missing event code: 3501
+ .....................
+  => Translating.. at 2016-02-24 14:03:33
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/translation errors 2-17-16/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8001_S_407_0004405020263.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8001_S_407_0004405020263.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/translation errors 2-17-16/output/S8001_S_407_0004405020263.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 14:07:19
+ .....................
+  => Translating.. at 2016-02-24 14:07:20
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/translation errors 2-17-16/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8008_S_406_0004405020254.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8008_S_406_0004405020254.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/translation errors 2-17-16/output/S8008_S_406_0004405020254.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 14:08:20
+>>> Missing event code: 3501
+ .....................
+  => Translating.. at 2016-02-24 14:08:20
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/translation errors 2-17-16/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8001_S_407_0004405020263.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8001_S_407_0004405020263.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/translation errors 2-17-16/output/S8001_S_407_0004405020263.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-02-24 14:14:14
+ .....................
+  => Translating.. at 2016-02-24 14:14:15
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/translation errors 2-17-16/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8000_S_424_0004405020247.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8000_S_424_0004405020247.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/translation errors 2-17-16/output/S8000_S_424_0004405020247.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+>>> Missing event code: 3501
+ .....................
+  => Translating.. at 2016-02-24 14:14:15
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/translation errors 2-17-16/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8001_S_407_0004405020263.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8001_S_407_0004405020263.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/translation errors 2-17-16/output/S8001_S_407_0004405020263.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => Translating.. at 2016-02-24 14:14:15
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/translation errors 2-17-16/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8002_S_425_0004405020252.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8002_S_425_0004405020252.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/translation errors 2-17-16/output/S8002_S_425_0004405020252.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => Translating.. at 2016-02-24 14:14:15
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/translation errors 2-17-16/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8008_S_406_0004405020254.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8008_S_406_0004405020254.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/translation errors 2-17-16/output/S8008_S_406_0004405020254.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => Translating.. at 2016-02-24 14:14:15
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/translation errors 2-17-16/ares mapping file 2-17-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8009_S_406_0004405020384.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/translation errors 2-17-16/S8009_S_406_0004405020384.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/translation errors 2-17-16/output/S8009_S_406_0004405020384.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: 100001Duration not found: 100007Duration not found: 100002Duration not found: 100003Duration not found: 100004Duration not found: 100005Duration not found: 100006XML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 5 out of 5 EDF files have been successfully translated.

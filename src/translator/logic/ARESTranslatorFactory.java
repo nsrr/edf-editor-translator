@@ -118,6 +118,8 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 			scoredEvent = parseEventElement(scoredEventElement);
 		} else {
 			// no mapping event name found
+			System.out.println(map[1].keySet().toString());
+			System.out.println(eventKey);
 			scoredEvent = xmlRoot.createElement("ScoredEvent");
 			Element eventConcept = xmlRoot.createElement("EventConcept");
 			Element eventCategory = xmlRoot.createElement("EventType");
@@ -142,7 +144,7 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 			scoredEvent.appendChild(durationElement);
 			scoredEvent.appendChild(notesElement);
 
-//			String info = xmlAnnotation + "," + code + "," + startTime;
+			//			String info = xmlAnnotation + "," + code + "," + startTime;
 			// log(info);
 			addElementIntoLog(">>> Missing event code: " + code, true);
 		}
@@ -263,13 +265,13 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 		int subattribute = Integer.valueOf(subattributeStr);
 		// String eventKey = code + attribute + subattribute;
 		AresItemKey aresKey = new AresItemKey(code, attribute, subattribute);
-		System.out.println(""+aresKey);
+		// System.out.println(""+aresKey);
 		String result = "defaultSignal"; 
 
 		String defaultSignal = (String) map[4].get(aresKey.toString());
-		System.out.println(defaultSignal);
+		// System.out.println(defaultSignal);
 		List<String> edfSignals = Arrays.asList(signalLabels);
-		System.out.println(edfSignals);
+		// System.out.println(edfSignals);
 		if (edfSignals.contains(defaultSignal)) {
 			result = annLocation;
 		}
@@ -477,8 +479,7 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 							subattribute);
 
 					// process events
-					if (!eventTypeLowerCase.contains("epochlength")
-							&& !eventTypeLowerCase.contains("stages")) {
+					if (!eventTypeLowerCase.contains("epochlength")) {
 
 						// Process signal column in mapping file
 						if (data.length >= 5) {
