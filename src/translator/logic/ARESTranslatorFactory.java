@@ -83,8 +83,9 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 			if (parsedElement == null) {
 				log("Can't parse event: " + index + " "
 						+ getElementByChildTag(elem, "Type"));
+			}else{
+				scoredEvents.appendChild(parsedElement);
 			}
-			scoredEvents.appendChild(parsedElement);
 		}
 		// Parse staging:
 		// for (Element elem : parseStaging())
@@ -156,6 +157,7 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 		List<Element> locationList = getLocation(scoredEventElement);
 		if (locationList == null) {
 			log("ERROR: location error");
+			return null;
 		}
 		Element scoredEvent = null;
 		if (xmlRoot != null) {
@@ -223,15 +225,23 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 		String startTime = getElementByChildTag(scoredEventElement, "starttime");
 		// System.out.println("StartTime: "+startTime);
 		if(startTime==null){
-			startTime = "Not Found";
+			log("Starttime not found: code: "
+					+ getElementByChildTag(scoredEventElement, "code")+" - attribute: " + getElementByChildTag(scoredEventElement, "attribute")+" - subattribute: " + getElementByChildTag(scoredEventElement, "subattribute"));
+			startTime = null;
+			return null;
+		}else{
+			double startTimeDouble= Double.parseDouble(startTime);
+			startTime = String.valueOf(startTimeDouble/1000);
+			start.appendChild(xmlRoot.createTextNode(startTime));
 		}
-		// String stopTime = getElementByChildTag(scoredEventElement,
-		// "stoptime"); //TODO
-		// String durationTime = String.valueOf(Integer.valueOf(startTime)
-		// - Integer.valueOf(stopTime));
-		duration.appendChild(xmlRoot
-				.createTextNode(getDuration(scoredEventElement)));
-		start.appendChild(xmlRoot.createTextNode(startTime));
+		String durationTime = getDuration(scoredEventElement);
+		if(durationTime==null){
+			return null;
+		}else{
+			double durationTimeDouble = Double.parseDouble(durationTime);
+			// durationTime = String.valueOf(durationTimeDouble/1000);
+			duration.appendChild(xmlRoot.createTextNode(durationTime));
+		}
 
 		list.add(eventCategory);
 		list.add(eventConcept);
@@ -282,11 +292,12 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 	private String getDuration(Element scoredEvent) {
 		String startTime = getElementByChildTag(scoredEvent, "starttime");
 		String stopTime = getElementByChildTag(scoredEvent, "stoptime");
-		String durationTime = "Invalid Duration";
+		String durationTime = null;
 		try {
 			int duration = Integer.valueOf(stopTime)
 					- Integer.valueOf(startTime);
-			duration /= 1000; // Assume duration is in millisecond format
+			duration /= 1000;
+				
 			if (duration > 0) {
 				durationTime = String.valueOf(duration);
 			}
@@ -301,9 +312,9 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 		if (durationTime != null) {
 			return durationTime;
 		} else {
-			log("Duration not found: "
-					+ getElementByChildTag(scoredEvent, "code"));
-			return "Duration not found";
+			log("Duration not found: code"
+					+ getElementByChildTag(scoredEvent, "code") + "-attribute"+ getElementByChildTag(scoredEvent, "attribute") + "- subattribute" + getElementByChildTag(scoredEvent, "subattribute"));
+			return null;
 		}
 	}
 
