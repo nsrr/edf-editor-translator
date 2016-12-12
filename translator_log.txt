@@ -6376,3 +6376,51 @@ Duration not found: code50101-attribute0- subattribute0ERROR: location errorCan'
  .....................
   => The task finished!
    * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-06-29 14:42:41
+ .....................
+  => Translating.. at 2016-06-29 14:42:42
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/SOL studies for Shiqiang and Wei/ares mapping file 4-29-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/SOL studies for Shiqiang and Wei/B5000242_B_103_0004402010069.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/SOL studies for Shiqiang and Wei/B5000242_B_103_0004402010069.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/SOL studies for Shiqiang and Wei/B5000242_B_103_0004402010069_ARES_2016-06-29_14-42-41.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: code50101-attribute0- subattribute0ERROR: location errorCan't parse event: 3586 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 6543 nullStarttime not found: code: 100001 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6599 nullStarttime not found: code: 100007 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6600 nullStarttime not found: code: 100002 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6601 nullStarttime not found: code: 100003 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6602 nullStarttime not found: code: 100004 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6603 nullStarttime not found: code: 100005 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6604 nullStarttime not found: code: 100006 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6605 nullXML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-06-29 14:53:35
+ .....................
+  => Translating.. at 2016-06-29 14:53:35
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Desktop/SOL studies for Shiqiang and Wei/ares mapping file 4-29-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Desktop/SOL studies for Shiqiang and Wei/B5000242_B_103_0004402010069.edf(Existed)
+   * Annotation:	/Users/strongtsq/Desktop/SOL studies for Shiqiang and Wei/B5000242_B_103_0004402010069.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/SOL studies for Shiqiang and Wei/B5000242_B_103_0004402010069_ARES_2016-06-29_14-53-35.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: code50101-attribute0- subattribute0ERROR: location errorCan't parse event: 3586 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 6543 nullStarttime not found: code: 100001 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6599 nullStarttime not found: code: 100007 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6600 nullStarttime not found: code: 100002 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6601 nullStarttime not found: code: 100003 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6602 nullStarttime not found: code: 100004 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6603 nullStarttime not found: code: 100005 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6604 nullStarttime not found: code: 100006 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 6605 nullXML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
+
+=====================================================================
+ + User started a new task at 2016-12-02 10:39:38
+ .....................
+  => Translating.. at 2016-12-02 10:39:39
+   * Vendor:	ARES
+   * Mapping:	/Users/strongtsq/Downloads/files for Shiqiang and Yan Oct 16/ares mapping file 4-29-16.csv(Existed)
+   * EDF file:	/Users/strongtsq/Downloads/files for Shiqiang and Yan Oct 16/C6095315_C_213_0004403030990.edf(Existed)
+   * Annotation:	/Users/strongtsq/Downloads/files for Shiqiang and Yan Oct 16/C6095315_C_213_0004403030990.xml(Existed)
+   * Output file:	/Users/strongtsq/Desktop/C6095315_C_213_0004403030990_ARES_2016-12-02_10-39-38.xml
+   * Translation:	Successful!
+   * Errors:
+Duration not found: code50101-attribute0- subattribute0ERROR: location errorCan't parse event: 1134 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1280 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1281 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1287 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1319 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1321 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1324 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1339 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1341 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1366 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1379 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1384 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1390 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1402 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1405 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1419 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1427 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1435 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1438 nullDuration not found: code2110-attribute2- subattribute0ERROR: location errorCan't parse event: 1443 nullStarttime not found: code: 100001 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 1453 nullStarttime not found: code: 100007 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 1454 nullStarttime not found: code: 100002 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 1455 nullStarttime not found: code: 100003 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 1456 nullStarttime not found: code: 100004 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 1457 nullStarttime not found: code: 100005 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 1458 nullStarttime not found: code: 100006 - attribute: null - subattribute: nullERROR: location errorCan't parse event: 1459 nullXML DOM Created Successfully..
+ .....................
+  => The task finished!
+   * 1 out of 1 EDF files have been successfully translated.
