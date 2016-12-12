@@ -190,7 +190,8 @@ public class Embla2EDFbrowserTranslatorFactory extends AbstractTranslatorFactory
 //		input.appendChild(inputNode);
 //		Node nameNode = xmlRoot.createTextNode(eventType); // bug fixed: wei wang, 2014-8-26
 		//		Node nameNode = xmlRoot.createTextNode((String) ((ArrayList<String>) map[1].get(eventType)).get(1));
-		Node nameNode = xmlRoot.createTextNode((String) (map[1].get(eventType)));
+//		Node nameNode = xmlRoot.createTextNode((String) (map[1].get(eventType)));
+		Node nameNode = xmlRoot.createTextNode(eventType);
 //		String category = map[2].get(eventType) == null ? "" : (String) map[2].get(eventType);
 //		Node categoryNode = xmlRoot.createTextNode(category);
 //		eventCategory.appendChild(categoryNode);
@@ -580,8 +581,8 @@ public class Embla2EDFbrowserTranslatorFactory extends AbstractTranslatorFactory
 				HashMap<String,Object> signalLocation = new HashMap<String,Object>();
 				while ((line = input.readLine()) != null) {
 					String[] data = line.split(",");
-					String eventCategoryInPipe = data[0] + "|" + data[0];
-					String eventNameInPipe = data[1].trim() + "|" + data[3].trim();
+					String eventCategoryInPipe = data[0];
+					String eventNameInPipe = data[3].trim();
 //					String eventTypeLowerCase = data[0].toLowerCase();
 					List<String> defaultSignals = new ArrayList<>();
 					if (data[0].compareTo("EpochLength") == 0) {

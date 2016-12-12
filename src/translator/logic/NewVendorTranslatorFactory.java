@@ -12,33 +12,31 @@ public class NewVendorTranslatorFactory extends AbstractTranslatorFactory {
 	
 	public NewVendorTranslatorFactory() {
 		super();
-		System.out.println("=================================================================");
 		System.out.println("NewVendor Factory:");
 	}
 
 	@Override
 	public boolean read(String edfFile, String annotationFile,
 			String mappingFile) {
-		System.out.println("   >>> Inside NewVendorTranslatorFactory read");
+		System.out.println("implement: read");
 		return false;
 	}
 
 	@Override
 	public boolean translate() {
-		System.out.println("   >>> Inside NewVendorTranslatorFactory translate");
+		System.out.println("implement: translate");
 		return false;
 	}
 
 	@Override
 	public boolean write2xml(String outputFile) {
-		System.out.println("   >>> Inside NewVendorTranslatorFactory write");
-		System.out.println("=================================================================");
+		System.out.println("implement: write");
 		return false;
 	}
 
 	@Override
 	public boolean write2JSON(String outputFile) {
-		System.out.println("   >>> Inside NewVendorTranslatorFactory writeToJSON");
+		System.out.println("implement writeToJSON");
 		return false;
 	}
 
@@ -50,8 +48,6 @@ public class NewVendorTranslatorFactory extends AbstractTranslatorFactory {
   @Override
   public String getSignalLocationFromEvent(Element scoredEvent,
       String annLocation) {
-    // TODO Auto-generated method stub
     return null;
   }
-
 }
