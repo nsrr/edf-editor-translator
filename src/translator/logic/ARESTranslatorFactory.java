@@ -294,9 +294,9 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 		String stopTime = getElementByChildTag(scoredEvent, "stoptime");
 		String durationTime = null;
 		try {
-			int duration = Integer.valueOf(stopTime)
+			double duration = Integer.valueOf(stopTime)
 					- Integer.valueOf(startTime);
-			duration /= 1000;
+			duration /= 1000.0;
 				
 			if (duration > 0) {
 				durationTime = String.valueOf(duration);

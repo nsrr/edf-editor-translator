@@ -8,6 +8,7 @@
 # OS generated files #
 .DS_Store
 /log.txt
+/translator_log.txt
 /bin
 /README.md
 /configuration.txt

@@ -271,12 +271,18 @@ public class ValidateEDF {
 				}
 				
 				//[Physical_Maximum](O.5) physical minimum < physical maximum
-				else if (phy_minimum > phy_maximum) {
-					description = Incompliance.error_esa_phymaxmin;
-					incomp = new Incompliance(incomplianceType, description,
-							fileName, i, col, errorSrcTypeIndex);
-					esaIncompliances.add(incomp);
-				}
+				// ==============================
+				// Shiqiang Tao
+				// 12/9/2016
+				// This is a false positive warning.
+				// Physical maximum can be smaller than physical minimum due to negative amplifier
+				// ==============================
+				// else if (phy_minimum > phy_maximum) {
+				// 	description = Incompliance.error_esa_phymaxmin;
+				// 	incomp = new Incompliance(incomplianceType, description,
+				// 			fileName, i, col, errorSrcTypeIndex);
+				// 	esaIncompliances.add(incomp);
+				// }
 			}
 
 			/************************************************************
