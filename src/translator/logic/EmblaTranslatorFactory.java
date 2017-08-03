@@ -338,19 +338,23 @@ public class EmblaTranslatorFactory extends AbstractTranslatorFactory {
 				userVarElement = userValElement;
 			}
 		}
+		String resultValue = "";
+		try{
 		NodeList values = userVarElement.getElementsByTagName("Value");
 		Element value = (Element)values.item(0);
 		NodeList paramsList = value.getElementsByTagName("Parameters");
 		Element parameters = (Element)paramsList.item(0);
 		NodeList finalParamList = parameters.getElementsByTagName("Parameter");
 
-		String resultValue = "";
 		for(int index = 0; index < finalParamList.getLength(); index++) {
 			Element parent = (Element)finalParamList.item(index);
 			String keyVal = getElementByChildTag(parent, "Key");
 			if(keyVal.equals(paramKey)) {
 				resultValue = getElementByChildTag(parent, "Value");
 			}
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		return resultValue;
 	}
