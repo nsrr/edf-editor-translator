@@ -470,7 +470,6 @@ public class TranslatorGUI extends JPanel implements ActionListener,
         JList_Out_files.setListData(outputFiles);
       }
     }
-
     Keywords.fileFolderChooser = select;
     this.repaint();
   }

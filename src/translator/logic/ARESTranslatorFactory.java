@@ -458,7 +458,7 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 				HashMap<String, Object> signalLocation = new HashMap<String, Object>(); // /
 
 				while ((line = input.readLine()) != null) {
-					String[] data = line.split(",");
+					String[] data = line.split(",", -1);
 					if (data == null || data[0] == "" || data[0].length() == 0
 							|| data[0] == null) {
 						break;
@@ -469,9 +469,18 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 					String eventName = data[1].trim();
 					String defaultSignal = "";
 
-					// construct are item key
-					int code = Integer.valueOf(data[5]);
-					;
+					// construct ares item key
+					int code;
+					try {
+						if(data.length >=6 ){
+							code = Integer.valueOf(data[5]);
+						}else{
+							code = 99;
+						}
+					}catch (NumberFormatException e){
+						code = 99;
+					}
+					
 
 					int attribute;
 					try {
@@ -513,7 +522,7 @@ public class ARESTranslatorFactory extends AbstractTranslatorFactory {
 					// Dated process for epoch
 					else if (data[0].compareTo("EpochLength") == 0) {
 						// System.out.println(data[0]);
-						epoch.put(data[0], data[2]);
+						epoch.put(data[0], data[3]);
 					} else {
 						// stages {event, event_concept}
 						stages.put(aresKey.toString(), eventName);
